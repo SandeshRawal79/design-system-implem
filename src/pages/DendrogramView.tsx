@@ -12,13 +12,15 @@ export function DendrogramView() {
     navigate('/phase1-services')
   }
 
-  // Mock service data
-  const mockService = {
-    id: serviceId || 'SVC001',
-    name: 'Cloud Storage Service',
+  // Service data from Provision X-ray
+  const serviceData = {
+    id: serviceId || '3501115',
+    name: 'PCP Office/Outpatient Visit and Consultation -> Professional Services',
     totalRecords: 2847,
     complexity: 'High',
-    groups: 12
+    groups: 12,
+    created: '2025-08-24 03:48:15',
+    createdBy: 'Mark'
   }
 
   return (
@@ -46,20 +48,39 @@ export function DendrogramView() {
         </div>
 
         <div className="text-right">
-          <h1 className="text-h3-responsive font-bold text-foreground">
-            Provision X-ray Analysis
-          </h1>
+          <div className="flex items-center justify-end gap-2 mb-2">
+            <div className="w-6 h-6 bg-gradient-to-br from-orange-400 to-purple-600 rounded-md flex items-center justify-center">
+              <span className="text-white text-xs font-bold">P</span>
+            </div>
+            <h1 className="text-h3-responsive font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Provision X-ray
+            </h1>
+          </div>
           <p className="text-sm text-muted-foreground">Service: 
             <span className="font-semibold text-foreground ml-1">
-              {mockService.id}
+              {serviceData.id}
             </span>
             <span className="mx-2 text-muted-foreground">•</span>
             <span className="font-medium text-primary">
-              {mockService.name}
+              {serviceData.name}
             </span>
           </p>
         </div>
       </div>
+
+      {/* Data Context Section */}
+      <Card className="bg-blue-50 border-blue-200">
+        <CardContent className="p-4">
+          <div className="space-y-1">
+            <p className="text-sm font-medium text-foreground">
+              <span className="font-semibold">Data context:</span> id={serviceData.id}, name={serviceData.name}
+            </p>
+            <p className="text-sm text-muted-foreground">
+              <span className="font-semibold">Created:</span> {serviceData.created}, <span className="font-semibold">By:</span> {serviceData.createdBy}
+            </p>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Service Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -68,7 +89,7 @@ export function DendrogramView() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Total Records</p>
-                <p className="text-2xl font-bold text-foreground">{mockService.totalRecords.toLocaleString()}</p>
+                <p className="text-2xl font-bold text-foreground">{serviceData.totalRecords.toLocaleString()}</p>
               </div>
               <Eye className="w-5 h-5 text-primary" />
             </div>
@@ -79,7 +100,7 @@ export function DendrogramView() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Service Groups</p>
-                <p className="text-2xl font-bold text-foreground">{mockService.groups}</p>
+                <p className="text-2xl font-bold text-foreground">{serviceData.groups}</p>
               </div>
               <TreeStructure className="w-5 h-5 text-secondary" />
             </div>
@@ -90,7 +111,7 @@ export function DendrogramView() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Complexity</p>
-                <p className="text-2xl font-bold text-foreground">{mockService.complexity}</p>
+                <p className="text-2xl font-bold text-foreground">{serviceData.complexity}</p>
               </div>
               <Gear className="w-5 h-5 text-accent" />
             </div>
@@ -100,7 +121,7 @@ export function DendrogramView() {
 
       {/* Section Header */}
       <div className="text-center space-y-2 mb-8">
-        <h2 className="text-2xl font-bold text-foreground">
+        <h2 className="text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
           Provision X-ray Analysis
         </h2>
         <p className="text-muted-foreground">
@@ -287,15 +308,15 @@ export function DendrogramView() {
               <div className="space-y-1">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Records:</span>
-                  <span className="font-medium text-foreground">{mockService.totalRecords.toLocaleString()}</span>
+                  <span className="font-medium text-foreground">{serviceData.totalRecords.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Service Groups:</span>
-                  <span className="font-medium text-foreground">{mockService.groups}</span>
+                  <span className="font-medium text-foreground">{serviceData.groups}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Complexity:</span>
-                  <span className="font-medium text-foreground">{mockService.complexity}</span>
+                  <span className="font-medium text-foreground">{serviceData.complexity}</span>
                 </div>
               </div>
             </div>
