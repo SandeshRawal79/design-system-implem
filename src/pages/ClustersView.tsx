@@ -2,10 +2,11 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-  const { serviceId } = useParams()
+import { ArrowLeft, Users, ChartBar, TreeStructure } from '@phosphor-icons/react'
+import { PageLayout } from '@/components/PageLayout'
 
-  // Mock clusters data
-    {
+export function ClustersView() {
+  const navigate = useNavigate()
   const { serviceId } = useParams()
   const [searchParams] = useSearchParams()
   const distance = searchParams.get('distance') || '0.5'
@@ -18,9 +19,9 @@ import { Badge } from '@/components/ui/badge'
       size: 423,
       items: ['Office Visits', 'Consultations', 'Routine Check-ups'],
       cohesion: 0.85,
-    {
+      avgDistance: 0.28
     },
-    }
+    {
       id: 2,
       name: 'Telehealth Services',
       size: 312,
@@ -30,102 +31,86 @@ import { Badge } from '@/components/ui/badge'
     },
     {
       id: 3,
-      name: 'Administrative Servi
+      name: 'Administrative Services',
       size: 189,
       items: ['Urgent Care', 'After-hours Coverage', 'Emergency Consultations'],
-      cohesion: 0.92,
-  ]
-    },
-    n
-      id: 4,
-      name: 'Specialized Procedures',
-      size: 156,
-      items: ['Diagnostic Services', 'Treatment Planning', 'Specialty Referrals'],
-      cohesion: 0.71,
+      cohesion: 0.72,
       avgDistance: 0.42
     },
-
+    {
+      id: 4,
+      name: 'Specialty Referrals',
+      size: 267,
+      items: ['Cardiology Referrals', 'Dermatology Referrals', 'Orthopedics Referrals'],
+      cohesion: 0.91,
+      avgDistance: 0.28
+    },
+    {
       id: 5,
-      name: 'Administrative Services',
-      size: 89,
-      items: ['Documentation', 'Billing Coordination', 'Insurance Processing'],
-      cohesion: 0.65,
-      {/* Page Header -
+      name: 'Preventive Care',
+      size: 178,
+      items: ['Annual Physicals', 'Vaccinations', 'Health Screenings'],
+      cohesion: 0.88,
+      avgDistance: 0.35
     }
-   
+  ]
 
   const handleBackToDendrogram = () => {
     navigate(`/dendrogram/${serviceId}`)
-   
+  }
 
   const handleBackToDashboard = () => {
     navigate('/')
-   
+  }
 
-              <div className="text-2xl font-bold t
+  const getCohesionBadgeVariant = (cohesion: number) => {
+    if (cohesion >= 0.8) return 'default' as const
+    if (cohesion >= 0.6) return 'secondary' as const
+    return 'outline' as const
+  }
+
+  const getCohesionColor = (cohesion: number) => {
+    if (cohesion >= 0.8) return 'text-green-600'
+    if (cohesion >= 0.6) return 'text-orange-600'
+    return 'text-red-600'
+  }
+
+  return (
+    <PageLayout
+      title={`Clusters Analysis`}
+      subtitle={`Service ${serviceId} | Distance threshold: ${distance}`}
+      showBackButton={true}
+    >
+      {/* Summary Card */}
+      <Card className="bg-white border border-border mb-6">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg font-semibold text-foreground flex items-center gap-2">
+            <Users className="w-5 h-5 text-primary" />
+            Cluster Analysis Summary
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-primary">
+                {mockClusters.length}
               </div>
+              <div className="text-sm text-muted-foreground">Total Clusters</div>
             </div>
-        </CardContent>
-
-
-          <h3 className="text-lg font-semibold text-foreg
-            {mockClusters.length} cluster
-        </div>
-        <div className="
-   
-
-          
-                    </div>
-                      <h4
-                    </div>
-                  <div className="flex items-cent
-                  
-                    <Badge v
-                    </Badge>
-                </div>
-           
-                    <div className="text-sm font-m
-                     
-                   
-                      ))}
-                  </div>
-                
-              
-                    </div>
-                      <span className="text-sm text-mut
-                        {(cluster.cohesion
-              
-              
-            
-
-            </Card>
-        </div>
-
-      <div className="flex justify-between items-ce
-          <Button 
-            onClick={handleBackToDashboard}
-          >
-            Back to Dashboard
-          <Butto
-            onClick={
-          >
-            Back to Dendrogram
-        </div>
-          <ChartBar className="w-4 h-4 mr-2" />
-        </Button>
-    </div>
-}
-
-
-
-
-
-
-
-
-
-
-
+            <div className="text-center">
+              <div className="text-2xl font-bold text-secondary">
+                {mockClusters.reduce((sum, cluster) => sum + cluster.size, 0)}
+              </div>
+              <div className="text-sm text-muted-foreground">Total Items</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-accent">
+                {distance}
+              </div>
+              <div className="text-sm text-muted-foreground">Distance Threshold</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-success">
                 {(mockClusters.reduce((sum, cluster) => sum + cluster.cohesion, 0) / mockClusters.length).toFixed(2)}
               </div>
               <div className="text-sm text-muted-foreground">Avg Cohesion</div>
@@ -227,6 +212,6 @@ import { Badge } from '@/components/ui/badge'
           Export Analysis
         </Button>
       </div>
-    </div>
+    </PageLayout>
   )
 }
