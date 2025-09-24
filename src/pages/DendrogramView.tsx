@@ -4,65 +4,149 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ArrowLeft, Download, Gear, Eye, TreeStructure, ChartLine, Funnel, Info, Calendar, User, Hash } from '@phosphor-icons/react'
 
-
+export function DendrogramView() {
   const navigate = useNavigate()
-    id: '3501115',
+  const { serviceId } = useParams()
 
   // Mock service data based on the snapshot
   const mockService = {
-    createdBy: 'Ma
+    id: '3501115',
+    createdBy: 'Marcel Martinez',
     name: 'PCP Office/Outpatient Visit and Consultation -> Professional Services',
-
+    createdDate: '12/12/2024',
     provisionTypes: 8,
-      {/* Page Header 
-        <div className="flex items-
-            variant="g
-            className="text-primary hover:text-primary/80 cursor-pointer"
-   
+    totalRecords: 1246,
+    options: 'Telehealth, In-Person, Emergency Coverage',
+    context: {
+      phase: 'Phase 1 - Service Classification',
+      analysisDepth: 'Deep Structure Analysis',
+      dataPoints: 3742,
+      relationships: 156
+    }
+  }
 
+  const handleBackToDashboard = () => {
+    navigate('/')
+  }
+
+  const handleBackToPhase1 = () => {
+    navigate('/phase1-services')
+  }
+
+  return (
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
           <Button 
-            onCli
-   
-
+            variant="ghost" 
+            onClick={handleBackToDashboard}
+            className="text-primary hover:text-primary/80 cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Dashboard
+          </Button>
+          <div className="text-xl font-semibold text-foreground">
+            Dendrogram Analysis - Service #{serviceId}
+          </div>
         </div>
-        <div className="text-rig
-   
-
-          
+        <div className="text-right">
+          <p className="text-sm text-muted-foreground">
+            Generated {new Date().toLocaleDateString()}
           </p>
+        </div>
       </div>
-      {/* Data Context Section */}
-        <CardHeader className="pb-3">
-            <div c
-            </div>
-              <CardTitle className="text-lg
-            </div>
-        </C
-          <div className="space-y-4">
-            <div clas
-              <div 
-                  <Hash className="w-4 h-4 text-
-                  
-                  </div>
-                
-                  <TreeStructure className="w-4 h-4 text-primary mt-0.5 f
-           
-                  </div>
-              </div>
-              {/* C
-              
 
-                    <div className="
-                </div>
-                <div className="flex
-               
-                    <div className="text-sm font-medium text-for
-                </div>
+      {/* Data Context Section */}
+      <Card className="bg-white border border-border">
+        <CardHeader className="pb-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center">
+                <Info className="w-5 h-5 text-secondary" />
+              </div>
+              <CardTitle className="text-lg">Service Context & Data Profile</CardTitle>
             </div>
-            {/* Ana
-              
-              
-      </div>
+          </div>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="flex items-start gap-3">
+                <div className="flex items-center gap-2">
+                  <Hash className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <div className="text-sm font-medium text-foreground">Service ID</div>
+                    <div className="text-sm text-muted-foreground">{mockService.id}</div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="flex items-center gap-2">
+                  <TreeStructure className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <div className="text-sm font-medium text-foreground">Provision Types</div>
+                    <div className="text-sm text-muted-foreground">{mockService.provisionTypes}</div>
+                  </div>
+                </div>
+              </div>
+              {/* Creator Information */}
+              <div className="flex items-start gap-3">
+                <div className="flex items-center gap-2">
+                  <User className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <div className="text-sm font-medium text-foreground">Created By</div>
+                    <div className="text-sm text-muted-foreground">{mockService.createdBy}</div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <div className="text-sm font-medium text-foreground">Created Date</div>
+                    <div className="text-sm text-muted-foreground">{mockService.createdDate}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* Service Name and Options */}
+            <div className="border-t border-border pt-4">
+              <div className="space-y-3">
+                <div>
+                  <div className="text-sm font-medium text-foreground mb-1">Service Name</div>
+                  <div className="text-sm text-muted-foreground">{mockService.name}</div>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <div className="text-sm font-medium text-foreground">Options:</div>
+                  <div className="text-sm text-muted-foreground">{mockService.options}</div>
+                </div>
+              </div>
+            </div>
+            {/* Analysis Context */}
+            <div className="bg-muted/30 rounded-lg p-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div>
+                  <div className="text-sm font-medium text-foreground">Analysis Phase</div>
+                  <div className="text-sm text-muted-foreground">{mockService.context.phase}</div>
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-foreground">Depth Level</div>
+                  <div className="text-sm text-muted-foreground">{mockService.context.analysisDepth}</div>
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-foreground">Data Points</div>
+                  <div className="text-sm text-muted-foreground">{mockService.context.dataPoints.toLocaleString()}</div>
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-foreground">Relationships</div>
+                  <div className="text-sm text-muted-foreground">{mockService.context.relationships}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Three Dendrogram Views */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -76,34 +160,30 @@ import { ArrowLeft, Download, Gear, Eye, TreeStructure, ChartLine, Funnel, Info,
                 </div>
                 <div>
                   <CardTitle className="text-lg">Provision X-ray #1</CardTitle>
-                <div className="w-10 h-10 bg-primary/10 rounded
+                  <p className="text-sm text-muted-foreground">Service ID/Name + Provision Type + Options</p>
                 </div>
-                  <Car
-                    Se
-                </di
+              </div>
               <div className="flex items-center gap-2">
+                <Button size="sm" variant="ghost" className="cursor-pointer">
                   <Eye className="w-4 h-4" />
-                <Button size="sm" variant="gh
                 </Button>
+                <Button size="sm" variant="ghost" className="cursor-pointer">
+                  <Gear className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
+          </CardHeader>
           <CardContent className="p-6">
-              <div classN
-              </div>
-                Fu
-              <p classN
-              </p>
-                <Button size="sm" className="btn-gradient-primary cursor-pointer">
-                  Generate
-                <Button size="sm" variant="outline" className="cur
-                  Ex
-              </div>
-          </CardContent>
-
-        <Card className="bg-white border border-border">
-            <div className="flex items-center justify-between">
-                <d
+            <div className="space-y-4">
+              <div className="bg-muted/20 rounded-lg p-4 min-h-[200px] flex items-center justify-center">
+                <div className="text-center text-muted-foreground">
+                  <TreeStructure className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                  <p className="text-sm">Dendrogram visualization will be generated here</p>
+                  <p className="text-xs mt-1">Full hierarchy: Service → Provision Type → Options</p>
                 </div>
-                  <CardTitle className="text-lg">Provision X-ray #2</CardTitle>
+              </div>
+              <div className="flex gap-2">
+                <Button size="sm" className="btn-gradient-primary cursor-pointer">
                   <ChartLine className="w-4 h-4 mr-2" />
                   Generate
                 </Button>
@@ -116,105 +196,97 @@ import { ArrowLeft, Download, Gear, Eye, TreeStructure, ChartLine, Funnel, Info,
           </CardContent>
         </Card>
 
-              </p>
-                <Button size="sm" className="btn-gradien
-                  Gene
-                <Button size="sm" variant="outline" className="
-                  Export
-              </div>
-          </CardContent>
-
-        <Card classNa
+        {/* Provision X-ray #2 */}
+        <Card className="bg-white border border-border">
+          <CardHeader>
             <div className="flex items-center justify-between">
-                <div className="w-10 h-10 bg-accent/10 rounded-
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center">
+                  <ChartLine className="w-5 h-5 text-secondary" />
                 </div>
-                  <Car
-                    Op
-                </di
+                <div>
+                  <CardTitle className="text-lg">Provision X-ray #2</CardTitle>
+                  <p className="text-sm text-muted-foreground">Provision Type + Options</p>
+                </div>
+              </div>
               <div className="flex items-center gap-2">
+                <Button size="sm" variant="ghost" className="cursor-pointer">
                   <Eye className="w-4 h-4" />
-                <Button size="sm" variant="gh
                 </Button>
+                <Button size="sm" variant="ghost" className="cursor-pointer">
+                  <Gear className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
+          </CardHeader>
           <CardContent className="p-6">
-              <div classN
+            <div className="space-y-4">
+              <div className="bg-muted/20 rounded-lg p-4 min-h-[200px] flex items-center justify-center">
+                <div className="text-center text-muted-foreground">
+                  <ChartLine className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                  <p className="text-sm">Dendrogram visualization will be generated here</p>
+                  <p className="text-xs mt-1">Mid-level hierarchy: Provision Type → Options</p>
+                </div>
               </div>
-                Op
-              <p classN
-              </p>
+              <div className="flex gap-2">
                 <Button size="sm" className="btn-gradient-primary cursor-pointer">
+                  <ChartLine className="w-4 h-4 mr-2" />
                   Generate
-                <Button size="sm" variant="outline" className
-                  Ex
+                </Button>
+                <Button size="sm" variant="outline" className="cursor-pointer">
+                  <Download className="w-4 h-4 mr-2" />
+                  Export
+                </Button>
               </div>
-          </CardContent>
-      </div>
-      {/* Analysis Configuration */}
-        <CardHeader>
-        </CardHead
-          <div className="grid grid-cols-1
-              <h4 className="font-semibold text-foreground">Analysis Settings</h4>
-                <div className="flex justify-between ite
-                  <span cl
-                <div clas
-                  <span className="text-foreground font-medium">Euclidean</span
-                <div className="flex justify-between it
-                  <span 
-              </div>
-            <div cla
-              <div
-                  <span 
-               
-
-                </div>
-                  <span className="text-muted-foreground
-                </div>
             </div>
-        </CardContent>
+          </CardContent>
+        </Card>
 
-      <div className="flex justify-between items-center pt-4">
-          <Button 
-            onClick={
-          >
-            Back to Dashboard
-          <Button 
-            onClick={h
-          >
-            Back to 
-        </div>
-          <Download className="w-4 h-4 mr-2" />
-        </Button>
-    </div>
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        {/* Provision X-ray #3 */}
+        <Card className="bg-white border border-border">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
+                  <Funnel className="w-5 h-5 text-accent" />
+                </div>
+                <div>
+                  <CardTitle className="text-lg">Provision X-ray #3</CardTitle>
+                  <p className="text-sm text-muted-foreground">Options</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button size="sm" variant="ghost" className="cursor-pointer">
+                  <Eye className="w-4 h-4" />
+                </Button>
+                <Button size="sm" variant="ghost" className="cursor-pointer">
+                  <Gear className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="space-y-4">
+              <div className="bg-muted/20 rounded-lg p-4 min-h-[200px] flex items-center justify-center">
+                <div className="text-center text-muted-foreground">
+                  <Funnel className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                  <p className="text-sm">Dendrogram visualization will be generated here</p>
+                  <p className="text-xs mt-1">Options-focused analysis</p>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button size="sm" className="btn-gradient-primary cursor-pointer">
+                  <ChartLine className="w-4 h-4 mr-2" />
+                  Generate
+                </Button>
+                <Button size="sm" variant="outline" className="cursor-pointer">
+                  <Download className="w-4 h-4 mr-2" />
+                  Export
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Analysis Configuration */}
