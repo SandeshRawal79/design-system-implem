@@ -102,6 +102,74 @@ export function DataTable<T extends Record<string, any>>({
     return faSort
   }
 
+  const getColumnClass = (columnKey: string) => {
+    // Apply responsive column classes based on common column patterns
+    const keyStr = String(columnKey).toLowerCase()
+    
+    // Service-specific columns (Phase1Services)
+    if (keyStr.includes('id') && keyStr.includes('service')) {
+      return 'service-id-col'
+    }
+    if (keyStr.includes('name') && keyStr.includes('service')) {
+      return 'service-name-col'
+    }
+    if (keyStr.includes('record') || keyStr.includes('total')) {
+      return 'records-col'
+    }
+    
+    // General columns
+    if (keyStr === 'id') {
+      return 'id-col'
+    }
+    if (keyStr === 'name') {
+      return 'name-col'
+    }
+    if (keyStr === 'description') {
+      return 'description-col'
+    }
+    if (keyStr === 'assignee') {
+      return 'assignee-col'
+    }
+    if (keyStr === 'members') {
+      return 'members-col'
+    }
+    if (keyStr === 'created') {
+      return 'created-col'
+    }
+    if (keyStr === 'modify') {
+      return 'modify-col'
+    }
+    if (keyStr === 'creator') {
+      return 'creator-col'
+    }
+    if (keyStr === 'setcount') {
+      return 'set-count-col'
+    }
+    if (keyStr === 'abcdtup') {
+      return 'abcd-tup-col'
+    }
+    if (keyStr === 'provisiontype') {
+      return 'provision-type-col'
+    }
+    if (keyStr === 'options') {
+      return 'options-col'
+    }
+    if (keyStr === 'approvalsneeded') {
+      return 'approvals-needed-col'
+    }
+    if (keyStr === 'timestamp') {
+      return 'timestamp-col'
+    }
+    if (keyStr === 'actions') {
+      return 'actions-col'
+    }
+    if (keyStr.includes('action') || keyStr.includes('button') || keyStr.includes('view') || keyStr.includes('dendrogram')) {
+      return 'action-col'
+    }
+    
+    return ''
+  }
+
   return (
     <div className={`space-y-4 ${className}`}>
       {/* Search Bar */}
@@ -122,14 +190,14 @@ export function DataTable<T extends Record<string, any>>({
 
       {/* Data Table */}
       <Card className="overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[640px]">
+        <div className="responsive-table-wrapper">
+          <table className="responsive-table sticky-header">
             <thead className="bg-muted/30">
               <tr className="border-b border-border">
                 {columns.map((column, index) => (
                   <th 
                     key={index}
-                    className={`text-left p-3 md:p-4 ${column.minWidth ? `min-w-[${column.minWidth}]` : ''}`}
+                    className={`text-left p-2 md:p-3 lg:p-4 ${getColumnClass(column.key as string)} ${column.className || ''}`}
                   >
                     {column.sortable !== false ? (
                       <button 
@@ -167,7 +235,7 @@ export function DataTable<T extends Record<string, any>>({
                     }`}
                   >
                     {columns.map((column, colIndex) => (
-                      <td key={colIndex} className={`p-3 md:p-4 ${column.className || ''}`}>
+                      <td key={colIndex} className={`p-2 md:p-3 lg:p-4 ${getColumnClass(column.key as string)} ${column.className || ''}`}>
                         {column.render 
                           ? column.render(record[column.key as keyof T], record, index)
                           : String(record[column.key as keyof T] || '')
