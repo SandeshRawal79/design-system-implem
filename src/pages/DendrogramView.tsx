@@ -1,12 +1,15 @@
 import { useNavigate, useParams } from 'react-router-dom'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { ArrowLeft, Download, Gear, Eye, TreeStructure, ChartLine, Funnel, Info, Calendar, User, Hash } from '@phosphor-icons/react'
+import { Input } from '@/components/ui/input'
+import { ArrowLeft, Download, Gear, Eye, TreeStructure, ChartLine, Funnel, Info, Calendar, User, Hash, MagnifyingGlass } from '@phosphor-icons/react'
 
 export function DendrogramView() {
   const navigate = useNavigate()
   const { serviceId } = useParams()
+  const [clusterDistance, setClusterDistance] = useState('')
 
   // Mock service data based on the snapshot
   const mockService = {
@@ -33,40 +36,46 @@ export function DendrogramView() {
     navigate('/phase1-services')
   }
 
+  const handleViewClusters = () => {
+    if (clusterDistance.trim()) {
+      // Navigate to clusters list page with the distance parameter
+      navigate(`/clusters/${serviceId}?distance=${clusterDistance}`)
+    }
+  }
+
   return (
     <div className="space-y-6">
-      {/* Page Header */}
-      <div className="flex items-center justify-between">
+      {/* Page Header - Compact with better alignment */}
+      <div className="page-header-compact">
         <div className="flex items-center gap-4">
           <Button 
             variant="ghost" 
             onClick={handleBackToDashboard}
-            className="text-primary hover:text-primary/80 cursor-pointer"
+            className="back-to-dashboard text-primary hover:text-primary/80 cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Dashboard
           </Button>
-          <div className="text-xl font-semibold text-foreground">
-            Dendrogram Analysis - Service #{serviceId}
+          <div className="flex items-center gap-3">
+            <h1 className="text-xl font-semibold text-foreground">
+              Dendrogram Analysis - Service #{serviceId}
+            </h1>
+            <span className="subtitle-separator hidden sm:inline">|</span>
+            <p className="text-sm text-muted-foreground subtitle-inline">
+              Generated {new Date().toLocaleDateString()}
+            </p>
           </div>
-        </div>
-        <div className="text-right">
-          <p className="text-sm text-muted-foreground">
-            Generated {new Date().toLocaleDateString()}
-          </p>
         </div>
       </div>
 
       {/* Data Context Section */}
-      <Card className="bg-white border border-border">
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center">
-                <Info className="w-5 h-5 text-secondary" />
-              </div>
-              <CardTitle className="text-lg">Service Context & Data Profile</CardTitle>
+      <Card className="bg-card border border-border">
+        <CardHeader className="pb-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center">
+              <Info className="w-5 h-5 text-secondary" />
             </div>
+            <CardTitle className="text-lg font-semibold">Service Context & Data Profile</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="pt-0">
@@ -148,26 +157,76 @@ export function DendrogramView() {
         </CardContent>
       </Card>
 
+      {/* See Clusters at Distance Section */}
+      <Card className="bg-card border border-border">
+        <CardHeader className="pb-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-info/10 rounded-lg flex items-center justify-center">
+              <MagnifyingGlass className="w-5 h-5 text-info" />
+            </div>
+            <CardTitle className="text-lg font-semibold">Cluster Analysis</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <div className="space-y-4">
+            <div>
+              <p className="text-sm text-muted-foreground mb-3">
+                Explore clusters at a specific distance threshold to identify natural groupings within your service provisions.
+              </p>
+              <div className="flex gap-3 items-end">
+                <div className="flex-1 max-w-xs">
+                  <label htmlFor="cluster-distance" className="block text-sm font-medium text-foreground mb-1">
+                    Distance Threshold
+                  </label>
+                  <Input
+                    id="cluster-distance"
+                    type="number"
+                    placeholder="Enter distance (e.g., 0.5)"
+                    value={clusterDistance}
+                    onChange={(e) => setClusterDistance(e.target.value)}
+                    className="w-full"
+                    min="0"
+                    max="1"
+                    step="0.1"
+                  />
+                </div>
+                <Button 
+                  onClick={handleViewClusters}
+                  disabled={!clusterDistance.trim()}
+                  className="btn-gradient-primary cursor-pointer"
+                >
+                  <MagnifyingGlass className="w-4 h-4 mr-2" />
+                  See Clusters
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">
+                Distance ranges from 0 (identical) to 1 (completely different). Lower values create more clusters.
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Three Dendrogram Views */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Provision X-ray #1 */}
-        <Card className="bg-white border border-border">
-          <CardHeader>
+        <Card className="bg-card border border-border">
+          <CardHeader className="pb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
                   <TreeStructure className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg">Provision X-ray #1</CardTitle>
+                  <CardTitle className="text-lg font-semibold">Provision X-ray #1</CardTitle>
                   <p className="text-sm text-muted-foreground">Service ID/Name + Provision Type + Options</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Button size="sm" variant="ghost" className="cursor-pointer">
+                <Button size="sm" variant="ghost" className="cursor-pointer hover:bg-muted">
                   <Eye className="w-4 h-4" />
                 </Button>
-                <Button size="sm" variant="ghost" className="cursor-pointer">
+                <Button size="sm" variant="ghost" className="cursor-pointer hover:bg-muted">
                   <Gear className="w-4 h-4" />
                 </Button>
               </div>
@@ -183,11 +242,11 @@ export function DendrogramView() {
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button size="sm" className="btn-gradient-primary cursor-pointer">
+                <Button size="sm" className="btn-gradient-primary cursor-pointer table-action-btn">
                   <ChartLine className="w-4 h-4 mr-2" />
                   Generate
                 </Button>
-                <Button size="sm" variant="outline" className="cursor-pointer">
+                <Button size="sm" variant="outline" className="cursor-pointer table-action-btn">
                   <Download className="w-4 h-4 mr-2" />
                   Export
                 </Button>
@@ -197,23 +256,23 @@ export function DendrogramView() {
         </Card>
 
         {/* Provision X-ray #2 */}
-        <Card className="bg-white border border-border">
-          <CardHeader>
+        <Card className="bg-card border border-border">
+          <CardHeader className="pb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center">
                   <ChartLine className="w-5 h-5 text-secondary" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg">Provision X-ray #2</CardTitle>
+                  <CardTitle className="text-lg font-semibold">Provision X-ray #2</CardTitle>
                   <p className="text-sm text-muted-foreground">Provision Type + Options</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Button size="sm" variant="ghost" className="cursor-pointer">
+                <Button size="sm" variant="ghost" className="cursor-pointer hover:bg-muted">
                   <Eye className="w-4 h-4" />
                 </Button>
-                <Button size="sm" variant="ghost" className="cursor-pointer">
+                <Button size="sm" variant="ghost" className="cursor-pointer hover:bg-muted">
                   <Gear className="w-4 h-4" />
                 </Button>
               </div>
@@ -229,11 +288,11 @@ export function DendrogramView() {
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button size="sm" className="btn-gradient-primary cursor-pointer">
+                <Button size="sm" className="btn-gradient-primary cursor-pointer table-action-btn">
                   <ChartLine className="w-4 h-4 mr-2" />
                   Generate
                 </Button>
-                <Button size="sm" variant="outline" className="cursor-pointer">
+                <Button size="sm" variant="outline" className="cursor-pointer table-action-btn">
                   <Download className="w-4 h-4 mr-2" />
                   Export
                 </Button>
@@ -243,23 +302,23 @@ export function DendrogramView() {
         </Card>
 
         {/* Provision X-ray #3 */}
-        <Card className="bg-white border border-border">
-          <CardHeader>
+        <Card className="bg-card border border-border">
+          <CardHeader className="pb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
                   <Funnel className="w-5 h-5 text-accent" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg">Provision X-ray #3</CardTitle>
+                  <CardTitle className="text-lg font-semibold">Provision X-ray #3</CardTitle>
                   <p className="text-sm text-muted-foreground">Options</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Button size="sm" variant="ghost" className="cursor-pointer">
+                <Button size="sm" variant="ghost" className="cursor-pointer hover:bg-muted">
                   <Eye className="w-4 h-4" />
                 </Button>
-                <Button size="sm" variant="ghost" className="cursor-pointer">
+                <Button size="sm" variant="ghost" className="cursor-pointer hover:bg-muted">
                   <Gear className="w-4 h-4" />
                 </Button>
               </div>
@@ -275,11 +334,11 @@ export function DendrogramView() {
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button size="sm" className="btn-gradient-primary cursor-pointer">
+                <Button size="sm" className="btn-gradient-primary cursor-pointer table-action-btn">
                   <ChartLine className="w-4 h-4 mr-2" />
                   Generate
                 </Button>
-                <Button size="sm" variant="outline" className="cursor-pointer">
+                <Button size="sm" variant="outline" className="cursor-pointer table-action-btn">
                   <Download className="w-4 h-4 mr-2" />
                   Export
                 </Button>
@@ -290,8 +349,8 @@ export function DendrogramView() {
       </div>
 
       {/* Analysis Configuration */}
-      <Card className="bg-muted/30">
-        <CardHeader>
+      <Card className="bg-muted/30 border border-border">
+        <CardHeader className="pb-4">
           <CardTitle className="text-xl font-bold">Dendrogram Configuration</CardTitle>
         </CardHeader>
         <CardContent className="p-6">
@@ -335,12 +394,12 @@ export function DendrogramView() {
       </Card>
 
       {/* Action Buttons */}
-      <div className="flex justify-between items-center pt-4">
+      <div className="flex justify-between items-center pt-4 border-t border-border">
         <div className="flex gap-3">
           <Button 
             variant="ghost" 
             onClick={handleBackToDashboard}
-            className="cursor-pointer"
+            className="cursor-pointer back-to-dashboard"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Dashboard
@@ -348,7 +407,7 @@ export function DendrogramView() {
           <Button 
             variant="ghost" 
             onClick={handleBackToPhase1}
-            className="cursor-pointer"
+            className="cursor-pointer back-to-dashboard"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Services
