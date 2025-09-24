@@ -217,3 +217,15 @@ button, .btn, [role="button"] {
 .interactive-element:hover {
   transform: translateY(-1px);
 }
+
+/* Intelligence Catalog card hover effects */
+.intelligence-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.intelligence-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px -12px rgba(71, 74, 158, 0.15);
+  border-color: rgba(71, 74, 158, 0.2);
+}

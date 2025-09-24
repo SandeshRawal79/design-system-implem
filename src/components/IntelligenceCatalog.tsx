@@ -35,14 +35,14 @@ function IntelligenceCard({
   const typeColor = type === 'Analytics' ? '#474A9E' : '#F48436'
   
   return (
-    <Card className="p-6 h-full flex flex-col justify-between hover:shadow-md transition-shadow">
+    <Card className="p-6 h-full flex flex-col justify-between hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group border-2 hover:border-primary/20">
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-semibold text-foreground">{title}</h3>
+          <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-200">{title}</h3>
         </div>
         
         <Badge 
-          className="mb-4 text-white font-medium"
+          className="mb-4 text-white font-medium group-hover:scale-105 transition-transform duration-200"
           style={{ backgroundColor: typeColor }}
         >
           {type}
@@ -78,7 +78,7 @@ function IntelligenceCard({
       
       <div className="flex flex-col gap-2 mt-4">
         <Button 
-          className="btn-gradient-primary w-full justify-center gap-2 cursor-pointer"
+          className="btn-gradient-primary w-full justify-center gap-2 cursor-pointer group-hover:scale-[1.02] transition-transform duration-200"
           onClick={onPrimaryClick}
         >
           <FontAwesomeIcon icon={faPlay} className="w-3 h-3" />
@@ -87,7 +87,7 @@ function IntelligenceCard({
         {secondaryAction && (
           <Button 
             variant="outline" 
-            className="btn-gradient-secondary w-full cursor-pointer"
+            className="btn-gradient-secondary w-full cursor-pointer group-hover:scale-[1.02] transition-transform duration-200"
             onClick={onSecondaryClick}
           >
             <FontAwesomeIcon icon={faPlay} className="w-3 h-3 mr-2" />
