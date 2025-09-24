@@ -1,18 +1,23 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { ArrowLeft, Download, Gear, Eye, TreeStructure, ChartLine, Funnel } from '@phosphor-icons/react'
+import { Badge } from '@/components/ui/badge'
+import { ArrowLeft, Download, Gear, Eye, TreeStructure, ChartLine, Funnel, Info, Calendar, User, Hash } from '@phosphor-icons/react'
 
 export function DendrogramView() {
   const navigate = useNavigate()
   const { serviceId } = useParams()
 
+  // Mock service data based on the snapshot
   const mockService = {
-    id: serviceId || 'SVC-001',
-    name: 'User Authentication Service',
-    totalRecords: 45672,
+    id: '3501115',
+    name: 'PCP Office/Outpatient Visit and Consultation -> Professional Services',
+    totalRecords: 50,
     provisionTypes: 8,
-    uniqueOptions: 15
+    uniqueOptions: 15,
+    created: '2025-08-24 03:48:15',
+    createdBy: 'Mark',
+    description: 'Primary Care Provider office visits and outpatient consultations categorized under professional services'
   }
 
   const handleBackToDashboard = () => {
@@ -51,13 +56,96 @@ export function DendrogramView() {
           <h1 className="text-h3-responsive font-bold text-foreground">
             Provision X-ray Analysis
           </h1>
-          <p className="text-sm text-muted-foreground">Service: 
+          <p className="text-sm text-muted-foreground">Service ID: 
             <span className="font-semibold text-foreground ml-1">
-              {mockService.name} ({mockService.id})
+              {mockService.id}
             </span>
           </p>
         </div>
       </div>
+
+      {/* Data Context Section */}
+      <Card className="bg-gradient-to-r from-primary/5 to-secondary/5 border-l-4 border-l-primary">
+        <CardHeader className="pb-3">
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Info className="w-5 h-5 text-primary" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <CardTitle className="text-lg text-foreground mb-1">Data Context</CardTitle>
+              <p className="text-sm text-muted-foreground">Service snapshot and metadata information</p>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <div className="space-y-4">
+            {/* Service Details Row */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {/* Service Information */}
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <Hash className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium mb-1">Service ID</div>
+                    <div className="text-sm font-semibold text-foreground">{mockService.id}</div>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <TreeStructure className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium mb-1">Service Name</div>
+                    <div className="text-sm font-medium text-foreground leading-5">{mockService.name}</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Creation Details */}
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <Calendar className="w-4 h-4 text-secondary mt-0.5 flex-shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium mb-1">Created</div>
+                    <div className="text-sm font-medium text-foreground">{mockService.created}</div>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <User className="w-4 h-4 text-secondary mt-0.5 flex-shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium mb-1">Created By</div>
+                    <div className="text-sm font-medium text-foreground">{mockService.createdBy}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Analytics Summary */}
+            <div className="pt-2 border-t border-border/50">
+              <div className="flex flex-wrap gap-4">
+                <div className="flex items-center gap-2">
+                  <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
+                    <ChartLine className="w-3 h-3 mr-1" />
+                    {mockService.totalRecords} Records
+                  </Badge>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Badge variant="secondary" className="bg-secondary/10 text-secondary border-secondary/20">
+                    <Funnel className="w-3 h-3 mr-1" />
+                    {mockService.provisionTypes} Provision Types
+                  </Badge>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Badge variant="secondary" className="bg-accent/10 text-accent border-accent/20">
+                    <TreeStructure className="w-3 h-3 mr-1" />
+                    {mockService.uniqueOptions} Unique Options
+                  </Badge>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Three Dendrogram Views */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
