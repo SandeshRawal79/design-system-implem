@@ -35,7 +35,7 @@ function IntelligenceCard({
   const typeColor = type === 'Analytics' ? '#474A9E' : '#F48436'
   
   return (
-    <Card className="p-6 h-full flex flex-col justify-between hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group border-2 hover:border-primary/20">
+    <Card className="p-6 h-full flex flex-col justify-between intelligence-card border-2 hover:border-primary/20">
       <div>
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-200">{title}</h3>
@@ -151,9 +151,9 @@ export function IntelligenceCatalog() {
 
   return (
     <div className="mb-8">
-      <div className="flex items-center gap-2 mb-6">
+      <div className="flex items-center gap-3 mb-6">
         <h2 className="text-2xl font-semibold text-foreground">Intelligence Catalog</h2>
-        <Badge variant="secondary" className="text-muted-foreground">
+        <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 font-medium px-2.5 py-1">
           4
         </Badge>
       </div>

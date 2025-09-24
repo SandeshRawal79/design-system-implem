@@ -40,7 +40,7 @@ export function PageLayout({
     <div className="space-y-5">
       {/* Ultra-compact Header - Inline Layout for Space Efficiency */}
       <header className="space-y-3">
-        {/* Single Row: Back Button + Title + Badge - Aligned for Maximum Space Savings */}
+        {/* Single Row: Back Button + Title + Badge + Subtitle - All inline for maximum space efficiency */}
         <div className="flex flex-col sm:flex-row sm:items-center gap-3">
           {/* Back Button - Compact Design */}
           {showTopBackButton && (
@@ -56,9 +56,9 @@ export function PageLayout({
             </Button>
           )}
           
-          {/* Page Title and Badge - Inline Layout */}
+          {/* Page Title, Badge, and Subtitle - Inline Layout */}
           <div className="flex-1 min-w-0">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 page-header-with-subtitle">
               <h1 className="text-h3-responsive font-bold text-foreground leading-tight truncate">
                 {title}
               </h1>
@@ -74,18 +74,19 @@ export function PageLayout({
                   <span className="text-xs text-muted-foreground">{badge.label}</span>
                 </div>
               )}
+              
+              {/* Subtitle with separator - inline on larger screens */}
+              {subtitle && (
+                <div className="flex items-center gap-3 mt-1 sm:mt-0 shrink-0 min-w-0">
+                  <span className="hidden sm:block subtitle-separator text-sm">|</span>
+                  <p className="text-sm text-muted-foreground leading-relaxed subtitle-inline">
+                    {subtitle}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
-
-        {/* Subtitle - Only if provided, compact spacing */}
-        {subtitle && (
-          <div className="sm:pl-[calc(theme(spacing.4)+theme(spacing.2)+5.5rem)]">
-            <p className="text-sm text-muted-foreground max-w-4xl leading-relaxed">
-              {subtitle}
-            </p>
-          </div>
-        )}
       </header>
 
       {/* Main Content - Reduced spacing for better density */}

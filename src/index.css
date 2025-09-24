@@ -284,6 +284,40 @@ button, .btn, [role="button"], .cursor-pointer {
   }
 }
 
+/* Inline subtitle separator and layout */
+@media (min-width: 640px) {
+  .page-header-with-subtitle {
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .subtitle-separator {
+    color: hsl(var(--muted-foreground));
+    font-weight: 300;
+    user-select: none;
+  }
+  
+  .subtitle-inline {
+    max-width: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+}
+
+/* Mobile subtitle layout - stack vertically */
+@media (max-width: 639px) {
+  .subtitle-inline {
+    margin-top: 0.5rem;
+    max-width: 100%;
+    white-space: normal;
+    word-wrap: break-word;
+  }
+}
+
 /* Back button consistent styling - More compact */
 .back-to-dashboard {
   min-height: 32px; /* reduced from 36px */
