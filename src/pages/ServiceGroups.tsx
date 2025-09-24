@@ -76,7 +76,8 @@ export function ServiceGroups() {
     {
       key: 'id',
       label: 'ID',
-      minWidth: '60px',
+      minWidth: '50px',
+      className: 'id-col',
       render: (value: number) => (
         <span className="font-medium text-foreground cursor-pointer">{value}</span>
       )
@@ -84,6 +85,7 @@ export function ServiceGroups() {
     {
       key: 'name',
       label: 'Group Name',
+      className: 'name-col',
       render: (value: string) => (
         <span className="text-info hover:text-info/80 cursor-pointer font-medium transition-colors">
           {value}
@@ -93,6 +95,7 @@ export function ServiceGroups() {
     {
       key: 'description',
       label: 'Description',
+      className: 'description-col',
       render: (value: string) => (
         <span className="text-info hover:text-info/80 cursor-pointer transition-colors">
           {value}
@@ -102,6 +105,7 @@ export function ServiceGroups() {
     {
       key: 'assignee',
       label: 'Assignee',
+      className: 'assignee-col',
       render: (value: string) => (
         <span className="text-foreground cursor-pointer">{value}</span>
       )
@@ -109,7 +113,8 @@ export function ServiceGroups() {
     {
       key: 'members',
       label: 'Members',
-      minWidth: '80px',
+      minWidth: '70px',
+      className: 'members-col',
       render: (value: number) => (
         <div className="text-center">
           <Badge variant="secondary" className="cursor-pointer">
@@ -121,7 +126,8 @@ export function ServiceGroups() {
     {
       key: 'created',
       label: 'Created',
-      minWidth: '140px',
+      minWidth: '110px',
+      className: 'created-col',
       render: (value: string) => (
         <span className="text-muted-foreground text-sm cursor-pointer">{value}</span>
       )
@@ -131,13 +137,14 @@ export function ServiceGroups() {
       label: 'Modify',
       sortable: false,
       searchable: false,
-      minWidth: '80px',
+      minWidth: '70px',
+      className: 'modify-col',
       render: (_: any, record: ServiceGroup) => (
         <Button
           onClick={() => handleModify(record.id)}
           variant="ghost"
           size="sm"
-          className="text-success hover:text-success/80 hover:bg-success/10 font-medium cursor-pointer"
+          className="text-success hover:text-success/80 hover:bg-success/10 font-medium cursor-pointer table-action-btn"
         >
           Modify
         </Button>
@@ -145,16 +152,17 @@ export function ServiceGroups() {
     },
     {
       key: 'dendrogram',
-      label: 'See Dendrogram',
+      label: 'Dendrogram',
       sortable: false,
       searchable: false,
-      minWidth: '120px',
+      minWidth: '90px',
+      className: 'actions-col',
       render: (_: any, record: ServiceGroup) => (
         <Button
           onClick={() => handleCreateView(record.id)}
           variant="ghost"
           size="sm"
-          className="text-success hover:text-success/80 hover:bg-success/10 font-medium cursor-pointer"
+          className="text-success hover:text-success/80 hover:bg-success/10 font-medium cursor-pointer table-action-btn"
         >
           Create/View
         </Button>
@@ -163,59 +171,60 @@ export function ServiceGroups() {
   ]
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Top Back Button */}
-      <div className="flex items-start mb-4 -mt-2">
+      <div className="flex items-start mb-3 -mt-2">
         <BackToDashboardButton />
       </div>
 
-      {/* Hero Section with Metrics */}
-      <Card className="bg-gradient-to-r from-primary to-secondary text-white border-0 rounded-lg overflow-hidden">
-        <CardContent className="p-8">
-          <div className="text-center mb-8">
-            <h1 className="text-h1-responsive font-bold mb-2">Service Groups</h1>
-            <p className="text-lg opacity-90">Manage and view service group assignments</p>
+      {/* Compact Hero Section with Metrics */}
+      <Card className="bg-gradient-to-r from-primary to-secondary text-white border-0 rounded-lg overflow-hidden service-groups-hero">
+        <CardContent className="p-5 lg:p-6">
+          {/* Compact Header Layout */}
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-5">
+            <div className="text-center lg:text-left">
+              <h1 className="text-2xl lg:text-3xl font-bold mb-1">Service Groups</h1>
+              <p className="text-sm lg:text-base opacity-90">Manage and view service group assignments</p>
+            </div>
+            
+            {/* Action Button moved to hero for space efficiency */}
+            <Button 
+              onClick={handleCreateNewGroup}
+              className="bg-white/20 hover:bg-white/30 border border-white/30 text-white h-9 px-4 text-sm font-medium rounded-lg cursor-pointer shadow-md hover:shadow-lg transition-all duration-300 whitespace-nowrap"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Create New Group
+            </Button>
           </div>
           
-          {/* Metrics Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 cursor-pointer hover:bg-white/20 transition-all duration-300 group">
-              <div className="text-3xl font-bold mb-1 group-hover:scale-105 transition-transform">
+          {/* Compact Metrics Grid */}
+          <div className="grid grid-cols-3 gap-3 lg:gap-4">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg metric-card-compact cursor-pointer hover:bg-white/20 transition-all duration-300 group text-center">
+              <div className="text-xl lg:text-2xl font-bold mb-0.5 group-hover:scale-105 transition-transform">
                 {serviceGroups.length}
               </div>
-              <div className="text-sm opacity-80">TOTAL GROUPS</div>
+              <div className="text-xs lg:text-sm opacity-80 font-medium">TOTAL GROUPS</div>
             </div>
             
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 cursor-pointer hover:bg-white/20 transition-all duration-300 group">
-              <div className="text-3xl font-bold mb-1 group-hover:scale-105 transition-transform">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg metric-card-compact cursor-pointer hover:bg-white/20 transition-all duration-300 group text-center">
+              <div className="text-xl lg:text-2xl font-bold mb-0.5 group-hover:scale-105 transition-transform">
                 {serviceGroups.length}
               </div>
-              <div className="text-sm opacity-80">ASSIGNED GROUPS</div>
+              <div className="text-xs lg:text-sm opacity-80 font-medium">ASSIGNED GROUPS</div>
             </div>
             
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 cursor-pointer hover:bg-white/20 transition-all duration-300 group">
-              <div className="text-3xl font-bold mb-1 group-hover:scale-105 transition-transform">
-                1297
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg metric-card-compact cursor-pointer hover:bg-white/20 transition-all duration-300 group text-center">
+              <div className="text-xl lg:text-2xl font-bold mb-0.5 group-hover:scale-105 transition-transform">
+                1,297
               </div>
-              <div className="text-sm opacity-80">AVAILABLE SERVICES</div>
+              <div className="text-xs lg:text-sm opacity-80 font-medium">AVAILABLE SERVICES</div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Action Buttons */}
-      <div className="flex justify-center">
-        <Button 
-          onClick={handleCreateNewGroup}
-          className="btn-gradient-primary h-[42px] px-6 text-sm font-medium rounded-lg cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Create New Group
-        </Button>
-      </div>
-
       {/* Service Groups Table */}
-      <div className="space-y-6">
+      <div className="space-y-4">
         <DataTable
           data={serviceGroups}
           columns={columns}

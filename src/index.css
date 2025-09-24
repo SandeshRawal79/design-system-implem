@@ -328,7 +328,44 @@ button, .btn, [role="button"], .cursor-pointer {
   }
 }
 
-/* Enhanced Intelligence Catalog card hover effects - Optimized for 1920x1080 */
+/* Compact hero section styles for Service Groups */
+.service-groups-hero {
+  margin-bottom: 1.5rem; /* 24px - reduced spacing */
+}
+
+@media (min-width: 1440px) {
+  .service-groups-hero {
+    margin-bottom: 1.25rem; /* 20px - even more compact on larger screens */
+  }
+}
+
+/* Compact metric cards */
+.metric-card-compact {
+  padding: 0.75rem; /* 12px */
+  border-radius: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (min-width: 1024px) {
+  .metric-card-compact {
+    padding: 1rem; /* 16px on larger screens */
+  }
+}
+
+/* Ensure buttons in table are compact */
+.table-action-btn {
+  min-height: 28px !important;
+  padding: 0.125rem 0.5rem !important; /* Very compact padding */
+  font-size: 0.75rem !important; /* 12px */
+  line-height: 1.4;
+}
+
+@media (min-width: 768px) {
+  .table-action-btn {
+    min-height: 30px !important;
+    padding: 0.25rem 0.625rem !important;
+  }
+}
 .intelligence-card {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
@@ -376,26 +413,30 @@ button, .btn, [role="button"], .cursor-pointer {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: hsl(var(--muted) / 0.9);
+  background: hsl(var(--card)) !important; /* Solid background instead of transparent */
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
   font-size: 0.75rem; /* 12px */
   line-height: 1.25;
+  padding: 0.5rem 0.75rem !important; /* More compact padding */
+  font-weight: 600;
+  color: hsl(var(--foreground));
 }
 
 @media (min-width: 768px) {
   .sticky-header th {
-    font-size: 0.875rem; /* 14px */
+    font-size: 0.8125rem; /* 13px - smaller than before */
+    padding: 0.625rem 0.75rem !important; /* Slightly more padding on desktop */
   }
 }
 
-/* Desktop header optimization for 1920x1080 */
+/* Desktop header optimization for 1920x1080 - Service Groups specific */
 @media (min-width: 1440px) {
   .sticky-header th {
-    font-size: 0.8125rem; /* 13px - slightly smaller for better space usage */
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    font-size: 0.75rem; /* 12px - more compact for Service Groups */
+    padding: 0.5rem 0.75rem !important; /* Very compact for better space usage */
+    line-height: 1.3;
   }
 }
 
@@ -522,8 +563,14 @@ button, .btn, [role="button"], .cursor-pointer {
   }
   
   .responsive-table .modify-col {
-    width: 70px;
-    min-width: 70px;
+    width: 65px;
+    min-width: 65px;
+  }
+  
+  /* New actions column for dendrogram */
+  .responsive-table .actions-col {
+    width: 85px;
+    min-width: 85px;
   }
   
   /* ABCD Sets mobile layout - very compact */
@@ -586,33 +633,38 @@ button, .btn, [role="button"], .cursor-pointer {
     width: 15%;
   }
   
-  /* Desktop layout - for ServiceGroups table */
+  /* Desktop layout - for ServiceGroups table - More compact for 1920x1080 */
   .responsive-table .id-col {
-    width: 8%;
+    width: 6%; /* Reduced from 8% */
   }
   
   .responsive-table .name-col {
-    width: 20%;
+    width: 22%; /* Slightly increased from 20% */
   }
   
   .responsive-table .description-col {
-    width: 30%;
+    width: 32%; /* Slightly increased from 30% */
   }
   
   .responsive-table .assignee-col {
-    width: 12%;
+    width: 12%; /* Kept same */
   }
   
   .responsive-table .members-col {
-    width: 10%;
+    width: 8%; /* Reduced from 10% */
   }
   
   .responsive-table .created-col {
-    width: 12%;
+    width: 12%; /* Kept same */
   }
   
   .responsive-table .modify-col {
-    width: 8%;
+    width: 8%; /* Kept same */
+  }
+  
+  /* New column for dendrogram actions */
+  .responsive-table .actions-col {
+    width: 10%; /* Reduced from implied 12% */
   }
   
   /* Desktop layout - for ABCD Sets table (many columns - needs to be compact) */
