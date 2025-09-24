@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { PageLayout } from '@/components/PageLayout'
+import { BackToDashboardButton } from '@/components/BackToDashboardButton'
 import { DataTable } from '@/components/DataTable'
 import { Plus } from '@phosphor-icons/react'
 import { Badge } from '@/components/ui/badge'
@@ -164,6 +164,11 @@ export function ServiceGroups() {
 
   return (
     <div className="space-y-8">
+      {/* Top Back Button */}
+      <div className="flex items-start mb-4 -mt-2">
+        <BackToDashboardButton />
+      </div>
+
       {/* Hero Section with Metrics */}
       <Card className="bg-gradient-to-r from-primary to-secondary text-white border-0 rounded-lg overflow-hidden">
         <CardContent className="p-8">
@@ -210,17 +215,14 @@ export function ServiceGroups() {
       </div>
 
       {/* Service Groups Table */}
-      <PageLayout
-        title=""
-        showBackButton={false}
-      >
+      <div className="space-y-6">
         <DataTable
           data={serviceGroups}
           columns={columns}
           searchable
           searchPlaceholder="Search service groups..."
         />
-      </PageLayout>
+      </div>
     </div>
   )
 }

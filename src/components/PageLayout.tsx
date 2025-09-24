@@ -13,6 +13,7 @@ interface PageLayoutProps {
     variant?: 'default' | 'outline' | 'destructive' | 'secondary'
   }
   showBackButton?: boolean
+  showTopBackButton?: boolean
   backButtonLabel?: string
   backButtonPath?: string
   children: React.ReactNode
@@ -27,6 +28,7 @@ export function PageLayout({
   subtitle,
   badge,
   showBackButton = true,
+  showTopBackButton = true,
   backButtonLabel = "Back to Dashboard",
   backButtonPath = "/",
   children
@@ -35,6 +37,22 @@ export function PageLayout({
 
   return (
     <div className="space-y-8">
+      {/* Top Back Button */}
+      {showTopBackButton && (
+        <div className="flex items-start mb-4 -mt-2">
+          <Button 
+            variant="outline" 
+            size="sm"
+            className="btn-gradient-secondary back-to-dashboard flex items-center gap-2 cursor-pointer interactive-element"
+            onClick={() => navigate(backButtonPath)}
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span className="hidden sm:inline">{backButtonLabel}</span>
+            <span className="sm:hidden">Dashboard</span>
+          </Button>
+        </div>
+      )}
+
       {/* Page Header */}
       <header className="text-center space-y-4">
         <div className="space-y-2">
