@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Header } from './components/Header'
 import { Dashboard } from './pages/Dashboard'
 import { Phase1Services } from './pages/Phase1Services'
+import { ServiceGroups } from './pages/ServiceGroups'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/phase1-services" element={<Phase1Services />} />
+            <Route path="/service-groups" element={<ServiceGroups />} />
           </Routes>
         </main>
         

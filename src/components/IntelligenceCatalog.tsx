@@ -118,7 +118,8 @@ export function IntelligenceCatalog() {
       type: "Management" as const,
       description: "Organize and group related services together for streamlined processing, workflow management, and bulk operations",
       status: "Active" as const,
-      primaryAction: "Launch"
+      primaryAction: "Launch",
+      onPrimaryClick: () => navigate('/service-groups')
     },
     {
       title: "Set Intelligence",

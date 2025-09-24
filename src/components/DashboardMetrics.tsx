@@ -93,7 +93,9 @@ export function DashboardMetrics() {
       subtitle: "Currently active",
       additionalInfo: "1298 Total Services",
       icon: faTag,
-      iconColor: "#0174B2"
+      iconColor: "#0174B2",
+      onClick: () => navigate('/service-groups'),
+      isClickable: true
     },
     {
       title: "ABCD Sets",
