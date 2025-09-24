@@ -171,7 +171,7 @@ export function DataTable<T extends Record<string, any>>({
   }
 
   return (
-    <div className={`space-y-4 ${className}`}>
+    <div className={`space-y-4 w-full max-w-none ${className}`}>
       {/* Search Bar */}
       {searchable && (
         <div className="flex items-center gap-2 max-w-md">
@@ -188,10 +188,10 @@ export function DataTable<T extends Record<string, any>>({
         </div>
       )}
 
-      {/* Data Table */}
-      <Card className="overflow-hidden">
-        <div className="responsive-table-wrapper">
-          <table className="responsive-table sticky-header">
+      {/* Data Table - Full Width */}
+      <Card className="overflow-hidden w-full">
+        <div className="responsive-table-wrapper w-full">
+          <table className="responsive-table sticky-header w-full min-w-full">
             <thead className="bg-muted/30">
               <tr className="border-b border-border">
                 {columns.map((column, index) => (

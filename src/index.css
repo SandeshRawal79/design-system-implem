@@ -493,16 +493,20 @@ button, .btn, [role="button"], .cursor-pointer {
   background: hsl(var(--muted-foreground) / 0.5);
 }
 
-/* Responsive table without horizontal scroll */
+/* Responsive table without horizontal scroll - Full width utilization */
 .responsive-table-wrapper {
   overflow: visible;
-  max-height: calc(100vh - 300px); /* Prevent vertical overflow on large datasets */
+  max-height: calc(100vh - 280px); /* Slightly more height for better data visibility */
   overflow-y: auto;
+  width: 100%;
 }
 
 .responsive-table {
   width: 100%;
-  table-layout: fixed;
+  min-width: 100%;
+  table-layout: auto; /* Changed from fixed to auto for better content-based sizing */
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 /* Mobile responsive table layout */
@@ -650,89 +654,115 @@ button, .btn, [role="button"], .cursor-pointer {
 }
 
 @media (min-width: 769px) {
-  /* Desktop layout - distribute columns evenly for Phase1Services */
+  /* Desktop layout - Full width distribution with flexible sizing */
   .responsive-table .service-id-col {
-    width: 12%;
+    min-width: 80px;
+    width: 10%;
   }
   
   .responsive-table .service-name-col {
-    width: 58%;
+    min-width: 400px;
+    width: auto; /* Allow to expand as needed */
   }
   
   .responsive-table .records-col {
+    min-width: 100px;
     width: 15%;
   }
   
   .responsive-table .action-col {
+    min-width: 120px;
     width: 15%;
   }
   
-  /* Desktop layout - for ServiceGroups table - More compact for 1920x1080 */
+  /* Desktop layout - Full width for ServiceGroups table */
   .responsive-table .id-col {
-    width: 6%; /* Reduced from 8% */
+    min-width: 40px;
+    width: 5%;
   }
   
   .responsive-table .name-col {
-    width: 22%; /* Slightly increased from 20% */
+    min-width: 180px;
+    width: auto; /* Allow to expand */
   }
   
   .responsive-table .description-col {
-    width: 32%; /* Slightly increased from 30% */
+    min-width: 250px;
+    width: auto; /* Allow to expand */
   }
   
   .responsive-table .assignee-col {
-    width: 12%; /* Kept same */
+    min-width: 80px;
+    width: 12%;
   }
   
   .responsive-table .members-col {
-    width: 8%; /* Reduced from 10% */
+    min-width: 60px;
+    width: 8%;
   }
   
   .responsive-table .created-col {
-    width: 12%; /* Kept same */
+    min-width: 80px;
+    width: 10%;
   }
   
   .responsive-table .modify-col {
-    width: 8%; /* Kept same */
+    min-width: 60px;
+    width: 8%;
   }
   
   /* New column for dendrogram actions */
   .responsive-table .actions-col {
-    width: 10%; /* Reduced from implied 12% */
+    min-width: 100px;
+    width: 12%;
   }
   
-  /* Desktop layout - for ABCD Sets table (many columns - needs to be compact) */
+  /* Desktop layout - Full width for ABCD Sets table */
   .responsive-table .creator-col {
-    width: 8%;
+    min-width: 70px;
+    width: 10%;
   }
   
   .responsive-table .set-count-col {
+    min-width: 60px;
     width: 8%;
   }
   
   .responsive-table .abcd-tup-col {
+    min-width: 60px;
     width: 8%;
   }
   
   .responsive-table .provision-type-col {
-    width: 12%;
+    min-width: 100px;
+    width: 14%;
   }
   
   .responsive-table .options-col {
-    width: 15%;
+    min-width: 150px;
+    width: auto; /* Allow to expand */
   }
   
   .responsive-table .approvals-needed-col {
+    min-width: 90px;
     width: 12%;
   }
   
   .responsive-table .timestamp-col {
+    min-width: 80px;
     width: 10%;
   }
   
   .responsive-table .actions-col {
+    min-width: 90px;
     width: 10%;
   }
+}
+
+/* Ensure page components use full width */
+.page-layout-full-width {
+  width: 100%;
+  max-width: none;
 }
 
 /* Better spacing for dashboard metrics on 1920x1080 */
