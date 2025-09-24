@@ -155,7 +155,6 @@ export function AbcdPage() {
     <PageLayout
       title="ABCD Disposition"
       subtitle="Healthcare Analytics Platform for provision analysis and team collaboration"
-      showBackButton={true}
       backButtonLabel="Back to Dashboard"
       backButtonPath="/"
     >
