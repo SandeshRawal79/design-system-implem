@@ -12,7 +12,8 @@ function App() {
       <div className="min-h-screen bg-background flex flex-col">
         <Header />
         
-        <main className="flex-1 px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
+        {/* Main Content Area - Optimized for 1920x1080 with reduced padding for better density */}
+        <main className="flex-1 px-4 sm:px-6 lg:px-8 py-5 lg:py-6">
           <div className="max-w-7xl mx-auto">
             <Routes>
               <Route path="/" element={<Dashboard />} />
@@ -24,6 +25,7 @@ function App() {
           </div>
         </main>
         
+        {/* Compact Footer */}
         <footer className="h-6 border-t border-border bg-white px-4 sm:px-6 lg:px-8 flex items-center justify-center mt-auto">
           <p className="text-xs text-muted-foreground text-center">
             © 2024 Provision Intelligence Hub. Powered by SHC.AI

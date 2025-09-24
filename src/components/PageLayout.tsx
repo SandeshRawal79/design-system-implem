@@ -20,16 +20,15 @@ interface PageLayoutProps {
 }
 
 /**
- * Shared page layout component providing consistent structure, typography, and navigation
- * across all pages in the application. Features space-efficient design with back button
- * aligned with page title and no bottom navigation to maximize content area.
- * Implements the design system specifications.
+ * Shared page layout component optimized for 1920x1080 resolution with maximum space efficiency.
+ * Features compact header design with back button aligned inline with title to save vertical space.
+ * Consistent styling across all pages following the design system specifications.
  */
 export function PageLayout({
   title,
   subtitle,
   badge,
-  showBackButton = false, // Changed default to false since we're removing bottom button
+  showBackButton = false, // Deprecated - kept for compatibility
   showTopBackButton = true,
   backButtonLabel = "Back to Dashboard",
   backButtonPath = "/",
@@ -38,56 +37,59 @@ export function PageLayout({
   const navigate = useNavigate()
 
   return (
-    <div className="space-y-6">
-      {/* Compact Header with Inline Back Button */}
-      <header className="space-y-4">
-        {/* Back Button and Title Row */}
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+    <div className="space-y-5">
+      {/* Ultra-compact Header - Inline Layout for Space Efficiency */}
+      <header className="space-y-3">
+        {/* Single Row: Back Button + Title + Badge - Aligned for Maximum Space Savings */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+          {/* Back Button - Compact Design */}
           {showTopBackButton && (
             <Button 
               variant="outline" 
               size="sm"
-              className="btn-gradient-secondary back-to-dashboard flex items-center gap-2 cursor-pointer interactive-element self-start"
+              className="btn-gradient-secondary back-to-dashboard flex items-center gap-2 cursor-pointer interactive-element self-start sm:self-center shrink-0"
               onClick={() => navigate(backButtonPath)}
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span className="hidden sm:inline">{backButtonLabel}</span>
-              <span className="sm:hidden">Dashboard</span>
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline text-xs font-medium">{backButtonLabel}</span>
+              <span className="sm:hidden text-xs font-medium">Dashboard</span>
             </Button>
           )}
           
-          {/* Page Title and Badge */}
-          <div className="flex-1 text-center sm:text-left">
-            <h1 className="text-h3-responsive md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] font-bold text-foreground leading-tight">
-              {title}
-            </h1>
-            
-            {badge && (
-              <div className="flex items-center justify-center sm:justify-start gap-2 mt-2">
-                <Badge 
-                  variant={badge.variant || "outline"} 
-                  className="text-success border-success bg-success/10 font-medium px-3 py-1"
-                >
-                  {badge.count}
-                </Badge>
-                <span className="text-sm text-muted-foreground">{badge.label}</span>
-              </div>
-            )}
+          {/* Page Title and Badge - Inline Layout */}
+          <div className="flex-1 min-w-0">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+              <h1 className="text-h3-responsive font-bold text-foreground leading-tight truncate">
+                {title}
+              </h1>
+              
+              {badge && (
+                <div className="flex items-center gap-2 mt-1 sm:mt-0 shrink-0">
+                  <Badge 
+                    variant={badge.variant || "outline"} 
+                    className="text-success border-success bg-success/10 font-medium px-2.5 py-0.5 text-xs"
+                  >
+                    {badge.count}
+                  </Badge>
+                  <span className="text-xs text-muted-foreground">{badge.label}</span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Subtitle - separate row */}
+        {/* Subtitle - Only if provided, compact spacing */}
         {subtitle && (
-          <div className="text-center sm:text-left">
-            <p className="text-sm md:text-base text-muted-foreground max-w-3xl">
+          <div className="sm:pl-[calc(theme(spacing.4)+theme(spacing.2)+5.5rem)]">
+            <p className="text-sm text-muted-foreground max-w-4xl leading-relaxed">
               {subtitle}
             </p>
           </div>
         )}
       </header>
 
-      {/* Main Content */}
-      <main className="space-y-6">
+      {/* Main Content - Reduced spacing for better density */}
+      <main className="space-y-5">
         {children}
       </main>
     </div>

@@ -33,27 +33,27 @@ function MetricCard({
 }: MetricCardProps) {
   return (
     <Card 
-      className={`p-6 h-full flex flex-col justify-between hover:shadow-md transition-all ${
-        isClickable ? 'cursor-pointer hover:scale-105' : ''
+      className={`p-5 h-full flex flex-col justify-between hover:shadow-md transition-all cursor-pointer ${
+        isClickable ? 'hover:scale-[1.02] interactive-element' : ''
       }`}
       onClick={onClick}
     >
-      <div className="flex items-start justify-between mb-4">
+      <div className="flex items-start justify-between mb-3">
         <div>
-          <h3 className="text-4xl font-bold text-foreground mb-2">{value}</h3>
-          <p className="text-sm text-muted-foreground">{title}</p>
+          <h3 className="text-3xl xl:text-4xl font-bold text-foreground mb-1.5">{value}</h3>
+          <p className="text-xs text-muted-foreground">{title}</p>
         </div>
         <div 
-          className="w-12 h-12 rounded-lg flex items-center justify-center"
+          className="w-10 h-10 xl:w-11 xl:h-11 rounded-lg flex items-center justify-center shadow-sm"
           style={{ backgroundColor: iconColor }}
         >
-          <FontAwesomeIcon icon={icon} className="w-6 h-6 text-white" />
+          <FontAwesomeIcon icon={icon} className="w-5 h-5 text-white" />
         </div>
       </div>
       
       <div className="space-y-1">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold" style={{ color: '#1F8A7A' }}>
+          <span className="text-xs font-semibold" style={{ color: '#1F8A7A' }}>
             {additionalInfo.split(' ')[0]} {additionalInfo.split(' ')[1]}
           </span>
           <span className="text-xs text-muted-foreground">
@@ -62,7 +62,7 @@ function MetricCard({
         </div>
         {isActive && (
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full status-active" style={{ backgroundColor: '#43812C' }}></div>
+            <div className="w-1.5 h-1.5 rounded-full status-active" style={{ backgroundColor: '#43812C' }}></div>
             <span className="text-xs font-medium" style={{ color: '#43812C' }}>
               {subtitle}
             </span>
@@ -121,7 +121,7 @@ export function DashboardMetrics() {
   ]
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-6">
       {metrics.map((metric, index) => (
         <MetricCard key={index} {...metric} />
       ))}

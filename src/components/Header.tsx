@@ -51,132 +51,132 @@ export function Header() {
 
   return (
     <>
-      <header className="bg-white border-b border-border shadow-sm px-4 sm:px-6 lg:px-8 py-3 relative">
-        <div className="flex items-center justify-between max-w-7xl mx-auto">
-          {/* Logo and Title */}
+      <header className="bg-white border-b border-border shadow-sm px-4 sm:px-6 lg:px-8 py-2.5 relative min-h-[3.5rem]">
+        <div className="flex items-center justify-between max-w-7xl mx-auto h-full">
+          {/* Logo and Title - Optimized for 1920x1080 */}
           <div className="flex items-center gap-3 min-w-0 flex-1">
             <div className="flex items-center gap-3">
               <div 
-                className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center text-white font-bold text-sm cursor-pointer" 
+                className="w-9 h-9 rounded-lg flex items-center justify-center text-white font-bold text-sm cursor-pointer shadow-sm" 
                 style={{ background: 'linear-gradient(135deg, #474A9E 0%, #36A798 100%)' }}
               >
                 PIH
               </div>
               <div className="min-w-0">
-                <h1 className="text-base sm:text-lg lg:text-xl font-semibold text-foreground truncate">
+                <h1 className="text-lg lg:text-xl xl:text-2xl font-semibold text-foreground truncate leading-tight">
                   Provision Intelligence Hub
                 </h1>
-                <p className="text-xs text-muted-foreground hidden sm:block">
+                <p className="text-xs text-muted-foreground hidden sm:block leading-none">
                   Powered by SHC.AI
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Desktop Accessibility Controls */}
-          <div className="hidden md:flex items-center gap-2">
+          {/* Desktop Accessibility Controls - Compact Layout */}
+          <div className="hidden md:flex items-center gap-1.5">
             <Button
               variant="ghost"
               size="sm"
               onClick={decreaseFontSize}
-              className="icon-hover p-2 cursor-pointer"
+              className="icon-hover p-1.5 cursor-pointer h-8 w-8"
               aria-label="Decrease font size"
             >
-              <FontAwesomeIcon icon={faMinus} className="w-4 h-4 text-icon" />
+              <FontAwesomeIcon icon={faMinus} className="w-3.5 h-3.5 text-icon" />
             </Button>
             <Button
               variant="ghost"
               size="sm"
               onClick={increaseFontSize}
-              className="icon-hover p-2 cursor-pointer"
+              className="icon-hover p-1.5 cursor-pointer h-8 w-8"
               aria-label="Increase font size"
             >
-              <FontAwesomeIcon icon={faPlus} className="w-4 h-4 text-icon" />
+              <FontAwesomeIcon icon={faPlus} className="w-3.5 h-3.5 text-icon" />
             </Button>
             <Button
               variant="ghost"
               size="sm"
               onClick={toggleLanguage}
-              className="icon-hover p-2 cursor-pointer"
+              className="icon-hover p-1.5 cursor-pointer h-8 w-8"
               aria-label={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
             >
-              <FontAwesomeIcon icon={faLanguage} className="w-4 h-4 text-icon" />
+              <FontAwesomeIcon icon={faLanguage} className="w-3.5 h-3.5 text-icon" />
             </Button>
             <Button
               variant="ghost"
               size="sm"
               onClick={toggleTheme}
-              className="icon-hover p-2 cursor-pointer"
+              className="icon-hover p-1.5 cursor-pointer h-8 w-8"
               aria-label="Toggle theme"
             >
               <FontAwesomeIcon 
                 icon={isDarkMode === 'true' ? faSun : faMoon} 
-                className="w-4 h-4 text-icon" 
+                className="w-3.5 h-3.5 text-icon" 
               />
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - Compact */}
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden icon-hover p-2 cursor-pointer"
+            className="md:hidden icon-hover p-1.5 cursor-pointer h-8 w-8"
             aria-label="Toggle menu"
           >
             <FontAwesomeIcon 
               icon={isMenuOpen ? faTimes : faBars} 
-              className="w-4 h-4 text-icon" 
+              className="w-3.5 h-3.5 text-icon" 
             />
           </Button>
         </div>
 
-        {/* Mobile Menu Dropdown */}
+        {/* Mobile Menu Dropdown - Compact */}
         {isMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-white border-b border-border shadow-lg z-50 md:hidden">
-            <div className="px-4 py-4 space-y-3">
-              <div className="text-sm font-medium text-foreground mb-3">
+            <div className="px-4 py-3 space-y-2">
+              <div className="text-xs font-medium text-foreground mb-2">
                 Accessibility Options
               </div>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2">
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={decreaseFontSize}
-                  className="flex items-center gap-2 cursor-pointer"
+                  className="flex items-center gap-2 cursor-pointer text-xs h-8"
                 >
-                  <FontAwesomeIcon icon={faMinus} className="w-4 h-4 text-icon" />
-                  <span className="text-sm">Decrease Font</span>
+                  <FontAwesomeIcon icon={faMinus} className="w-3 h-3 text-icon" />
+                  <span>Decrease Font</span>
                 </Button>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={increaseFontSize}
-                  className="flex items-center gap-2 cursor-pointer"
+                  className="flex items-center gap-2 cursor-pointer text-xs h-8"
                 >
-                  <FontAwesomeIcon icon={faPlus} className="w-4 h-4 text-icon" />
-                  <span className="text-sm">Increase Font</span>
+                  <FontAwesomeIcon icon={faPlus} className="w-3 h-3 text-icon" />
+                  <span>Increase Font</span>
                 </Button>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={toggleLanguage}
-                  className="flex items-center gap-2 cursor-pointer"
+                  className="flex items-center gap-2 cursor-pointer text-xs h-8"
                 >
-                  <FontAwesomeIcon icon={faLanguage} className="w-4 h-4 text-icon" />
-                  <span className="text-sm">{language === 'en' ? 'Español' : 'English'}</span>
+                  <FontAwesomeIcon icon={faLanguage} className="w-3 h-3 text-icon" />
+                  <span>{language === 'en' ? 'Español' : 'English'}</span>
                 </Button>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={toggleTheme}
-                  className="flex items-center gap-2 cursor-pointer"
+                  className="flex items-center gap-2 cursor-pointer text-xs h-8"
                 >
                   <FontAwesomeIcon 
                     icon={isDarkMode === 'true' ? faSun : faMoon} 
-                    className="w-4 h-4 text-icon" 
+                    className="w-3 h-3 text-icon" 
                   />
-                  <span className="text-sm">{isDarkMode === 'true' ? 'Light Mode' : 'Dark Mode'}</span>
+                  <span>{isDarkMode === 'true' ? 'Light Mode' : 'Dark Mode'}</span>
                 </Button>
               </div>
             </div>
@@ -184,12 +184,12 @@ export function Header() {
         )}
       </header>
 
-      {/* Floating ChatBot */}
+      {/* Floating ChatBot - Optimized positioning for 1920x1080 */}
       <Button
-        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-12 h-12 sm:w-14 sm:h-14 rounded-full shadow-lg hover:shadow-xl z-50 btn-gradient-primary cursor-pointer transition-all duration-300"
+        className="fixed bottom-5 right-5 w-12 h-12 sm:w-13 sm:h-13 rounded-full shadow-lg hover:shadow-xl z-50 btn-gradient-primary cursor-pointer transition-all duration-300"
         aria-label="Open chat support"
       >
-        <FontAwesomeIcon icon={faComments} className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+        <FontAwesomeIcon icon={faComments} className="w-5 h-5 text-white" />
       </Button>
     </>
   )
