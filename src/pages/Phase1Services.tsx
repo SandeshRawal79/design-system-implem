@@ -1,10 +1,6 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
-import { Card } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { PageLayout } from '@/components/PageLayout'
+import { DataTable } from '@/components/DataTable'
 
 interface ServiceRecord {
   id: string
@@ -12,15 +8,8 @@ interface ServiceRecord {
   totalRecords: number
 }
 
-type SortField = 'id' | 'name' | 'totalRecords'
-type SortDirection = 'asc' | 'desc'
-
 export function Phase1Services() {
-  const navigate = useNavigate()
-  const [sortField, setSortField] = useState<SortField>('id')
-  const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
-
-  // Mock data based on the screenshot - 51 services total
+  // Mock data based on the screenshot - 50 services total
   const services: ServiceRecord[] = [
     { id: '3501115', name: 'PCP Office/Outpatient Visit and Consultation -> Professional Services', totalRecords: 50 },
     { id: '3501117', name: 'Specialist Office/Outpatient Visit and Consultation -> Professional Services', totalRecords: 132 },
@@ -75,150 +64,67 @@ export function Phase1Services() {
     { id: '3501219', name: 'Sports Medicine -> Orthopedic Services -> Professional Services', totalRecords: 89 }
   ]
 
-  const handleSort = (field: SortField) => {
-    if (sortField === field) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
-    } else {
-      setSortField(field)
-      setSortDirection('asc')
+  const columns = [
+    {
+      key: 'id',
+      label: 'Service ID',
+      minWidth: '100px',
+      render: (value: string) => (
+        <span className="font-mono text-xs md:text-sm text-foreground font-medium cursor-pointer">
+          {value}
+        </span>
+      )
+    },
+    {
+      key: 'name',
+      label: 'Service Name',
+      render: (value: string) => (
+        <span className="text-xs md:text-sm text-foreground leading-relaxed cursor-pointer">
+          {value}
+        </span>
+      )
+    },
+    {
+      key: 'totalRecords',
+      label: 'Total Records',
+      minWidth: '120px',
+      render: (value: number) => (
+        <span className="text-xs md:text-sm font-medium text-foreground cursor-pointer">
+          {value}
+        </span>
+      )
+    },
+    {
+      key: 'actions',
+      label: 'See Dendrogram',
+      sortable: false,
+      searchable: false,
+      minWidth: '140px',
+      render: () => (
+        <Button 
+          size="sm" 
+          className="btn-gradient-primary text-xs h-6 md:h-7 px-2 md:px-3 whitespace-nowrap cursor-pointer"
+        >
+          Create/View
+        </Button>
+      )
     }
-  }
-
-  const sortedServices = [...services].sort((a, b) => {
-    let aValue: string | number = a[sortField]
-    let bValue: string | number = b[sortField]
-    
-    if (sortDirection === 'desc') {
-      [aValue, bValue] = [bValue, aValue]
-    }
-    
-    if (typeof aValue === 'string' && typeof bValue === 'string') {
-      return aValue.localeCompare(bValue)
-    }
-    
-    return Number(aValue) - Number(bValue)
-  })
-
-  const getSortIcon = (field: SortField) => {
-    if (sortField !== field) {
-      return faSort
-    }
-    return sortDirection === 'asc' ? faSortUp : faSortDown
-  }
-
-  const totalServicesFound = services.length
+  ]
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="text-center space-y-4">
-        <h1 className="text-h3-responsive md:text-[2rem] font-bold text-foreground">
-          ABCD Dashboard (Phase 1 Services)
-        </h1>
-        
-        <div className="flex items-center justify-center gap-2">
-          <Badge variant="outline" className="text-success border-success bg-success/10 font-medium">
-            {totalServicesFound}
-          </Badge>
-          <span className="text-muted-foreground">services found</span>
-        </div>
-      </div>
-
-      {/* Services Table */}
-      <Card className="overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[640px]">
-            <thead className="bg-muted/30">
-              <tr className="border-b border-border">
-                <th className="text-left p-3 md:p-4 min-w-[100px]">
-                  <button 
-                    onClick={() => handleSort('id')}
-                    className="flex items-center gap-2 font-semibold text-sm md:text-base text-foreground hover:text-primary transition-colors"
-                  >
-                    Service ID
-                    <FontAwesomeIcon 
-                      icon={getSortIcon('id')} 
-                      className="w-3 h-3 text-muted-foreground"
-                    />
-                  </button>
-                </th>
-                <th className="text-left p-3 md:p-4">
-                  <button 
-                    onClick={() => handleSort('name')}
-                    className="flex items-center gap-2 font-semibold text-sm md:text-base text-foreground hover:text-primary transition-colors"
-                  >
-                    Service Name
-                    <FontAwesomeIcon 
-                      icon={getSortIcon('name')} 
-                      className="w-3 h-3 text-muted-foreground"
-                    />
-                  </button>
-                </th>
-                <th className="text-left p-3 md:p-4 min-w-[120px]">
-                  <button 
-                    onClick={() => handleSort('totalRecords')}
-                    className="flex items-center gap-2 font-semibold text-sm md:text-base text-foreground hover:text-primary transition-colors"
-                  >
-                    Total Records
-                    <FontAwesomeIcon 
-                      icon={getSortIcon('totalRecords')} 
-                      className="w-3 h-3 text-muted-foreground"
-                    />
-                  </button>
-                </th>
-                <th className="text-left p-3 md:p-4 min-w-[140px]">
-                  <span className="font-semibold text-sm md:text-base text-foreground">See Dendrogram</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedServices.map((service, index) => (
-                <tr 
-                  key={service.id} 
-                  className={`border-b border-border hover:bg-muted/20 transition-colors ${
-                    index % 2 === 0 ? 'bg-background' : 'bg-muted/10'
-                  }`}
-                >
-                  <td className="p-3 md:p-4">
-                    <span className="font-mono text-xs md:text-sm text-foreground font-medium">
-                      {service.id}
-                    </span>
-                  </td>
-                  <td className="p-3 md:p-4">
-                    <span className="text-xs md:text-sm text-foreground leading-relaxed">
-                      {service.name}
-                    </span>
-                  </td>
-                  <td className="p-3 md:p-4">
-                    <span className="text-xs md:text-sm font-medium text-foreground">
-                      {service.totalRecords}
-                    </span>
-                  </td>
-                  <td className="p-3 md:p-4">
-                    <Button 
-                      size="sm" 
-                      className="btn-gradient-primary text-xs h-6 md:h-7 px-2 md:px-3 whitespace-nowrap"
-                    >
-                      Create/View
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Card>
-
-      {/* Back Button */}
-      <div className="flex justify-center pt-4">
-        <Button 
-          variant="outline" 
-          className="btn-gradient-secondary"
-          onClick={() => navigate('/')}
-        >
-          Back to Dashboard
-        </Button>
-      </div>
-    </div>
+    <PageLayout
+      title="ABCD Dashboard (Phase 1 Services)"
+      badge={{
+        count: services.length,
+        label: "services found"
+      }}
+    >
+      <DataTable
+        data={services}
+        columns={columns}
+        searchable
+        searchPlaceholder="Search services..."
+      />
+    </PageLayout>
   )
 }

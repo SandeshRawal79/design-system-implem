@@ -1,0 +1,186 @@
+import React, { useState, useMemo } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
+import { Card } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { MagnifyingGlass } from '@phosphor-icons/react'
+
+interface Column<T> {
+  key: keyof T | string
+  label: string
+  sortable?: boolean
+  searchable?: boolean
+  render?: (value: any, record: T, index: number) => React.ReactNode
+  className?: string
+  minWidth?: string
+}
+
+interface DataTableProps<T> {
+  data: T[]
+  columns: Column<T>[]
+  searchable?: boolean
+  searchPlaceholder?: string
+  emptyMessage?: string
+  className?: string
+}
+
+type SortDirection = 'asc' | 'desc' | null
+
+/**
+ * Reusable data table component with sorting, searching, and consistent styling
+ * following the design system specifications.
+ */
+export function DataTable<T extends Record<string, any>>({
+  data,
+  columns,
+  searchable = false,
+  searchPlaceholder = "Search...",
+  emptyMessage = "No data found",
+  className = ""
+}: DataTableProps<T>) {
+  const [sortField, setSortField] = useState<string | null>(null)
+  const [sortDirection, setSortDirection] = useState<SortDirection>(null)
+  const [searchTerm, setSearchTerm] = useState('')
+
+  // Filter data based on search term
+  const filteredData = useMemo(() => {
+    if (!searchable || !searchTerm) return data
+
+    return data.filter(record => {
+      return columns.some(column => {
+        if (column.searchable === false) return false
+        
+        const value = record[column.key as keyof T]
+        return String(value).toLowerCase().includes(searchTerm.toLowerCase())
+      })
+    })
+  }, [data, searchTerm, searchable, columns])
+
+  // Sort filtered data
+  const sortedData = useMemo(() => {
+    if (!sortField || !sortDirection) return filteredData
+
+    return [...filteredData].sort((a, b) => {
+      const aValue = a[sortField]
+      const bValue = b[sortField]
+      
+      let result = 0
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        result = aValue.localeCompare(bValue)
+      } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+        result = aValue - bValue
+      } else {
+        result = String(aValue).localeCompare(String(bValue))
+      }
+      
+      return sortDirection === 'desc' ? -result : result
+    })
+  }, [filteredData, sortField, sortDirection])
+
+  const handleSort = (field: string) => {
+    if (sortField === field) {
+      // Cycle through: asc -> desc -> null
+      setSortDirection(current => {
+        if (current === 'asc') return 'desc'
+        if (current === 'desc') return null
+        return 'asc'
+      })
+      if (sortDirection === 'desc') {
+        setSortField(null)
+      }
+    } else {
+      setSortField(field)
+      setSortDirection('asc')
+    }
+  }
+
+  const getSortIcon = (field: string) => {
+    if (sortField !== field) return faSort
+    if (sortDirection === 'asc') return faSortUp
+    if (sortDirection === 'desc') return faSortDown
+    return faSort
+  }
+
+  return (
+    <div className={`space-y-4 ${className}`}>
+      {/* Search Bar */}
+      {searchable && (
+        <div className="flex items-center gap-2 max-w-md">
+          <div className="relative flex-1">
+            <MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder={searchPlaceholder}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-9"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Data Table */}
+      <Card className="overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[640px]">
+            <thead className="bg-muted/30">
+              <tr className="border-b border-border">
+                {columns.map((column, index) => (
+                  <th 
+                    key={index}
+                    className={`text-left p-3 md:p-4 ${column.minWidth ? `min-w-[${column.minWidth}]` : ''}`}
+                  >
+                    {column.sortable !== false ? (
+                      <button 
+                        onClick={() => handleSort(String(column.key))}
+                        className="flex items-center gap-2 font-semibold text-sm md:text-base text-foreground hover:text-primary transition-colors cursor-pointer"
+                      >
+                        {column.label}
+                        <FontAwesomeIcon 
+                          icon={getSortIcon(String(column.key))} 
+                          className="w-3 h-3 text-muted-foreground"
+                        />
+                      </button>
+                    ) : (
+                      <span className="font-semibold text-sm md:text-base text-foreground">
+                        {column.label}
+                      </span>
+                    )}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {sortedData.length === 0 ? (
+                <tr>
+                  <td colSpan={columns.length} className="text-center p-8 text-muted-foreground">
+                    {emptyMessage}
+                  </td>
+                </tr>
+              ) : (
+                sortedData.map((record, index) => (
+                  <tr 
+                    key={index}
+                    className={`border-b border-border hover:bg-muted/20 transition-colors ${
+                      index % 2 === 0 ? 'bg-background' : 'bg-muted/10'
+                    }`}
+                  >
+                    {columns.map((column, colIndex) => (
+                      <td key={colIndex} className={`p-3 md:p-4 ${column.className || ''}`}>
+                        {column.render 
+                          ? column.render(record[column.key as keyof T], record, index)
+                          : String(record[column.key as keyof T] || '')
+                        }
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+    </div>
+  )
+}

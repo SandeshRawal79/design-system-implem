@@ -1,12 +1,8 @@
 import { useState } from 'react'
-import { ArrowLeft, MagnifyingGlass, Funnel, Eye, Download, ArrowClockwise, CaretDown } from '@phosphor-icons/react'
-import { useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { PageLayout } from '@/components/PageLayout'
+import { DataTable } from '@/components/DataTable'
 
 interface AbcdSet {
   id: number
@@ -79,21 +75,21 @@ const mockAbcdSets: AbcdSet[] = [
     provisionType: "Coinsurance - Insurer",
     options: "Yes 100 Percent",
     approvalsNeeded: ["SH", "HPO", "PM&D"],
-    timestamp: "2025-08-22 04:22:25"
+    timestamp: "2025-08-22 04:22:26"
   },
   {
     id: 5,
     creator: "Dheeraj",
     name: "Z No Change CD 5",
-    setCount: 104,
-    description: "Type=Copay, options=No",
-    abcdTup: 245,
+    setCount: 288,
+    description: "Type=Copayment, options=No",
+    abcdTup: 892,
     serviceId: 0,
     serviceName: "Product Wide Provision",
-    provisionType: "Copay",
+    provisionType: "Copayment",
     options: "No",
     approvalsNeeded: ["SH", "HPO", "PM&D"],
-    timestamp: "2025-08-22 04:22:27"
+    timestamp: "2025-08-22 04:22:28"
   },
   {
     id: 6,
@@ -126,255 +122,182 @@ const mockAbcdSets: AbcdSet[] = [
 ]
 
 export function AbcdSets() {
-  const navigate = useNavigate()
-  const [searchTerm, setSearchTerm] = useState('')
-  const [creatorFilter, setCreatorFilter] = useState('')
-  const [nameFilter, setNameFilter] = useState('')
-  const [descriptionFilter, setDescriptionFilter] = useState('')
-  const [filteredSets, setFilteredSets] = useState(mockAbcdSets)
+  const [abcdSets] = useState(mockAbcdSets)
 
-  const handleSearch = () => {
-    const filtered = mockAbcdSets.filter(set => {
-      const matchesSearch = searchTerm === '' || 
-        set.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        set.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        set.creator.toLowerCase().includes(searchTerm.toLowerCase())
-      
-      const matchesCreator = creatorFilter === '' || set.creator.toLowerCase().includes(creatorFilter.toLowerCase())
-      const matchesName = nameFilter === '' || set.name.toLowerCase().includes(nameFilter.toLowerCase())
-      const matchesDescription = descriptionFilter === '' || set.description.toLowerCase().includes(descriptionFilter.toLowerCase())
-      
-      return matchesSearch && matchesCreator && matchesName && matchesDescription
-    })
-    setFilteredSets(filtered)
+  const handleView = (setId: number) => {
+    console.log('View ABCD set:', setId)
   }
 
-  const handleFilterChange = (field: string, value: string) => {
-    switch(field) {
-      case 'creator':
-        setCreatorFilter(value)
-        break
-      case 'name':
-        setNameFilter(value)
-        break
-      case 'description':
-        setDescriptionFilter(value)
-        break
+  const handleDownload = (setId: number) => {
+    console.log('Download ABCD set:', setId)
+  }
+
+  const handleRefresh = (setId: number) => {
+    console.log('Refresh ABCD set:', setId)
+  }
+
+  const getProvisionTypeBadgeColor = (type: string) => {
+    switch(type) {
+      case 'Coverage': return 'bg-blue-100 text-blue-800 border-blue-300'
+      case 'Deductible': return 'bg-green-100 text-green-800 border-green-300'
+      case 'Coinsurance - Insurer': return 'bg-purple-100 text-purple-800 border-purple-300'
+      case 'Copayment': return 'bg-orange-100 text-orange-800 border-orange-300'
+      default: return 'bg-gray-100 text-gray-800 border-gray-300'
     }
-    
-    // Auto-search when filters change
-    setTimeout(() => handleSearch(), 100)
   }
 
-  const getProvisionTypeBadge = (type: string) => {
-    const colors = {
-      'Coverage': 'bg-blue-100 text-blue-800 border-blue-200',
-      'Deductible': 'bg-green-100 text-green-800 border-green-200', 
-      'Coinsurance - Insurer': 'bg-purple-100 text-purple-800 border-purple-200',
-      'Copay': 'bg-orange-100 text-orange-800 border-orange-200'
+  const columns = [
+    {
+      key: 'id',
+      label: 'ID',
+      minWidth: '60px',
+      render: (value: number) => (
+        <span className="font-medium text-foreground cursor-pointer">{value}</span>
+      )
+    },
+    {
+      key: 'creator',
+      label: 'Creator',
+      render: (value: string) => (
+        <span className="text-info cursor-pointer font-medium">{value}</span>
+      )
+    },
+    {
+      key: 'name',
+      label: 'ABCD Set Name',
+      render: (value: string) => (
+        <span className="text-info hover:text-info/80 cursor-pointer font-medium transition-colors">
+          {value}
+        </span>
+      )
+    },
+    {
+      key: 'setCount',
+      label: 'Set Count',
+      minWidth: '90px',
+      render: (value: number) => (
+        <Badge variant="secondary" className="cursor-pointer">
+          {value.toLocaleString()}
+        </Badge>
+      )
+    },
+    {
+      key: 'description',
+      label: 'Description',
+      render: (value: string) => (
+        <span className="text-sm text-muted-foreground cursor-pointer">{value}</span>
+      )
+    },
+    {
+      key: 'abcdTup',
+      label: 'ABCD Tup',
+      minWidth: '90px',
+      render: (value: number) => (
+        <Badge variant="outline" className="cursor-pointer">
+          {value.toLocaleString()}
+        </Badge>
+      )
+    },
+    {
+      key: 'serviceName',
+      label: 'Service Name',
+      render: (value: string) => (
+        <span className="text-foreground cursor-pointer">{value}</span>
+      )
+    },
+    {
+      key: 'provisionType',
+      label: 'Provision Type',
+      render: (value: string, record: AbcdSet) => (
+        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium cursor-pointer ${getProvisionTypeBadgeColor(value)}`}>
+          {value}
+        </span>
+      )
+    },
+    {
+      key: 'options',
+      label: 'Options',
+      render: (value: string) => (
+        <span className="text-sm text-foreground cursor-pointer">{value}</span>
+      )
+    },
+    {
+      key: 'approvalsNeeded',
+      label: 'Approvals Needed',
+      searchable: false,
+      render: (value: string[]) => (
+        <div className="flex flex-wrap gap-1">
+          {value.map((approval, index) => (
+            <Badge key={index} variant="destructive" className="text-xs cursor-pointer">
+              {approval}
+            </Badge>
+          ))}
+        </div>
+      )
+    },
+    {
+      key: 'timestamp',
+      label: 'Timestamp',
+      minWidth: '140px',
+      render: (value: string) => (
+        <span className="text-xs text-muted-foreground cursor-pointer">{value}</span>
+      )
+    },
+    {
+      key: 'actions',
+      label: 'Actions',
+      sortable: false,
+      searchable: false,
+      minWidth: '120px',
+      render: (_: any, record: AbcdSet) => (
+        <div className="flex gap-1">
+          <Button
+            onClick={() => handleView(record.id)}
+            variant="ghost"
+            size="sm"
+            className="text-info hover:text-info/80 hover:bg-info/10 px-2 cursor-pointer"
+            title="View"
+          >
+            View
+          </Button>
+          <Button
+            onClick={() => handleDownload(record.id)}
+            variant="ghost"
+            size="sm"
+            className="text-success hover:text-success/80 hover:bg-success/10 px-2 cursor-pointer"
+            title="Download"
+          >
+            ↓
+          </Button>
+          <Button
+            onClick={() => handleRefresh(record.id)}
+            variant="ghost"
+            size="sm"
+            className="text-warning hover:text-warning/80 hover:bg-warning/10 px-2 cursor-pointer"
+            title="Refresh"
+          >
+            ↻
+          </Button>
+        </div>
+      )
     }
-    return colors[type as keyof typeof colors] || 'bg-gray-100 text-gray-800 border-gray-200'
-  }
+  ]
 
   return (
-    <div className="space-y-8">
-      {/* Header Section */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={() => navigate(-1)}
-            className="cursor-pointer hover:bg-muted"
-          >
-            <ArrowLeft size={16} className="mr-2" />
-            Back
-          </Button>
-          <div>
-            <h1 className="text-h3-responsive font-semibold text-foreground">
-              ABCD Sets - All Sets View
-            </h1>
-            <p className="text-body text-muted-foreground mt-1">
-              Showing: {filteredSets.length} of {mockAbcdSets.length} sets
-            </p>
-          </div>
-        </div>
-        
-        <div className="flex items-center gap-3">
-          <Button 
-            variant="outline" 
-            size="sm"
-            className="cursor-pointer"
-            onClick={() => window.location.reload()}
-          >
-            <ArrowClockwise size={16} className="mr-2" />
-            Refresh
-          </Button>
-          <Button 
-            variant="outline" 
-            size="sm"
-            className="cursor-pointer"
-          >
-            <Download size={16} className="mr-2" />
-            Export
-          </Button>
-        </div>
-      </div>
-
-      {/* Search and Filter Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-h5 font-semibold">
-            Filter on set features & view "first ABCD" in set for reference
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {/* Global Search */}
-          <div className="flex items-center gap-4">
-            <div className="flex-1">
-              <div className="relative">
-                <MagnifyingGlass size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  placeholder="Search across all fields..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 cursor-pointer"
-                />
-              </div>
-            </div>
-            <Button 
-              onClick={handleSearch}
-              className="btn-gradient-primary cursor-pointer"
-            >
-              <MagnifyingGlass size={16} className="mr-2" />
-              Search
-            </Button>
-          </div>
-
-          {/* Column Filters */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="space-y-2">
-              <label className="text-caption font-medium text-foreground">Creator Filter</label>
-              <Input
-                placeholder="Filter by creator..."
-                value={creatorFilter}
-                onChange={(e) => handleFilterChange('creator', e.target.value)}
-                className="cursor-pointer"
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-caption font-medium text-foreground">Name Filter</label>
-              <Input
-                placeholder="Filter by name..."
-                value={nameFilter}
-                onChange={(e) => handleFilterChange('name', e.target.value)}
-                className="cursor-pointer"
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-caption font-medium text-foreground">Description Filter</label>
-              <Input
-                placeholder="Filter by description..."
-                value={descriptionFilter}
-                onChange={(e) => handleFilterChange('description', e.target.value)}
-                className="cursor-pointer"
-              />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Data Table */}
-      <Card>
-        <CardContent className="p-0">
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-primary hover:bg-primary">
-                  <TableHead className="text-primary-foreground font-semibold text-center w-12">#</TableHead>
-                  <TableHead className="text-primary-foreground font-semibold min-w-24">Creator</TableHead>
-                  <TableHead className="text-primary-foreground font-semibold min-w-32">Name</TableHead>
-                  <TableHead className="text-primary-foreground font-semibold text-center w-20">Set Count</TableHead>
-                  <TableHead className="text-primary-foreground font-semibold min-w-48">Description</TableHead>
-                  <TableHead className="text-primary-foreground font-semibold text-center w-20">ABCD Tup</TableHead>
-                  <TableHead className="text-primary-foreground font-semibold text-center w-20">Service ID</TableHead>
-                  <TableHead className="text-primary-foreground font-semibold min-w-32">Service Name</TableHead>
-                  <TableHead className="text-primary-foreground font-semibold min-w-32">Provision Type</TableHead>
-                  <TableHead className="text-primary-foreground font-semibold min-w-40">Options</TableHead>
-                  <TableHead className="text-primary-foreground font-semibold min-w-24">Approvals Needed</TableHead>
-                  <TableHead className="text-primary-foreground font-semibold min-w-32">Timestamp</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredSets.map((set, index) => (
-                  <TableRow 
-                    key={set.id} 
-                    className="hover:bg-muted/50 cursor-pointer transition-colors"
-                    onClick={() => {
-                      // Handle row click - could navigate to set details
-                      console.log('Selected set:', set.id)
-                    }}
-                  >
-                    <TableCell className="text-center font-medium">{index + 1}</TableCell>
-                    <TableCell className="font-medium">{set.creator}</TableCell>
-                    <TableCell>
-                      <span className="text-info font-medium cursor-pointer hover:underline">
-                        {set.name}
-                      </span>
-                    </TableCell>
-                    <TableCell className="text-center font-semibold">{set.setCount}</TableCell>
-                    <TableCell>
-                      <span className="text-info cursor-pointer hover:underline">
-                        {set.description}
-                      </span>
-                    </TableCell>
-                    <TableCell className="text-center font-semibold">{set.abcdTup}</TableCell>
-                    <TableCell className="text-center">{set.serviceId}</TableCell>
-                    <TableCell>{set.serviceName}</TableCell>
-                    <TableCell>
-                      <Badge variant="secondary" className={`cursor-pointer ${getProvisionTypeBadge(set.provisionType)}`}>
-                        {set.provisionType}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>{set.options}</TableCell>
-                    <TableCell>
-                      <div className="space-y-1">
-                        {set.approvalsNeeded.map((approval, idx) => (
-                          <Badge 
-                            key={idx} 
-                            variant="destructive" 
-                            className="text-xs mr-1 cursor-pointer"
-                          >
-                            {approval}
-                          </Badge>
-                        ))}
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-caption text-muted-foreground">
-                      {set.timestamp}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Summary Footer */}
-      <Card>
-        <CardContent className="py-4">
-          <div className="flex items-center justify-between text-caption text-muted-foreground">
-            <span>Total ABCD Sets: {filteredSets.length}</span>
-            <span>
-              Total Set Count: {filteredSets.reduce((sum, set) => sum + set.setCount, 0).toLocaleString()}
-            </span>
-            <span>
-              Total ABCD Tuples: {filteredSets.reduce((sum, set) => sum + set.abcdTup, 0).toLocaleString()}
-            </span>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+    <PageLayout
+      title="ABCD Sets"
+      subtitle="Manage and view ABCD set configurations and provisions"
+      badge={{
+        count: abcdSets.length,
+        label: "ABCD sets found"
+      }}
+    >
+      <DataTable
+        data={abcdSets}
+        columns={columns}
+        searchable
+        searchPlaceholder="Search ABCD sets..."
+      />
+    </PageLayout>
   )
 }

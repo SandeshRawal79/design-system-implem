@@ -9,21 +9,23 @@ import { AbcdPage } from './pages/AbcdPage'
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background flex flex-col">
         <Header />
         
-        <main className="px-8 py-8 max-w-7xl mx-auto">
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/phase1-services" element={<Phase1Services />} />
-            <Route path="/service-groups" element={<ServiceGroups />} />
-            <Route path="/abcd-sets" element={<AbcdSets />} />
-            <Route path="/abcd" element={<AbcdPage />} />
-          </Routes>
+        <main className="flex-1 px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
+          <div className="max-w-7xl mx-auto">
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/phase1-services" element={<Phase1Services />} />
+              <Route path="/service-groups" element={<ServiceGroups />} />
+              <Route path="/abcd-sets" element={<AbcdSets />} />
+              <Route path="/abcd" element={<AbcdPage />} />
+            </Routes>
+          </div>
         </main>
         
-        <footer className="h-6 border-t border-border bg-white px-8 flex items-center justify-center">
-          <p className="text-xs text-muted-foreground">
+        <footer className="h-6 border-t border-border bg-white px-4 sm:px-6 lg:px-8 flex items-center justify-center mt-auto">
+          <p className="text-xs text-muted-foreground text-center">
             © 2024 Provision Intelligence Hub. Powered by SHC.AI
           </p>
         </footer>
