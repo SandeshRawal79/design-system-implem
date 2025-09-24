@@ -3,6 +3,7 @@ import { Header } from './components/Header'
 import { Dashboard } from './pages/Dashboard'
 import { Phase1Services } from './pages/Phase1Services'
 import { ServiceGroups } from './pages/ServiceGroups'
+import { AbcdSets } from './pages/AbcdSets'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/phase1-services" element={<Phase1Services />} />
             <Route path="/service-groups" element={<ServiceGroups />} />
+            <Route path="/abcd-sets" element={<AbcdSets />} />
           </Routes>
         </main>
         

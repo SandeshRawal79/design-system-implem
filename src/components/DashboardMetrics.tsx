@@ -104,7 +104,9 @@ export function DashboardMetrics() {
       additionalInfo: "Managed Currently active",
       icon: faDatabase,
       iconColor: "#F48436",
-      isActive: true
+      isActive: true,
+      onClick: () => navigate('/abcd-sets'),
+      isClickable: true
     },
     {
       title: "Phase 1 ABCDs",

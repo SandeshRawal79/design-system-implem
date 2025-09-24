@@ -127,6 +127,7 @@ export function IntelligenceCatalog() {
       description: "Comprehensive ABCD set management and workflow orchestration for provision approval",
       status: "Active" as const,
       primaryAction: "Launch",
+      onPrimaryClick: () => navigate('/abcd-sets'),
       teamStats: [
         { team: "HPO team", percentage: "2%", detail: "1 of 45" },
         { team: "PM&D team", percentage: "2%", detail: "1 of 42" },
