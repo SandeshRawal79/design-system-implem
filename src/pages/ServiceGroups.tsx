@@ -160,9 +160,8 @@ export function ServiceGroups() {
       render: (_: any, record: ServiceGroup) => (
         <Button
           onClick={() => handleCreateView(record.id)}
-          variant="ghost"
           size="sm"
-          className="text-success hover:text-success/80 hover:bg-success/10 font-medium cursor-pointer table-action-btn"
+          className="btn-gradient-primary text-xs h-6 md:h-7 px-2 md:px-3 whitespace-nowrap cursor-pointer"
         >
           Create/View
         </Button>
