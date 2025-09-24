@@ -2,56 +2,101 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { ArrowLeft, Users, ChartBar, TreeStructure } from '@phosphor-icons/react'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Checkbox } from '@/components/ui/checkbox'
+import { ArrowLeft, TreeStructure, Plus, Check, X } from '@phosphor-icons/react'
 import { PageLayout } from '@/components/PageLayout'
 
 export function ClustersView() {
   const navigate = useNavigate()
   const { serviceId } = useParams()
   const [searchParams] = useSearchParams()
-  const distance = searchParams.get('distance') || '0.5'
 
-  // Mock clusters data
-  const mockClusters = [
+  // Data from the snapshot
+  const dataContext = {
+    id: '3501115',
+    name: 'PCP Office/Outpatient Visit and Consultation -> Professional Services',
+    created: '2025-08-24 03:48:15',
+    creator: 'Mark'
+  }
+
+  const xrayProjection = 'Only Options (D)'
+  const totalClusters = 1
+  const totalRecords = 50
+  const distanceThreshold = '10.0'
+
+  // Mock cluster data matching the snapshot
+  const clusterData = [
     {
-      id: 1,
-      name: 'Primary Care Services',
-      size: 423,
-      items: ['Office Visits', 'Consultations', 'Routine Check-ups'],
-      cohesion: 0.85,
-      avgDistance: 0.28
+      abcd1Up: '3828',
+      serviceId: '3501115',
+      serviceName: 'PCP Office/Outpatient Visit and Consultation -> Professional Services',
+      provisionType: 'Copay',
+      options: 'Yes 20 Dollars, per Visit',
+      approvals: { approve: true, x1: true, x2: false, x3: true, x4: false },
+      setsInNow: '1',
+      addToSet: false
     },
     {
-      id: 2,
-      name: 'Telehealth Services',
-      size: 312,
-      items: ['Virtual Consultations', 'Remote Monitoring', 'Digital Follow-ups'],
-      cohesion: 0.78,
-      avgDistance: 0.31
+      abcd1Up: '3829',
+      serviceId: '3501115',
+      serviceName: 'PCP Office/Outpatient Visit and Consultation -> Professional Services',
+      provisionType: 'Telemedicine Vendor Copay',
+      options: 'Yes 5 Dollars, per Visit',
+      approvals: { approve: false, x1: true, x2: false, x3: false, x4: false },
+      setsInNow: '',
+      addToSet: false
     },
     {
-      id: 3,
-      name: 'Administrative Services',
-      size: 189,
-      items: ['Urgent Care', 'After-hours Coverage', 'Emergency Consultations'],
-      cohesion: 0.72,
-      avgDistance: 0.42
+      abcd1Up: '3908',
+      serviceId: '3501115',
+      serviceName: 'PCP Office/Outpatient Visit and Consultation -> Professional Services',
+      provisionType: 'Copay',
+      options: 'Yes 25 Dollars Apply Only 1 Copayment, per Date of Service, per Provider',
+      approvals: { approve: false, x1: true, x2: false, x3: false, x4: false },
+      setsInNow: '1',
+      addToSet: false
     },
     {
-      id: 4,
-      name: 'Specialty Referrals',
-      size: 267,
-      items: ['Cardiology Referrals', 'Dermatology Referrals', 'Orthopedics Referrals'],
-      cohesion: 0.91,
-      avgDistance: 0.28
+      abcd1Up: '3918',
+      serviceId: '3501115',
+      serviceName: 'PCP Office/Outpatient Visit and Consultation -> Professional Services',
+      provisionType: 'Telemedicine Vendor Coinsurance',
+      options: 'Yes 100 Percent',
+      approvals: { approve: false, x1: true, x2: false, x3: false, x4: false },
+      setsInNow: '',
+      addToSet: false
     },
     {
-      id: 5,
-      name: 'Preventive Care',
-      size: 178,
-      items: ['Annual Physicals', 'Vaccinations', 'Health Screenings'],
-      cohesion: 0.88,
-      avgDistance: 0.35
+      abcd1Up: '4231',
+      serviceId: '3501115',
+      serviceName: 'PCP Office/Outpatient Visit and Consultation -> Professional Services',
+      provisionType: 'Coinsurance - Insurer',
+      options: 'Yes Subject to Program Coinsurance for Home Visits otherwise 100 Percent',
+      approvals: { approve: false, x1: true, x2: false, x3: false, x4: false },
+      setsInNow: '',
+      addToSet: false
+    },
+    {
+      abcd1Up: '4240',
+      serviceId: '3501115',
+      serviceName: 'PCP Office/Outpatient Visit and Consultation -> Professional Services',
+      provisionType: 'Deductible',
+      options: 'No',
+      approvals: { approve: false, x1: true, x2: false, x3: false, x4: false },
+      setsInNow: '1',
+      addToSet: false
+    },
+    {
+      abcd1Up: '4571',
+      serviceId: '3501115',
+      serviceName: 'PCP Office/Outpatient Visit and Consultation -> Professional Services',
+      provisionType: 'Copay',
+      options: 'Yes 30 Dollars, per Visit',
+      approvals: { approve: false, x1: true, x2: false, x3: true, x4: false },
+      setsInNow: '1',
+      addToSet: false
     }
   ]
 
@@ -63,154 +108,180 @@ export function ClustersView() {
     navigate('/')
   }
 
-  const getCohesionBadgeVariant = (cohesion: number) => {
-    if (cohesion >= 0.8) return 'default' as const
-    if (cohesion >= 0.6) return 'secondary' as const
-    return 'outline' as const
-  }
-
-  const getCohesionColor = (cohesion: number) => {
-    if (cohesion >= 0.8) return 'text-green-600'
-    if (cohesion >= 0.6) return 'text-orange-600'
-    return 'text-red-600'
+  const getApprovalIcon = (value: boolean | undefined) => {
+    if (value === true) return <Check className="w-4 h-4 text-success" />
+    if (value === false) return <X className="w-4 h-4 text-destructive" />
+    return <span className="text-muted-foreground">-</span>
   }
 
   return (
     <PageLayout
-      title={`Clusters Analysis`}
-      subtitle={`Service ${serviceId} | Distance threshold: ${distance}`}
+      title="Provision Intelligence Hub - Cluster Analysis"
       showBackButton={true}
     >
-      {/* Summary Card */}
-      <Card className="bg-white border border-border mb-6">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-semibold text-foreground flex items-center gap-2">
-            <Users className="w-5 h-5 text-primary" />
-            Cluster Analysis Summary
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">
-                {mockClusters.length}
-              </div>
-              <div className="text-sm text-muted-foreground">Total Clusters</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-secondary">
-                {mockClusters.reduce((sum, cluster) => sum + cluster.size, 0)}
-              </div>
-              <div className="text-sm text-muted-foreground">Total Items</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-accent">
-                {distance}
-              </div>
-              <div className="text-sm text-muted-foreground">Distance Threshold</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-success">
-                {(mockClusters.reduce((sum, cluster) => sum + cluster.cohesion, 0) / mockClusters.length).toFixed(2)}
-              </div>
-              <div className="text-sm text-muted-foreground">Avg Cohesion</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Clusters List */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-foreground">Identified Clusters</h3>
-          <Badge variant="secondary" className="text-muted-foreground">
-            {mockClusters.length} clusters
-          </Badge>
-        </div>
-
-        <div className="grid grid-cols-1 gap-4">
-          {mockClusters.map((cluster) => (
-            <Card key={cluster.id} className="bg-white border border-border hover:border-primary/30 transition-colors cursor-pointer">
-              <CardContent className="p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                      <Users className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-foreground">{cluster.name}</h4>
-                      <p className="text-sm text-muted-foreground">Cluster #{cluster.id}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Badge variant={getCohesionBadgeVariant(cluster.cohesion)}>
-                      {(cluster.cohesion * 100).toFixed(0)}% cohesion
-                    </Badge>
-                    <Badge variant="outline">
-                      {cluster.size} items
-                    </Badge>
-                  </div>
+      <div className="space-y-6">
+        {/* Header Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {/* Data Context */}
+          <Card className="bg-blue-50 border-l-4 border-l-blue-500">
+            <CardContent className="p-4">
+              <div className="space-y-2">
+                <div className="text-sm font-semibold text-blue-900">Data context:</div>
+                <div className="text-xs text-blue-800 space-y-1">
+                  <div>id={dataContext.id}, name={dataContext.name}</div>
+                  <div>Created: {dataContext.created}, By: {dataContext.creator}</div>
                 </div>
+              </div>
+            </CardContent>
+          </Card>
 
-                <div className="space-y-3">
-                  <div>
-                    <div className="text-sm font-medium text-foreground mb-1">Cluster Items</div>
-                    <div className="flex flex-wrap gap-2">
-                      {cluster.items.map((item, index) => (
-                        <Badge key={index} variant="secondary" className="text-xs">
-                          {item}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-3 border-t border-border">
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Cluster Size:</span>
-                      <span className="text-sm font-medium text-foreground">{cluster.size}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Cohesion:</span>
-                      <span className={`text-sm font-medium ${getCohesionColor(cluster.cohesion)}`}>
-                        {(cluster.cohesion * 100).toFixed(1)}%
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Avg Distance:</span>
-                      <span className="text-sm font-medium text-foreground">{cluster.avgDistance.toFixed(2)}</span>
-                    </div>
-                  </div>
+          {/* X-ray Projection */}
+          <Card className="bg-green-50 border-l-4 border-l-green-500">
+            <CardContent className="p-4">
+              <div className="space-y-2">
+                <div className="text-sm font-semibold text-green-900">X-ray Projection: {xrayProjection}</div>
+                <div className="text-sm text-green-800">Total Clusters: {totalClusters}</div>
+                <div className="text-sm text-green-800">Total Records: {totalRecords}</div>
+                <div className="flex items-center gap-2 mt-2">
+                  <span className="text-sm text-green-800">Distance Threshold:</span>
+                  <Input 
+                    value={distanceThreshold} 
+                    className="w-20 h-6 text-xs border-green-300"
+                    readOnly
+                  />
+                  <Button size="sm" className="h-6 text-xs px-2 bg-green-600 hover:bg-green-700">
+                    Update
+                  </Button>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
+                <Button 
+                  variant="link" 
+                  className="text-blue-600 hover:text-blue-800 text-xs p-0 h-auto"
+                  onClick={handleBackToDendrogram}
+                >
+                  ← Back to 3-dendrograms view
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
 
-      {/* Action Buttons */}
-      <div className="flex justify-between items-center pt-4">
-        <div className="flex gap-3">
-          <Button 
-            variant="ghost" 
-            onClick={handleBackToDashboard}
-            className="cursor-pointer"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Dashboard
-          </Button>
-          <Button 
-            variant="ghost" 
-            onClick={handleBackToDendrogram}
-            className="cursor-pointer"
-          >
-            <TreeStructure className="w-4 h-4 mr-2" />
-            Back to Dendrogram
-          </Button>
+          {/* Create Set */}
+          <Card className="bg-yellow-100 border-l-4 border-l-yellow-500">
+            <CardContent className="p-4">
+              <div className="space-y-3">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-yellow-900">Creator:*</label>
+                  <Input placeholder="Enter creator name" className="h-8 text-sm border-yellow-300" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-yellow-900">Set Name:*</label>
+                  <Input placeholder="Enter set name" className="h-8 text-sm border-yellow-300" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-yellow-900">Description:*</label>
+                  <Textarea 
+                    placeholder="Enter description (max 500 chars)" 
+                    className="h-16 text-sm border-yellow-300 resize-none"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Button 
+                    className="w-full bg-yellow-600 hover:bg-yellow-700 text-white text-sm h-8"
+                    disabled
+                  >
+                    Create a set (select rows first)
+                  </Button>
+                  <div className="text-xs text-yellow-700 space-y-1">
+                    <div>Select an existing set to add rows to it</div>
+                    <div>Select set first...</div>
+                  </div>
+                  <Button 
+                    className="w-full bg-yellow-500 hover:bg-yellow-600 text-white text-sm h-8"
+                    disabled
+                  >
+                    Add rows to set (select rows first)
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
-        <Button className="btn-gradient-primary cursor-pointer">
-          <ChartBar className="w-4 h-4 mr-2" />
-          Export Analysis
-        </Button>
+
+        {/* Cluster Table */}
+        <Card>
+          <CardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-lg font-semibold">
+                Cluster 1 of 1 ({totalRecords} records)
+              </CardTitle>
+              <div className="flex items-center gap-2">
+                <Checkbox id="whole-cluster" />
+                <label htmlFor="whole-cluster" className="text-sm font-medium">
+                  Whole cluster
+                </label>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="responsive-table-wrapper">
+              <table className="responsive-table w-full">
+                <thead className="sticky-header">
+                  <tr className="bg-primary text-primary-foreground">
+                    <th className="text-left p-2 text-xs font-semibold">ABCD 1-Up</th>
+                    <th className="text-left p-2 text-xs font-semibold">Service ID</th>
+                    <th className="text-left p-2 text-xs font-semibold">Service Name</th>
+                    <th className="text-left p-2 text-xs font-semibold">Provision Type</th>
+                    <th className="text-left p-2 text-xs font-semibold">Options</th>
+                    <th className="text-center p-2 text-xs font-semibold">Approve</th>
+                    <th className="text-center p-2 text-xs font-semibold"># sets in now</th>
+                    <th className="text-center p-2 text-xs font-semibold">Add to set</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {clusterData.map((row, index) => (
+                    <tr key={index} className="border-b border-border hover:bg-muted/50">
+                      <td className="p-2">
+                        <a href="#" className="text-blue-600 hover:text-blue-800 text-sm font-medium cursor-pointer">
+                          {row.abcd1Up}
+                        </a>
+                      </td>
+                      <td className="p-2 text-sm">{row.serviceId}</td>
+                      <td className="p-2 text-sm max-w-xs">
+                        <div className="truncate" title={row.serviceName}>
+                          {row.serviceName}
+                        </div>
+                      </td>
+                      <td className="p-2 text-sm">{row.provisionType}</td>
+                      <td className="p-2 text-sm max-w-sm">
+                        <div className="truncate" title={row.options}>
+                          {row.options}
+                        </div>
+                      </td>
+                      <td className="p-2 text-center">
+                        <div className="flex items-center justify-center gap-1">
+                          {getApprovalIcon(row.approvals.approve)}
+                          <span className="text-muted-foreground">-</span>
+                          {getApprovalIcon(row.approvals.x1)}
+                          {getApprovalIcon(row.approvals.x2)}
+                          <span className="text-muted-foreground">-</span>
+                        </div>
+                      </td>
+                      <td className="p-2 text-center">
+                        {row.setsInNow && (
+                          <a href="#" className="text-blue-600 hover:text-blue-800 font-medium cursor-pointer">
+                            {row.setsInNow}
+                          </a>
+                        )}
+                      </td>
+                      <td className="p-2 text-center">
+                        <Checkbox checked={row.addToSet} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </PageLayout>
   )
