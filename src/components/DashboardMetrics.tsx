@@ -6,6 +6,7 @@ import {
   faFile 
 } from '@fortawesome/free-solid-svg-icons'
 import { Card } from '@/components/ui/card'
+import { useNavigate } from 'react-router-dom'
 
 interface MetricCardProps {
   title: string
@@ -15,6 +16,8 @@ interface MetricCardProps {
   icon: typeof faUsers
   iconColor: string
   isActive?: boolean
+  onClick?: () => void
+  isClickable?: boolean
 }
 
 function MetricCard({ 
@@ -24,10 +27,17 @@ function MetricCard({
   additionalInfo, 
   icon, 
   iconColor, 
-  isActive = false 
+  isActive = false,
+  onClick,
+  isClickable = false
 }: MetricCardProps) {
   return (
-    <Card className="p-6 h-full flex flex-col justify-between hover:shadow-md transition-shadow">
+    <Card 
+      className={`p-6 h-full flex flex-col justify-between hover:shadow-md transition-all ${
+        isClickable ? 'cursor-pointer hover:scale-105' : ''
+      }`}
+      onClick={onClick}
+    >
       <div className="flex items-start justify-between mb-4">
         <div>
           <h3 className="text-4xl font-bold text-foreground mb-2">{value}</h3>
@@ -64,6 +74,8 @@ function MetricCard({
 }
 
 export function DashboardMetrics() {
+  const navigate = useNavigate()
+  
   const metrics = [
     {
       title: "Phase 1 Services",
@@ -71,7 +83,9 @@ export function DashboardMetrics() {
       subtitle: "Currently active",
       additionalInfo: "1298 Total Services",
       icon: faUsers,
-      iconColor: "#1F8A7A"
+      iconColor: "#1F8A7A",
+      onClick: () => navigate('/phase1-services'),
+      isClickable: true
     },
     {
       title: "Total Service Groups",

@@ -74,7 +74,7 @@ export function Header() {
             variant="ghost"
             size="sm"
             onClick={decreaseFontSize}
-            className="icon-hover p-2"
+            className="icon-hover p-2 cursor-pointer"
             aria-label="Decrease font size"
           >
             <FontAwesomeIcon icon={faMinus} className="w-4 h-4 text-icon" />
@@ -83,7 +83,7 @@ export function Header() {
             variant="ghost"
             size="sm"
             onClick={increaseFontSize}
-            className="icon-hover p-2"
+            className="icon-hover p-2 cursor-pointer"
             aria-label="Increase font size"
           >
             <FontAwesomeIcon icon={faPlus} className="w-4 h-4 text-icon" />
@@ -94,7 +94,7 @@ export function Header() {
             variant="ghost"
             size="sm"
             onClick={toggleLanguage}
-            className="icon-hover p-2"
+            className="icon-hover p-2 cursor-pointer"
             aria-label="Switch language"
           >
             <FontAwesomeIcon icon={faLanguage} className="w-4 h-4 text-icon" />
@@ -105,7 +105,7 @@ export function Header() {
             variant="ghost"
             size="sm"
             onClick={toggleTheme}
-            className="icon-hover p-2"
+            className="icon-hover p-2 cursor-pointer"
             aria-label="Toggle theme"
           >
             <FontAwesomeIcon 
@@ -119,7 +119,7 @@ export function Header() {
             variant="ghost"
             size="sm"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="icon-hover p-2"
+            className="icon-hover p-2 cursor-pointer"
             aria-label="Toggle menu"
           >
             <FontAwesomeIcon icon={faBars} className="w-4 h-4 text-icon" />
@@ -129,7 +129,7 @@ export function Header() {
 
       {/* Floating ChatBot */}
       <Button
-        className="fixed bottom-6 right-6 w-14 h-14 rounded-full shadow-lg hover:shadow-xl z-50 btn-gradient-primary"
+        className="fixed bottom-6 right-6 w-14 h-14 rounded-full shadow-lg hover:shadow-xl z-50 btn-gradient-primary cursor-pointer"
         aria-label="Open chat"
       >
         <FontAwesomeIcon icon={faComments} className="w-6 h-6 text-white" />

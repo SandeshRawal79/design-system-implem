@@ -78,7 +78,7 @@ function IntelligenceCard({
       
       <div className="flex flex-col gap-2 mt-4">
         <Button 
-          className="btn-gradient-primary w-full justify-center gap-2"
+          className="btn-gradient-primary w-full justify-center gap-2 cursor-pointer"
           onClick={onPrimaryClick}
         >
           <FontAwesomeIcon icon={faPlay} className="w-3 h-3" />
@@ -87,7 +87,7 @@ function IntelligenceCard({
         {secondaryAction && (
           <Button 
             variant="outline" 
-            className="btn-gradient-secondary w-full"
+            className="btn-gradient-secondary w-full cursor-pointer"
             onClick={onSecondaryClick}
           >
             <FontAwesomeIcon icon={faPlay} className="w-3 h-3 mr-2" />

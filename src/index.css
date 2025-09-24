@@ -132,12 +132,14 @@
   transition: all 0.3s ease;
   border: none;
   color: white;
+  cursor: pointer;
 }
 
 .btn-gradient-primary:hover {
   background: linear-gradient(135deg, #36A798 0%, #474A9E 100%);
   transform: translateY(-1px);
   color: white;
+  cursor: pointer;
 }
 
 .btn-gradient-secondary {
@@ -147,6 +149,7 @@
   color: #474A9E;
   position: relative;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .btn-gradient-secondary:hover {
@@ -154,6 +157,7 @@
   color: white;
   border-image: none;
   border-color: transparent;
+  cursor: pointer;
 }
 
 /* Icon hover animation */
@@ -161,10 +165,12 @@
   transition: all 0.2s ease;
   border-radius: 0.375rem;
   padding: 0.25rem;
+  cursor: pointer;
 }
 
 .icon-hover:hover {
   background-color: #F6F6F6;
+  cursor: pointer;
 }
 
 /* Responsive breakpoints classes */
@@ -191,4 +197,23 @@
 
 .text-icon:hover {
   color: #333333;
+}
+
+/* Cursor pointer utilities */
+button, .btn, [role="button"] {
+  cursor: pointer !important;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+/* Interactive element base styles */
+.interactive-element {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.interactive-element:hover {
+  transform: translateY(-1px);
 }
