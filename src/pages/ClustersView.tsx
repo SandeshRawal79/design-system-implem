@@ -2,10 +2,10 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { ArrowLeft, TreeStructure, Users, ChartBar, Info, Hash, MagnifyingGlass } from '@phosphor-icons/react'
+  const { serviceId } = useParams()
 
-export function ClustersView() {
-  const navigate = useNavigate()
+  // Mock clusters data
+    {
   const { serviceId } = useParams()
   const [searchParams] = useSearchParams()
   const distance = searchParams.get('distance') || '0.5'
@@ -18,9 +18,9 @@ export function ClustersView() {
       size: 423,
       items: ['Office Visits', 'Consultations', 'Routine Check-ups'],
       cohesion: 0.85,
-      avgDistance: 0.23
-    },
     {
+    },
+    }
       id: 2,
       name: 'Telehealth Services',
       size: 312,
@@ -30,13 +30,13 @@ export function ClustersView() {
     },
     {
       id: 3,
-      name: 'Emergency Services',
+      name: 'Administrative Servi
       size: 189,
       items: ['Urgent Care', 'After-hours Coverage', 'Emergency Consultations'],
       cohesion: 0.92,
-      avgDistance: 0.18
+  ]
     },
-    {
+    n
       id: 4,
       name: 'Specialized Procedures',
       size: 156,
@@ -44,89 +44,88 @@ export function ClustersView() {
       cohesion: 0.71,
       avgDistance: 0.42
     },
-    {
+
       id: 5,
       name: 'Administrative Services',
       size: 89,
       items: ['Documentation', 'Billing Coordination', 'Insurance Processing'],
       cohesion: 0.65,
-      avgDistance: 0.48
+      {/* Page Header -
     }
-  ]
+   
 
   const handleBackToDendrogram = () => {
     navigate(`/dendrogram/${serviceId}`)
-  }
+   
 
   const handleBackToDashboard = () => {
     navigate('/')
-  }
+   
 
-  const getCohesionColor = (cohesion: number) => {
-    if (cohesion >= 0.8) return 'text-success'
-    if (cohesion >= 0.7) return 'text-warning'
-    return 'text-destructive'
-  }
-
-  const getCohesionBadgeVariant = (cohesion: number) => {
-    if (cohesion >= 0.8) return 'default'
-    if (cohesion >= 0.7) return 'secondary'
-    return 'destructive'
-  }
-
-  return (
-    <div className="space-y-6">
-      {/* Page Header - Compact with better alignment */}
-      <div className="page-header-compact">
-        <div className="flex items-center gap-4">
-          <Button 
-            variant="ghost" 
-            onClick={handleBackToDashboard}
-            className="back-to-dashboard text-primary hover:text-primary/80 cursor-pointer"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Dashboard
-          </Button>
-          <div className="flex items-center gap-3">
-            <h1 className="text-xl font-semibold text-foreground">
-              Cluster Analysis - Service #{serviceId}
-            </h1>
-            <span className="subtitle-separator hidden sm:inline">|</span>
-            <p className="text-sm text-muted-foreground subtitle-inline">
-              Distance Threshold: {distance}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Analysis Summary */}
-      <Card className="bg-card border border-border">
-        <CardHeader className="pb-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-info/10 rounded-lg flex items-center justify-center">
-              <Info className="w-5 h-5 text-info" />
-            </div>
-            <CardTitle className="text-lg font-semibold">Cluster Analysis Summary</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">{mockClusters.length}</div>
-              <div className="text-sm text-muted-foreground">Clusters Found</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-secondary">
-                {mockClusters.reduce((sum, cluster) => sum + cluster.size, 0)}
+              <div className="text-2xl font-bold t
               </div>
-              <div className="text-sm text-muted-foreground">Total Items</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-accent">{distance}</div>
-              <div className="text-sm text-muted-foreground">Distance Threshold</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-success">
+        </CardContent>
+
+
+          <h3 className="text-lg font-semibold text-foreg
+            {mockClusters.length} cluster
+        </div>
+        <div className="
+   
+
+          
+                    </div>
+                      <h4
+                    </div>
+                  <div className="flex items-cent
+                  
+                    <Badge v
+                    </Badge>
+                </div>
+           
+                    <div className="text-sm font-m
+                     
+                   
+                      ))}
+                  </div>
+                
+              
+                    </div>
+                      <span className="text-sm text-mut
+                        {(cluster.cohesion
+              
+              
+            
+
+            </Card>
+        </div>
+
+      <div className="flex justify-between items-ce
+          <Button 
+            onClick={handleBackToDashboard}
+          >
+            Back to Dashboard
+          <Butto
+            onClick={
+          >
+            Back to Dendrogram
+        </div>
+          <ChartBar className="w-4 h-4 mr-2" />
+        </Button>
+    </div>
+}
+
+
+
+
+
+
+
+
+
+
+
                 {(mockClusters.reduce((sum, cluster) => sum + cluster.cohesion, 0) / mockClusters.length).toFixed(2)}
               </div>
               <div className="text-sm text-muted-foreground">Avg Cohesion</div>
@@ -146,7 +145,7 @@ export function ClustersView() {
 
         <div className="grid grid-cols-1 gap-4">
           {mockClusters.map((cluster) => (
-            <Card key={cluster.id} className="bg-card border border-border hover:border-primary/30 transition-colors cursor-pointer interactive-element">
+            <Card key={cluster.id} className="bg-white border border-border hover:border-primary/30 transition-colors cursor-pointer">
               <CardContent className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
@@ -204,12 +203,12 @@ export function ClustersView() {
       </div>
 
       {/* Action Buttons */}
-      <div className="flex justify-between items-center pt-4 border-t border-border">
+      <div className="flex justify-between items-center pt-4">
         <div className="flex gap-3">
           <Button 
             variant="ghost" 
             onClick={handleBackToDashboard}
-            className="cursor-pointer back-to-dashboard"
+            className="cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Dashboard
@@ -217,7 +216,7 @@ export function ClustersView() {
           <Button 
             variant="ghost" 
             onClick={handleBackToDendrogram}
-            className="cursor-pointer back-to-dashboard"
+            className="cursor-pointer"
           >
             <TreeStructure className="w-4 h-4 mr-2" />
             Back to Dendrogram
