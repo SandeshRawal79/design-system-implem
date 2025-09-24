@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useNavigate, useParams } from 'react-router-dom'
-import { ArrowLeft, Download, Gear, Eye } from '@phosphor-icons/react'
+import { ArrowLeft, Download, Gear, Eye, TreeStructure, ChartLine, Funnel } from '@phosphor-icons/react'
 
 export function DendrogramView() {
   const navigate = useNavigate()
@@ -123,66 +123,204 @@ export function DendrogramView() {
         </Card>
       </div>
 
-      {/* Dendrogram Visualization Card */}
-      <Card className="min-h-[600px] mb-8">
+      {/* Section Title */}
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-foreground mb-2">
+          Provision X-ray Analysis
+        </h2>
+        <p className="text-muted-foreground">
+          Hierarchical clustering analysis across different projection types to reveal provision patterns and relationships.
+        </p>
+      </div>
+
+      {/* Provision X-ray #1: Service ID/Name + Provision Type + Options */}
+      <Card className="mb-8">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-xl font-semibold text-foreground">
-              Dendrogram Visualization
-            </CardTitle>
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                <TreeStructure className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <CardTitle className="text-lg font-semibold text-foreground">
+                  Provision X-ray #1
+                </CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  Projection = Service ID/Name + Provision Type + Options
+                </p>
+              </div>
+            </div>
             <div className="flex items-center gap-2">
-              <Badge variant="outline" className="text-xs">
-                Interactive View
+              <Badge variant="outline" className="text-xs bg-primary/5 text-primary border-primary/20">
+                Full Context
               </Badge>
               <Button size="sm" variant="ghost" className="cursor-pointer">
-                <Gear className="w-4 h-4" />
+                <Download className="w-4 h-4" />
               </Button>
             </div>
           </div>
         </CardHeader>
         <CardContent className="p-6">
-          <div className="min-h-[400px] bg-muted/20 rounded-lg border-2 border-dashed border-border flex items-center justify-center">
+          <div className="min-h-[400px] bg-gradient-to-br from-primary/5 to-primary/10 rounded-lg border border-primary/20 flex items-center justify-center">
             <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                <Gear className="w-8 h-8 text-primary" />
+              <div className="w-16 h-16 bg-primary/15 rounded-full flex items-center justify-center mx-auto">
+                <TreeStructure className="w-8 h-8 text-primary" />
               </div>
               <h3 className="text-lg font-semibold text-foreground">
-                Dendrogram Analysis Ready
+                Complete Service Analysis
               </h3>
-              <p className="text-muted-foreground max-w-md">
-                Interactive visualization showing hierarchical relationships between different provision groups and service dependencies.
+              <p className="text-muted-foreground max-w-lg">
+                Comprehensive dendrogram showing relationships between services, provision types, and their available options. 
+                This view provides the most detailed clustering analysis including all contextual information.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <div className="flex gap-3 justify-center">
                 <Button className="btn-gradient-primary cursor-pointer">
-                  Generate Visualization
-                </Button>
-                <Button variant="outline" className="cursor-pointer">
-                  Configure Parameters
+                  <TreeStructure className="w-4 h-4 mr-2" />
+                  Generate Dendrogram
                 </Button>
               </div>
             </div>
           </div>
-          
-          {/* Analysis Information */}
-          <div className="mt-6 p-4 bg-muted/30 rounded-lg">
-            <h4 className="font-medium text-foreground mb-2">Analysis Information</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div>
-                <span className="text-muted-foreground">Clustering Method:</span>
-                <span className="ml-2 font-medium text-foreground">Hierarchical</span>
+        </CardContent>
+      </Card>
+
+      {/* Provision X-ray #2: Provision Type + Options */}
+      <Card className="mb-8">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-secondary/10 rounded-lg flex items-center justify-center">
+                <ChartLine className="w-5 h-5 text-secondary" />
               </div>
               <div>
-                <span className="text-muted-foreground">Distance Metric:</span>
-                <span className="ml-2 font-medium text-foreground">Euclidean</span>
+                <CardTitle className="text-lg font-semibold text-foreground">
+                  Provision X-ray #2
+                </CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  Projection = Provision Type + Options
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Badge variant="outline" className="text-xs bg-secondary/5 text-secondary border-secondary/20">
+                Type-Focused
+              </Badge>
+              <Button size="sm" variant="ghost" className="cursor-pointer">
+                <Download className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="p-6">
+          <div className="min-h-[400px] bg-gradient-to-br from-secondary/5 to-secondary/10 rounded-lg border border-secondary/20 flex items-center justify-center">
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-secondary/15 rounded-full flex items-center justify-center mx-auto">
+                <ChartLine className="w-8 h-8 text-secondary" />
+              </div>
+              <h3 className="text-lg font-semibold text-foreground">
+                Provision Type Analysis
+              </h3>
+              <p className="text-muted-foreground max-w-lg">
+                Focused clustering analysis examining the relationship between provision types and their available options.
+                This view abstracts away service-specific details to reveal provision patterns across the system.
+              </p>
+              <div className="flex gap-3 justify-center">
+                <Button className="bg-secondary hover:bg-secondary/90 text-white cursor-pointer">
+                  <ChartLine className="w-4 h-4 mr-2" />
+                  Generate Dendrogram
+                </Button>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Provision X-ray #3: Options Only */}
+      <Card className="mb-8">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-accent/10 rounded-lg flex items-center justify-center">
+                <Funnel className="w-5 h-5 text-accent" />
               </div>
               <div>
-                <span className="text-muted-foreground">Linkage Criteria:</span>
-                <span className="ml-2 font-medium text-foreground">Ward</span>
+                <CardTitle className="text-lg font-semibold text-foreground">
+                  Provision X-ray #3
+                </CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  Projection = Options
+                </p>
               </div>
-              <div>
-                <span className="text-muted-foreground">Optimal Clusters:</span>
-                <span className="ml-2 font-medium text-foreground">{mockService.groups}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Badge variant="outline" className="text-xs bg-accent/5 text-accent border-accent/20">
+                Options-Only
+              </Badge>
+              <Button size="sm" variant="ghost" className="cursor-pointer">
+                <Download className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="p-6">
+          <div className="min-h-[400px] bg-gradient-to-br from-accent/5 to-accent/10 rounded-lg border border-accent/20 flex items-center justify-center">
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-accent/15 rounded-full flex items-center justify-center mx-auto">
+                <Funnel className="w-8 h-8 text-accent" />
               </div>
+              <h3 className="text-lg font-semibold text-foreground">
+                Options Analysis
+              </h3>
+              <p className="text-muted-foreground max-w-lg">
+                Pure options clustering analysis showing relationships and patterns between different provision options.
+                This highly focused view reveals the core option relationships without contextual noise.
+              </p>
+              <div className="flex gap-3 justify-center">
+                <Button className="bg-accent hover:bg-accent/90 text-white cursor-pointer">
+                  <Funnel className="w-4 h-4 mr-2" />
+                  Generate Dendrogram
+                </Button>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Analysis Summary */}
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle className="text-lg font-semibold text-foreground flex items-center gap-2">
+            <Gear className="w-5 h-5 text-primary" />
+            Analysis Configuration
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <h4 className="font-medium text-foreground">Clustering Method</h4>
+              <p className="text-sm text-muted-foreground">Hierarchical Agglomerative Clustering</p>
+            </div>
+            <div className="space-y-2">
+              <h4 className="font-medium text-foreground">Distance Metric</h4>
+              <p className="text-sm text-muted-foreground">Euclidean Distance</p>
+            </div>
+            <div className="space-y-2">
+              <h4 className="font-medium text-foreground">Linkage Criteria</h4>
+              <p className="text-sm text-muted-foreground">Ward Linkage</p>
+            </div>
+            <div className="space-y-2">
+              <h4 className="font-medium text-foreground">Total Records</h4>
+              <p className="text-sm text-muted-foreground">{mockService.totalRecords.toLocaleString()}</p>
+            </div>
+            <div className="space-y-2">
+              <h4 className="font-medium text-foreground">Optimal Clusters</h4>
+              <p className="text-sm text-muted-foreground">{mockService.groups}</p>
+            </div>
+            <div className="space-y-2">
+              <h4 className="font-medium text-foreground">Complexity Level</h4>
+              <Badge variant="outline" className="text-accent border-accent/20">
+                {mockService.complexity}
+              </Badge>
             </div>
           </div>
         </CardContent>
@@ -190,9 +328,13 @@ export function DendrogramView() {
 
       {/* Action Buttons */}
       <div className="flex flex-col sm:flex-row gap-3 justify-center">
+        <Button className="btn-gradient-primary cursor-pointer">
+          <TreeStructure className="w-4 h-4 mr-2" />
+          Generate All Dendrograms
+        </Button>
         <Button variant="outline" className="cursor-pointer">
           <Download className="w-4 h-4 mr-2" />
-          Download Report
+          Download Complete Report
         </Button>
         <Button 
           variant="ghost" 
@@ -201,9 +343,6 @@ export function DendrogramView() {
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Services
-        </Button>
-        <Button className="btn-gradient-primary cursor-pointer">
-          Export Analysis
         </Button>
       </div>
     </div>
