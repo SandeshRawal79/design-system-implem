@@ -114,7 +114,9 @@ export function DashboardMetrics() {
       subtitle: "Currently active",
       additionalInfo: "18105 Total ABCDs",
       icon: faFile,
-      iconColor: "#1F8A7A"
+      iconColor: "#1F8A7A",
+      onClick: () => navigate('/abcd'),
+      isClickable: true
     }
   ]
 

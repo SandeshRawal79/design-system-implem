@@ -140,6 +140,7 @@ export function IntelligenceCatalog() {
       description: "Phase 1 ABCD record analytics and provision tracking with detailed insights and performance metrics",
       status: "Active" as const,
       primaryAction: "Launch",
+      onPrimaryClick: () => navigate('/abcd'),
       teamStats: [
         { team: "HPO team", percentage: "0%", detail: "0 of 438" },
         { team: "PM&D team", percentage: "2%", detail: "7 of 398" },

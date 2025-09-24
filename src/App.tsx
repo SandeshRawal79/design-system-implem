@@ -4,6 +4,7 @@ import { Dashboard } from './pages/Dashboard'
 import { Phase1Services } from './pages/Phase1Services'
 import { ServiceGroups } from './pages/ServiceGroups'
 import { AbcdSets } from './pages/AbcdSets'
+import { AbcdPage } from './pages/AbcdPage'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/phase1-services" element={<Phase1Services />} />
             <Route path="/service-groups" element={<ServiceGroups />} />
             <Route path="/abcd-sets" element={<AbcdSets />} />
+            <Route path="/abcd" element={<AbcdPage />} />
           </Routes>
         </main>
         
