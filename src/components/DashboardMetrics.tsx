@@ -67,7 +67,7 @@ export function DashboardMetrics() {
   const metrics = [
     {
       title: "Phase 1 Services",
-      value: "50",
+      value: "51",
       subtitle: "Currently active",
       additionalInfo: "1298 Total Services",
       icon: faUsers,

@@ -3,6 +3,7 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { useNavigate } from 'react-router-dom'
 
 interface IntelligenceServiceProps {
   title: string
@@ -11,6 +12,8 @@ interface IntelligenceServiceProps {
   status: 'Active' | 'Inactive'
   primaryAction: string
   secondaryAction?: string
+  onPrimaryClick?: () => void
+  onSecondaryClick?: () => void
   teamStats?: Array<{
     team: string
     percentage: string
@@ -25,6 +28,8 @@ function IntelligenceCard({
   status, 
   primaryAction, 
   secondaryAction,
+  onPrimaryClick,
+  onSecondaryClick,
   teamStats 
 }: IntelligenceServiceProps) {
   const typeColor = type === 'Analytics' ? '#474A9E' : '#F48436'
@@ -72,12 +77,19 @@ function IntelligenceCard({
       </div>
       
       <div className="flex flex-col gap-2 mt-4">
-        <Button className="btn-gradient-primary w-full justify-center gap-2">
+        <Button 
+          className="btn-gradient-primary w-full justify-center gap-2"
+          onClick={onPrimaryClick}
+        >
           <FontAwesomeIcon icon={faPlay} className="w-3 h-3" />
           {primaryAction}
         </Button>
         {secondaryAction && (
-          <Button variant="outline" className="btn-gradient-secondary w-full">
+          <Button 
+            variant="outline" 
+            className="btn-gradient-secondary w-full"
+            onClick={onSecondaryClick}
+          >
             <FontAwesomeIcon icon={faPlay} className="w-3 h-3 mr-2" />
             {secondaryAction}
           </Button>
@@ -88,6 +100,8 @@ function IntelligenceCard({
 }
 
 export function IntelligenceCatalog() {
+  const navigate = useNavigate()
+  
   const services = [
     {
       title: "Service Intelligence",
@@ -95,7 +109,9 @@ export function IntelligenceCatalog() {
       description: "Smart service analytics and performance monitoring with detailed insights and reporting",
       status: "Active" as const,
       primaryAction: "Launch Phase I services",
-      secondaryAction: "Launch all services"
+      secondaryAction: "Launch all services",
+      onPrimaryClick: () => navigate('/phase1-services'),
+      onSecondaryClick: () => console.log('Launch all services clicked')
     },
     {
       title: "Service Group Intelligence", 
