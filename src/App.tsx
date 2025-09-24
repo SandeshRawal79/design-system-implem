@@ -5,6 +5,7 @@ import { Phase1Services } from './pages/Phase1Services'
 import { ServiceGroups } from './pages/ServiceGroups'
 import { AbcdSets } from './pages/AbcdSets'
 import { AbcdPage } from './pages/AbcdPage'
+import { DendrogramView } from './pages/DendrogramView'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="/service-groups" element={<ServiceGroups />} />
               <Route path="/abcd-sets" element={<AbcdSets />} />
               <Route path="/abcd" element={<AbcdPage />} />
+              <Route path="/dendrogram/:serviceId" element={<DendrogramView />} />
             </Routes>
           </div>
         </main>

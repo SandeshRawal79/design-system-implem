@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { PageLayout } from '@/components/PageLayout'
 import { DataTable } from '@/components/DataTable'
+import { useNavigate } from 'react-router-dom'
 
 interface ServiceRecord {
   id: string
@@ -9,6 +10,8 @@ interface ServiceRecord {
 }
 
 export function Phase1Services() {
+  const navigate = useNavigate()
+  
   // Mock data based on the screenshot - 50 services total
   const services: ServiceRecord[] = [
     { id: '3501115', name: 'PCP Office/Outpatient Visit and Consultation -> Professional Services', totalRecords: 50 },
@@ -100,10 +103,11 @@ export function Phase1Services() {
       sortable: false,
       searchable: false,
       minWidth: '140px',
-      render: () => (
+      render: (_, row: ServiceRecord) => (
         <Button 
           size="sm" 
           className="btn-gradient-primary text-xs h-6 md:h-7 px-2 md:px-3 whitespace-nowrap cursor-pointer"
+          onClick={() => navigate(`/dendrogram/${row.id}`)}
         >
           Create/View
         </Button>
