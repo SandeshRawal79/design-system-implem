@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { PageLayout } from '@/components/PageLayout'
+import { ServiceGroupSelector } from '@/components/ServiceGroupSelector'
 import { CaretDown } from '@phosphor-icons/react'
 
 interface AbcdCardProps {
@@ -107,6 +108,26 @@ function AbcdCard({ title, description, isActive, teams, badgeText, badgeCount }
 }
 
 export function AbcdPage() {
+  const [selectedServiceGroup, setSelectedServiceGroup] = useState("phase1-cycle2")
+  
+  // Service groups mapping for subtitle display
+  const serviceGroupNames = {
+    "phase1-cycle2": "Phase 1 Cycle 2",
+    "phase1-cycle1": "Phase 1 Cycle 1", 
+    "cycle1-service-group": "Cycle 1 service group",
+    "test": "test",
+    "demo": "demo",
+    "testing": "Test",
+    "sr-test-sample": "test"
+  }
+  
+  // Handle service group selection change
+  const handleServiceGroupChange = (serviceGroupId: string) => {
+    setSelectedServiceGroup(serviceGroupId)
+    // In a real app, you would fetch new data based on the selected service group
+    console.log('Selected service group:', serviceGroupId)
+  }
+  
   const classificationCards = [
     {
       title: "No Change",
@@ -200,9 +221,15 @@ export function AbcdPage() {
     <div className="abcd-page-compact">
       <PageLayout
         title="ABCD"
-        subtitle="Service Group: Phase 1 Cycle 2"
+        subtitle={`Service Group: ${serviceGroupNames[selectedServiceGroup as keyof typeof serviceGroupNames] || selectedServiceGroup}`}
         backButtonLabel="Back to Dashboard"
         backButtonPath="/"
+        rightContent={
+          <ServiceGroupSelector 
+            selectedServiceGroup={selectedServiceGroup}
+            onServiceGroupChange={handleServiceGroupChange}
+          />
+        }
       >
         {/* Two-column layout with 20% ABCD Disposition and 80% Streamlining Classifications using 4px grid system */}
         <div className="grid grid-cols-1 xl:grid-cols-5 h-full" style={{ gap: '24px' }}>
