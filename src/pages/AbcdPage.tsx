@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { PageLayout } from '@/components/PageLayout'
+import { CaretDown } from '@phosphor-icons/react'
 
 interface AbcdCardProps {
   title: string
@@ -17,14 +19,31 @@ interface AbcdCardProps {
 }
 
 function AbcdCard({ title, description, isActive, teams, badgeText, badgeCount }: AbcdCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false)
+
   return (
     <Card className="p-4 h-full flex flex-col justify-between intelligence-card border-2 hover:border-primary/20 cursor-pointer">
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors duration-200">{title}</h3>
+          <div className="flex items-center gap-2 flex-1">
+            <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors duration-200 flex-1">{title}</h3>
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                setIsExpanded(!isExpanded)
+              }}
+              className="flex items-center justify-center w-6 h-6 rounded-md hover:bg-muted transition-colors duration-200 cursor-pointer"
+              aria-label={isExpanded ? "Collapse description" : "Expand description"}
+            >
+              <CaretDown 
+                size={16} 
+                className={`text-muted-foreground transition-transform duration-300 ${isExpanded ? 'rotate-180' : 'rotate-0'}`}
+              />
+            </button>
+          </div>
           {badgeText && badgeCount && (
             <Badge 
-              className="text-white font-medium group-hover:scale-105 transition-transform duration-200"
+              className="text-white font-medium group-hover:scale-105 transition-transform duration-200 ml-2"
               style={{ backgroundColor: '#474A9E' }}
             >
               {badgeText} {badgeCount}
@@ -32,9 +51,15 @@ function AbcdCard({ title, description, isActive, teams, badgeText, badgeCount }
           )}
         </div>
         
-        <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
-          {description}
-        </p>
+        <div 
+          className={`overflow-hidden transition-all duration-300 ease-in-out ${
+            isExpanded ? 'max-h-20 opacity-100 mb-3' : 'max-h-0 opacity-0 mb-0'
+          }`}
+        >
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            {description}
+          </p>
+        </div>
         
         {isActive && (
           <div className="flex items-center gap-1.5 mb-3">
