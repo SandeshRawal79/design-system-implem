@@ -66,7 +66,10 @@ function IntelligenceCard({
                   // Add navigation logic here if needed for team stats
                 }}
               >
-                <span className="text-sm font-medium text-muted-foreground group-hover:text-primary group-hover:font-semibold transition-all duration-300">
+                <span 
+                  className="text-sm font-medium transition-all duration-300 group-hover:font-semibold"
+                  style={{ color: '#474A9E' }}
+                >
                   {stat.team}
                 </span>
                 <div className="flex items-center gap-2">
@@ -82,8 +85,8 @@ function IntelligenceCard({
                     {stat.percentage}
                   </span>
                   <span 
-                    className="text-xs font-medium transition-all duration-300 group-hover:text-secondary"
-                    style={{ color: '#F48436' }}
+                    className="text-xs font-medium transition-all duration-300 group-hover:font-semibold"
+                    style={{ color: '#1F8A7A' }}
                   >
                     ({stat.detail})
                   </span>
