@@ -182,10 +182,10 @@ export function AbcdPage() {
         backButtonLabel="Back to Dashboard"
         backButtonPath="/"
       >
-        {/* Two-column layout with equal card widths */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 h-full">
-          {/* Left Column - ABCD Disposition */}
-          <div className="space-y-4">
+        {/* Two-column layout with 20% ABCD Disposition and 80% Streamlining Classifications */}
+        <div className="grid grid-cols-1 xl:grid-cols-5 gap-6 h-full">
+          {/* Left Column - ABCD Disposition (20% width) */}
+          <div className="xl:col-span-1 space-y-4">
             <div className="flex items-center gap-3">
               <h2 className="text-lg font-semibold text-foreground">ABCD Disposition</h2>
               <Badge variant="outline" className="bg-primary text-primary-foreground cursor-pointer text-xs px-2 py-1">
@@ -193,16 +193,16 @@ export function AbcdPage() {
               </Badge>
             </div>
             
-            {/* Same grid layout as right column for equal card widths */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Single column layout for compact cards in narrow column */}
+            <div className="space-y-4">
               {classificationCards.map((card, index) => (
                 <AbcdCard key={index} {...card} />
               ))}
             </div>
           </div>
 
-          {/* Right Column - Streamlining Classifications */}
-          <div className="space-y-4">
+          {/* Right Column - Streamlining Classifications (80% width) */}
+          <div className="xl:col-span-4 space-y-4">
             <div className="flex items-center gap-3">
               <h2 className="text-lg font-semibold text-foreground">Streamlining Classifications</h2>
               <Badge variant="outline" className="bg-info text-white cursor-pointer text-xs px-2 py-1">
@@ -210,8 +210,8 @@ export function AbcdPage() {
               </Badge>
             </div>
             
-            {/* Grid layout for analytics cards in right column */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Grid layout for analytics cards in wider column */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">
               {analyticsCards.map((card, index) => (
                 <AbcdCard key={index} {...card} />
               ))}
