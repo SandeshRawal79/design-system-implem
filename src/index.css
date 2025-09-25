@@ -386,23 +386,27 @@ button, .btn, [role="button"], .cursor-pointer {
 
 /* ABCD Page specific two-column layout - Optimized for 1920x1080 single screen */
 .abcd-page-compact {
-  height: calc(100vh - var(--header-height) - var(--footer-height) - 2rem); /* Full available height minus padding */
-  overflow: hidden; /* Prevent any scrolling */
+  min-height: calc(100vh - var(--header-height) - var(--footer-height) - 2rem); /* Full available height minus padding */
+  overflow: visible; /* Allow natural content flow */
 }
 
 .abcd-page-compact .intelligence-card {
   min-height: auto !important;
-  max-height: 220px; /* Slightly increased for better content visibility */
-  overflow: hidden;
+  height: auto; /* Remove fixed height constraints */
+  max-height: none; /* Allow cards to expand to fit content */
+  overflow: visible; /* Show all content */
+  display: flex;
+  flex-direction: column;
 }
 
 @media (min-width: 1440px) {
   .abcd-page-compact {
-    height: calc(100vh - 3.5rem - 1.5rem - 2.5rem); /* Exact calculation for 1920x1080 */
+    min-height: calc(100vh - 3.5rem - 1.5rem - 2.5rem); /* Exact calculation for 1920x1080 */
   }
   
   .abcd-page-compact .intelligence-card {
-    max-height: 200px; /* Optimal height for two-column layout */
+    height: auto; /* Allow natural height based on content */
+    max-height: none; /* Remove height restrictions */
   }
   
   .abcd-page-compact .card-header {
@@ -417,7 +421,8 @@ button, .btn, [role="button"], .cursor-pointer {
 
 @media (min-width: 1920px) {
   .abcd-page-compact .intelligence-card {
-    max-height: 210px; /* Slightly more generous on larger screens */
+    height: auto; /* Allow natural height based on content */
+    max-height: none; /* Remove height restrictions for better content visibility */
   }
   
   .abcd-page-compact .card-header {

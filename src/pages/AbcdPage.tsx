@@ -22,9 +22,9 @@ function AbcdCard({ title, description, isActive, teams, badgeText, badgeCount }
   const [isExpanded, setIsExpanded] = useState(false)
 
   return (
-    <Card className="p-4 h-full flex flex-col justify-between intelligence-card border-2 hover:border-primary/20 cursor-pointer">
-      <div>
-        <div className="flex items-center justify-between mb-3">
+    <Card className="p-4 flex flex-col intelligence-card border-2 hover:border-primary/20 cursor-pointer min-h-fit">
+      <div className="flex-1 space-y-3">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 flex-1">
             <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors duration-200 flex-1">{title}</h3>
             <button
@@ -53,7 +53,7 @@ function AbcdCard({ title, description, isActive, teams, badgeText, badgeCount }
         
         <div 
           className={`overflow-hidden transition-all duration-300 ease-in-out ${
-            isExpanded ? 'max-h-20 opacity-100 mb-3' : 'max-h-0 opacity-0 mb-0'
+            isExpanded ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
           <p className="text-xs text-muted-foreground leading-relaxed">
@@ -62,7 +62,7 @@ function AbcdCard({ title, description, isActive, teams, badgeText, badgeCount }
         </div>
         
         {isActive && (
-          <div className="flex items-center gap-1.5 mb-3">
+          <div className="flex items-center gap-1.5">
             <div className="w-2 h-2 rounded-full status-active" style={{ backgroundColor: '#43812C' }}></div>
             <span className="text-xs font-medium" style={{ color: '#43812C' }}>
               Active
@@ -70,7 +70,7 @@ function AbcdCard({ title, description, isActive, teams, badgeText, badgeCount }
           </div>
         )}
 
-        <div className="space-y-1 mb-2">
+        <div className="space-y-1">
           {teams.map((team, index) => (
             <div 
               key={index} 
