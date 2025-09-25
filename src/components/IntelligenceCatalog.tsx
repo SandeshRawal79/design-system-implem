@@ -27,27 +27,27 @@ function IntelligenceCard({
   
   return (
     <Card 
-      className="p-6 h-full flex flex-col justify-between intelligence-card border-2 hover:border-primary/20 cursor-pointer"
+      className="p-4 h-full flex flex-col justify-between intelligence-card border-2 hover:border-primary/20 cursor-pointer"
       onClick={onCardClick}
     >
       <div>
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-200">{title}</h3>
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors duration-200">{title}</h3>
         </div>
         
         <Badge 
-          className="mb-4 text-white font-medium group-hover:scale-105 transition-transform duration-200"
+          className="mb-3 text-white font-medium group-hover:scale-105 transition-transform duration-200"
           style={{ backgroundColor: typeColor }}
         >
           {type}
         </Badge>
         
-        <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+        <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
           {description}
         </p>
         
         {status === 'Active' && (
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-1.5 mb-3">
             <div className="w-2 h-2 rounded-full status-active" style={{ backgroundColor: '#43812C' }}></div>
             <span className="text-xs font-medium" style={{ color: '#43812C' }}>
               Active
@@ -56,25 +56,25 @@ function IntelligenceCard({
         )}
 
         {teamStats && (
-          <div className="space-y-2 mb-4">
+          <div className="space-y-1 mb-3">
             {teamStats.map((stat, index) => (
               <div 
                 key={index} 
-                className="flex justify-between items-center p-2 -mx-2 rounded-md cursor-pointer transition-all duration-300 hover:bg-gradient-to-r hover:from-primary/5 hover:to-secondary/5 hover:shadow-sm hover:scale-[1.02] group"
+                className="flex justify-between items-center p-1.5 -mx-1.5 rounded-md cursor-pointer transition-all duration-300 hover:bg-gradient-to-r hover:from-primary/5 hover:to-secondary/5 hover:shadow-sm hover:scale-[1.02] group"
                 onClick={(e) => {
                   e.stopPropagation()
                   // Add navigation logic here if needed for team stats
                 }}
               >
                 <span 
-                  className="text-sm font-medium transition-all duration-300 group-hover:font-semibold team-stats-text relative underline-offset-2 hover:underline"
+                  className="text-xs font-medium transition-all duration-300 group-hover:font-semibold team-stats-text relative underline-offset-2 hover:underline"
                   style={{ color: '#474A9E' }}
                 >
                   {stat.team}
                 </span>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                   <span 
-                    className="text-sm font-bold transition-all duration-300 group-hover:scale-110"
+                    className="text-xs font-bold transition-all duration-300 group-hover:scale-110"
                     style={{ 
                       background: 'linear-gradient(135deg, #474A9E 0%, #1F8A7A 100%)',
                       WebkitBackgroundClip: 'text',
@@ -145,15 +145,15 @@ export function IntelligenceCatalog() {
   ]
 
   return (
-    <div className="mb-8">
-      <div className="flex items-center gap-3 mb-6">
-        <h2 className="text-2xl font-semibold text-foreground">Intelligence Catalog</h2>
-        <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 font-medium px-2.5 py-1">
+    <div className="mb-6">
+      <div className="flex items-center gap-3 mb-4">
+        <h2 className="text-xl font-semibold text-foreground">Intelligence Catalog</h2>
+        <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 font-medium px-2 py-0.5">
           4
         </Badge>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {services.map((service, index) => (
           <IntelligenceCard key={index} {...service} />
         ))}

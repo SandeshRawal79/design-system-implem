@@ -33,34 +33,34 @@ function MetricCard({
 }: MetricCardProps) {
   return (
     <Card 
-      className={`p-5 h-full flex flex-col justify-between hover:shadow-md transition-all cursor-pointer ${
+      className={`p-3 h-full flex flex-col justify-between hover:shadow-md transition-all cursor-pointer ${
         isClickable ? 'hover:scale-[1.02] interactive-element' : ''
       }`}
       onClick={onClick}
     >
-      <div className="flex items-start justify-between mb-3">
+      <div className="flex items-start justify-between mb-2">
         <div>
-          <h3 className="text-3xl xl:text-4xl font-bold text-foreground mb-1.5">{value}</h3>
-          <p className="text-muted-foreground text-sm">{title}</p>
+          <h3 className="text-2xl xl:text-3xl font-bold text-foreground mb-1">{value}</h3>
+          <p className="text-muted-foreground text-xs">{title}</p>
         </div>
         <div 
-          className="w-10 h-10 xl:w-11 xl:h-11 rounded-lg flex items-center justify-center shadow-sm"
+          className="w-8 h-8 xl:w-9 xl:h-9 rounded-lg flex items-center justify-center shadow-sm"
           style={{ backgroundColor: iconColor }}
         >
-          <FontAwesomeIcon icon={icon} className="w-5 h-5 text-white" />
+          <FontAwesomeIcon icon={icon} className="w-4 h-4 text-white" />
         </div>
       </div>
-      <div className="space-y-1">
-        <div className="flex items-center gap-2">
-          <span className="font-semibold text-sm" style={{ color: '#1F8A7A' }}>
+      <div className="space-y-0.5">
+        <div className="flex items-center gap-1.5">
+          <span className="font-semibold text-xs" style={{ color: '#1F8A7A' }}>
             {additionalInfo.split(' ')[0]} {additionalInfo.split(' ')[1]}
           </span>
-          <span className="text-muted-foreground text-sm">
+          <span className="text-muted-foreground text-xs">
             {additionalInfo.split(' ').slice(2).join(' ')}
           </span>
         </div>
         {isActive && (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <div className="w-1.5 h-1.5 rounded-full status-active" style={{ backgroundColor: '#43812C' }}></div>
             <span className="text-xs font-medium" style={{ color: '#43812C' }}>
               {subtitle}
@@ -120,7 +120,7 @@ export function DashboardMetrics() {
   ]
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-5">
       {metrics.map((metric, index) => (
         <MetricCard key={index} {...metric} />
       ))}
