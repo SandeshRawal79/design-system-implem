@@ -41,7 +41,7 @@ function MetricCard({
       <div className="flex items-start justify-between mb-3">
         <div>
           <h3 className="text-3xl xl:text-4xl font-bold text-foreground mb-1.5">{value}</h3>
-          <p className="text-xs text-muted-foreground">{title}</p>
+          <p className="text-muted-foreground text-sm">{title}</p>
         </div>
         <div 
           className="w-10 h-10 xl:w-11 xl:h-11 rounded-lg flex items-center justify-center shadow-sm"
@@ -50,13 +50,12 @@ function MetricCard({
           <FontAwesomeIcon icon={icon} className="w-5 h-5 text-white" />
         </div>
       </div>
-      
       <div className="space-y-1">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold" style={{ color: '#1F8A7A' }}>
+          <span className="font-semibold text-sm" style={{ color: '#1F8A7A' }}>
             {additionalInfo.split(' ')[0]} {additionalInfo.split(' ')[1]}
           </span>
-          <span className="text-xs text-muted-foreground">
+          <span className="text-muted-foreground text-sm">
             {additionalInfo.split(' ').slice(2).join(' ')}
           </span>
         </div>
@@ -70,7 +69,7 @@ function MetricCard({
         )}
       </div>
     </Card>
-  )
+  );
 }
 
 export function DashboardMetrics() {
