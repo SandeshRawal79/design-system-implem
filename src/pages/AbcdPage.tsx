@@ -18,37 +18,37 @@ interface AbcdCardProps {
 
 function AbcdCard({ title, description, isActive, teams, badgeText, badgeCount }: AbcdCardProps) {
   return (
-    <Card className="h-full cursor-pointer hover:shadow-lg transition-all duration-300 group intelligence-card">
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-base font-semibold text-foreground group-hover:text-primary transition-colors">
+    <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 group intelligence-card bg-card border-border">
+      <CardHeader className="pb-2 px-3 pt-3">
+        <div className="flex items-center justify-between mb-1">
+          <CardTitle className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors leading-tight">
             {title}
           </CardTitle>
           {badgeText && badgeCount && (
-            <Badge variant="secondary" className="bg-primary text-primary-foreground cursor-pointer text-xs">
+            <Badge variant="secondary" className="bg-primary text-primary-foreground cursor-pointer text-xs px-1.5 py-0.5">
               {badgeText} {badgeCount}
             </Badge>
           )}
         </div>
-        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+        <p className="text-xs text-muted-foreground leading-snug line-clamp-2 mb-2">
           {description}
         </p>
-        <div className="flex items-center gap-2 mt-1">
+        <div className="flex items-center gap-1.5">
           <div className={`w-1.5 h-1.5 rounded-full cursor-pointer ${isActive ? 'bg-success status-active' : 'bg-muted-foreground'}`}></div>
           <span className="text-xs font-medium text-success cursor-pointer">Active</span>
         </div>
       </CardHeader>
-      <CardContent className="pt-0">
-        <div className="space-y-2">
+      <CardContent className="pt-0 px-3 pb-3">
+        <div className="space-y-1.5">
           {teams.map((team, index) => (
-            <div key={index} className="flex items-center justify-between cursor-pointer hover:bg-muted/30 rounded-lg p-1.5 -m-1.5 transition-colors">
-              <span className="text-xs text-primary hover:underline cursor-pointer font-medium">
+            <div key={index} className="flex items-center justify-between cursor-pointer hover:bg-muted/30 rounded-lg p-1 -m-1 transition-colors">
+              <span className="text-xs text-primary hover:underline cursor-pointer font-medium truncate max-w-[60%]">
                 {team.name}
               </span>
-              <div className="text-right">
+              <div className="text-right flex-shrink-0">
                 <span className="text-sm font-bold text-foreground cursor-pointer">{team.percentage}%</span>
                 <div className="text-xs text-muted-foreground cursor-pointer">
-                  {team.count} of {team.total}
+                  ({team.count} of {team.total})
                 </div>
               </div>
             </div>
@@ -66,9 +66,10 @@ export function AbcdPage() {
       description: "ABCDs that do not have a New Provision Type or Option nor a New Bencode",
       isActive: true,
       teams: [
-        { name: "HPO team", percentage: 0, count: 0, total: 1458 },
-        { name: "PM&D team", percentage: 0, count: 3, total: 1453 },
-        { name: "Simplify Healthcare", percentage: 1, count: 16, total: 1476 }
+        { name: "Simplify Healthcare", percentage: 0, count: 0, total: 452 },
+        { name: "HPO team", percentage: 0, count: 0, total: 452 },
+        { name: "PM&D team", percentage: 0, count: 0, total: 452 },
+        { name: "Total", percentage: 0, count: 452, total: 452 }
       ]
     },
     {
@@ -76,9 +77,7 @@ export function AbcdPage() {
       description: "ABCDs with a New Provision Type and/or Option and/or a New Bencode",
       isActive: true,
       teams: [
-        { name: "HPO team", percentage: 0, count: 0, total: 23 },
-        { name: "PM&D team", percentage: 29, count: 4, total: 14 },
-        { name: "Simplify Healthcare", percentage: 18, count: 12, total: 65 }
+        { name: "Total", percentage: 0, count: 0, total: 0 }
       ]
     }
   ]
@@ -89,17 +88,15 @@ export function AbcdPage() {
       description: "All ABCDs with a row that changes only Provision Type",
       isActive: true,
       teams: [
-        { name: "Simplify Healthcare", percentage: 0, count: 0, total: 10 }
+        { name: "Total", percentage: 0, count: 0, total: 0 }
       ]
     },
     {
       title: "New Provision Type is not in CCR",
-      description: "All ABCDs with a row that changes only Provision Type but to a value not currently in CCR",
+      description: "All ABCDs with a row that changes Provision Type to a value not currently in CCR",
       isActive: true,
       teams: [
-        { name: "HPO team", percentage: 0, count: 0, total: 11 },
-        { name: "PM&D team", percentage: 0, count: 0, total: 3 },
-        { name: "Simplify Healthcare", percentage: 52, count: 11, total: 21 }
+        { name: "Total", percentage: 0, count: 0, total: 0 }
       ]
     },
     {
@@ -107,9 +104,7 @@ export function AbcdPage() {
       description: "All ABCDs with a row that changes only Provision Option",
       isActive: true,
       teams: [
-        { name: "HPO team", percentage: 0, count: 0, total: 1 },
-        { name: "PM&D team", percentage: 0, count: 0, total: 1 },
-        { name: "Simplify Healthcare", percentage: 11, count: 1, total: 9 }
+        { name: "Total", percentage: 0, count: 0, total: 0 }
       ]
     },
     {
@@ -117,27 +112,39 @@ export function AbcdPage() {
       description: "All ABCDs with a row that recommends a New Bencode",
       isActive: true,
       teams: [
-        { name: "HPO team", percentage: 0, count: 0, total: 8 },
-        { name: "PM&D team", percentage: 60, count: 3, total: 5 },
-        { name: "Simplify Healthcare", percentage: 0, count: 0, total: 8 }
+        { name: "Total", percentage: 0, count: 0, total: 0 }
       ]
     },
     {
-      title: "New Provision Option & Option",
+      title: "New Provision Type & Option",
       description: "All ABCDs with a row that changes both Provision Type & Option",
       isActive: true,
       teams: [
-        { name: "HPO team", percentage: 0, count: 0, total: 11 },
-        { name: "PM&D team", percentage: 0, count: 0, total: 3 },
-        { name: "Simplify Healthcare", percentage: 79, count: 11, total: 14 }
+        { name: "Total", percentage: 0, count: 0, total: 0 }
       ]
     },
     {
       title: "New Provision Type & Bencode",
-      description: "All ABCDs with a row that changes both Provision Type and recommends a New Bencode",
+      description: "All ABCDs with a row that changes Provision Type & recommends a New Bencode",
       isActive: true,
       teams: [
-        { name: "Simplify Healthcare", percentage: 0, count: 0, total: 3 }
+        { name: "Total", percentage: 0, count: 0, total: 0 }
+      ]
+    },
+    {
+      title: "New Provision Option & Bencode",
+      description: "All ABCDs with a row that changes Provision Option and recommends a New Bencode",
+      isActive: true,
+      teams: [
+        { name: "Total", percentage: 0, count: 0, total: 0 }
+      ]
+    },
+    {
+      title: "New Provision Type & Option & Bencode",
+      description: "All ABCDs with a row that changes Provision Type & Option and recommends a New Bencode",
+      isActive: true,
+      teams: [
+        { name: "Total", percentage: 0, count: 0, total: 0 }
       ]
     }
   ]
@@ -145,40 +152,44 @@ export function AbcdPage() {
   return (
     <div className="abcd-page-compact">
       <PageLayout
-        title="ABCD Disposition"
-        subtitle="Healthcare Analytics Platform for provision analysis and team collaboration"
+        title="ABCD"
+        subtitle="Service Group: Phase 1 Cycle 2"
         backButtonLabel="Back to Dashboard"
         backButtonPath="/"
       >
-        {/* Classification Section - Compact spacing */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <h2 className="text-lg font-semibold text-foreground">ABCD Disposition</h2>
-            <Badge variant="outline" className="bg-primary text-primary-foreground cursor-pointer text-xs">
-              Classification 2
-            </Badge>
+        {/* Compact single-screen layout optimized for 1920x1080 */}
+        <div className="space-y-6">
+          {/* Classification Section */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <h2 className="text-lg font-semibold text-foreground">ABCD Disposition</h2>
+              <Badge variant="outline" className="bg-primary text-primary-foreground cursor-pointer text-xs px-2 py-1">
+                Classification 2
+              </Badge>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {classificationCards.map((card, index) => (
+                <AbcdCard key={index} {...card} />
+              ))}
+            </div>
           </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {classificationCards.map((card, index) => (
-              <AbcdCard key={index} {...card} />
-            ))}
-          </div>
-        </div>
 
-        {/* Analytics Section - Compact spacing */}
-        <div className="space-y-4 mt-6">
-          <div className="flex items-center gap-3">
-            <h2 className="text-lg font-semibold text-foreground">Streamlining Classifications</h2>
-            <Badge variant="outline" className="bg-info text-white cursor-pointer text-xs">
-              Analytics 6
-            </Badge>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-            {analyticsCards.map((card, index) => (
-              <AbcdCard key={index} {...card} />
-            ))}
+          {/* Analytics Section - Optimized for single screen fit */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <h2 className="text-lg font-semibold text-foreground">Streamlining Classifications</h2>
+              <Badge variant="outline" className="bg-info text-white cursor-pointer text-xs px-2 py-1">
+                Analytics 8
+              </Badge>
+            </div>
+            
+            {/* Responsive grid - fits all 8 cards on screen without scrolling */}
+            <div className="analytics-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-3">
+              {analyticsCards.map((card, index) => (
+                <AbcdCard key={index} {...card} />
+              ))}
+            </div>
           </div>
         </div>
       </PageLayout>
