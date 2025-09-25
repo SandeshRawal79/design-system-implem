@@ -1,19 +1,11 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import { Card } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { useNavigate } from 'react-router-dom'
 
 interface IntelligenceServiceProps {
   title: string
   type: 'Analytics' | 'Management'
   description: string
   status: 'Active' | 'Inactive'
-  primaryAction: string
-  secondaryAction?: string
-  onPrimaryClick?: () => void
-  onSecondaryClick?: () => void
   teamStats?: Array<{
     team: string
     percentage: string
@@ -26,10 +18,6 @@ function IntelligenceCard({
   type, 
   description, 
   status, 
-  primaryAction, 
-  secondaryAction,
-  onPrimaryClick,
-  onSecondaryClick,
   teamStats 
 }: IntelligenceServiceProps) {
   const typeColor = type === 'Analytics' ? '#474A9E' : '#F48436'
@@ -75,59 +63,29 @@ function IntelligenceCard({
           </div>
         )}
       </div>
-      
-      <div className="flex flex-col gap-2 mt-4">
-        <Button 
-          className="btn-gradient-primary w-full justify-center gap-2 cursor-pointer group-hover:scale-[1.02] transition-transform duration-200"
-          onClick={onPrimaryClick}
-        >
-          <FontAwesomeIcon icon={faPlay} className="w-3 h-3" />
-          {primaryAction}
-        </Button>
-        {secondaryAction && (
-          <Button 
-            variant="outline" 
-            className="btn-gradient-secondary w-full cursor-pointer group-hover:scale-[1.02] transition-transform duration-200"
-            onClick={onSecondaryClick}
-          >
-            <FontAwesomeIcon icon={faPlay} className="w-3 h-3 mr-2" />
-            {secondaryAction}
-          </Button>
-        )}
-      </div>
     </Card>
   )
 }
 
 export function IntelligenceCatalog() {
-  const navigate = useNavigate()
-  
   const services = [
     {
       title: "Service Intelligence",
       type: "Analytics" as const,
       description: "Smart service analytics and performance monitoring with detailed insights and reporting",
-      status: "Active" as const,
-      primaryAction: "Launch Phase I services",
-      secondaryAction: "Launch all services",
-      onPrimaryClick: () => navigate('/phase1-services'),
-      onSecondaryClick: () => console.log('Launch all services clicked')
+      status: "Active" as const
     },
     {
       title: "Service Group Intelligence", 
       type: "Management" as const,
       description: "Organize and group related services together for streamlined processing, workflow management, and bulk operations",
-      status: "Active" as const,
-      primaryAction: "Launch",
-      onPrimaryClick: () => navigate('/service-groups')
+      status: "Active" as const
     },
     {
       title: "Set Intelligence",
       type: "Management" as const,
       description: "Comprehensive ABCD set management and workflow orchestration for provision approval",
       status: "Active" as const,
-      primaryAction: "Launch",
-      onPrimaryClick: () => navigate('/abcd-sets'),
       teamStats: [
         { team: "HPO team", percentage: "2%", detail: "1 of 45" },
         { team: "PM&D team", percentage: "2%", detail: "1 of 42" },
@@ -139,8 +97,6 @@ export function IntelligenceCatalog() {
       type: "Analytics" as const,
       description: "Phase 1 ABCD record analytics and provision tracking with detailed insights and performance metrics",
       status: "Active" as const,
-      primaryAction: "Launch",
-      onPrimaryClick: () => navigate('/abcd'),
       teamStats: [
         { team: "HPO team", percentage: "0%", detail: "0 of 438" },
         { team: "PM&D team", percentage: "2%", detail: "7 of 398" },
