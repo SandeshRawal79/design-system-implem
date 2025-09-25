@@ -67,7 +67,7 @@ function IntelligenceCard({
                 }}
               >
                 <span 
-                  className="text-sm font-medium transition-all duration-300 group-hover:font-semibold team-stats-text"
+                  className="text-sm font-medium transition-all duration-300 group-hover:font-semibold team-stats-text relative underline-offset-2 hover:underline"
                   style={{ color: '#474A9E' }}
                 >
                   {stat.team}

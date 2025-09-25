@@ -288,26 +288,19 @@ button, .btn, [role="button"], .cursor-pointer {
   box-shadow: 0 4px 12px rgba(71, 74, 158, 0.1);
 }
 
-/* Team stats text with underline on hover */
+/* Team stats text with anchor-like underline on hover */
 .team-stats-text {
   position: relative;
   text-decoration: none;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
 
-.team-stats-text::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(135deg, #474A9E 0%, #1F8A7A 100%);
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.team-stats-text:hover::after {
-  width: 100%;
+.team-stats-text:hover {
+  text-decoration: underline;
+  text-decoration-color: #474A9E;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
 }
 
 /* Page header layout improvements - Optimized for 1920x1080 */
