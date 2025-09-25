@@ -60,20 +60,31 @@ function IntelligenceCard({
             {teamStats.map((stat, index) => (
               <div 
                 key={index} 
-                className="flex justify-between items-center p-2 -mx-2 rounded-md cursor-pointer transition-all duration-200 hover:bg-muted/50 hover:shadow-sm group"
+                className="flex justify-between items-center p-2 -mx-2 rounded-md cursor-pointer transition-all duration-300 hover:bg-gradient-to-r hover:from-primary/5 hover:to-secondary/5 hover:shadow-sm hover:scale-[1.02] group"
                 onClick={(e) => {
                   e.stopPropagation()
                   // Add navigation logic here if needed for team stats
                 }}
               >
-                <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                <span className="text-sm font-medium text-muted-foreground group-hover:text-primary group-hover:font-semibold transition-all duration-300">
                   {stat.team}
                 </span>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors duration-200">
+                  <span 
+                    className="text-sm font-bold transition-all duration-300 group-hover:scale-110"
+                    style={{ 
+                      background: 'linear-gradient(135deg, #474A9E 0%, #1F8A7A 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text'
+                    }}
+                  >
                     {stat.percentage}
                   </span>
-                  <span className="text-xs text-muted-foreground group-hover:text-foreground/80 transition-colors duration-200">
+                  <span 
+                    className="text-xs font-medium transition-all duration-300 group-hover:text-secondary"
+                    style={{ color: '#F48436' }}
+                  >
                     ({stat.detail})
                   </span>
                 </div>
