@@ -384,7 +384,7 @@ button, .btn, [role="button"], .cursor-pointer {
   }
 }
 
-/* ABCD Page specific compact layout - Optimized for 1920x1080 single screen */
+/* ABCD Page specific two-column layout - Optimized for 1920x1080 single screen */
 .abcd-page-compact {
   height: calc(100vh - var(--header-height) - var(--footer-height) - 2rem); /* Full available height minus padding */
   overflow: hidden; /* Prevent any scrolling */
@@ -392,7 +392,7 @@ button, .btn, [role="button"], .cursor-pointer {
 
 .abcd-page-compact .intelligence-card {
   min-height: auto !important;
-  max-height: 200px; /* Strict height limit for single screen fit */
+  max-height: 220px; /* Slightly increased for better content visibility */
   overflow: hidden;
 }
 
@@ -402,37 +402,30 @@ button, .btn, [role="button"], .cursor-pointer {
   }
   
   .abcd-page-compact .intelligence-card {
-    max-height: 180px; /* Smaller cards for better density */
+    max-height: 200px; /* Optimal height for two-column layout */
   }
   
   .abcd-page-compact .card-header {
-    padding: 0.625rem !important; /* 10px */
+    padding: 0.75rem !important; /* 12px */
   }
   
   .abcd-page-compact .card-content {
-    padding: 0.625rem !important; /* 10px */
+    padding: 0.75rem !important; /* 12px */
     padding-top: 0 !important;
-  }
-  
-  /* Ensure analytics cards fit in 4 columns on 1920x1080 */
-  .abcd-page-compact .analytics-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.75rem; /* 12px gap */
   }
 }
 
 @media (min-width: 1920px) {
   .abcd-page-compact .intelligence-card {
-    max-height: 185px; /* Slightly more generous on larger screens */
+    max-height: 210px; /* Slightly more generous on larger screens */
   }
   
   .abcd-page-compact .card-header {
-    padding: 0.75rem !important; /* 12px */
+    padding: 0.875rem !important; /* 14px */
   }
   
   .abcd-page-compact .card-content {
-    padding: 0.75rem !important; /* 12px */
+    padding: 0.875rem !important; /* 14px */
     padding-top: 0 !important;
   }
 }
