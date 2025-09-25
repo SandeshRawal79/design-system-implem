@@ -17,7 +17,7 @@
   /* Design System Colors */
   --background: oklch(1 0 0); /* #FFFFFF */
   --foreground: oklch(0.145 0 0); /* #222222 */
-  --card: oklch(0.978 0 0); /* #F8F9FA */
+  --card: oklch(1 0 0); /* #FFFFFF - Pure white for cards */
   --card-foreground: oklch(0.145 0 0); /* #222222 */
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
