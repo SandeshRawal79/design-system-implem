@@ -84,16 +84,7 @@ function IntelligenceCard({
           <FontAwesomeIcon icon={faPlay} className="w-3 h-3" />
           {primaryAction}
         </Button>
-        {secondaryAction && (
-          <Button 
-            variant="outline" 
-            className="btn-gradient-secondary w-full cursor-pointer group-hover:scale-[1.02] transition-transform duration-200"
-            onClick={onSecondaryClick}
-          >
-            <FontAwesomeIcon icon={faPlay} className="w-3 h-3 mr-2" />
-            {secondaryAction}
-          </Button>
-        )}
+
       </div>
     </Card>
   )
@@ -109,9 +100,7 @@ export function IntelligenceCatalog() {
       description: "Smart service analytics and performance monitoring with detailed insights and reporting",
       status: "Active" as const,
       primaryAction: "Launch Phase I services",
-      secondaryAction: "Launch all services",
-      onPrimaryClick: () => navigate('/phase1-services'),
-      onSecondaryClick: () => console.log('Launch all services clicked')
+      onPrimaryClick: () => navigate('/phase1-services')
     },
     {
       title: "Service Group Intelligence", 
