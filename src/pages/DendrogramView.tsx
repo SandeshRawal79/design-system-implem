@@ -1,15 +1,12 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Input } from '@/components/ui/input'
-import { ArrowLeft, Download, Gear, Eye, TreeStructure, ChartLine, Funnel, Info, Calendar, User, Hash, MagnifyingGlass } from '@phosphor-icons/react'
+import { ArrowLeft, Download, Gear, Eye, TreeStructure, ChartLine, Funnel, Info, Calendar, User, Hash } from '@phosphor-icons/react'
 
 export function DendrogramView() {
   const navigate = useNavigate()
   const { serviceId } = useParams()
-  const [clusterDistance, setClusterDistance] = useState('')
 
   // Mock service data based on the snapshot
   const mockService = {
@@ -34,13 +31,6 @@ export function DendrogramView() {
 
   const handleBackToPhase1 = () => {
     navigate('/phase1-services')
-  }
-
-  const handleViewClusters = () => {
-    if (clusterDistance.trim()) {
-      // Navigate to clusters list page with the distance parameter
-      navigate(`/clusters/${serviceId}?distance=${clusterDistance}`)
-    }
   }
 
   return (
@@ -152,56 +142,6 @@ export function DendrogramView() {
                   <div className="text-sm text-muted-foreground">{mockService.context.relationships}</div>
                 </div>
               </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* See Clusters at Distance Section */}
-      <Card className="bg-card border border-border">
-        <CardHeader className="pb-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-info/10 rounded-lg flex items-center justify-center">
-              <MagnifyingGlass className="w-5 h-5 text-info" />
-            </div>
-            <CardTitle className="text-lg font-semibold">Cluster Analysis</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <div className="space-y-4">
-            <div>
-              <p className="text-sm text-muted-foreground mb-3">
-                Explore clusters at a specific distance threshold to identify natural groupings within your service provisions.
-              </p>
-              <div className="flex gap-3 items-end">
-                <div className="flex-1 max-w-xs">
-                  <label htmlFor="cluster-distance" className="block text-sm font-medium text-foreground mb-1">
-                    Distance Threshold
-                  </label>
-                  <Input
-                    id="cluster-distance"
-                    type="number"
-                    placeholder="Enter distance (e.g., 0.5)"
-                    value={clusterDistance}
-                    onChange={(e) => setClusterDistance(e.target.value)}
-                    className="w-full"
-                    min="0"
-                    max="1"
-                    step="0.1"
-                  />
-                </div>
-                <Button 
-                  onClick={handleViewClusters}
-                  disabled={!clusterDistance.trim()}
-                  className="btn-gradient-primary cursor-pointer"
-                >
-                  <MagnifyingGlass className="w-4 h-4 mr-2" />
-                  See Clusters
-                </Button>
-              </div>
-              <p className="text-xs text-muted-foreground mt-2">
-                Distance ranges from 0 (identical) to 1 (completely different). Lower values create more clusters.
-              </p>
             </div>
           </div>
         </CardContent>

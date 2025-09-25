@@ -6,7 +6,6 @@ import { ServiceGroups } from './pages/ServiceGroups'
 import { AbcdSets } from './pages/AbcdSets'
 import { AbcdPage } from './pages/AbcdPage'
 import { DendrogramView } from './pages/DendrogramView'
-import { ClustersView } from './pages/ClustersView'
 
 function App() {
   return (
@@ -24,7 +23,6 @@ function App() {
               <Route path="/abcd-sets" element={<AbcdSets />} />
               <Route path="/abcd" element={<AbcdPage />} />
               <Route path="/dendrogram/:serviceId" element={<DendrogramView />} />
-              <Route path="/clusters/:serviceId" element={<ClustersView />} />
             </Routes>
           </div>
         </main>
