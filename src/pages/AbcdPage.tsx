@@ -157,7 +157,7 @@ export function AbcdPage() {
         backButtonLabel="Back to Dashboard"
         backButtonPath="/"
       >
-        {/* Two-column layout matching the snapshot */}
+        {/* Two-column layout with equal card widths */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 h-full">
           {/* Left Column - ABCD Disposition */}
           <div className="space-y-4">
@@ -168,7 +168,8 @@ export function AbcdPage() {
               </Badge>
             </div>
             
-            <div className="space-y-4">
+            {/* Same grid layout as right column for equal card widths */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {classificationCards.map((card, index) => (
                 <AbcdCard key={index} {...card} />
               ))}
