@@ -152,7 +152,7 @@ export function ServiceGroups() {
     },
     {
       key: 'dendrogram',
-      label: 'Dendrogram',
+      label: 'Actions',
       sortable: false,
       searchable: false,
       minWidth: '90px',
