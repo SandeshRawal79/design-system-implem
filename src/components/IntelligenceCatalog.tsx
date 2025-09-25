@@ -58,11 +58,24 @@ function IntelligenceCard({
         {teamStats && (
           <div className="space-y-2 mb-4">
             {teamStats.map((stat, index) => (
-              <div key={index} className="flex justify-between items-center">
-                <span className="text-sm text-muted-foreground">{stat.team}</span>
+              <div 
+                key={index} 
+                className="flex justify-between items-center p-2 -mx-2 rounded-md cursor-pointer transition-all duration-200 hover:bg-muted/50 hover:shadow-sm group"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // Add navigation logic here if needed for team stats
+                }}
+              >
+                <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  {stat.team}
+                </span>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-foreground">{stat.percentage}</span>
-                  <span className="text-xs text-muted-foreground">({stat.detail})</span>
+                  <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors duration-200">
+                    {stat.percentage}
+                  </span>
+                  <span className="text-xs text-muted-foreground group-hover:text-foreground/80 transition-colors duration-200">
+                    ({stat.detail})
+                  </span>
                 </div>
               </div>
             ))}
