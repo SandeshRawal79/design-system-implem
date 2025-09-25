@@ -56,7 +56,7 @@ function IntelligenceCard({
         )}
 
         {teamStats && (
-          <div className="space-y-1 mb-3">
+          <div className="space-y-1 mb-2">
             {teamStats.map((stat, index) => (
               <div 
                 key={index} 
