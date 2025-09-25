@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { PageLayout } from '@/components/PageLayout'
 
@@ -18,43 +18,68 @@ interface AbcdCardProps {
 
 function AbcdCard({ title, description, isActive, teams, badgeText, badgeCount }: AbcdCardProps) {
   return (
-    <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 group intelligence-card bg-card border-border">
-      <CardHeader className="pb-2 px-3 pt-3">
-        <div className="flex items-center justify-between mb-1">
-          <CardTitle className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors leading-tight">
-            {title}
-          </CardTitle>
+    <Card className="p-4 h-full flex flex-col justify-between intelligence-card border-2 hover:border-primary/20 cursor-pointer">
+      <div>
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors duration-200">{title}</h3>
           {badgeText && badgeCount && (
-            <Badge variant="secondary" className="bg-primary text-primary-foreground cursor-pointer text-xs px-1.5 py-0.5">
+            <Badge 
+              className="text-white font-medium group-hover:scale-105 transition-transform duration-200"
+              style={{ backgroundColor: '#474A9E' }}
+            >
               {badgeText} {badgeCount}
             </Badge>
           )}
         </div>
-        <p className="text-xs text-muted-foreground leading-snug line-clamp-2 mb-2">
+        
+        <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
           {description}
         </p>
-        <div className="flex items-center gap-1.5">
-          <div className={`w-1.5 h-1.5 rounded-full cursor-pointer ${isActive ? 'bg-success status-active' : 'bg-muted-foreground'}`}></div>
-          <span className="text-xs font-medium text-success cursor-pointer">Active</span>
-        </div>
-      </CardHeader>
-      <CardContent className="pt-0 px-3 pb-3">
-        <div className="space-y-1.5">
+        
+        {isActive && (
+          <div className="flex items-center gap-1.5 mb-3">
+            <div className="w-2 h-2 rounded-full status-active" style={{ backgroundColor: '#43812C' }}></div>
+            <span className="text-xs font-medium" style={{ color: '#43812C' }}>
+              Active
+            </span>
+          </div>
+        )}
+
+        <div className="space-y-1 mb-2">
           {teams.map((team, index) => (
-            <div key={index} className="flex items-center justify-between cursor-pointer hover:bg-muted/30 rounded-lg p-1 -m-1 transition-colors">
-              <span className="text-xs text-primary hover:underline cursor-pointer font-medium truncate max-w-[60%]">
+            <div 
+              key={index} 
+              className="flex justify-between items-center p-1.5 -mx-1.5 rounded-md cursor-pointer transition-all duration-300 hover:bg-gradient-to-r hover:from-primary/5 hover:to-secondary/5 hover:shadow-sm hover:scale-[1.02] group"
+            >
+              <span 
+                className="text-xs font-medium transition-all duration-300 group-hover:font-semibold team-stats-text relative underline-offset-2 hover:underline"
+                style={{ color: '#474A9E' }}
+              >
                 {team.name}
               </span>
-              <div className="text-right flex-shrink-0">
-                <span className="text-sm font-bold text-foreground cursor-pointer">{team.percentage}%</span>
-                <div className="text-xs text-muted-foreground cursor-pointer">
+              <div className="flex items-center gap-1.5">
+                <span 
+                  className="text-xs font-bold transition-all duration-300 group-hover:scale-110"
+                  style={{ 
+                    background: 'linear-gradient(135deg, #474A9E 0%, #1F8A7A 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text'
+                  }}
+                >
+                  {team.percentage}%
+                </span>
+                <span 
+                  className="text-xs font-medium transition-all duration-300 group-hover:font-semibold"
+                  style={{ color: '#1F8A7A' }}
+                >
                   ({team.count} of {team.total})
-                </div>
+                </span>
               </div>
             </div>
           ))}
         </div>
-      </CardContent>
+      </div>
     </Card>
   )
 }
