@@ -299,7 +299,7 @@ button, .btn, [role="button"], .cursor-pointer {
 .team-stats-text:hover {
   text-decoration: underline;
   text-decoration-color: #474A9E;
-  text-decoration-thickness: 2px;
+  text-decoration-thickness: 1px;
   text-underline-offset: 4px;
 }
 
