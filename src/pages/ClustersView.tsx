@@ -357,7 +357,10 @@ export function ClustersView() {
           <Card className="bg-card border border-border">
             <CardHeader className="pb-4">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-lg font-bold">
+                <CardTitle 
+                  className="text-lg font-bold cursor-pointer hover:text-primary transition-colors"
+                  onClick={() => navigate(`/clusters/${serviceId}/cluster/${selectedCluster}`)}
+                >
                   Cluster {selectedCluster} of 6 ({selectedClusterData?.recordCount || 0} records)
                 </CardTitle>
                 <div className="flex items-center gap-4">
