@@ -245,7 +245,7 @@ export function ClusterDetails() {
           </Button>
           
           <div>
-            <h1 className="text-h2-responsive font-bold text-foreground">
+            <h1 className="text-2xl font-bold text-foreground">
               Provision Intelligence Hub - Cluster #{clusterInfo.clusterId} of {clusterInfo.totalClusters} Details
             </h1>
           </div>
