@@ -1,12 +1,31 @@
+import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { ArrowLeft, Download, Gear, Eye, TreeStructure, ChartLine, Funnel, Info, Calendar, User, Hash } from '@phosphor-icons/react'
+import { Input } from '@/components/ui/input'
+import { ArrowLeft, Download, Gear, Eye, TreeStructure, ChartLine, Funnel, Info, Calendar, User, Hash, Circle } from '@phosphor-icons/react'
 
 export function DendrogramView() {
   const navigate = useNavigate()
   const { serviceId } = useParams()
+  
+  // State for cluster distance inputs
+  const [clusterDistance1, setClusterDistance1] = useState('')
+  const [clusterDistance2, setClusterDistance2] = useState('')
+  const [clusterDistance3, setClusterDistance3] = useState('')
+  
+  // Handler for cluster distance analysis
+  const handleClusterAnalysis = (dendrogramType: 1 | 2 | 3, distance: string) => {
+    if (!distance || isNaN(parseFloat(distance))) {
+      alert('Please enter a valid distance value')
+      return
+    }
+    
+    // Mock implementation - in real app would trigger actual cluster analysis
+    console.log(`Analyzing clusters at distance ${distance} for dendrogram ${dendrogramType}`)
+    alert(`Cluster analysis initiated for Provision X-ray #${dendrogramType} at distance: ${distance}`)
+  }
 
   // Mock service data based on the snapshot
   const mockService = {
@@ -181,6 +200,37 @@ export function DendrogramView() {
                   <p className="text-xs mt-1">Full hierarchy: Service → Provision Type → Options</p>
                 </div>
               </div>
+              
+              {/* Cluster Distance Control */}
+              <div className="border-t border-border pt-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex-1 min-w-0">
+                    <label htmlFor="cluster-distance-1" className="block text-xs font-medium text-foreground mb-1">
+                      See clusters at distance:
+                    </label>
+                    <Input
+                      id="cluster-distance-1"
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      max="1"
+                      value={clusterDistance1}
+                      onChange={(e) => setClusterDistance1(e.target.value)}
+                      placeholder="0.75"
+                      className="text-sm h-8"
+                    />
+                  </div>
+                  <Button 
+                    size="sm" 
+                    onClick={() => handleClusterAnalysis(1, clusterDistance1)}
+                    className="btn-gradient-secondary cursor-pointer table-action-btn mt-5"
+                  >
+                    <Circle className="w-4 h-4 mr-1" />
+                    Analyze
+                  </Button>
+                </div>
+              </div>
+              
               <div className="flex gap-2">
                 <Button size="sm" className="btn-gradient-primary cursor-pointer table-action-btn">
                   <ChartLine className="w-4 h-4 mr-2" />
@@ -227,6 +277,37 @@ export function DendrogramView() {
                   <p className="text-xs mt-1">Mid-level hierarchy: Provision Type → Options</p>
                 </div>
               </div>
+              
+              {/* Cluster Distance Control */}
+              <div className="border-t border-border pt-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex-1 min-w-0">
+                    <label htmlFor="cluster-distance-2" className="block text-xs font-medium text-foreground mb-1">
+                      See clusters at distance:
+                    </label>
+                    <Input
+                      id="cluster-distance-2"
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      max="1"
+                      value={clusterDistance2}
+                      onChange={(e) => setClusterDistance2(e.target.value)}
+                      placeholder="0.75"
+                      className="text-sm h-8"
+                    />
+                  </div>
+                  <Button 
+                    size="sm" 
+                    onClick={() => handleClusterAnalysis(2, clusterDistance2)}
+                    className="btn-gradient-secondary cursor-pointer table-action-btn mt-5"
+                  >
+                    <Circle className="w-4 h-4 mr-1" />
+                    Analyze
+                  </Button>
+                </div>
+              </div>
+              
               <div className="flex gap-2">
                 <Button size="sm" className="btn-gradient-primary cursor-pointer table-action-btn">
                   <ChartLine className="w-4 h-4 mr-2" />
@@ -273,6 +354,37 @@ export function DendrogramView() {
                   <p className="text-xs mt-1">Options-focused analysis</p>
                 </div>
               </div>
+              
+              {/* Cluster Distance Control */}
+              <div className="border-t border-border pt-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex-1 min-w-0">
+                    <label htmlFor="cluster-distance-3" className="block text-xs font-medium text-foreground mb-1">
+                      See clusters at distance:
+                    </label>
+                    <Input
+                      id="cluster-distance-3"
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      max="1"
+                      value={clusterDistance3}
+                      onChange={(e) => setClusterDistance3(e.target.value)}
+                      placeholder="0.75"
+                      className="text-sm h-8"
+                    />
+                  </div>
+                  <Button 
+                    size="sm" 
+                    onClick={() => handleClusterAnalysis(3, clusterDistance3)}
+                    className="btn-gradient-secondary cursor-pointer table-action-btn mt-5"
+                  >
+                    <Circle className="w-4 h-4 mr-1" />
+                    Analyze
+                  </Button>
+                </div>
+              </div>
+              
               <div className="flex gap-2">
                 <Button size="sm" className="btn-gradient-primary cursor-pointer table-action-btn">
                   <ChartLine className="w-4 h-4 mr-2" />
