@@ -327,10 +327,10 @@ export function ClusterDetails() {
         </Card>
       </div>
 
-      {/* Compact Search, Filter & Sort Bar - Single Line */}
-      <Card className="bg-card border-border mb-4">
-        <CardContent className="p-0.5">
-          <div className="flex flex-col xl:flex-row gap-2 items-start xl:items-center">
+      {/* Main Cluster Data Table */}
+      <Card className="bg-card border-border">
+        <CardContent className="p-0">
+         <div className="flex flex-col xl:flex-row gap-2 px-2 items-start xl:items-center">
             {/* Search Input - Compact */}
             <div className="relative flex-shrink-0">
               <MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -457,12 +457,7 @@ export function ClusterDetails() {
               </span>
             </div>
           </div>
-        </CardContent>
-      </Card>
 
-      {/* Main Cluster Data Table */}
-      <Card className="bg-card border-border">
-        <CardContent className="p-0">
           <div className="px-4 py-3 border-b border-border">
             <h2 className="text-lg font-semibold text-foreground">Main Cluster Data</h2>
           </div>
