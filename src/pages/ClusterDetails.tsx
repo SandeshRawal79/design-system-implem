@@ -88,7 +88,7 @@ export function ClusterDetails() {
 
   const clusterInfo = {
     xrayProjection: 'Only Options (D)',
-    dataContext: 'id=0 names=Product Wide Provision',
+    dataContext: 'id=0 names=Product Wide Provision Product Wide Provision',
     created: '2023-03-16 10:56:57',
     recordsInCluster: 270,
     clusterId: clusterId || '1',
