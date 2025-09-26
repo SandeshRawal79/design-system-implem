@@ -314,7 +314,7 @@ export function ClusterDetails() {
                 />
                 <Button 
                   size="sm" 
-                  className="h-6 px-3 btn-gradient-primary text-xs"
+                  className="h-6 px-3 btn-gradient-primary text-sm"
                   onClick={() => {
                     console.log('Update distance threshold to:', distanceThreshold)
                     // Here you would typically make an API call to update the threshold
