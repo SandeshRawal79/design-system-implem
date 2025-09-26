@@ -273,60 +273,6 @@ export function ClusterDetails() {
         </div>
       </div>
 
-      {/* Cluster Information Cards - Compact */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
-        {/* Left Card - Cluster Metadata */}
-        <Card className="bg-card border-border">
-          <CardContent className="p-0.5">
-            <div className="space-y-1">
-              <div className="flex flex-wrap items-center gap-0.5">
-                <span className="text-xs font-medium text-primary">X-ray Projection:</span>
-                <span className="text-xs text-foreground">{clusterInfo.xrayProjection}</span>
-              </div>
-              <div className="flex flex-wrap items-center gap-0.5">
-                <span className="text-xs font-medium text-primary">Data context:</span>
-                <span className="text-xs text-foreground font-mono">{clusterInfo.dataContext}</span>
-              </div>
-              <div className="flex flex-wrap items-center gap-0.5">
-                <span className="text-xs font-medium text-primary">Created:</span>
-                <span className="text-xs text-foreground">{clusterInfo.created}</span>
-              </div>
-              <div className="flex flex-wrap items-center gap-0.5">
-                <span className="text-xs font-medium text-primary">Records in this Cluster:</span>
-                <span className="text-xs font-bold text-accent">{clusterInfo.recordsInCluster}</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Right Card - Cluster Status */}
-        <Card className="bg-card border-border">
-          <CardContent className="p-0.5">
-            <div className="space-y-1">
-              <div className="flex flex-wrap items-center gap-0.5">
-                <span className="text-xs font-medium text-primary">Cluster:</span>
-                <span className="text-xs font-bold text-accent">{clusterInfo.clusterId}</span>
-              </div>
-              <div className="flex flex-wrap items-center gap-0.5">
-                <span className="text-xs font-medium text-primary">Total Clusters:</span>
-                <span className="text-xs text-foreground">{clusterInfo.totalClusters}</span>
-              </div>
-              <div className="flex flex-wrap items-center gap-1">
-                <span className="text-xs font-medium text-primary">Distance Threshold:</span>
-                <span className="text-xs font-bold text-accent">{clusterInfo.distanceThreshold}</span>
-                <Button 
-                  size="sm" 
-                  className="btn-gradient-primary h-5 px-2 text-xs"
-                  onClick={() => {}}
-                >
-                  Update
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
       {/* Main Cluster Data Table */}
       <Card className="bg-card border-border">
         <CardContent className="p-0">
