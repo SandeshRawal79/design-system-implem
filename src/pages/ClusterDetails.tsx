@@ -1,9 +1,19 @@
+import { useState, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft } from '@phosphor-icons/react'
+import { ArrowLeft, MagnifyingGlass, CaretDown, CaretUp, Funnel, X, SortAscending, SortDescending, Bookmark } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
+import { Input } from '@/components/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
+
+// Types for filtering and sorting
+type SortField = 'id' | 'serviceName' | 'provisionType' | 'options' | 'numProv' | 'numProd' | 'numSplit'
+type SortDirection = 'asc' | 'desc'
+type FilterType = 'all' | 'with-approvals' | 'pending-approvals' | 'no-approvals'
+type StatusFilter = 'all' | 'approved' | 'rejected' | 'pending'
 
 // Generate random approval statuses for demonstration
 const generateApprovalStatuses = () => {
@@ -68,6 +78,14 @@ export function ClusterDetails() {
   const { serviceId, clusterId } = useParams()
   const navigate = useNavigate()
 
+  // State for filtering and sorting
+  const [searchTerm, setSearchTerm] = useState('')
+  const [sortField, setSortField] = useState<SortField>('id')
+  const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
+  const [filterType, setFilterType] = useState<FilterType>('all')
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
+  const [provisionTypeFilter, setProvisionTypeFilter] = useState('all')
+
   const clusterInfo = {
     xrayProjection: 'Only Options (D)',
     dataContext: 'd=() names=Product Wide Provision',
@@ -77,6 +95,139 @@ export function ClusterDetails() {
     totalClusters: 6,
     distanceThreshold: 10.0
   }
+
+  // Filter and sort data
+  const filteredAndSortedData = useMemo(() => {
+    let filtered = [...mockClusterData]
+
+    // Apply search filter
+    if (searchTerm) {
+      filtered = filtered.filter(item =>
+        item.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.serviceName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.provisionType.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.options.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    }
+
+    // Apply provision type filter
+    if (provisionTypeFilter !== 'all') {
+      filtered = filtered.filter(item => item.provisionType === provisionTypeFilter)
+    }
+
+    // Apply approval status filter
+    if (filterType !== 'all') {
+      filtered = filtered.filter(item => {
+        const hasApprovals = item.approvalStatuses.includes('✓')
+        const hasRejections = item.approvalStatuses.includes('✗')
+        const hasPending = item.approvalStatuses.includes('-')
+        
+        switch (filterType) {
+          case 'with-approvals':
+            return hasApprovals
+          case 'pending-approvals':
+            return hasPending && !hasApprovals && !hasRejections
+          case 'no-approvals':
+            return !hasApprovals && !hasRejections
+          default:
+            return true
+        }
+      })
+    }
+
+    // Apply status filter
+    if (statusFilter !== 'all') {
+      filtered = filtered.filter(item => {
+        const approvedCount = item.approvalStatuses.filter(s => s === '✓').length
+        const rejectedCount = item.approvalStatuses.filter(s => s === '✗').length
+        const pendingCount = item.approvalStatuses.filter(s => s === '-').length
+        
+        switch (statusFilter) {
+          case 'approved':
+            return approvedCount > rejectedCount && approvedCount > 0
+          case 'rejected':
+            return rejectedCount > approvedCount && rejectedCount > 0
+          case 'pending':
+            return pendingCount > 0 && approvedCount === 0 && rejectedCount === 0
+          default:
+            return true
+        }
+      })
+    }
+
+    // Apply sorting
+    filtered.sort((a, b) => {
+      let aValue: string | number = ''
+      let bValue: string | number = ''
+
+      switch (sortField) {
+        case 'id':
+          aValue = parseInt(a.id)
+          bValue = parseInt(b.id)
+          break
+        case 'serviceName':
+          aValue = a.serviceName
+          bValue = b.serviceName
+          break
+        case 'provisionType':
+          aValue = a.provisionType
+          bValue = b.provisionType
+          break
+        case 'options':
+          aValue = a.options
+          bValue = b.options
+          break
+        case 'numProv':
+          aValue = parseInt(a.numProv)
+          bValue = parseInt(b.numProv)
+          break
+        case 'numProd':
+          aValue = parseInt(a.numProd)
+          bValue = parseInt(b.numProd)
+          break
+        case 'numSplit':
+          aValue = parseInt(a.numSplit)
+          bValue = parseInt(b.numSplit)
+          break
+        default:
+          return 0
+      }
+
+      if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1
+      if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1
+      return 0
+    })
+
+    return filtered
+  }, [searchTerm, sortField, sortDirection, filterType, statusFilter, provisionTypeFilter])
+
+  const handleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
+    } else {
+      setSortField(field)
+      setSortDirection('asc')
+    }
+  }
+
+  const clearFilters = () => {
+    setSearchTerm('')
+    setFilterType('all')
+    setStatusFilter('all')
+    setProvisionTypeFilter('all')
+    setSortField('id')
+    setSortDirection('asc')
+  }
+
+  const getSortIcon = (field: SortField) => {
+    if (sortField !== field) return null
+    return sortDirection === 'asc' ? 
+      <CaretUp className="h-3 w-3 ml-1" /> : 
+      <CaretDown className="h-3 w-3 ml-1" />
+  }
+
+  // Get unique provision types for filter
+  const uniqueProvisionTypes = Array.from(new Set(mockClusterData.map(item => item.provisionType)))
 
   return (
     <div className="page-layout-full-width">
@@ -98,6 +249,27 @@ export function ClusterDetails() {
               Provision Intelligence Hub - Cluster #{clusterInfo.clusterId} of {clusterInfo.totalClusters} Details
             </h1>
           </div>
+        </div>
+        
+        {/* Actions */}
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" className="text-xs">
+            <Bookmark className="h-4 w-4 mr-1" />
+            Bookmark
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="text-xs">
+                <SortAscending className="h-4 w-4 mr-1" />
+                Export
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem>Export as CSV</DropdownMenuItem>
+              <DropdownMenuItem>Export as Excel</DropdownMenuItem>
+              <DropdownMenuItem>Export as PDF</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 
@@ -155,6 +327,151 @@ export function ClusterDetails() {
         </Card>
       </div>
 
+      {/* Search and Filter Bar */}
+      <Card className="bg-card border-border mb-4">
+        <CardContent className="p-4">
+          {/* First Row - Search and Quick Filters */}
+          <div className="flex flex-col lg:flex-row gap-4 mb-4">
+            {/* Search Input */}
+            <div className="relative flex-1 max-w-md">
+              <MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Search items..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 pr-4 py-2 text-sm border-border"
+              />
+              {searchTerm && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
+                  onClick={() => setSearchTerm('')}
+                >
+                  <X className="h-3 w-3" />
+                </Button>
+              )}
+            </div>
+
+            {/* Quick Action Buttons */}
+            <div className="flex items-center gap-2 flex-wrap">
+              <Button
+                variant={filterType === 'all' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setFilterType('all')}
+                className="text-xs h-8 btn-gradient-primary"
+              >
+                All Items
+              </Button>
+              <Button
+                variant={filterType === 'with-approvals' ? 'secondary' : 'outline'}
+                size="sm"
+                onClick={() => setFilterType('with-approvals')}
+                className="text-xs h-8"
+              >
+                With Approvals
+              </Button>
+              <Button
+                variant={filterType === 'pending-approvals' ? 'secondary' : 'outline'}
+                size="sm"
+                onClick={() => setFilterType('pending-approvals')}
+                className="text-xs h-8"
+              >
+                Pending
+              </Button>
+              <Button
+                variant={filterType === 'no-approvals' ? 'secondary' : 'outline'}
+                size="sm"
+                onClick={() => setFilterType('no-approvals')}
+                className="text-xs h-8"
+              >
+                No Approvals
+              </Button>
+            </div>
+          </div>
+
+          {/* Second Row - Advanced Filters */}
+          <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center">
+            {/* Filter Dropdowns */}
+            <div className="flex items-center gap-3 flex-wrap">
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium text-foreground whitespace-nowrap">Status:</span>
+                <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as StatusFilter)}>
+                  <SelectTrigger className="w-32 h-8 text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Status</SelectItem>
+                    <SelectItem value="approved">Approved</SelectItem>
+                    <SelectItem value="rejected">Rejected</SelectItem>
+                    <SelectItem value="pending">Pending</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium text-foreground whitespace-nowrap">Type:</span>
+                <Select value={provisionTypeFilter} onValueChange={setProvisionTypeFilter}>
+                  <SelectTrigger className="w-40 h-8 text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Types</SelectItem>
+                    {uniqueProvisionTypes.map(type => (
+                      <SelectItem key={type} value={type}>{type}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Sort Controls */}
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium text-foreground whitespace-nowrap">Sort by:</span>
+                <Select value={sortField} onValueChange={(value) => setSortField(value as SortField)}>
+                  <SelectTrigger className="w-32 h-8 text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="id">ID</SelectItem>
+                    <SelectItem value="serviceName">Service Name</SelectItem>
+                    <SelectItem value="provisionType">Type</SelectItem>
+                    <SelectItem value="options">Options</SelectItem>
+                    <SelectItem value="numProv">Num Prov</SelectItem>
+                    <SelectItem value="numProd">Num Prod</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
+                  className="h-8 w-8 p-0"
+                >
+                  {sortDirection === 'asc' ? <SortAscending className="h-3 w-3" /> : <SortDescending className="h-3 w-3" />}
+                </Button>
+              </div>
+
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearFilters}
+                className="text-xs h-8 text-muted-foreground hover:text-foreground"
+              >
+                <X className="h-3 w-3 mr-1" />
+                Clear
+              </Button>
+            </div>
+
+            {/* Results Count */}
+            <div className="ml-auto">
+              <span className="text-xs text-muted-foreground">
+                Showing {filteredAndSortedData.length} of {mockClusterData.length} entries
+              </span>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Main Cluster Data Table */}
       <Card className="bg-card border-border">
         <CardContent className="p-0">
@@ -162,31 +479,87 @@ export function ClusterDetails() {
             <h2 className="text-lg font-semibold text-foreground">Main Cluster Data</h2>
           </div>
           
-          <div className="responsive-table-wrapper max-h-[calc(100vh-400px)]">
+          <div className="responsive-table-wrapper max-h-[calc(100vh-500px)]">
             <Table className="responsive-table">
               <TableHeader className="sticky-header">
                 <TableRow>
                   <TableHead className="text-xs text-center">#</TableHead>
-                  <TableHead className="text-xs">ABCD 1-Up</TableHead>
+                  <TableHead 
+                    className="text-xs cursor-pointer hover:bg-muted/50"
+                    onClick={() => handleSort('id')}
+                  >
+                    <div className="flex items-center">
+                      ABCD 1-Up
+                      {getSortIcon('id')}
+                    </div>
+                  </TableHead>
                   <TableHead className="text-xs">Service ID</TableHead>
-                  <TableHead className="text-xs">Service Name</TableHead>
+                  <TableHead 
+                    className="text-xs cursor-pointer hover:bg-muted/50"
+                    onClick={() => handleSort('serviceName')}
+                  >
+                    <div className="flex items-center">
+                      Service Name
+                      {getSortIcon('serviceName')}
+                    </div>
+                  </TableHead>
                   <TableHead className="text-xs text-center">P</TableHead>
-                  <TableHead className="text-xs">Provision Type</TableHead>
+                  <TableHead 
+                    className="text-xs cursor-pointer hover:bg-muted/50"
+                    onClick={() => handleSort('provisionType')}
+                  >
+                    <div className="flex items-center">
+                      Provision Type
+                      {getSortIcon('provisionType')}
+                    </div>
+                  </TableHead>
                   <TableHead className="text-xs text-center">O</TableHead>
-                  <TableHead className="text-xs">Options</TableHead>
+                  <TableHead 
+                    className="text-xs cursor-pointer hover:bg-muted/50"
+                    onClick={() => handleSort('options')}
+                  >
+                    <div className="flex items-center">
+                      Options
+                      {getSortIcon('options')}
+                    </div>
+                  </TableHead>
                   <TableHead className="text-xs text-center">PTy Type</TableHead>
                   <TableHead className="text-xs">Bencode</TableHead>
                   <TableHead className="text-xs">New Bencode</TableHead>
-                  <TableHead className="text-xs text-center">Num Split</TableHead>
-                  <TableHead className="text-xs text-center">Num Prov</TableHead>
-                  <TableHead className="text-xs text-center">Num Prod</TableHead>
+                  <TableHead 
+                    className="text-xs text-center cursor-pointer hover:bg-muted/50"
+                    onClick={() => handleSort('numSplit')}
+                  >
+                    <div className="flex items-center justify-center">
+                      Num Split
+                      {getSortIcon('numSplit')}
+                    </div>
+                  </TableHead>
+                  <TableHead 
+                    className="text-xs text-center cursor-pointer hover:bg-muted/50"
+                    onClick={() => handleSort('numProv')}
+                  >
+                    <div className="flex items-center justify-center">
+                      Num Prov
+                      {getSortIcon('numProv')}
+                    </div>
+                  </TableHead>
+                  <TableHead 
+                    className="text-xs text-center cursor-pointer hover:bg-muted/50"
+                    onClick={() => handleSort('numProd')}
+                  >
+                    <div className="flex items-center justify-center">
+                      Num Prod
+                      {getSortIcon('numProd')}
+                    </div>
+                  </TableHead>
                   <TableHead className="text-xs text-center">Num Cmnt</TableHead>
                   <TableHead className="text-xs text-center">Num Grp</TableHead>
                   <TableHead className="text-xs text-center">Approve</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {mockClusterData.map((record, index) => (
+                {filteredAndSortedData.map((record, index) => (
                   <TableRow key={record.id} className="hover:bg-muted/50">
                     <TableCell className="text-xs text-center font-medium text-primary">
                       {index + 1}
