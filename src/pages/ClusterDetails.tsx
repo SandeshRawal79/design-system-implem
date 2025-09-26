@@ -64,7 +64,7 @@ function ApprovalStatusIndicators({ statuses }: { statuses: string[] }) {
                 : status === '✗'
                 ? 'bg-red-100 text-red-700 border border-red-200'
                 : 'bg-gray-100 text-gray-500 border border-gray-200'
-            }`}
+            }text-sm text-sm`}
           >
             {status}
           </span>
@@ -88,7 +88,7 @@ export function ClusterDetails() {
 
   const clusterInfo = {
     xrayProjection: 'Only Options (D)',
-    dataContext: 'd=() names=Product Wide Provision',
+    dataContext: 'id=0 names=Product Wide Provision',
     created: '2023-03-16 10:56:57',
     recordsInCluster: 270,
     clusterId: clusterId || '1',
@@ -272,28 +272,27 @@ export function ClusterDetails() {
           </DropdownMenu>
         </div>
       </div>
-
       {/* Compact Cluster Information Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-3 mb-4">
         {/* Left Card - X-ray Projection & Data Context */}
         <Card className="bg-card border-border p-2">
           <CardContent className="p-0">
             <div className="space-y-1">
               <div>
-                <span className="text-xs font-medium text-foreground">X-ray Projection:</span>
-                <p className="text-xs text-muted-foreground mt-0.5">{clusterInfo.xrayProjection}</p>
+                <span className="font-medium text-foreground text-sm">X-ray Projection:</span>
+                <p className="text-muted-foreground mt-0.5 text-sm">{clusterInfo.xrayProjection}</p>
               </div>
               <div>
-                <span className="text-xs font-medium text-foreground">Data context:</span>
-                <p className="text-xs text-muted-foreground mt-0.5">{clusterInfo.dataContext}</p>
+                <span className="font-medium text-foreground text-sm">Data context:</span>
+                <p className="text-muted-foreground mt-0.5 text-sm">{clusterInfo.dataContext}</p>
               </div>
               <div>
-                <span className="text-xs font-medium text-foreground">Created:</span>
-                <p className="text-xs text-muted-foreground mt-0.5">{clusterInfo.created}</p>
+                <span className="font-medium text-foreground text-sm">Created:</span>
+                <p className="text-muted-foreground mt-0.5 text-sm">{clusterInfo.created}</p>
               </div>
               <div>
-                <span className="text-xs font-medium text-foreground">Records in this Cluster:</span>
-                <p className="text-xs font-semibold text-primary mt-0.5">{clusterInfo.recordsInCluster}</p>
+                <span className="font-medium text-foreground text-sm">Records in this Cluster:</span>
+                <p className="font-semibold text-primary mt-0.5 text-sm">{clusterInfo.recordsInCluster}</p>
               </div>
             </div>
           </CardContent>
@@ -304,86 +303,28 @@ export function ClusterDetails() {
           <CardContent className="p-0">
             <div className="space-y-1">
               <div>
-                <span className="text-xs font-medium text-foreground">Cluster:</span>
-                <p className="text-xs font-semibold text-primary mt-0.5">{clusterInfo.clusterId}</p>
+                <span className="font-medium text-foreground text-sm">Cluster:</span>
+                <p className="font-semibold text-primary mt-0.5 text-sm">{clusterInfo.clusterId}</p>
               </div>
               <div>
-                <span className="text-xs font-medium text-foreground">Total Clusters:</span>
-                <p className="text-xs text-muted-foreground mt-0.5">{clusterInfo.totalClusters}</p>
+                <span className="font-medium text-foreground text-sm">Total Clusters:</span>
+                <p className="text-muted-foreground mt-0.5 text-sm">{clusterInfo.totalClusters}</p>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-medium text-foreground">Distance Threshold:</span>
+                <span className="font-medium text-foreground text-sm">Distance Threshold:</span>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-muted-foreground">{clusterInfo.distanceThreshold}</span>
+                  <span className="text-muted-foreground text-sm">{clusterInfo.distanceThreshold}</span>
                   <Button 
                     size="sm" 
-                    className="h-5 px-2 text-xs btn-gradient-primary"
+                    className="h-5 px-2 btn-gradient-primary text-sm"
                     onClick={() => {}}
-                  >
-                    Update
-                  </Button>
+                  >Update</Button>
                 </div>
               </div>
             </div>
           </CardContent>
         </Card>
-
-        {/* Additional Metrics Cards - Optional */}
-        <Card className="bg-card border-border p-2">
-          <CardContent className="p-0">
-            <div className="space-y-1">
-              <div>
-                <span className="text-xs font-medium text-foreground">Approved:</span>
-                <p className="text-xs text-success mt-0.5 font-semibold">
-                  {filteredAndSortedData.filter(item => 
-                    item.approvalStatuses.filter(s => s === '✓').length > 
-                    item.approvalStatuses.filter(s => s === '✗').length
-                  ).length}
-                </p>
-              </div>
-              <div>
-                <span className="text-xs font-medium text-foreground">Pending:</span>
-                <p className="text-xs text-warning mt-0.5 font-semibold">
-                  {filteredAndSortedData.filter(item => 
-                    item.approvalStatuses.includes('-') && 
-                    !item.approvalStatuses.includes('✓') && 
-                    !item.approvalStatuses.includes('✗')
-                  ).length}
-                </p>
-              </div>
-              <div>
-                <span className="text-xs font-medium text-foreground">Rejected:</span>
-                <p className="text-xs text-destructive mt-0.5 font-semibold">
-                  {filteredAndSortedData.filter(item => 
-                    item.approvalStatuses.filter(s => s === '✗').length > 
-                    item.approvalStatuses.filter(s => s === '✓').length
-                  ).length}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-card border-border p-2">
-          <CardContent className="p-0">
-            <div className="space-y-1">
-              <div>
-                <span className="text-xs font-medium text-foreground">Total Records:</span>
-                <p className="text-xs font-semibold text-primary mt-0.5">{mockClusterData.length}</p>
-              </div>
-              <div>
-                <span className="text-xs font-medium text-foreground">Filtered:</span>
-                <p className="text-xs text-muted-foreground mt-0.5">{filteredAndSortedData.length}</p>
-              </div>
-              <div>
-                <span className="text-xs font-medium text-foreground">Service Types:</span>
-                <p className="text-xs text-muted-foreground mt-0.5">{uniqueProvisionTypes.length}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
       </div>
-
       {/* Main Cluster Data Table */}
       <Card className="bg-card border-border">
         <CardContent className="p-0">
@@ -396,7 +337,7 @@ export function ClusterDetails() {
                 placeholder="Search..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-8 py-1 text-xs h-8 w-full border-border"
+                className="pl-10 pr-8 py-1 h-8 w-full border-border text-sm"
               />
               {searchTerm && (
                 <Button
@@ -416,34 +357,26 @@ export function ClusterDetails() {
                 variant={filterType === 'all' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setFilterType('all')}
-                className="text-xs h-7 px-2 btn-gradient-primary flex-1 xl:flex-none"
-              >
-                All
-              </Button>
+                className="h-7 px-2 btn-gradient-primary flex-1 xl:flex-none text-sm"
+              >All</Button>
               <Button
                 variant={filterType === 'with-approvals' ? 'secondary' : 'outline'}
                 size="sm"
                 onClick={() => setFilterType('with-approvals')}
-                className="text-xs h-7 px-2 flex-1 xl:flex-none"
-              >
-                Approved
-              </Button>
+                className="h-7 px-2 flex-1 xl:flex-none text-sm"
+              >Approved</Button>
               <Button
                 variant={filterType === 'pending-approvals' ? 'secondary' : 'outline'}
                 size="sm"
                 onClick={() => setFilterType('pending-approvals')}
-                className="text-xs h-7 px-2 flex-1 xl:flex-none"
-              >
-                Pending
-              </Button>
+                className="h-7 px-2 flex-1 xl:flex-none text-sm"
+              >Pending</Button>
               <Button
                 variant={filterType === 'no-approvals' ? 'secondary' : 'outline'}
                 size="sm"
                 onClick={() => setFilterType('no-approvals')}
-                className="text-xs h-7 px-2 flex-1 xl:flex-none"
-              >
-                None
-              </Button>
+                className="h-7 px-2 flex-1 xl:flex-none text-sm"
+              >None</Button>
             </div>
 
             {/* Compact Filters - Full width on mobile */}
@@ -504,12 +437,12 @@ export function ClusterDetails() {
                 variant="ghost"
                 size="sm"
                 onClick={clearFilters}
-                className="text-xs h-7 px-2 text-muted-foreground hover:text-foreground"
+                className="h-7 px-2 text-muted-foreground hover:text-foreground text-sm"
               >
                 <X className="h-3 w-3 mr-1" />
                 Clear
               </Button>
-              <span className="text-xs text-muted-foreground whitespace-nowrap">
+              <span className="text-muted-foreground whitespace-nowrap text-sm">
                 {filteredAndSortedData.length} of {mockClusterData.length}
               </span>
             </div>
@@ -523,79 +456,79 @@ export function ClusterDetails() {
             <Table className="responsive-table">
               <TableHeader className="sticky-header">
                 <TableRow>
-                  <TableHead className="text-xs text-center">#</TableHead>
+                  <TableHead className="text-xs text-center text-sm">#</TableHead>
                   <TableHead 
-                    className="text-xs cursor-pointer hover:bg-muted/50"
+                    className="cursor-pointer hover:bg-muted/50 text-sm"
                     onClick={() => handleSort('id')}
                   >
-                    <div className="flex items-center">
+                    <div className="flex items-center text-sm">
                       ABCD 1-Up
                       {getSortIcon('id')}
                     </div>
                   </TableHead>
-                  <TableHead className="text-xs">Service ID</TableHead>
+                  <TableHead className="text-sm">Service ID</TableHead>
                   <TableHead 
-                    className="text-xs cursor-pointer hover:bg-muted/50"
+                    className="cursor-pointer hover:bg-muted/50 text-sm"
                     onClick={() => handleSort('serviceName')}
                   >
-                    <div className="flex items-center">
+                    <div className="flex items-center text-sm">
                       Service Name
                       {getSortIcon('serviceName')}
                     </div>
                   </TableHead>
-                  <TableHead className="text-xs text-center">P</TableHead>
+                  <TableHead className="text-center text-sm">P</TableHead>
                   <TableHead 
-                    className="text-xs cursor-pointer hover:bg-muted/50"
+                    className="cursor-pointer hover:bg-muted/50 text-sm"
                     onClick={() => handleSort('provisionType')}
                   >
-                    <div className="flex items-center">
+                    <div className="flex items-center text-sm">
                       Provision Type
                       {getSortIcon('provisionType')}
                     </div>
                   </TableHead>
-                  <TableHead className="text-xs text-center">O</TableHead>
+                  <TableHead className="text-center text-sm">O</TableHead>
                   <TableHead 
-                    className="text-xs cursor-pointer hover:bg-muted/50"
+                    className="cursor-pointer hover:bg-muted/50 text-sm"
                     onClick={() => handleSort('options')}
                   >
-                    <div className="flex items-center">
+                    <div className="flex items-center text-sm">
                       Options
                       {getSortIcon('options')}
                     </div>
                   </TableHead>
-                  <TableHead className="text-xs text-center">PTy Type</TableHead>
-                  <TableHead className="text-xs">Bencode</TableHead>
-                  <TableHead className="text-xs">New Bencode</TableHead>
+                  <TableHead className="text-center text-sm">PTy Type</TableHead>
+                  <TableHead className="text-sm">Bencode</TableHead>
+                  <TableHead className="text-sm">New Bencode</TableHead>
                   <TableHead 
-                    className="text-xs text-center cursor-pointer hover:bg-muted/50"
+                    className="text-center cursor-pointer hover:bg-muted/50 text-sm"
                     onClick={() => handleSort('numSplit')}
                   >
-                    <div className="flex items-center justify-center">
+                    <div className="flex items-center justify-center text-sm">
                       Num Split
                       {getSortIcon('numSplit')}
                     </div>
                   </TableHead>
                   <TableHead 
-                    className="text-xs text-center cursor-pointer hover:bg-muted/50"
+                    className="text-center cursor-pointer hover:bg-muted/50 text-sm"
                     onClick={() => handleSort('numProv')}
                   >
-                    <div className="flex items-center justify-center">
+                    <div className="flex items-center justify-center text-sm">
                       Num Prov
                       {getSortIcon('numProv')}
                     </div>
                   </TableHead>
                   <TableHead 
-                    className="text-xs text-center cursor-pointer hover:bg-muted/50"
+                    className="text-center cursor-pointer hover:bg-muted/50 text-sm"
                     onClick={() => handleSort('numProd')}
                   >
-                    <div className="flex items-center justify-center">
+                    <div className="flex items-center justify-center text-sm">
                       Num Prod
                       {getSortIcon('numProd')}
                     </div>
                   </TableHead>
-                  <TableHead className="text-xs text-center">Num Cmnt</TableHead>
-                  <TableHead className="text-xs text-center">Num Grp</TableHead>
-                  <TableHead className="text-xs text-center">Approve</TableHead>
+                  <TableHead className="text-center text-sm">Num Cmnt</TableHead>
+                  <TableHead className="text-center text-sm">Num Grp</TableHead>
+                  <TableHead className="text-center text-sm">Approve</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -607,24 +540,24 @@ export function ClusterDetails() {
                     <TableCell className="text-xs">
                       <Button 
                         variant="link" 
-                        className="h-auto p-0 text-xs text-info hover:text-info/80"
+                        className="h-auto p-0 text-info hover:text-info/80 text-sm"
                         onClick={() => {}}
                       >
                         {record.id}
                       </Button>
                     </TableCell>
-                    <TableCell className="text-xs">{record.serviceId}</TableCell>
-                    <TableCell className="text-xs">{record.serviceName}</TableCell>
+                    <TableCell className="text-sm">{record.serviceId}</TableCell>
+                    <TableCell className="text-sm">{record.serviceName}</TableCell>
                     <TableCell className="text-xs text-center">-</TableCell>
-                    <TableCell className="text-xs">{record.provisionType}</TableCell>
+                    <TableCell className="text-sm">{record.provisionType}</TableCell>
                     <TableCell className="text-xs text-center">-</TableCell>
-                    <TableCell className="text-xs font-medium">{record.options}</TableCell>
-                    <TableCell className="text-xs text-center">-</TableCell>
-                    <TableCell className="text-xs">{record.bencode}</TableCell>
-                    <TableCell className="text-xs">{record.newBencode}</TableCell>
-                    <TableCell className="text-xs text-center">{record.numSplit}</TableCell>
-                    <TableCell className="text-xs text-center">{record.numProv}</TableCell>
-                    <TableCell className="text-xs text-center">{record.numProd}</TableCell>
+                    <TableCell className="font-medium text-sm">{record.options}</TableCell>
+                    <TableCell className="text-center text-sm">-</TableCell>
+                    <TableCell className="text-sm">{record.bencode}</TableCell>
+                    <TableCell className="text-sm">{record.newBencode}</TableCell>
+                    <TableCell className="text-center text-sm">{record.numSplit}</TableCell>
+                    <TableCell className="text-center text-sm">{record.numProv}</TableCell>
+                    <TableCell className="text-center text-sm">{record.numProd}</TableCell>
                     <TableCell className="text-xs text-center">{record.numCmnt}</TableCell>
                     <TableCell className="text-xs text-center">{record.numGrp}</TableCell>
                     <TableCell className="text-xs text-center">
@@ -638,5 +571,5 @@ export function ClusterDetails() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
