@@ -277,21 +277,21 @@ export function ClusterDetails() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
         {/* Left Card - Cluster Metadata */}
         <Card className="bg-card border-border">
-          <CardContent className="p-2">
-            <div className="space-y-1.5">
-              <div className="flex flex-wrap items-center gap-1">
+          <CardContent className="p-0.5">
+            <div className="space-y-1">
+              <div className="flex flex-wrap items-center gap-0.5">
                 <span className="text-xs font-medium text-primary">X-ray Projection:</span>
                 <span className="text-xs text-foreground">{clusterInfo.xrayProjection}</span>
               </div>
-              <div className="flex flex-wrap items-center gap-1">
+              <div className="flex flex-wrap items-center gap-0.5">
                 <span className="text-xs font-medium text-primary">Data context:</span>
                 <span className="text-xs text-foreground font-mono">{clusterInfo.dataContext}</span>
               </div>
-              <div className="flex flex-wrap items-center gap-1">
+              <div className="flex flex-wrap items-center gap-0.5">
                 <span className="text-xs font-medium text-primary">Created:</span>
                 <span className="text-xs text-foreground">{clusterInfo.created}</span>
               </div>
-              <div className="flex flex-wrap items-center gap-1">
+              <div className="flex flex-wrap items-center gap-0.5">
                 <span className="text-xs font-medium text-primary">Records in this Cluster:</span>
                 <span className="text-xs font-bold text-accent">{clusterInfo.recordsInCluster}</span>
               </div>
@@ -301,17 +301,17 @@ export function ClusterDetails() {
 
         {/* Right Card - Cluster Status */}
         <Card className="bg-card border-border">
-          <CardContent className="p-2">
-            <div className="space-y-1.5">
-              <div className="flex flex-wrap items-center gap-1">
+          <CardContent className="p-0.5">
+            <div className="space-y-1">
+              <div className="flex flex-wrap items-center gap-0.5">
                 <span className="text-xs font-medium text-primary">Cluster:</span>
                 <span className="text-xs font-bold text-accent">{clusterInfo.clusterId}</span>
               </div>
-              <div className="flex flex-wrap items-center gap-1">
+              <div className="flex flex-wrap items-center gap-0.5">
                 <span className="text-xs font-medium text-primary">Total Clusters:</span>
                 <span className="text-xs text-foreground">{clusterInfo.totalClusters}</span>
               </div>
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="flex flex-wrap items-center gap-1">
                 <span className="text-xs font-medium text-primary">Distance Threshold:</span>
                 <span className="text-xs font-bold text-accent">{clusterInfo.distanceThreshold}</span>
                 <Button 
@@ -329,8 +329,8 @@ export function ClusterDetails() {
 
       {/* Compact Search, Filter & Sort Bar - Single Line */}
       <Card className="bg-card border-border mb-4">
-        <CardContent className="p-2">
-          <div className="flex flex-col xl:flex-row gap-3 items-start xl:items-center">
+        <CardContent className="p-0.5">
+          <div className="flex flex-col xl:flex-row gap-2 items-start xl:items-center">
             {/* Search Input - Compact */}
             <div className="relative flex-shrink-0">
               <MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
