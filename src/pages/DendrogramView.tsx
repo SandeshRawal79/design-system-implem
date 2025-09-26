@@ -22,9 +22,8 @@ export function DendrogramView() {
       return
     }
     
-    // Mock implementation - in real app would trigger actual cluster analysis
-    console.log(`Analyzing clusters at distance ${distance} for dendrogram ${dendrogramType}`)
-    alert(`Cluster analysis initiated for Provision X-ray #${dendrogramType} at distance: ${distance}`)
+    // Navigate to clusters view with parameters
+    navigate(`/clusters/${serviceId}?dendrogram=${dendrogramType}&distance=${distance}`)
   }
 
   // Mock service data based on the snapshot
@@ -226,7 +225,7 @@ export function DendrogramView() {
                     className="btn-gradient-secondary cursor-pointer table-action-btn mt-5"
                   >
                     <Circle className="w-4 h-4 mr-1" />
-                    Analyze
+                    View Clusters
                   </Button>
                 </div>
               </div>
@@ -303,7 +302,7 @@ export function DendrogramView() {
                     className="btn-gradient-secondary cursor-pointer table-action-btn mt-5"
                   >
                     <Circle className="w-4 h-4 mr-1" />
-                    Analyze
+                    View Clusters
                   </Button>
                 </div>
               </div>
@@ -380,7 +379,7 @@ export function DendrogramView() {
                     className="btn-gradient-secondary cursor-pointer table-action-btn mt-5"
                   >
                     <Circle className="w-4 h-4 mr-1" />
-                    Analyze
+                    View Clusters
                   </Button>
                 </div>
               </div>
