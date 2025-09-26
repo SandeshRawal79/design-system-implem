@@ -1,35 +1,35 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { Card, CardContent, CardHeader, CardT
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ArrowLeft, Plus, X, Check } from "@phosphor-icons/react"
-import { Checkbox } from "@/components/ui/checkbox"
-
-interface ClusterData {
-  clusterNumber: number
-  recordCount: number
-  records: Array<{
-    abcdTup: string
     serviceId: number
-    serviceName: string
     provisionType: string
-    options: string
-    approved: boolean
-    setsInNow: number
-    addToSet: boolean
-  }>
-}
 
-export function ClustersView() {
-  const { serviceId } = useParams()
-  const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
-  const [clusters, setClusters] = useState<ClusterData[]>([])
-  const [selectedCluster, setSelectedCluster] = useState<number>(1)
+    addToSet: boolean
+}
+export function Clust
+  const navigate =
+  const [clusters, 
+  const [wholeCluster
+  const [setName, setSe
+  const [distance, setDis
+  // Extract query 
+  const distanceParam
+  useEffect(() => {
+    const mockCluster
+    
+ 
+
+            serviceName: "Produc
+            options: "8773",
+            setsInNow: 0,
+          },
+            abcdTup: "575",
+            serviceName: "Product Wide Provision",
   const [wholeCluster, setWholeCluster] = useState<boolean>(false)
   const [creator, setCreator] = useState<string>('')
   const [setName, setSetName] = useState<string>('')
@@ -50,84 +50,84 @@ export function ClustersView() {
           {
             abcdTup: "493",
             serviceId: 0,
-            serviceName: "Product Wide Provision",
+            setsInNow: 0,
             provisionType: "Coverage Code Id",
             options: "8773",
             approved: false,
-            setsInNow: 0,
+            serviceName: 
             addToSet: false
-          },
+            
           {
             abcdTup: "575",
             serviceId: 0,
             serviceName: "Product Wide Provision",
             provisionType: "Coverage Code Id",
-            options: "8780",
-            approved: false,
-            setsInNow: 0,
-            addToSet: false
+          },
+            abcdTup: "745",
+            serviceName: 
+            options: "8523"
           },
           {
-            abcdTup: "585",
-            serviceId: 0,
-            serviceName: "Product Wide Provision",
-            provisionType: "Coverage Code Id",
-            options: "9057",
-            approved: false,
+            abcdTup: "757",
+            serviceName: 
+            options: "6476",
             setsInNow: 0,
-            addToSet: false
           },
-          {
-            abcdTup: "620",
-            serviceId: 0,
-            serviceName: "Product Wide Provision",
-            provisionType: "Coverage Code Id",
-            options: "9241",
-            approved: false,
+            abcdTup: "759",
+            serviceName: 
+            options: "8997"
+            
+          }
+            abcdTup: "763",
+            serviceName: 
+            options: "8782",
             setsInNow: 0,
-            addToSet: false
           },
-          {
-            abcdTup: "628",
-            serviceId: 0,
-            serviceName: "Product Wide Provision",
-            provisionType: "Coverage Code Id",
-            options: "9367",
-            approved: false,
+            abcdTup: "772",
+            serviceName: 
+            options: "8143"
+            
+          }
+            abcdTup: "780",
+            serviceName: 
+            options: "9015",
             setsInNow: 0,
-            addToSet: false
           },
-          {
-            abcdTup: "662",
-            serviceId: 0,
-            serviceName: "Product Wide Provision",
-            provisionType: "Coverage Code Id",
-            options: "8157",
-            approved: false,
+            abcdTup: "781",
+            serviceName: 
+            options: "8480"
+            
+          }
+            abcdTup: "789",
+            serviceName: 
+            options: "8839",
             setsInNow: 0,
-            addToSet: false
-          },
-          {
-            abcdTup: "665",
-            serviceId: 0,
-            serviceName: "Product Wide Provision",
-            provisionType: "Coverage Code Id",
-            options: "9392",
-            approved: false,
-            setsInNow: 0,
-            addToSet: false
-          },
-          {
-            abcdTup: "732",
-            serviceId: 0,
-            serviceName: "Product Wide Provision",
-            provisionType: "Coverage Code Id",
-            options: "8770",
-            approved: false,
-            setsInNow: 0,
-            addToSet: false
-          },
-          {
+          }
+      }
+    setClusters(mockClust
+  }, [distanceParam])
+  const hand
+  }
+  const handleCheckboxChang
+      prevClusters.map(cl
+          ? {
+              records: cluster.records.map((re
+              )
+          : cluster
+    )
+
+    const ne
+    
+      prevClusters.map(clus
+          ? {
+              records: cluster.records.map(record 
+                addToSet: newWholeClusterState
+            }
+      )
+  }
+  const selectedClusterData
+  return (
+      {/* H
             abcdTup: "745",
             serviceId: 0,
             serviceName: "Product Wide Provision",
@@ -260,15 +260,15 @@ export function ClustersView() {
       <div className="bg-white border-b border-border px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Button
+                   
               variant="outline"
-              size="sm"
+                    Add
               onClick={handleBackToDendrogram}
               className="back-to-dashboard flex items-center gap-2"
             >
               <ArrowLeft size={16} />
               Back to 3-dendrograms view
-            </Button>
+                    C
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 bg-gradient-to-r from-primary to-secondary rounded-sm"></div>
               <h1 className="text-2xl font-bold text-foreground">
@@ -282,11 +282,11 @@ export function ClustersView() {
       <div className="px-4 sm:px-6 lg:px-8 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Data Context Panel */}
-          <div className="lg:col-span-3">
+                      onCheckedChange={ha
             <Card className="bg-card border border-border">
-              <CardHeader className="pb-3">
+                      Whole cluster
                 <CardTitle className="text-sm font-semibold">Data context:</CardTitle>
-              </CardHeader>
+                </div>
               <CardContent className="space-y-2">
                 <div className="text-sm">
                   <span className="font-medium">id=0</span>
@@ -302,9 +302,9 @@ export function ClustersView() {
                 </div>
               </CardContent>
             </Card>
-          </div>
+                
 
-          {/* X-ray Projection Panel */}
+                        <td className="p
           <div className="lg:col-span-3">
             <Card className="bg-card border border-border">
               <CardHeader className="pb-3">
@@ -322,17 +322,17 @@ export function ClustersView() {
                 </div>
                 <div className="flex items-center gap-2 mt-3">
                   <Label className="text-sm font-medium">Distance Threshold:</Label>
-                  <Input
+  )
                     type="number"
-                    value={distance}
+
                     onChange={(e) => setDistance(e.target.value)}
                     className="w-20 h-8"
                     step="0.1"
-                  />
+
                   <Button size="sm" className="btn-gradient-primary h-8">
                     Update
                   </Button>
-                </div>
+
               </CardContent>
             </Card>
           </div>
@@ -342,15 +342,15 @@ export function ClustersView() {
             <Card className="bg-amber-50 border border-amber-200">
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
-                  <div>
+
                     <Label className="text-sm font-semibold">Creator:*</Label>
-                    <Input
+
                       placeholder="Enter creator name"
                       value={creator}
                       onChange={(e) => setCreator(e.target.value)}
                       className="mt-1 bg-white"
                     />
-                  </div>
+
                   <div className="text-right">
                     <Button 
                       className="bg-primary hover:bg-primary/90 text-primary-foreground"
@@ -358,13 +358,13 @@ export function ClustersView() {
                         // Handle select existing set logic
                         console.log('Select an existing set')
                       }}
-                    >
+
                       Select an existing set
                     </Button>
                     <div className="text-xs text-muted-foreground mt-1">to add rows to it</div>
                     <div className="text-xs text-muted-foreground">Select set first</div>
                   </div>
-                </div>
+
                 <div className="mt-4">
                   <Label className="text-sm font-semibold">Set Name:*</Label>
                   <Input
@@ -372,7 +372,7 @@ export function ClustersView() {
                     value={setName}
                     onChange={(e) => setSetName(e.target.value)}
                     className="mt-1 bg-white"
-                  />
+
                 </div>
                 <div className="mt-4">
                   <Label className="text-sm font-semibold">Description:*</Label>
@@ -382,9 +382,9 @@ export function ClustersView() {
                     onChange={(e) => setDescription(e.target.value)}
                     className="mt-1 bg-white h-20"
                     maxLength={500}
-                  />
+
                 </div>
-              </CardHeader>
+
               <CardContent>
                 <div className="flex gap-2">
                   <Button 
@@ -392,10 +392,10 @@ export function ClustersView() {
                     onClick={() => {
                       // Handle add rows to set logic
                       console.log('Add rows to set (select rows first)')
-                    }}
-                  >
+
+
                     Add rows to set (select rows first)
-                  </Button>
+
                   <Button 
                     className="bg-warning hover:bg-warning/90 text-white"
                     onClick={() => {
@@ -406,9 +406,9 @@ export function ClustersView() {
                     Create a set (select rows first)
                   </Button>
                 </div>
-              </CardContent>
+
             </Card>
-          </div>
+
         </div>
 
         {/* Cluster Table */}
@@ -430,9 +430,9 @@ export function ClustersView() {
                       Whole cluster
                     </Label>
                   </div>
-                </div>
+
               </div>
-            </CardHeader>
+
             <CardContent className="p-0">
               <div className="responsive-table-wrapper">
                 <table className="responsive-table w-full">
@@ -448,7 +448,7 @@ export function ClustersView() {
                       <th className="text-center">Add to set</th>
                     </tr>
                   </thead>
-                  <tbody>
+
                     {selectedClusterData?.records.map((record, index) => (
                       <tr key={index} className="border-b border-border hover:bg-muted/50">
                         <td className="py-3 px-4">
@@ -472,17 +472,17 @@ export function ClustersView() {
                           <Checkbox
                             checked={record.addToSet}
                             onCheckedChange={() => handleCheckboxChange(index)}
-                          />
+
                         </td>
                       </tr>
                     ))}
-                  </tbody>
+
                 </table>
-              </div>
+
             </CardContent>
-          </Card>
+
         </div>
-      </div>
+
     </div>
-  )
+
 }
