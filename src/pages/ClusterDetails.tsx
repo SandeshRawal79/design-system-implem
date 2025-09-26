@@ -327,20 +327,19 @@ export function ClusterDetails() {
         </Card>
       </div>
 
-      {/* Search and Filter Bar */}
+      {/* Compact Search, Filter & Sort Bar - Single Line */}
       <Card className="bg-card border-border mb-4">
-        <CardContent className="p-4">
-          {/* First Row - Search and Quick Filters */}
-          <div className="flex flex-col lg:flex-row gap-4 mb-4">
-            {/* Search Input */}
-            <div className="relative flex-1 max-w-md">
+        <CardContent className="p-3">
+          <div className="flex flex-col xl:flex-row gap-3 items-start xl:items-center">
+            {/* Search Input - Compact */}
+            <div className="relative flex-shrink-0">
               <MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="text"
-                placeholder="Search items..."
+                placeholder="Search..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 text-sm border-border"
+                className="pl-10 pr-8 py-1 text-xs h-8 w-48 border-border"
               />
               {searchTerm && (
                 <Button
@@ -354,29 +353,29 @@ export function ClusterDetails() {
               )}
             </div>
 
-            {/* Quick Action Buttons */}
-            <div className="flex items-center gap-2 flex-wrap">
+            {/* Quick Filter Pills - Compact */}
+            <div className="flex items-center gap-1 flex-shrink-0">
               <Button
                 variant={filterType === 'all' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setFilterType('all')}
-                className="text-xs h-8 btn-gradient-primary"
+                className="text-xs h-7 px-2 btn-gradient-primary"
               >
-                All Items
+                All
               </Button>
               <Button
                 variant={filterType === 'with-approvals' ? 'secondary' : 'outline'}
                 size="sm"
                 onClick={() => setFilterType('with-approvals')}
-                className="text-xs h-8"
+                className="text-xs h-7 px-2"
               >
-                With Approvals
+                Approved
               </Button>
               <Button
                 variant={filterType === 'pending-approvals' ? 'secondary' : 'outline'}
                 size="sm"
                 onClick={() => setFilterType('pending-approvals')}
-                className="text-xs h-8"
+                className="text-xs h-7 px-2"
               >
                 Pending
               </Button>
@@ -384,88 +383,77 @@ export function ClusterDetails() {
                 variant={filterType === 'no-approvals' ? 'secondary' : 'outline'}
                 size="sm"
                 onClick={() => setFilterType('no-approvals')}
-                className="text-xs h-8"
+                className="text-xs h-7 px-2"
               >
-                No Approvals
+                None
               </Button>
             </div>
-          </div>
 
-          {/* Second Row - Advanced Filters */}
-          <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center">
-            {/* Filter Dropdowns */}
-            <div className="flex items-center gap-3 flex-wrap">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-medium text-foreground whitespace-nowrap">Status:</span>
-                <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as StatusFilter)}>
-                  <SelectTrigger className="w-32 h-8 text-xs">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="approved">Approved</SelectItem>
-                    <SelectItem value="rejected">Rejected</SelectItem>
-                    <SelectItem value="pending">Pending</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+            {/* Compact Filters - Dropdowns */}
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as StatusFilter)}>
+                <SelectTrigger className="w-24 h-7 text-xs">
+                  <SelectValue placeholder="Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Status</SelectItem>
+                  <SelectItem value="approved">Approved</SelectItem>
+                  <SelectItem value="rejected">Rejected</SelectItem>
+                  <SelectItem value="pending">Pending</SelectItem>
+                </SelectContent>
+              </Select>
 
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-medium text-foreground whitespace-nowrap">Type:</span>
-                <Select value={provisionTypeFilter} onValueChange={setProvisionTypeFilter}>
-                  <SelectTrigger className="w-40 h-8 text-xs">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Types</SelectItem>
-                    {uniqueProvisionTypes.map(type => (
-                      <SelectItem key={type} value={type}>{type}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <Select value={provisionTypeFilter} onValueChange={setProvisionTypeFilter}>
+                <SelectTrigger className="w-28 h-7 text-xs">
+                  <SelectValue placeholder="Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Types</SelectItem>
+                  {uniqueProvisionTypes.map(type => (
+                    <SelectItem key={type} value={type}>{type}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
-              {/* Sort Controls */}
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-medium text-foreground whitespace-nowrap">Sort by:</span>
-                <Select value={sortField} onValueChange={(value) => setSortField(value as SortField)}>
-                  <SelectTrigger className="w-32 h-8 text-xs">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="id">ID</SelectItem>
-                    <SelectItem value="serviceName">Service Name</SelectItem>
-                    <SelectItem value="provisionType">Type</SelectItem>
-                    <SelectItem value="options">Options</SelectItem>
-                    <SelectItem value="numProv">Num Prov</SelectItem>
-                    <SelectItem value="numProd">Num Prod</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
-                  className="h-8 w-8 p-0"
-                >
-                  {sortDirection === 'asc' ? <SortAscending className="h-3 w-3" /> : <SortDescending className="h-3 w-3" />}
-                </Button>
-              </div>
+            {/* Sort Controls - Compact */}
+            <div className="flex items-center gap-1 flex-shrink-0">
+              <Select value={sortField} onValueChange={(value) => setSortField(value as SortField)}>
+                <SelectTrigger className="w-24 h-7 text-xs">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="id">ID</SelectItem>
+                  <SelectItem value="serviceName">Name</SelectItem>
+                  <SelectItem value="provisionType">Type</SelectItem>
+                  <SelectItem value="options">Options</SelectItem>
+                  <SelectItem value="numProv">Prov</SelectItem>
+                  <SelectItem value="numProd">Prod</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
+                className="h-7 w-7 p-0"
+              >
+                {sortDirection === 'asc' ? <SortAscending className="h-3 w-3" /> : <SortDescending className="h-3 w-3" />}
+              </Button>
+            </div>
 
+            {/* Clear & Results Count */}
+            <div className="flex items-center gap-3 ml-auto flex-shrink-0">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={clearFilters}
-                className="text-xs h-8 text-muted-foreground hover:text-foreground"
+                className="text-xs h-7 px-2 text-muted-foreground hover:text-foreground"
               >
                 <X className="h-3 w-3 mr-1" />
                 Clear
               </Button>
-            </div>
-
-            {/* Results Count */}
-            <div className="ml-auto">
-              <span className="text-xs text-muted-foreground">
-                Showing {filteredAndSortedData.length} of {mockClusterData.length} entries
+              <span className="text-xs text-muted-foreground whitespace-nowrap">
+                {filteredAndSortedData.length} of {mockClusterData.length}
               </span>
             </div>
           </div>
