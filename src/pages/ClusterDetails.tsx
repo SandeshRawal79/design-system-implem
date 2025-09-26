@@ -273,6 +273,117 @@ export function ClusterDetails() {
         </div>
       </div>
 
+      {/* Compact Cluster Information Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 mb-4">
+        {/* Left Card - X-ray Projection & Data Context */}
+        <Card className="bg-card border-border p-2">
+          <CardContent className="p-0">
+            <div className="space-y-1">
+              <div>
+                <span className="text-xs font-medium text-foreground">X-ray Projection:</span>
+                <p className="text-xs text-muted-foreground mt-0.5">{clusterInfo.xrayProjection}</p>
+              </div>
+              <div>
+                <span className="text-xs font-medium text-foreground">Data context:</span>
+                <p className="text-xs text-muted-foreground mt-0.5">{clusterInfo.dataContext}</p>
+              </div>
+              <div>
+                <span className="text-xs font-medium text-foreground">Created:</span>
+                <p className="text-xs text-muted-foreground mt-0.5">{clusterInfo.created}</p>
+              </div>
+              <div>
+                <span className="text-xs font-medium text-foreground">Records in this Cluster:</span>
+                <p className="text-xs font-semibold text-primary mt-0.5">{clusterInfo.recordsInCluster}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Right Card - Cluster Stats */}
+        <Card className="bg-card border-border p-2">
+          <CardContent className="p-0">
+            <div className="space-y-1">
+              <div>
+                <span className="text-xs font-medium text-foreground">Cluster:</span>
+                <p className="text-xs font-semibold text-primary mt-0.5">{clusterInfo.clusterId}</p>
+              </div>
+              <div>
+                <span className="text-xs font-medium text-foreground">Total Clusters:</span>
+                <p className="text-xs text-muted-foreground mt-0.5">{clusterInfo.totalClusters}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-medium text-foreground">Distance Threshold:</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-muted-foreground">{clusterInfo.distanceThreshold}</span>
+                  <Button 
+                    size="sm" 
+                    className="h-5 px-2 text-xs btn-gradient-primary"
+                    onClick={() => {}}
+                  >
+                    Update
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Additional Metrics Cards - Optional */}
+        <Card className="bg-card border-border p-2">
+          <CardContent className="p-0">
+            <div className="space-y-1">
+              <div>
+                <span className="text-xs font-medium text-foreground">Approved:</span>
+                <p className="text-xs text-success mt-0.5 font-semibold">
+                  {filteredAndSortedData.filter(item => 
+                    item.approvalStatuses.filter(s => s === '✓').length > 
+                    item.approvalStatuses.filter(s => s === '✗').length
+                  ).length}
+                </p>
+              </div>
+              <div>
+                <span className="text-xs font-medium text-foreground">Pending:</span>
+                <p className="text-xs text-warning mt-0.5 font-semibold">
+                  {filteredAndSortedData.filter(item => 
+                    item.approvalStatuses.includes('-') && 
+                    !item.approvalStatuses.includes('✓') && 
+                    !item.approvalStatuses.includes('✗')
+                  ).length}
+                </p>
+              </div>
+              <div>
+                <span className="text-xs font-medium text-foreground">Rejected:</span>
+                <p className="text-xs text-destructive mt-0.5 font-semibold">
+                  {filteredAndSortedData.filter(item => 
+                    item.approvalStatuses.filter(s => s === '✗').length > 
+                    item.approvalStatuses.filter(s => s === '✓').length
+                  ).length}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-card border-border p-2">
+          <CardContent className="p-0">
+            <div className="space-y-1">
+              <div>
+                <span className="text-xs font-medium text-foreground">Total Records:</span>
+                <p className="text-xs font-semibold text-primary mt-0.5">{mockClusterData.length}</p>
+              </div>
+              <div>
+                <span className="text-xs font-medium text-foreground">Filtered:</span>
+                <p className="text-xs text-muted-foreground mt-0.5">{filteredAndSortedData.length}</p>
+              </div>
+              <div>
+                <span className="text-xs font-medium text-foreground">Service Types:</span>
+                <p className="text-xs text-muted-foreground mt-0.5">{uniqueProvisionTypes.length}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Main Cluster Data Table */}
       <Card className="bg-card border-border">
         <CardContent className="p-0">
