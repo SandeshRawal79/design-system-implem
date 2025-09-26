@@ -85,6 +85,7 @@ export function ClusterDetails() {
   const [filterType, setFilterType] = useState<FilterType>('all')
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
   const [provisionTypeFilter, setProvisionTypeFilter] = useState('all')
+  const [distanceThreshold, setDistanceThreshold] = useState('10.0')
 
   const clusterInfo = {
     xrayProjection: 'Only Options (D)',
@@ -92,8 +93,7 @@ export function ClusterDetails() {
     created: '2023-03-16 10:56:57',
     recordsInCluster: 270,
     clusterId: clusterId || '1',
-    totalClusters: 6,
-    distanceThreshold: 10.0
+    totalClusters: 6
   }
 
   // Filter and sort data
@@ -303,11 +303,22 @@ export function ClusterDetails() {
             <div className="flex items-center gap-2">
               <span className="font-medium text-foreground text-sm">Distance Threshold:</span>
               <div className="flex items-center gap-2">
-                <span className="text-muted-foreground text-sm">{clusterInfo.distanceThreshold}</span>
+                <Input
+                  type="number"
+                  value={distanceThreshold}
+                  onChange={(e) => setDistanceThreshold(e.target.value)}
+                  step="0.1"
+                  min="0"
+                  max="100"
+                  className="w-20 h-6 text-sm border-border"
+                />
                 <Button 
                   size="sm" 
-                  className="h-5 px-2 btn-gradient-primary text-xs"
-                  onClick={() => {}}
+                  className="h-6 px-3 btn-gradient-primary text-xs"
+                  onClick={() => {
+                    console.log('Update distance threshold to:', distanceThreshold)
+                    // Here you would typically make an API call to update the threshold
+                  }}
                 >Update</Button>
               </div>
             </div>
