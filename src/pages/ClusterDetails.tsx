@@ -290,15 +290,15 @@ export function ClusterDetails() {
             </div>
             <div className="flex-shrink-0">
               <span className="font-medium text-foreground text-sm">Records in this Cluster:</span>
-              <p className="font-semibold text-primary text-sm">{clusterInfo.recordsInCluster}</p>
+              <p className="font-semibold text-sm" style={{ color: '#43812C' }}>{clusterInfo.recordsInCluster}</p>
             </div>
             <div className="flex-shrink-0">
               <span className="font-medium text-foreground text-sm">Cluster:</span>
-              <p className="font-semibold text-primary text-sm">{clusterInfo.clusterId}</p>
+              <p className="font-semibold text-sm" style={{ color: '#474A9E' }}>{clusterInfo.clusterId}</p>
             </div>
             <div className="flex-shrink-0">
               <span className="font-medium text-foreground text-sm">Total Clusters:</span>
-              <p className="text-muted-foreground text-sm">{clusterInfo.totalClusters}</p>
+              <p className="font-semibold text-sm" style={{ color: '#1F8A7A' }}>{clusterInfo.totalClusters}</p>
             </div>
             <div className="flex items-center gap-2">
               <span className="font-medium text-foreground text-sm">Distance Threshold:</span>
@@ -310,7 +310,8 @@ export function ClusterDetails() {
                   step="0.1"
                   min="0"
                   max="100"
-                  className="w-20 h-6 text-sm border-border"
+                  className="w-20 h-6 text-sm border-border font-semibold"
+                  style={{ color: '#F48436' }}
                 />
                 <Button 
                   size="sm" 
@@ -546,18 +547,18 @@ export function ClusterDetails() {
                         {record.id}
                       </Button>
                     </TableCell>
-                    <TableCell className="text-sm">{record.serviceId}</TableCell>
+                    <TableCell className="text-sm font-semibold" style={{ color: '#0174B2' }}>{record.serviceId}</TableCell>
                     <TableCell className="text-sm">{record.serviceName}</TableCell>
                     <TableCell className="text-xs text-center">-</TableCell>
                     <TableCell className="text-sm">{record.provisionType}</TableCell>
                     <TableCell className="text-xs text-center">-</TableCell>
-                    <TableCell className="font-medium text-sm">{record.options}</TableCell>
+                    <TableCell className="font-medium text-sm" style={{ color: '#F48436' }}>{record.options}</TableCell>
                     <TableCell className="text-center text-sm">-</TableCell>
                     <TableCell className="text-sm">{record.bencode}</TableCell>
                     <TableCell className="text-sm">{record.newBencode}</TableCell>
-                    <TableCell className="text-center text-sm">{record.numSplit}</TableCell>
-                    <TableCell className="text-center text-sm">{record.numProv}</TableCell>
-                    <TableCell className="text-center text-sm">{record.numProd}</TableCell>
+                    <TableCell className="text-center text-sm" style={{ color: '#1F8A7A', fontWeight: '600' }}>{record.numSplit}</TableCell>
+                    <TableCell className="text-center text-sm" style={{ color: '#474A9E', fontWeight: '600' }}>{record.numProv}</TableCell>
+                    <TableCell className="text-center text-sm" style={{ color: '#43812C', fontWeight: '600' }}>{record.numProd}</TableCell>
                     <TableCell className="text-xs text-center">{record.numCmnt}</TableCell>
                     <TableCell className="text-xs text-center">{record.numGrp}</TableCell>
                     <TableCell className="text-xs text-center">
