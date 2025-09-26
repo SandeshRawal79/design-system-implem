@@ -330,16 +330,16 @@ export function ClusterDetails() {
       {/* Main Cluster Data Table */}
       <Card className="bg-card border-border">
         <CardContent className="p-0">
-         <div className="flex flex-col xl:flex-row gap-2 px-2 items-start xl:items-center">
-            {/* Search Input - Compact */}
-            <div className="relative flex-shrink-0">
+         <div className="flex flex-col xl:flex-row gap-2 px-2 py-2 items-start xl:items-center w-full">
+            {/* Search Input - Full width on mobile, expanded width on desktop */}
+            <div className="relative w-full xl:w-auto xl:flex-1 xl:max-w-sm">
               <MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="text"
                 placeholder="Search..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-8 py-1 text-xs h-8 w-48 border-border"
+                className="pl-10 pr-8 py-1 text-xs h-8 w-full border-border"
               />
               {searchTerm && (
                 <Button
@@ -353,13 +353,13 @@ export function ClusterDetails() {
               )}
             </div>
 
-            {/* Quick Filter Pills - Compact */}
-            <div className="flex items-center gap-1 flex-shrink-0">
+            {/* Quick Filter Pills - Full width on mobile */}
+            <div className="flex items-center gap-1 w-full xl:w-auto xl:flex-shrink-0">
               <Button
                 variant={filterType === 'all' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setFilterType('all')}
-                className="text-xs h-7 px-2 btn-gradient-primary"
+                className="text-xs h-7 px-2 btn-gradient-primary flex-1 xl:flex-none"
               >
                 All
               </Button>
@@ -367,7 +367,7 @@ export function ClusterDetails() {
                 variant={filterType === 'with-approvals' ? 'secondary' : 'outline'}
                 size="sm"
                 onClick={() => setFilterType('with-approvals')}
-                className="text-xs h-7 px-2"
+                className="text-xs h-7 px-2 flex-1 xl:flex-none"
               >
                 Approved
               </Button>
@@ -375,7 +375,7 @@ export function ClusterDetails() {
                 variant={filterType === 'pending-approvals' ? 'secondary' : 'outline'}
                 size="sm"
                 onClick={() => setFilterType('pending-approvals')}
-                className="text-xs h-7 px-2"
+                className="text-xs h-7 px-2 flex-1 xl:flex-none"
               >
                 Pending
               </Button>
@@ -383,16 +383,16 @@ export function ClusterDetails() {
                 variant={filterType === 'no-approvals' ? 'secondary' : 'outline'}
                 size="sm"
                 onClick={() => setFilterType('no-approvals')}
-                className="text-xs h-7 px-2"
+                className="text-xs h-7 px-2 flex-1 xl:flex-none"
               >
                 None
               </Button>
             </div>
 
-            {/* Compact Filters - Dropdowns */}
-            <div className="flex items-center gap-2 flex-shrink-0">
+            {/* Compact Filters - Full width on mobile */}
+            <div className="flex items-center gap-2 w-full xl:w-auto xl:flex-shrink-0">
               <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as StatusFilter)}>
-                <SelectTrigger className="w-24 h-7 text-xs">
+                <SelectTrigger className="w-full xl:w-32 h-7 text-xs">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -404,7 +404,7 @@ export function ClusterDetails() {
               </Select>
 
               <Select value={provisionTypeFilter} onValueChange={setProvisionTypeFilter}>
-                <SelectTrigger className="w-28 h-7 text-xs">
+                <SelectTrigger className="w-full xl:w-36 h-7 text-xs">
                   <SelectValue placeholder="Type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -416,10 +416,10 @@ export function ClusterDetails() {
               </Select>
             </div>
 
-            {/* Sort Controls - Compact */}
-            <div className="flex items-center gap-1 flex-shrink-0">
+            {/* Sort Controls - Full width on mobile */}
+            <div className="flex items-center gap-1 w-full xl:w-auto xl:flex-shrink-0">
               <Select value={sortField} onValueChange={(value) => setSortField(value as SortField)}>
-                <SelectTrigger className="w-24 h-7 text-xs">
+                <SelectTrigger className="w-full xl:w-28 h-7 text-xs flex-1 xl:flex-none">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -435,14 +435,14 @@ export function ClusterDetails() {
                 variant="outline"
                 size="sm"
                 onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
-                className="h-7 w-7 p-0"
+                className="h-7 w-7 p-0 flex-shrink-0"
               >
                 {sortDirection === 'asc' ? <SortAscending className="h-3 w-3" /> : <SortDescending className="h-3 w-3" />}
               </Button>
             </div>
 
             {/* Clear & Results Count */}
-            <div className="flex items-center gap-3 ml-auto flex-shrink-0">
+            <div className="flex items-center gap-3 w-full xl:w-auto xl:ml-auto xl:flex-shrink-0 justify-between xl:justify-end">
               <Button
                 variant="ghost"
                 size="sm"
