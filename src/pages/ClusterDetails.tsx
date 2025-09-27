@@ -463,95 +463,142 @@ export function ClusterDetails() {
           {/* Responsive Table - Design System Compliant */}
           <div className="responsive-table-wrapper max-h-[calc(100vh-520px)] overflow-y-auto">
             <Table className="responsive-table">
-              <TableHeader className="sticky-header">
-                <TableRow className="border-b border-border">
-                  <TableHead className="h-11 px-3 text-xs font-bold text-foreground text-center bg-card">#</TableHead>
-                  <TableHead 
-                    className="h-11 px-3 cursor-pointer hover:bg-muted/50 text-xs font-bold text-foreground bg-card transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
-                    onClick={() => handleSort('id')}
-                    tabIndex={0}
-                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('id'); }}
-                  >
-                    <div className="flex items-center">
-                      ABCD 1-Up
-                      {getSortIcon('id')}
-                    </div>
+              <TableHeader data-slot="table-header" className="[&_tr]:border-b sticky-header">
+                <TableRow data-slot="table-row" className="hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors">
+                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
+                      <div className="flex items-center">#</div>
+                    </button>
                   </TableHead>
-                  <TableHead className="h-11 px-3 text-xs font-bold text-foreground bg-card">Service ID</TableHead>
-                  <TableHead 
-                    className="h-11 px-3 cursor-pointer hover:bg-muted/50 text-xs font-bold text-foreground bg-card transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
-                    onClick={() => handleSort('serviceName')}
-                    tabIndex={0}
-                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('serviceName'); }}
-                  >
-                    <div className="flex items-center">
-                      Service Name
-                      {getSortIcon('serviceName')}
-                    </div>
+                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                    <button data-slot="button" 
+                      onClick={() => handleSort('id')}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('id'); }}
+                      className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
+                    >
+                      <div className="flex items-center">
+                        ABCD 1-Up
+                        <i className="fas fa-sort text-muted-foreground ml-2"></i>
+                      </div>
+                    </button>
                   </TableHead>
-                  <TableHead className="h-11 px-3 text-center text-xs font-bold text-foreground bg-card">P</TableHead>
-                  <TableHead 
-                    className="h-11 px-3 cursor-pointer hover:bg-muted/50 text-xs font-bold text-foreground bg-card transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
-                    onClick={() => handleSort('provisionType')}
-                    tabIndex={0}
-                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('provisionType'); }}
-                  >
-                    <div className="flex items-center">
-                      Provision Type
-                      {getSortIcon('provisionType')}
-                    </div>
+                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
+                      <div className="flex items-center">Service ID</div>
+                    </button>
                   </TableHead>
-                  <TableHead className="h-11 px-3 text-center text-xs font-bold text-foreground bg-card">O</TableHead>
-                  <TableHead 
-                    className="h-11 px-3 cursor-pointer hover:bg-muted/50 text-xs font-bold text-foreground bg-card transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
-                    onClick={() => handleSort('options')}
-                    tabIndex={0}
-                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('options'); }}
-                  >
-                    <div className="flex items-center">
-                      Options
-                      {getSortIcon('options')}
-                    </div>
+                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                    <button data-slot="button" 
+                      onClick={() => handleSort('serviceName')}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('serviceName'); }}
+                      className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
+                    >
+                      <div className="flex items-center">
+                        Service Name
+                        <i className="fas fa-sort text-muted-foreground ml-2"></i>
+                      </div>
+                    </button>
                   </TableHead>
-                  <TableHead className="h-11 px-3 text-center text-xs font-bold text-foreground bg-card">PTy Type</TableHead>
-                  <TableHead className="h-11 px-3 text-xs font-bold text-foreground bg-card">Bencode</TableHead>
-                  <TableHead className="h-11 px-3 text-xs font-bold text-foreground bg-card">New Bencode</TableHead>
-                  <TableHead 
-                    className="h-11 px-3 text-center cursor-pointer hover:bg-muted/50 text-xs font-bold text-foreground bg-card transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
-                    onClick={() => handleSort('numSplit')}
-                    tabIndex={0}
-                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('numSplit'); }}
-                  >
-                    <div className="flex items-center justify-center">
-                      Num Split
-                      {getSortIcon('numSplit')}
-                    </div>
+                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
+                      <div className="flex items-center">P</div>
+                    </button>
                   </TableHead>
-                  <TableHead 
-                    className="h-11 px-3 text-center cursor-pointer hover:bg-muted/50 text-xs font-bold text-foreground bg-card transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
-                    onClick={() => handleSort('numProv')}
-                    tabIndex={0}
-                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('numProv'); }}
-                  >
-                    <div className="flex items-center justify-center">
-                      Num Prov
-                      {getSortIcon('numProv')}
-                    </div>
+                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                    <button data-slot="button" 
+                      onClick={() => handleSort('provisionType')}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('provisionType'); }}
+                      className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
+                    >
+                      <div className="flex items-center">
+                        Provision Type
+                        <i className="fas fa-sort text-muted-foreground ml-2"></i>
+                      </div>
+                    </button>
                   </TableHead>
-                  <TableHead 
-                    className="h-11 px-3 text-center cursor-pointer hover:bg-muted/50 text-xs font-bold text-foreground bg-card transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
-                    onClick={() => handleSort('numProd')}
-                    tabIndex={0}
-                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('numProd'); }}
-                  >
-                    <div className="flex items-center justify-center">
-                      Num Prod
-                      {getSortIcon('numProd')}
-                    </div>
+                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
+                      <div className="flex items-center">O</div>
+                    </button>
                   </TableHead>
-                  <TableHead className="h-11 px-3 text-center text-xs font-bold text-foreground bg-card">Num Cmnt</TableHead>
-                  <TableHead className="h-11 px-3 text-center text-xs font-bold text-foreground bg-card">Num Grp</TableHead>
-                  <TableHead className="h-11 px-3 text-center text-xs font-bold text-foreground bg-card">Approve</TableHead>
+                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                    <button data-slot="button" 
+                      onClick={() => handleSort('options')}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('options'); }}
+                      className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
+                    >
+                      <div className="flex items-center">
+                        Options
+                        <i className="fas fa-sort text-muted-foreground ml-2"></i>
+                      </div>
+                    </button>
+                  </TableHead>
+                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
+                      <div className="flex items-center">PTy Type</div>
+                    </button>
+                  </TableHead>
+                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
+                      <div className="flex items-center">Bencode</div>
+                    </button>
+                  </TableHead>
+                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
+                      <div className="flex items-center">New Bencode</div>
+                    </button>
+                  </TableHead>
+                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                    <button data-slot="button" 
+                      onClick={() => handleSort('numSplit')}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('numSplit'); }}
+                      className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
+                    >
+                      <div className="flex items-center">
+                        Num Split
+                        <i className="fas fa-sort text-muted-foreground ml-2"></i>
+                      </div>
+                    </button>
+                  </TableHead>
+                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                    <button data-slot="button" 
+                      onClick={() => handleSort('numProv')}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('numProv'); }}
+                      className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
+                    >
+                      <div className="flex items-center">
+                        Num Prov
+                        <i className="fas fa-sort text-muted-foreground ml-2"></i>
+                      </div>
+                    </button>
+                  </TableHead>
+                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                    <button data-slot="button" 
+                      onClick={() => handleSort('numProd')}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('numProd'); }}
+                      className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
+                    >
+                      <div className="flex items-center">
+                        Num Prod
+                        <i className="fas fa-sort text-muted-foreground ml-2"></i>
+                      </div>
+                    </button>
+                  </TableHead>
+                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
+                      <div className="flex items-center">Num Cmnt</div>
+                    </button>
+                  </TableHead>
+                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
+                      <div className="flex items-center">Num Grp</div>
+                    </button>
+                  </TableHead>
+                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
+                      <div className="flex items-center">Approve</div>
+                    </button>
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
