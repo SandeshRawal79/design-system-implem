@@ -188,30 +188,31 @@ export function DataTable<T extends Record<string, any>>({
         </div>
       )}
 
-      {/* Data Table - Full Width */}
+      {/* Data Table - Refactored with exact markup structure */}
       <Card className="overflow-hidden w-full">
         <div className="responsive-table-wrapper w-full">
-          <table className="responsive-table sticky-header w-full min-w-full">
-            <thead className="bg-muted/30">
-              <tr className="border-b border-border">
+          <table data-slot="table" className="w-full caption-bottom text-sm">
+            <thead data-slot="table-header" className="[&_tr]:border-b">
+              <tr data-slot="table-row" className="hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors">
                 {columns.map((column, index) => (
                   <th 
                     key={index}
-                    className={`text-left px-2 py-1.5 md:px-3 md:py-2 lg:px-3 lg:py-2 ${getColumnClass(column.key as string)} ${column.className || ''}`}
+                    data-slot="table-head"
+                    className={`text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] ${getColumnClass(column.key as string)} ${column.className || ''}`}
                   >
                     {column.sortable !== false ? (
                       <button 
+                        data-slot="button"
                         onClick={() => handleSort(String(column.key))}
-                        className="flex items-center gap-1.5 font-semibold text-xs md:text-sm text-foreground hover:text-primary transition-colors cursor-pointer"
+                        className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start"
                       >
-                        {column.label}
-                        <FontAwesomeIcon 
-                          icon={getSortIcon(String(column.key))} 
-                          className="w-2.5 h-2.5 text-muted-foreground"
-                        />
+                        <div className="flex items-center">
+                          {column.label}
+                          <i className={`fas ${getSortIcon(String(column.key)) === faSort ? 'fa-sort' : getSortIcon(String(column.key)) === faSortUp ? 'fa-sort-up' : 'fa-sort-down'} text-muted-foreground ml-2`}></i>
+                        </div>
                       </button>
                     ) : (
-                      <span className="font-semibold text-xs md:text-sm text-foreground">
+                      <span className="font-medium text-muted-foreground">
                         {column.label}
                       </span>
                     )}
@@ -219,10 +220,10 @@ export function DataTable<T extends Record<string, any>>({
                 ))}
               </tr>
             </thead>
-            <tbody>
+            <tbody data-slot="table-body" className="[&_tr:last-child]:border-0">
               {sortedData.length === 0 ? (
-                <tr>
-                  <td colSpan={columns.length} className="text-center p-8 text-muted-foreground">
+                <tr data-slot="table-row" className="data-[state=selected]:bg-muted border-b hover:bg-muted/30 transition-colors">
+                  <td data-slot="table-cell" colSpan={columns.length} className="p-2 align-middle whitespace-nowrap py-4 text-center text-muted-foreground">
                     {emptyMessage}
                   </td>
                 </tr>
@@ -230,12 +231,15 @@ export function DataTable<T extends Record<string, any>>({
                 sortedData.map((record, index) => (
                   <tr 
                     key={index}
-                    className={`border-b border-border hover:bg-muted/20 transition-colors ${
-                      index % 2 === 0 ? 'bg-background' : 'bg-muted/10'
-                    }`}
+                    data-slot="table-row"
+                    className="data-[state=selected]:bg-muted border-b hover:bg-muted/30 transition-colors"
                   >
                     {columns.map((column, colIndex) => (
-                      <td key={colIndex} className={`px-2 py-2 md:px-3 md:py-2.5 lg:px-3 lg:py-2.5 ${getColumnClass(column.key as string)} ${column.className || ''}`}>
+                      <td 
+                        key={colIndex} 
+                        data-slot="table-cell"
+                        className={`p-2 align-middle whitespace-nowrap py-4 ${getColumnClass(column.key as string)} ${column.className || ''}`}
+                      >
                         {column.render 
                           ? column.render(record[column.key as keyof T], record, index)
                           : String(record[column.key as keyof T] || '')
