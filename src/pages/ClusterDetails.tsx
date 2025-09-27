@@ -21,7 +21,7 @@ const generateApprovalStatuses = () => {
   return Array.from({ length: 5 }, () => statuses[Math.floor(Math.random() * statuses.length)]);
 };
 
-// Mock data based on user's provided cluster details data
+// Mock data using the provided cluster details data - First 10 records
 const mockClusterData = [
   {
     abcd_1up: 2001,
@@ -36,6 +36,12 @@ const mockClusterData = [
     num_products: 4207,
     num_clients: 953,
     num_groups: 3310,
+    splits: [],
+    phase_included_in_bm: 0,
+    approver_groups_needed_bm: 1,
+    approvals_given_bm: 0,
+    approvals_done_by_abcd_set_1up: null,
+    member_of_sets: null,
     approvalStatuses: generateApprovalStatuses()
   },
   {
@@ -51,6 +57,12 @@ const mockClusterData = [
     num_products: 2,
     num_clients: 1,
     num_groups: 1,
+    splits: [],
+    phase_included_in_bm: 0,
+    approver_groups_needed_bm: 1,
+    approvals_given_bm: 0,
+    approvals_done_by_abcd_set_1up: null,
+    member_of_sets: null,
     approvalStatuses: generateApprovalStatuses()
   },
   {
@@ -66,6 +78,12 @@ const mockClusterData = [
     num_products: 2,
     num_clients: 2,
     num_groups: 11,
+    splits: [],
+    phase_included_in_bm: 0,
+    approver_groups_needed_bm: 1,
+    approvals_given_bm: 0,
+    approvals_done_by_abcd_set_1up: null,
+    member_of_sets: null,
     approvalStatuses: generateApprovalStatuses()
   },
   {
@@ -81,6 +99,12 @@ const mockClusterData = [
     num_products: 11,
     num_clients: 8,
     num_groups: 20,
+    splits: [],
+    phase_included_in_bm: 0,
+    approver_groups_needed_bm: 1,
+    approvals_given_bm: 0,
+    approvals_done_by_abcd_set_1up: null,
+    member_of_sets: null,
     approvalStatuses: generateApprovalStatuses()
   },
   {
@@ -96,6 +120,12 @@ const mockClusterData = [
     num_products: 7,
     num_clients: 4,
     num_groups: 8,
+    splits: [],
+    phase_included_in_bm: 0,
+    approver_groups_needed_bm: 1,
+    approvals_given_bm: 0,
+    approvals_done_by_abcd_set_1up: null,
+    member_of_sets: null,
     approvalStatuses: generateApprovalStatuses()
   },
   {
@@ -111,6 +141,12 @@ const mockClusterData = [
     num_products: 15,
     num_clients: 11,
     num_groups: 31,
+    splits: [],
+    phase_included_in_bm: 0,
+    approver_groups_needed_bm: 1,
+    approvals_given_bm: 0,
+    approvals_done_by_abcd_set_1up: null,
+    member_of_sets: null,
     approvalStatuses: generateApprovalStatuses()
   },
   {
@@ -126,6 +162,12 @@ const mockClusterData = [
     num_products: 9,
     num_clients: 7,
     num_groups: 23,
+    splits: [],
+    phase_included_in_bm: 0,
+    approver_groups_needed_bm: 1,
+    approvals_given_bm: 0,
+    approvals_done_by_abcd_set_1up: null,
+    member_of_sets: null,
     approvalStatuses: generateApprovalStatuses()
   },
   {
@@ -141,6 +183,12 @@ const mockClusterData = [
     num_products: 31,
     num_clients: 15,
     num_groups: 54,
+    splits: [],
+    phase_included_in_bm: 0,
+    approver_groups_needed_bm: 1,
+    approvals_given_bm: 0,
+    approvals_done_by_abcd_set_1up: null,
+    member_of_sets: null,
     approvalStatuses: generateApprovalStatuses()
   },
   {
@@ -156,6 +204,12 @@ const mockClusterData = [
     num_products: 1,
     num_clients: 1,
     num_groups: 2,
+    splits: [],
+    phase_included_in_bm: 0,
+    approver_groups_needed_bm: 1,
+    approvals_given_bm: 0,
+    approvals_done_by_abcd_set_1up: null,
+    member_of_sets: null,
     approvalStatuses: generateApprovalStatuses()
   },
   {
@@ -171,6 +225,12 @@ const mockClusterData = [
     num_products: 9,
     num_clients: 1,
     num_groups: 2,
+    splits: [],
+    phase_included_in_bm: 0,
+    approver_groups_needed_bm: 1,
+    approvals_given_bm: 0,
+    approvals_done_by_abcd_set_1up: null,
+    member_of_sets: null,
     approvalStatuses: generateApprovalStatuses()
   },
 ]
@@ -218,6 +278,19 @@ export function ClusterDetails() {
   const { serviceId, clusterId } = useParams()
   const navigate = useNavigate()
 
+  const clusterInfo = {
+    xrayProjection: 'Only Options (D)',
+    dataContext: 'id=0 names=Product Wide Provision Product Wide Provision',
+    created: '2023-03-16 10:56:57',
+    recordsInCluster: 225,
+    clusterId: clusterId || '1',
+    totalClusters: 1,
+    distanceThreshold: 10,
+    dendrogramId: "15001",
+    dendrogramType: "d",
+    dendrogramTypeName: "Only Options (D)"
+  }
+
   // State for filtering and sorting
   const [searchTerm, setSearchTerm] = useState('')
   const [sortField, setSortField] = useState<SortField>('abcd_1up')
@@ -225,16 +298,7 @@ export function ClusterDetails() {
   const [filterType, setFilterType] = useState<FilterType>('all')
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
   const [provisionTypeFilter, setProvisionTypeFilter] = useState('all')
-  const [distanceThreshold, setDistanceThreshold] = useState('10.0')
-
-  const clusterInfo = {
-    xrayProjection: 'Only Options (D)',
-    dataContext: 'id=0 names=Product Wide Provision Product Wide Provision',
-    created: '2023-03-16 10:56:57',
-    recordsInCluster: 270,
-    clusterId: clusterId || '1',
-    totalClusters: 6
-  }
+  const [distanceThreshold, setDistanceThreshold] = useState(clusterInfo.distanceThreshold.toString())
 
   // Filter and sort data
   const filteredAndSortedData = useMemo(() => {
@@ -732,7 +796,7 @@ export function ClusterDetails() {
                     <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4">
                       <button 
                         data-slot="button" 
-                        className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:text-accent-foreground dark:hover:bg-accent/50 rounded-md gap-1.5 has-[>svg]:px-2.5 p-1 h-6 w-6 hover:bg-muted/50"
+                        className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:text-accent-foreground dark:hover:bg-accent/50 rounded-md gap-1.5 has-[>svg]:px-2.5 p-1 h-6 w-6 hover:bg-muted/50 text-primary font-bold"
                         onClick={() => console.log('Navigate to ABCD details:', record.abcd_1up)}
                       >
                         {record.abcd_1up}
@@ -789,7 +853,7 @@ export function ClusterDetails() {
                   </tr>
                 ))}
                 {filteredAndSortedData.length === 0 && (
-                  <tr data-slot="table-row" className="hover:bg-transparent border-b">
+                  <tr data-slot="table-row" className="hover:bg-transparent">
                     <td colSpan={17} data-slot="table-cell" className="h-24 p-2 text-center text-muted-foreground align-middle">
                       <div className="flex flex-col items-center gap-3 py-8">
                         <div className="flex items-center justify-center w-12 h-12 rounded-full bg-muted/30">
