@@ -467,9 +467,9 @@ export function ClusterDetails() {
             <h2 className="text-lg font-bold text-foreground">Main Cluster Data</h2>
           </div>
           
-          {/* Responsive Table - Design System Compliant */}
-          <div className="responsive-table-wrapper max-h-[calc(100vh-520px)] overflow-y-auto">
-            <table data-slot="table" className="w-full caption-bottom text-sm border-collapse">
+          {/* Table using provided shadcn-style structure */}
+          <div className="max-h-[calc(100vh-520px)] overflow-y-auto">
+            <table data-slot="table" className="w-full caption-bottom text-sm">
               <thead data-slot="table-header" className="[&_tr]:border-b">
                 <tr data-slot="table-row" className="hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors">
                   <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]">
@@ -483,10 +483,7 @@ export function ClusterDetails() {
                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('id'); }}
                       className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
                     >
-                      <div className="flex items-center">
-                        ABCD 1-Up
-                        <i className="fas fa-sort text-muted-foreground ml-2"></i>
-                      </div>
+                      <div className="flex items-center">ABCD 1-Up<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
                     </button>
                   </th>
                   <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
@@ -500,10 +497,7 @@ export function ClusterDetails() {
                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('serviceName'); }}
                       className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
                     >
-                      <div className="flex items-center">
-                        Service Name
-                        <i className="fas fa-sort text-muted-foreground ml-2"></i>
-                      </div>
+                      <div className="flex items-center">Service Name<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
                     </button>
                   </th>
                   <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
@@ -517,10 +511,7 @@ export function ClusterDetails() {
                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('provisionType'); }}
                       className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
                     >
-                      <div className="flex items-center">
-                        Provision Type
-                        <i className="fas fa-sort text-muted-foreground ml-2"></i>
-                      </div>
+                      <div className="flex items-center">Provision Type<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
                     </button>
                   </th>
                   <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
@@ -534,10 +525,7 @@ export function ClusterDetails() {
                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('options'); }}
                       className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
                     >
-                      <div className="flex items-center">
-                        Options
-                        <i className="fas fa-sort text-muted-foreground ml-2"></i>
-                      </div>
+                      <div className="flex items-center">Options<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
                     </button>
                   </th>
                   <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
@@ -561,10 +549,7 @@ export function ClusterDetails() {
                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('numSplit'); }}
                       className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
                     >
-                      <div className="flex items-center">
-                        Num Split
-                        <i className="fas fa-sort text-muted-foreground ml-2"></i>
-                      </div>
+                      <div className="flex items-center">Num Split<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
                     </button>
                   </th>
                   <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
@@ -573,10 +558,7 @@ export function ClusterDetails() {
                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('numProv'); }}
                       className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
                     >
-                      <div className="flex items-center">
-                        Num Prov
-                        <i className="fas fa-sort text-muted-foreground ml-2"></i>
-                      </div>
+                      <div className="flex items-center">Num Prov<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
                     </button>
                   </th>
                   <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
@@ -585,10 +567,7 @@ export function ClusterDetails() {
                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('numProd'); }}
                       className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
                     >
-                      <div className="flex items-center">
-                        Num Prod
-                        <i className="fas fa-sort text-muted-foreground ml-2"></i>
-                      </div>
+                      <div className="flex items-center">Num Prod<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
                     </button>
                   </th>
                   <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
@@ -610,136 +589,72 @@ export function ClusterDetails() {
               </thead>
               <tbody data-slot="table-body" className="[&_tr:last-child]:border-0">
                 {filteredAndSortedData.map((record, index) => (
-                  <tr 
-                    key={record.id}
-                    data-slot="table-row" 
-                    className="data-[state=selected]:bg-muted border-b hover:bg-muted/30 transition-colors"
-                  >
-                    <td 
-                      data-slot="table-cell" 
-                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
-                    >
-                      <span className="text-xs font-bold text-primary" aria-label={`Row ${index + 1}`}>
-                        {index + 1}
-                      </span>
+                  <tr key={record.id} data-slot="table-row" className="data-[state=selected]:bg-muted border-b hover:bg-muted/30 transition-colors">
+                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
+                      <span className="text-xs font-bold text-primary">{index + 1}</span>
                     </td>
-                    <td 
-                      data-slot="table-cell" 
-                      className="p-2 align-middle whitespace-nowrap py-4"
-                    >
+                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4">
                       <button 
                         data-slot="button" 
-                        className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:text-accent-foreground dark:hover:bg-accent/50 h-auto p-0 text-info hover:text-info/80 underline underline-offset-2"
-                        onClick={() => {
-                          console.log('Navigate to ABCD details:', record.id)
-                        }}
+                        className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:text-accent-foreground dark:hover:bg-accent/50 rounded-md gap-1.5 has-[>svg]:px-2.5 p-1 h-6 w-6 hover:bg-muted/50"
+                        onClick={() => console.log('Navigate to ABCD details:', record.id)}
                       >
                         {record.id}
                       </button>
                     </td>
-                    <td 
-                      data-slot="table-cell" 
-                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
-                    >
+                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
                       <span className="text-xs font-bold text-info">{record.serviceId}</span>
                     </td>
-                    <td 
-                      data-slot="table-cell" 
-                      className="p-2 align-middle whitespace-nowrap py-4"
-                    >
-                      <span className="text-xs font-medium text-foreground">{record.serviceName}</span>
+                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4">
+                      <div className="flex items-center gap-2">
+                        <i className="fas fa-scroll text-primary"></i>
+                        <span className="font-medium text-foreground">{record.serviceName}</span>
+                      </div>
                     </td>
-                    <td 
-                      data-slot="table-cell" 
-                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
-                    >
+                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
                       <span className="text-xs text-muted-foreground">-</span>
                     </td>
-                    <td 
-                      data-slot="table-cell" 
-                      className="p-2 align-middle whitespace-nowrap py-4"
-                    >
+                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4">
                       <span className="text-xs font-medium text-foreground">{record.provisionType}</span>
                     </td>
-                    <td 
-                      data-slot="table-cell" 
-                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
-                    >
+                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
                       <span className="text-xs text-muted-foreground">-</span>
                     </td>
-                    <td 
-                      data-slot="table-cell" 
-                      className="p-2 align-middle whitespace-nowrap py-4"
-                    >
+                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4">
                       <span className="text-xs font-bold text-accent">{record.options}</span>
                     </td>
-                    <td 
-                      data-slot="table-cell" 
-                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
-                    >
+                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
                       <span className="text-xs text-muted-foreground">-</span>
                     </td>
-                    <td 
-                      data-slot="table-cell" 
-                      className="p-2 align-middle whitespace-nowrap py-4"
-                    >
+                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4">
                       <span className="text-xs text-muted-foreground">{record.bencode || '-'}</span>
                     </td>
-                    <td 
-                      data-slot="table-cell" 
-                      className="p-2 align-middle whitespace-nowrap py-4"
-                    >
+                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4">
                       <span className="text-xs text-muted-foreground">{record.newBencode || '-'}</span>
                     </td>
-                    <td 
-                      data-slot="table-cell" 
-                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
-                    >
+                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
                       <span className="text-xs font-bold text-secondary">{record.numSplit}</span>
                     </td>
-                    <td 
-                      data-slot="table-cell" 
-                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
-                    >
+                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
                       <span className="text-xs font-bold text-primary">{record.numProv}</span>
                     </td>
-                    <td 
-                      data-slot="table-cell" 
-                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
-                    >
+                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
                       <span className="text-xs font-bold text-success">{record.numProd}</span>
                     </td>
-                    <td 
-                      data-slot="table-cell" 
-                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
-                    >
+                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
                       <span className="text-xs text-muted-foreground">{record.numCmnt || '-'}</span>
                     </td>
-                    <td 
-                      data-slot="table-cell" 
-                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
-                    >
+                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
                       <span className="text-xs text-muted-foreground">{record.numGrp || '-'}</span>
                     </td>
-                    <td 
-                      data-slot="table-cell" 
-                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
-                    >
+                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
                       <ApprovalStatusIndicators statuses={record.approvalStatuses} />
                     </td>
                   </tr>
                 ))}
-                {/* Empty state row - Design System Compliant */}
                 {filteredAndSortedData.length === 0 && (
-                  <tr 
-                    data-slot="table-row"
-                    className="hover:bg-transparent border-b"
-                  >
-                    <td 
-                      colSpan={17} 
-                      data-slot="table-cell"
-                      className="h-24 p-2 text-center text-muted-foreground align-middle"
-                    >
+                  <tr data-slot="table-row" className="hover:bg-transparent border-b">
+                    <td colSpan={17} data-slot="table-cell" className="h-24 p-2 text-center text-muted-foreground align-middle">
                       <div className="flex flex-col items-center gap-3 py-8">
                         <div className="flex items-center justify-center w-12 h-12 rounded-full bg-muted/30">
                           <MagnifyingGlass className="h-6 w-6 text-muted-foreground/60" />
