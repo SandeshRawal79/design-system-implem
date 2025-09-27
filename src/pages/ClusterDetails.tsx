@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 
 // Types for filtering and sorting
-type SortField = 'id' | 'serviceName' | 'provisionType' | 'options' | 'numProv' | 'numProd' | 'numSplit'
+type SortField = 'abcd_1up' | 'service_name' | 'provision_type' | 'options' | 'num_provisions' | 'num_products' | 'num_splits'
 type SortDirection = 'asc' | 'desc'
 type FilterType = 'all' | 'with-approvals' | 'pending-approvals' | 'no-approvals'
 type StatusFilter = 'all' | 'approved' | 'rejected' | 'pending'
@@ -21,22 +21,158 @@ const generateApprovalStatuses = () => {
   return Array.from({ length: 5 }, () => statuses[Math.floor(Math.random() * statuses.length)]);
 };
 
+// Mock data based on user's provided cluster details data
 const mockClusterData = [
-  { id: '493', serviceId: '0', serviceName: 'Product Wide Provision', provisionType: 'Coverage Code Id', options: '8773', bencode: '', newBencode: '', numSplit: '0', numProv: '1', numProd: '1', numCmnt: '', numGrp: '', approvalStatuses: ['✗', '-', '-', '-', '✗'] },
-  { id: '575', serviceId: '0', serviceName: 'Product Wide Provision', provisionType: 'Coverage Code Id', options: '8780', bencode: '', newBencode: '', numSplit: '0', numProv: '2', numProd: '2', numCmnt: '', numGrp: '', approvalStatuses: ['✓', '✗', '-', '✓', '-'] },
-  { id: '585', serviceId: '0', serviceName: 'Product Wide Provision', provisionType: 'Coverage Code Id', options: '9057', bencode: '', newBencode: '', numSplit: '0', numProv: '1', numProd: '1', numCmnt: '', numGrp: '', approvalStatuses: ['-', '✓', '✓', '-', '✗'] },
-  { id: '620', serviceId: '0', serviceName: 'Product Wide Provision', provisionType: 'Coverage Code Id', options: '9241', bencode: '', newBencode: '', numSplit: '0', numProv: '1', numProd: '1', numCmnt: '', numGrp: '', approvalStatuses: ['✗', '-', '-', '-', '✗'] },
-  { id: '628', serviceId: '0', serviceName: 'Product Wide Provision', provisionType: 'Coverage Code Id', options: '9367', bencode: '', newBencode: '', numSplit: '0', numProv: '1', numProd: '1', numCmnt: '', numGrp: '', approvalStatuses: ['✓', '✓', '-', '✗', '-'] },
-  { id: '662', serviceId: '0', serviceName: 'Product Wide Provision', provisionType: 'Coverage Code Id', options: '8157', bencode: '', newBencode: '', numSplit: '0', numProv: '1', numProd: '1', numCmnt: '', numGrp: '', approvalStatuses: ['-', '-', '✓', '✓', '✗'] },
-  { id: '665', serviceId: '0', serviceName: 'Product Wide Provision', provisionType: 'Coverage Code Id', options: '9392', bencode: '', newBencode: '', numSplit: '0', numProv: '1', numProd: '1', numCmnt: '', numGrp: '', approvalStatuses: ['✗', '✓', '-', '-', '✓'] },
-  { id: '732', serviceId: '0', serviceName: 'Product Wide Provision', provisionType: 'Coverage Code Id', options: '8770', bencode: '', newBencode: '', numSplit: '0', numProv: '1', numProd: '1', numCmnt: '', numGrp: '', approvalStatuses: ['✗', '-', '-', '-', '✗'] },
-  { id: '745', serviceId: '0', serviceName: 'Product Wide Provision', provisionType: 'Coverage Code Id', options: '8523', bencode: '', newBencode: '', numSplit: '0', numProv: '1', numProd: '1', numCmnt: '', numGrp: '', approvalStatuses: ['✓', '✓', '✓', '✗', '-'] },
-  { id: '757', serviceId: '0', serviceName: 'Product Wide Provision', provisionType: 'Coverage Code Id', options: '8476', bencode: '', newBencode: '', numSplit: '0', numProv: '1', numProd: '1', numCmnt: '', numGrp: '', approvalStatuses: ['-', '✗', '✓', '✓', '-'] },
-  { id: '759', serviceId: '0', serviceName: 'Product Wide Provision', provisionType: 'Coverage Code Id', options: '8997', bencode: '', newBencode: '', numSplit: '0', numProv: '1', numProd: '1', numCmnt: '', numGrp: '', approvalStatuses: ['✗', '-', '-', '-', '✗'] },
-  { id: '763', serviceId: '0', serviceName: 'Product Wide Provision', provisionType: 'Coverage Code Id', options: '8782', bencode: '', newBencode: '', numSplit: '0', numProv: '1', numProd: '1', numCmnt: '', numGrp: '', approvalStatuses: ['✓', '-', '✗', '✓', '-'] },
-  { id: '772', serviceId: '0', serviceName: 'Product Wide Provision', provisionType: 'Coverage Code Id', options: '8143', bencode: '', newBencode: '', numSplit: '0', numProv: '1', numProd: '1', numCmnt: '', numGrp: '', approvalStatuses: ['-', '✓', '✓', '-', '✗'] },
-  { id: '780', serviceId: '0', serviceName: 'Product Wide Provision', provisionType: 'Coverage Code Id', options: '9015', bencode: '', newBencode: '', numSplit: '0', numProv: '1', numProd: '1', numCmnt: '', numGrp: '', approvalStatuses: ['✗', '-', '-', '-', '✗'] },
-  { id: '781', serviceId: '0', serviceName: 'Product Wide Provision', provisionType: 'Coverage Code Id', options: '8480', bencode: '', newBencode: '', numSplit: '0', numProv: '1', numProd: '1', numCmnt: '', numGrp: '', approvalStatuses: ['✓', '✓', '✗', '-', '✓'] },
+  {
+    abcd_1up: 2001,
+    service_id: 15001,
+    service_name: "Federal Legend Drugs",
+    provision_type_1up: null,
+    provision_type: "Anti Cancer Deductible",
+    options: "Does Not Apply",
+    num_splits: 0,
+    is_single_split_with_no_change: null,
+    num_provisions: 8412,
+    num_products: 4207,
+    num_clients: 953,
+    num_groups: 3310,
+    approvalStatuses: generateApprovalStatuses()
+  },
+  {
+    abcd_1up: 2019,
+    service_id: 15001,
+    service_name: "Federal Legend Drugs",
+    provision_type_1up: null,
+    provision_type: "Anti Cancer Deductible",
+    options: "No",
+    num_splits: 0,
+    is_single_split_with_no_change: null,
+    num_provisions: 4,
+    num_products: 2,
+    num_clients: 1,
+    num_groups: 1,
+    approvalStatuses: generateApprovalStatuses()
+  },
+  {
+    abcd_1up: 2028,
+    service_id: 15001,
+    service_name: "Federal Legend Drugs",
+    provision_type_1up: null,
+    provision_type: "Initial Cov Period Spec Tier Copay NonPref",
+    options: "Yes Brand Drug 50 Dollars Generic Drug 50 Dollars Brand Drug if Generic Drug Available 50 Dollars",
+    num_splits: 0,
+    is_single_split_with_no_change: null,
+    num_provisions: 16,
+    num_products: 2,
+    num_clients: 2,
+    num_groups: 11,
+    approvalStatuses: generateApprovalStatuses()
+  },
+  {
+    abcd_1up: 2036,
+    service_id: 15001,
+    service_name: "Federal Legend Drugs",
+    provision_type_1up: null,
+    provision_type: "Specialty Tier Coins - Member Form",
+    options: "Yes Brand Drug 40 Percent of Allowed Charge Generic Drug 40 Percent of Allowed Charge Brand Drug if Generic Drug Available 40 Percent of Allowed Charge",
+    num_splits: 0,
+    is_single_split_with_no_change: null,
+    num_provisions: 88,
+    num_products: 11,
+    num_clients: 8,
+    num_groups: 20,
+    approvalStatuses: generateApprovalStatuses()
+  },
+  {
+    abcd_1up: 2043,
+    service_id: 15001,
+    service_name: "Federal Legend Drugs",
+    provision_type_1up: null,
+    provision_type: "Specialty Tier Coins - Member Form",
+    options: "Yes Brand Drug 60 Percent of Allowed Charge Generic Drug 60 Percent of Allowed Charge Brand Drug if Generic Drug Available 60 Percent of Allowed Charge",
+    num_splits: 0,
+    is_single_split_with_no_change: null,
+    num_provisions: 56,
+    num_products: 7,
+    num_clients: 4,
+    num_groups: 8,
+    approvalStatuses: generateApprovalStatuses()
+  },
+  {
+    abcd_1up: 2046,
+    service_id: 15001,
+    service_name: "Federal Legend Drugs",
+    provision_type_1up: null,
+    provision_type: "Specialty Tier Copay Form",
+    options: "No",
+    num_splits: 0,
+    is_single_split_with_no_change: null,
+    num_provisions: 30,
+    num_products: 15,
+    num_clients: 11,
+    num_groups: 31,
+    approvalStatuses: generateApprovalStatuses()
+  },
+  {
+    abcd_1up: 2048,
+    service_id: 15001,
+    service_name: "Federal Legend Drugs",
+    provision_type_1up: null,
+    provision_type: "Specialty Tier Copay NonForm",
+    options: "No",
+    num_splits: 0,
+    is_single_split_with_no_change: null,
+    num_provisions: 17,
+    num_products: 9,
+    num_clients: 7,
+    num_groups: 23,
+    approvalStatuses: generateApprovalStatuses()
+  },
+  {
+    abcd_1up: 2058,
+    service_id: 15001,
+    service_name: "Federal Legend Drugs",
+    provision_type_1up: null,
+    provision_type: "Specialty Tier Copay NonForm",
+    options: "Yes Brand Drug 250 Dollars Generic Drug 250 Dollars Brand Drug if Generic Drug Available 250 Dollars",
+    num_splits: 0,
+    is_single_split_with_no_change: null,
+    num_provisions: 220,
+    num_products: 31,
+    num_clients: 15,
+    num_groups: 54,
+    approvalStatuses: generateApprovalStatuses()
+  },
+  {
+    abcd_1up: 2060,
+    service_id: 15001,
+    service_name: "Federal Legend Drugs",
+    provision_type_1up: null,
+    provision_type: "Specialty Tier Max Copay Form",
+    options: "Yes Brand Drug 250 Dollars, per Days Range One Generic Drug 250 Dollars, per Days Range One Brand Drug if Generic Drug Available 250 Dollars, per Days Range One Brand Drug 500 Dollars, per Days Range Two Generic Drug 500 Dollars, per Days Range Two Brand Drug if Generic Drug Available 500 Dollars, per Days Range Two",
+    num_splits: 0,
+    is_single_split_with_no_change: null,
+    num_provisions: 14,
+    num_products: 1,
+    num_clients: 1,
+    num_groups: 2,
+    approvalStatuses: generateApprovalStatuses()
+  },
+  {
+    abcd_1up: 2071,
+    service_id: 15001,
+    service_name: "Federal Legend Drugs",
+    provision_type_1up: null,
+    provision_type: "Specialty Tier Max Copay Form",
+    options: "Yes Brand Drug 700 Dollars Generic Drug 700 Dollars Brand Drug if Generic Drug Available 700 Dollars",
+    num_splits: 0,
+    is_single_split_with_no_change: null,
+    num_provisions: 36,
+    num_products: 9,
+    num_clients: 1,
+    num_groups: 2,
+    approvalStatuses: generateApprovalStatuses()
+  },
 ]
 
 // Component to render approval status indicators with design system compliance
@@ -84,7 +220,7 @@ export function ClusterDetails() {
 
   // State for filtering and sorting
   const [searchTerm, setSearchTerm] = useState('')
-  const [sortField, setSortField] = useState<SortField>('id')
+  const [sortField, setSortField] = useState<SortField>('abcd_1up')
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
   const [filterType, setFilterType] = useState<FilterType>('all')
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
@@ -107,16 +243,16 @@ export function ClusterDetails() {
     // Apply search filter
     if (searchTerm) {
       filtered = filtered.filter(item =>
-        item.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.serviceName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.provisionType.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.abcd_1up.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.service_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.provision_type.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.options.toLowerCase().includes(searchTerm.toLowerCase())
       )
     }
 
     // Apply provision type filter
     if (provisionTypeFilter !== 'all') {
-      filtered = filtered.filter(item => item.provisionType === provisionTypeFilter)
+      filtered = filtered.filter(item => item.provision_type === provisionTypeFilter)
     }
 
     // Apply approval status filter
@@ -165,33 +301,33 @@ export function ClusterDetails() {
       let bValue: string | number = ''
 
       switch (sortField) {
-        case 'id':
-          aValue = parseInt(a.id)
-          bValue = parseInt(b.id)
+        case 'abcd_1up':
+          aValue = a.abcd_1up
+          bValue = b.abcd_1up
           break
-        case 'serviceName':
-          aValue = a.serviceName
-          bValue = b.serviceName
+        case 'service_name':
+          aValue = a.service_name
+          bValue = b.service_name
           break
-        case 'provisionType':
-          aValue = a.provisionType
-          bValue = b.provisionType
+        case 'provision_type':
+          aValue = a.provision_type
+          bValue = b.provision_type
           break
         case 'options':
           aValue = a.options
           bValue = b.options
           break
-        case 'numProv':
-          aValue = parseInt(a.numProv)
-          bValue = parseInt(b.numProv)
+        case 'num_provisions':
+          aValue = a.num_provisions
+          bValue = b.num_provisions
           break
-        case 'numProd':
-          aValue = parseInt(a.numProd)
-          bValue = parseInt(b.numProd)
+        case 'num_products':
+          aValue = a.num_products
+          bValue = b.num_products
           break
-        case 'numSplit':
-          aValue = parseInt(a.numSplit)
-          bValue = parseInt(b.numSplit)
+        case 'num_splits':
+          aValue = a.num_splits
+          bValue = b.num_splits
           break
         default:
           return 0
@@ -219,7 +355,7 @@ export function ClusterDetails() {
     setFilterType('all')
     setStatusFilter('all')
     setProvisionTypeFilter('all')
-    setSortField('id')
+    setSortField('abcd_1up')
     setSortDirection('asc')
   }
 
@@ -231,7 +367,7 @@ export function ClusterDetails() {
   }
 
   // Get unique provision types for filter
-  const uniqueProvisionTypes = Array.from(new Set(mockClusterData.map(item => item.provisionType)))
+  const uniqueProvisionTypes = Array.from(new Set(mockClusterData.map(item => item.provision_type)))
 
   return (
     <div className="page-layout-full-width font-['Proxima_Nova',sans-serif]">
@@ -424,12 +560,12 @@ export function ClusterDetails() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="font-['Proxima_Nova',sans-serif]">
-                  <SelectItem value="id" className="text-sm">ID</SelectItem>
-                  <SelectItem value="serviceName" className="text-sm">Name</SelectItem>
-                  <SelectItem value="provisionType" className="text-sm">Type</SelectItem>
+                  <SelectItem value="abcd_1up" className="text-sm">ABCD 1-Up</SelectItem>
+                  <SelectItem value="service_name" className="text-sm">Name</SelectItem>
+                  <SelectItem value="provision_type" className="text-sm">Type</SelectItem>
                   <SelectItem value="options" className="text-sm">Options</SelectItem>
-                  <SelectItem value="numProv" className="text-sm">Prov</SelectItem>
-                  <SelectItem value="numProd" className="text-sm">Prod</SelectItem>
+                  <SelectItem value="num_provisions" className="text-sm">Prov</SelectItem>
+                  <SelectItem value="num_products" className="text-sm">Prod</SelectItem>
                 </SelectContent>
               </Select>
               <Button
@@ -479,8 +615,8 @@ export function ClusterDetails() {
                   </th>
                   <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" 
-                      onClick={() => handleSort('id')}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('id'); }}
+                      onClick={() => handleSort('abcd_1up')}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('abcd_1up'); }}
                       className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
                     >
                       <div className="flex items-center">ABCD 1-Up<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
@@ -493,8 +629,8 @@ export function ClusterDetails() {
                   </th>
                   <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" 
-                      onClick={() => handleSort('serviceName')}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('serviceName'); }}
+                      onClick={() => handleSort('service_name')}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('service_name'); }}
                       className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
                     >
                       <div className="flex items-center">Service Name<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
@@ -507,8 +643,8 @@ export function ClusterDetails() {
                   </th>
                   <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" 
-                      onClick={() => handleSort('provisionType')}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('provisionType'); }}
+                      onClick={() => handleSort('provision_type')}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('provision_type'); }}
                       className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
                     >
                       <div className="flex items-center">Provision Type<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
@@ -545,8 +681,8 @@ export function ClusterDetails() {
                   </th>
                   <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" 
-                      onClick={() => handleSort('numSplit')}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('numSplit'); }}
+                      onClick={() => handleSort('num_splits')}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('num_splits'); }}
                       className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
                     >
                       <div className="flex items-center">Num Split<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
@@ -554,8 +690,8 @@ export function ClusterDetails() {
                   </th>
                   <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" 
-                      onClick={() => handleSort('numProv')}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('numProv'); }}
+                      onClick={() => handleSort('num_provisions')}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('num_provisions'); }}
                       className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
                     >
                       <div className="flex items-center">Num Prov<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
@@ -563,8 +699,8 @@ export function ClusterDetails() {
                   </th>
                   <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" 
-                      onClick={() => handleSort('numProd')}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('numProd'); }}
+                      onClick={() => handleSort('num_products')}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('num_products'); }}
                       className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
                     >
                       <div className="flex items-center">Num Prod<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
@@ -572,12 +708,12 @@ export function ClusterDetails() {
                   </th>
                   <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
-                      <div className="flex items-center">Num Cmnt</div>
+                      <div className="flex items-center">Num Clients</div>
                     </button>
                   </th>
                   <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
-                      <div className="flex items-center">Num Grp</div>
+                      <div className="flex items-center">Num Groups</div>
                     </button>
                   </th>
                   <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
@@ -589,7 +725,7 @@ export function ClusterDetails() {
               </thead>
               <tbody data-slot="table-body" className="[&_tr:last-child]:border-0">
                 {filteredAndSortedData.map((record, index) => (
-                  <tr key={record.id} data-slot="table-row" className="data-[state=selected]:bg-muted border-b hover:bg-muted/30 transition-colors">
+                  <tr key={record.abcd_1up} data-slot="table-row" className="data-[state=selected]:bg-muted border-b hover:bg-muted/30 transition-colors">
                     <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
                       <span className="text-xs font-bold text-primary">{index + 1}</span>
                     </td>
@@ -597,55 +733,55 @@ export function ClusterDetails() {
                       <button 
                         data-slot="button" 
                         className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:text-accent-foreground dark:hover:bg-accent/50 rounded-md gap-1.5 has-[>svg]:px-2.5 p-1 h-6 w-6 hover:bg-muted/50"
-                        onClick={() => console.log('Navigate to ABCD details:', record.id)}
+                        onClick={() => console.log('Navigate to ABCD details:', record.abcd_1up)}
                       >
-                        {record.id}
+                        {record.abcd_1up}
                       </button>
                     </td>
                     <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
-                      <span className="text-xs font-bold text-info">{record.serviceId}</span>
+                      <span className="text-xs font-bold text-info">{record.service_id}</span>
                     </td>
                     <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4">
                       <div className="flex items-center gap-2">
                         <i className="fas fa-scroll text-primary"></i>
-                        <span className="font-medium text-foreground">{record.serviceName}</span>
+                        <span className="font-medium text-foreground">{record.service_name}</span>
                       </div>
                     </td>
                     <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
                       <span className="text-xs text-muted-foreground">-</span>
                     </td>
                     <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4">
-                      <span className="text-xs font-medium text-foreground">{record.provisionType}</span>
+                      <span className="text-xs font-medium text-foreground">{record.provision_type}</span>
                     </td>
                     <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
                       <span className="text-xs text-muted-foreground">-</span>
                     </td>
                     <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4">
-                      <span className="text-xs font-bold text-accent">{record.options}</span>
+                      <span className="text-xs font-bold text-accent max-w-xs truncate block" title={record.options}>{record.options}</span>
                     </td>
                     <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
                       <span className="text-xs text-muted-foreground">-</span>
                     </td>
                     <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4">
-                      <span className="text-xs text-muted-foreground">{record.bencode || '-'}</span>
+                      <span className="text-xs text-muted-foreground">-</span>
                     </td>
                     <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4">
-                      <span className="text-xs text-muted-foreground">{record.newBencode || '-'}</span>
+                      <span className="text-xs text-muted-foreground">-</span>
                     </td>
                     <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
-                      <span className="text-xs font-bold text-secondary">{record.numSplit}</span>
+                      <span className="text-xs font-bold text-secondary">{record.num_splits}</span>
                     </td>
                     <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
-                      <span className="text-xs font-bold text-primary">{record.numProv}</span>
+                      <span className="text-xs font-bold text-primary">{record.num_provisions.toLocaleString()}</span>
                     </td>
                     <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
-                      <span className="text-xs font-bold text-success">{record.numProd}</span>
+                      <span className="text-xs font-bold text-success">{record.num_products.toLocaleString()}</span>
                     </td>
                     <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
-                      <span className="text-xs text-muted-foreground">{record.numCmnt || '-'}</span>
+                      <span className="text-xs text-info font-bold">{record.num_clients?.toLocaleString() || '-'}</span>
                     </td>
                     <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
-                      <span className="text-xs text-muted-foreground">{record.numGrp || '-'}</span>
+                      <span className="text-xs text-warning font-bold">{record.num_groups?.toLocaleString() || '-'}</span>
                     </td>
                     <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
                       <ApprovalStatusIndicators statuses={record.approvalStatuses} />
