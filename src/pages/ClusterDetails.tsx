@@ -250,27 +250,6 @@ export function ClusterDetails() {
             </h1>
           </div>
         </div>
-        
-        {/* Actions */}
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" className="text-xs">
-            <Bookmark className="h-4 w-4 mr-1" />
-            Bookmark
-          </Button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="text-xs">
-                <SortAscending className="h-4 w-4 mr-1" />
-                Export
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>Export as CSV</DropdownMenuItem>
-              <DropdownMenuItem>Export as Excel</DropdownMenuItem>
-              <DropdownMenuItem>Export as PDF</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
       </div>
       {/* Compact Cluster Information Cards - Single Row Layout */}
       <Card className="bg-card border-border p-2 mb-4">
