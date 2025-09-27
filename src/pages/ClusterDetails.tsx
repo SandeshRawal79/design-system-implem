@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft, MagnifyingGlass, CaretDown, CaretUp, Funnel, X, SortAscending, SortDescending, Bookmark } from '@phosphor-icons/react'
+import { ArrowLeft, MagnifyingGlass, CaretDown, CaretUp, Funnel, X, SortAscending, SortDescending, CheckCircle, XCircle, Clock } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
@@ -39,34 +39,31 @@ const mockClusterData = [
   { id: '781', serviceId: '0', serviceName: 'Product Wide Provision', provisionType: 'Coverage Code Id', options: '8480', bencode: '', newBencode: '', numSplit: '0', numProv: '1', numProd: '1', numCmnt: '', numGrp: '', approvalStatuses: ['✓', '✓', '✗', '-', '✓'] },
 ]
 
-// Component to render approval status indicators
+// Component to render approval status indicators with design system compliance
 function ApprovalStatusIndicators({ statuses }: { statuses: string[] }) {
   return (
     <div className="flex items-center gap-1 justify-center">
       {statuses.map((status, index) => {
-        let badgeVariant: "default" | "destructive" | "secondary" = "secondary";
-        let statusColor = "text-muted-foreground";
+        let icon;
+        let colorClass;
         
         if (status === '✓') {
-          badgeVariant = "default";
-          statusColor = "text-green-600";
+          icon = <CheckCircle className="h-3 w-3" />;
+          colorClass = "text-success bg-success/10 border-success/30";
         } else if (status === '✗') {
-          badgeVariant = "destructive";
-          statusColor = "text-red-600";
+          icon = <XCircle className="h-3 w-3" />;
+          colorClass = "text-destructive bg-destructive/10 border-destructive/30";
+        } else {
+          icon = <Clock className="h-3 w-3" />;
+          colorClass = "text-muted-foreground bg-muted border-border";
         }
         
         return (
           <span
             key={index}
-            className={`inline-flex items-center justify-center w-5 h-5 text-xs font-medium rounded-full ${
-              status === '✓' 
-                ? 'bg-green-100 text-green-700 border border-green-200' 
-                : status === '✗'
-                ? 'bg-red-100 text-red-700 border border-red-200'
-                : 'bg-gray-100 text-gray-500 border border-gray-200'
-            }text-sm text-sm`}
+            className={`inline-flex items-center justify-center w-5 h-5 text-xs font-medium rounded-full border transition-colors ${colorClass}`}
           >
-            {status}
+            {icon}
           </span>
         );
       })}
@@ -230,57 +227,58 @@ export function ClusterDetails() {
   const uniqueProvisionTypes = Array.from(new Set(mockClusterData.map(item => item.provisionType)))
 
   return (
-    <div className="page-layout-full-width">
-      {/* Page Header with Back Button and Title */}
+    <div className="page-layout-full-width font-['Proxima_Nova',sans-serif]">
+      {/* Page Header with Back Button and Title - Design System Compliant */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
           <Button
             variant="outline"
             size="sm"
             onClick={() => navigate(`/clusters/${serviceId}`)}
-            className="back-to-dashboard"
+            className="back-to-dashboard h-9 px-4 font-medium text-sm text-foreground border-border hover:bg-muted focus:ring-2 focus:ring-primary focus:ring-offset-2"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Clusters
           </Button>
           
           <div>
-            <h1 className="text-2xl font-bold text-foreground">
+            <h1 className="text-2xl lg:text-3xl font-bold text-foreground leading-tight">
               Provision Intelligence Hub - Cluster #{clusterInfo.clusterId} of {clusterInfo.totalClusters} Details
             </h1>
           </div>
         </div>
       </div>
-      {/* Compact Cluster Information Cards - Single Row Layout */}
-      <Card className="bg-card border-border p-2 mb-4">
+
+      {/* Compact Cluster Information Cards - Design System Compliant */}
+      <Card className="bg-card border-border p-2 mb-6">
         <CardContent className="p-0">
-          <div className="flex flex-wrap items-start gap-x-6 gap-y-2">
+          <div className="flex flex-wrap items-start gap-x-8 gap-y-3">
             <div className="flex-shrink-0">
-              <span className="font-medium text-foreground text-sm">X-ray Projection:</span>
-              <p className="text-muted-foreground text-sm">{clusterInfo.xrayProjection}</p>
+              <span className="font-semibold text-foreground text-sm">X-ray Projection:</span>
+              <p className="text-muted-foreground text-sm mt-0.5">{clusterInfo.xrayProjection}</p>
             </div>
             <div className="flex-shrink-0">
-              <span className="font-medium text-foreground text-sm">Data context:</span>
-              <p className="text-muted-foreground text-sm">{clusterInfo.dataContext}</p>
+              <span className="font-semibold text-foreground text-sm">Data context:</span>
+              <p className="text-muted-foreground text-sm mt-0.5">{clusterInfo.dataContext}</p>
             </div>
             <div className="flex-shrink-0">
-              <span className="font-medium text-foreground text-sm">Created:</span>
-              <p className="text-muted-foreground text-sm">{clusterInfo.created}</p>
+              <span className="font-semibold text-foreground text-sm">Created:</span>
+              <p className="text-muted-foreground text-sm mt-0.5">{clusterInfo.created}</p>
             </div>
             <div className="flex-shrink-0">
-              <span className="font-medium text-foreground text-sm">Records in this Cluster:</span>
-              <p className="font-semibold text-sm" style={{ color: '#43812C' }}>{clusterInfo.recordsInCluster}</p>
+              <span className="font-semibold text-foreground text-sm">Records in this Cluster:</span>
+              <p className="font-bold text-sm mt-0.5 text-success">{clusterInfo.recordsInCluster}</p>
             </div>
             <div className="flex-shrink-0">
-              <span className="font-medium text-foreground text-sm">Cluster:</span>
-              <p className="font-semibold text-sm" style={{ color: '#474A9E' }}>{clusterInfo.clusterId}</p>
+              <span className="font-semibold text-foreground text-sm">Cluster:</span>
+              <p className="font-bold text-sm mt-0.5 text-primary">{clusterInfo.clusterId}</p>
             </div>
             <div className="flex-shrink-0">
-              <span className="font-medium text-foreground text-sm">Total Clusters:</span>
-              <p className="font-semibold text-sm" style={{ color: '#1F8A7A' }}>{clusterInfo.totalClusters}</p>
+              <span className="font-semibold text-foreground text-sm">Total Clusters:</span>
+              <p className="font-bold text-sm mt-0.5 text-secondary">{clusterInfo.totalClusters}</p>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="font-medium text-foreground text-sm">Distance Threshold:</span>
+            <div className="flex items-center gap-3">
+              <span className="font-semibold text-foreground text-sm">Distance Threshold:</span>
               <div className="flex items-center gap-2">
                 <Input
                   type="number"
@@ -289,262 +287,322 @@ export function ClusterDetails() {
                   step="0.1"
                   min="0"
                   max="100"
-                  className="w-20 h-6 text-sm border-border font-semibold"
-                  style={{ color: '#F48436' }}
+                  className="w-20 h-8 text-sm border-border font-bold text-accent focus:ring-2 focus:ring-primary focus:border-primary"
                 />
                 <Button 
                   size="sm" 
-                  className="h-6 px-3 btn-gradient-primary text-sm"
+                  className="h-8 px-4 btn-gradient-primary text-sm font-medium focus:ring-2 focus:ring-primary focus:ring-offset-2"
                   onClick={() => {
                     console.log('Update distance threshold to:', distanceThreshold)
                     // Here you would typically make an API call to update the threshold
                   }}
-                >Update</Button>
+                >
+                  Update
+                </Button>
               </div>
             </div>
           </div>
         </CardContent>
       </Card>
-      {/* Main Cluster Data Table */}
-      <Card className="bg-card border-border">
+      {/* Main Cluster Data Table - Design System Compliant */}
+      <Card className="bg-card border-border shadow-sm">
         <CardContent className="p-0">
-         <div className="flex flex-col xl:flex-row gap-2 px-2 py-2 items-start xl:items-center w-full">
-            {/* Search Input - Full width on mobile, expanded width on desktop */}
+          {/* Enhanced Filter and Search Controls - Single Row Layout */}
+          <div className="flex flex-col xl:flex-row gap-3 px-4 py-4 items-start xl:items-center w-full border-b border-border bg-muted/30">
+            {/* Search Input - Enhanced design system compliance */}
             <div className="relative w-full xl:w-auto xl:flex-1 xl:max-w-sm">
               <MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="text"
-                placeholder="Search..."
+                placeholder="Search records..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-8 py-1 h-8 w-full border-border text-sm"
+                className="pl-10 pr-10 py-2 h-9 w-full border-border text-sm font-medium placeholder:text-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary"
               />
               {searchTerm && (
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-muted"
                   onClick={() => setSearchTerm('')}
                 >
-                  <X className="h-3 w-3" />
+                  <X className="h-3 w-3 text-muted-foreground" />
                 </Button>
               )}
             </div>
 
-            {/* Quick Filter Pills - Full width on mobile */}
-            <div className="flex items-center gap-1 w-full xl:w-auto xl:flex-shrink-0">
+            {/* Quick Filter Pills - Design System Colors */}
+            <div className="flex items-center gap-2 w-full xl:w-auto xl:flex-shrink-0">
               <Button
                 variant={filterType === 'all' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setFilterType('all')}
-                className="h-7 px-2 btn-gradient-primary flex-1 xl:flex-none text-sm"
-              >All</Button>
+                className={`h-8 px-3 font-medium text-xs transition-all ${
+                  filterType === 'all' 
+                    ? 'btn-gradient-primary text-primary-foreground' 
+                    : 'border-border text-foreground hover:bg-muted hover:text-foreground'
+                } flex-1 xl:flex-none focus:ring-2 focus:ring-primary focus:ring-offset-1`}
+              >
+                All
+              </Button>
               <Button
-                variant={filterType === 'with-approvals' ? 'secondary' : 'outline'}
+                variant={filterType === 'with-approvals' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setFilterType('with-approvals')}
-                className="h-7 px-2 flex-1 xl:flex-none text-sm"
-              >Approved</Button>
+                className={`h-8 px-3 font-medium text-xs transition-all ${
+                  filterType === 'with-approvals' 
+                    ? 'bg-success text-white hover:bg-success/90' 
+                    : 'border-border text-foreground hover:bg-muted hover:text-foreground'
+                } flex-1 xl:flex-none focus:ring-2 focus:ring-success focus:ring-offset-1`}
+              >
+                Approved
+              </Button>
               <Button
-                variant={filterType === 'pending-approvals' ? 'secondary' : 'outline'}
+                variant={filterType === 'pending-approvals' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setFilterType('pending-approvals')}
-                className="h-7 px-2 flex-1 xl:flex-none text-sm"
-              >Pending</Button>
+                className={`h-8 px-3 font-medium text-xs transition-all ${
+                  filterType === 'pending-approvals' 
+                    ? 'bg-warning text-white hover:bg-warning/90' 
+                    : 'border-border text-foreground hover:bg-muted hover:text-foreground'
+                } flex-1 xl:flex-none focus:ring-2 focus:ring-warning focus:ring-offset-1`}
+              >
+                Pending
+              </Button>
               <Button
-                variant={filterType === 'no-approvals' ? 'secondary' : 'outline'}
+                variant={filterType === 'no-approvals' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setFilterType('no-approvals')}
-                className="h-7 px-2 flex-1 xl:flex-none text-sm"
-              >None</Button>
+                className={`h-8 px-3 font-medium text-xs transition-all ${
+                  filterType === 'no-approvals' 
+                    ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90' 
+                    : 'border-border text-foreground hover:bg-muted hover:text-foreground'
+                } flex-1 xl:flex-none focus:ring-2 focus:ring-destructive focus:ring-offset-1`}
+              >
+                None
+              </Button>
             </div>
 
-            {/* Compact Filters - Full width on mobile */}
+            {/* Advanced Filters - Design System Compliant */}
             <div className="flex items-center gap-2 w-full xl:w-auto xl:flex-shrink-0">
               <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as StatusFilter)}>
-                <SelectTrigger className="w-full xl:w-32 h-7 text-xs">
+                <SelectTrigger className="w-full xl:w-36 h-8 text-xs font-medium border-border focus:ring-2 focus:ring-primary">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Status</SelectItem>
-                  <SelectItem value="approved">Approved</SelectItem>
-                  <SelectItem value="rejected">Rejected</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
+                <SelectContent className="font-['Proxima_Nova',sans-serif]">
+                  <SelectItem value="all" className="text-sm">All Status</SelectItem>
+                  <SelectItem value="approved" className="text-sm">Approved</SelectItem>
+                  <SelectItem value="rejected" className="text-sm">Rejected</SelectItem>
+                  <SelectItem value="pending" className="text-sm">Pending</SelectItem>
                 </SelectContent>
               </Select>
 
               <Select value={provisionTypeFilter} onValueChange={setProvisionTypeFilter}>
-                <SelectTrigger className="w-full xl:w-36 h-7 text-xs">
+                <SelectTrigger className="w-full xl:w-40 h-8 text-xs font-medium border-border focus:ring-2 focus:ring-primary">
                   <SelectValue placeholder="Type" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Types</SelectItem>
+                <SelectContent className="font-['Proxima_Nova',sans-serif]">
+                  <SelectItem value="all" className="text-sm">All Types</SelectItem>
                   {uniqueProvisionTypes.map(type => (
-                    <SelectItem key={type} value={type}>{type}</SelectItem>
+                    <SelectItem key={type} value={type} className="text-sm">{type}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
 
-            {/* Sort Controls - Full width on mobile */}
-            <div className="flex items-center gap-1 w-full xl:w-auto xl:flex-shrink-0">
+            {/* Sort Controls - Enhanced */}
+            <div className="flex items-center gap-2 w-full xl:w-auto xl:flex-shrink-0">
               <Select value={sortField} onValueChange={(value) => setSortField(value as SortField)}>
-                <SelectTrigger className="w-full xl:w-28 h-7 text-xs flex-1 xl:flex-none">
+                <SelectTrigger className="w-full xl:w-32 h-8 text-xs font-medium border-border focus:ring-2 focus:ring-primary">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="id">ID</SelectItem>
-                  <SelectItem value="serviceName">Name</SelectItem>
-                  <SelectItem value="provisionType">Type</SelectItem>
-                  <SelectItem value="options">Options</SelectItem>
-                  <SelectItem value="numProv">Prov</SelectItem>
-                  <SelectItem value="numProd">Prod</SelectItem>
+                <SelectContent className="font-['Proxima_Nova',sans-serif]">
+                  <SelectItem value="id" className="text-sm">ID</SelectItem>
+                  <SelectItem value="serviceName" className="text-sm">Name</SelectItem>
+                  <SelectItem value="provisionType" className="text-sm">Type</SelectItem>
+                  <SelectItem value="options" className="text-sm">Options</SelectItem>
+                  <SelectItem value="numProv" className="text-sm">Prov</SelectItem>
+                  <SelectItem value="numProd" className="text-sm">Prod</SelectItem>
                 </SelectContent>
               </Select>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
-                className="h-7 w-7 p-0 flex-shrink-0"
+                className="h-8 w-8 p-0 border-border hover:bg-muted focus:ring-2 focus:ring-primary focus:ring-offset-1"
               >
-                {sortDirection === 'asc' ? <SortAscending className="h-3 w-3" /> : <SortDescending className="h-3 w-3" />}
+                {sortDirection === 'asc' ? 
+                  <SortAscending className="h-4 w-4 text-foreground" /> : 
+                  <SortDescending className="h-4 w-4 text-foreground" />
+                }
               </Button>
             </div>
 
-            {/* Clear & Results Count */}
-            <div className="flex items-center gap-3 w-full xl:w-auto xl:ml-auto xl:flex-shrink-0 justify-between xl:justify-end">
+            {/* Clear Filters & Results Count */}
+            <div className="flex items-center gap-4 w-full xl:w-auto xl:ml-auto xl:flex-shrink-0 justify-between xl:justify-end">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={clearFilters}
-                className="h-7 px-2 text-muted-foreground hover:text-foreground text-sm"
+                className="h-8 px-3 text-muted-foreground hover:text-foreground hover:bg-muted text-sm font-medium focus:ring-2 focus:ring-primary focus:ring-offset-1"
               >
                 <X className="h-3 w-3 mr-1" />
                 Clear
               </Button>
-              <span className="text-muted-foreground whitespace-nowrap text-sm">
-                {filteredAndSortedData.length} of {mockClusterData.length}
-              </span>
+              <Badge variant="outline" className="text-xs font-medium px-2 py-1 bg-muted/50 text-muted-foreground border-border">
+                {filteredAndSortedData.length} of {mockClusterData.length} records
+              </Badge>
             </div>
           </div>
 
-          <div className="px-4 py-3 border-b border-border">
-            <h2 className="text-lg font-semibold text-foreground">Main Cluster Data</h2>
+          {/* Table Header */}
+          <div className="px-4 py-3 bg-card border-b border-border">
+            <h2 className="text-lg font-bold text-foreground">Main Cluster Data</h2>
           </div>
           
-          <div className="responsive-table-wrapper max-h-[calc(100vh-500px)]">
+          {/* Responsive Table - Design System Compliant */}
+          <div className="responsive-table-wrapper max-h-[calc(100vh-520px)] overflow-y-auto">
             <Table className="responsive-table">
               <TableHeader className="sticky-header">
-                <TableRow>
-                  <TableHead className="text-xs text-center text-sm">#</TableHead>
+                <TableRow className="border-b border-border">
+                  <TableHead className="h-11 px-3 text-xs font-bold text-foreground text-center bg-card">#</TableHead>
                   <TableHead 
-                    className="cursor-pointer hover:bg-muted/50 text-sm"
+                    className="h-11 px-3 cursor-pointer hover:bg-muted/50 text-xs font-bold text-foreground bg-card transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
                     onClick={() => handleSort('id')}
+                    tabIndex={0}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('id'); }}
                   >
-                    <div className="flex items-center text-sm">
+                    <div className="flex items-center">
                       ABCD 1-Up
                       {getSortIcon('id')}
                     </div>
                   </TableHead>
-                  <TableHead className="text-sm">Service ID</TableHead>
+                  <TableHead className="h-11 px-3 text-xs font-bold text-foreground bg-card">Service ID</TableHead>
                   <TableHead 
-                    className="cursor-pointer hover:bg-muted/50 text-sm"
+                    className="h-11 px-3 cursor-pointer hover:bg-muted/50 text-xs font-bold text-foreground bg-card transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
                     onClick={() => handleSort('serviceName')}
+                    tabIndex={0}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('serviceName'); }}
                   >
-                    <div className="flex items-center text-sm">
+                    <div className="flex items-center">
                       Service Name
                       {getSortIcon('serviceName')}
                     </div>
                   </TableHead>
-                  <TableHead className="text-center text-sm">P</TableHead>
+                  <TableHead className="h-11 px-3 text-center text-xs font-bold text-foreground bg-card">P</TableHead>
                   <TableHead 
-                    className="cursor-pointer hover:bg-muted/50 text-sm"
+                    className="h-11 px-3 cursor-pointer hover:bg-muted/50 text-xs font-bold text-foreground bg-card transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
                     onClick={() => handleSort('provisionType')}
+                    tabIndex={0}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('provisionType'); }}
                   >
-                    <div className="flex items-center text-sm">
+                    <div className="flex items-center">
                       Provision Type
                       {getSortIcon('provisionType')}
                     </div>
                   </TableHead>
-                  <TableHead className="text-center text-sm">O</TableHead>
+                  <TableHead className="h-11 px-3 text-center text-xs font-bold text-foreground bg-card">O</TableHead>
                   <TableHead 
-                    className="cursor-pointer hover:bg-muted/50 text-sm"
+                    className="h-11 px-3 cursor-pointer hover:bg-muted/50 text-xs font-bold text-foreground bg-card transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
                     onClick={() => handleSort('options')}
+                    tabIndex={0}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('options'); }}
                   >
-                    <div className="flex items-center text-sm">
+                    <div className="flex items-center">
                       Options
                       {getSortIcon('options')}
                     </div>
                   </TableHead>
-                  <TableHead className="text-center text-sm">PTy Type</TableHead>
-                  <TableHead className="text-sm">Bencode</TableHead>
-                  <TableHead className="text-sm">New Bencode</TableHead>
+                  <TableHead className="h-11 px-3 text-center text-xs font-bold text-foreground bg-card">PTy Type</TableHead>
+                  <TableHead className="h-11 px-3 text-xs font-bold text-foreground bg-card">Bencode</TableHead>
+                  <TableHead className="h-11 px-3 text-xs font-bold text-foreground bg-card">New Bencode</TableHead>
                   <TableHead 
-                    className="text-center cursor-pointer hover:bg-muted/50 text-sm"
+                    className="h-11 px-3 text-center cursor-pointer hover:bg-muted/50 text-xs font-bold text-foreground bg-card transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
                     onClick={() => handleSort('numSplit')}
+                    tabIndex={0}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('numSplit'); }}
                   >
-                    <div className="flex items-center justify-center text-sm">
+                    <div className="flex items-center justify-center">
                       Num Split
                       {getSortIcon('numSplit')}
                     </div>
                   </TableHead>
                   <TableHead 
-                    className="text-center cursor-pointer hover:bg-muted/50 text-sm"
+                    className="h-11 px-3 text-center cursor-pointer hover:bg-muted/50 text-xs font-bold text-foreground bg-card transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
                     onClick={() => handleSort('numProv')}
+                    tabIndex={0}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('numProv'); }}
                   >
-                    <div className="flex items-center justify-center text-sm">
+                    <div className="flex items-center justify-center">
                       Num Prov
                       {getSortIcon('numProv')}
                     </div>
                   </TableHead>
                   <TableHead 
-                    className="text-center cursor-pointer hover:bg-muted/50 text-sm"
+                    className="h-11 px-3 text-center cursor-pointer hover:bg-muted/50 text-xs font-bold text-foreground bg-card transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
                     onClick={() => handleSort('numProd')}
+                    tabIndex={0}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('numProd'); }}
                   >
-                    <div className="flex items-center justify-center text-sm">
+                    <div className="flex items-center justify-center">
                       Num Prod
                       {getSortIcon('numProd')}
                     </div>
                   </TableHead>
-                  <TableHead className="text-center text-sm">Num Cmnt</TableHead>
-                  <TableHead className="text-center text-sm">Num Grp</TableHead>
-                  <TableHead className="text-center text-sm">Approve</TableHead>
+                  <TableHead className="h-11 px-3 text-center text-xs font-bold text-foreground bg-card">Num Cmnt</TableHead>
+                  <TableHead className="h-11 px-3 text-center text-xs font-bold text-foreground bg-card">Num Grp</TableHead>
+                  <TableHead className="h-11 px-3 text-center text-xs font-bold text-foreground bg-card">Approve</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredAndSortedData.map((record, index) => (
-                  <TableRow key={record.id} className="hover:bg-muted/50">
-                    <TableCell className="text-xs text-center font-medium text-primary">
+                  <TableRow 
+                    key={record.id} 
+                    className="hover:bg-muted/30 transition-colors border-b border-border/50"
+                  >
+                    <TableCell className="px-3 py-2 text-xs text-center font-semibold text-primary">
                       {index + 1}
                     </TableCell>
-                    <TableCell className="text-xs">
+                    <TableCell className="px-3 py-2 text-xs">
                       <Button 
                         variant="link" 
-                        className="h-auto p-0 text-info hover:text-info/80 text-sm"
+                        className="h-auto p-0 text-info hover:text-info/80 text-xs font-semibold underline-offset-2 focus:ring-2 focus:ring-info focus:ring-offset-1 rounded-sm"
                         onClick={() => {}}
                       >
                         {record.id}
                       </Button>
                     </TableCell>
-                    <TableCell className="text-sm font-semibold" style={{ color: '#0174B2' }}>{record.serviceId}</TableCell>
-                    <TableCell className="text-sm">{record.serviceName}</TableCell>
-                    <TableCell className="text-xs text-center">-</TableCell>
-                    <TableCell className="text-sm">{record.provisionType}</TableCell>
-                    <TableCell className="text-xs text-center">-</TableCell>
-                    <TableCell className="font-medium text-sm" style={{ color: '#F48436' }}>{record.options}</TableCell>
-                    <TableCell className="text-center text-sm">-</TableCell>
-                    <TableCell className="text-sm">{record.bencode}</TableCell>
-                    <TableCell className="text-sm">{record.newBencode}</TableCell>
-                    <TableCell className="text-center text-sm" style={{ color: '#1F8A7A', fontWeight: '600' }}>{record.numSplit}</TableCell>
-                    <TableCell className="text-center text-sm" style={{ color: '#474A9E', fontWeight: '600' }}>{record.numProv}</TableCell>
-                    <TableCell className="text-center text-sm" style={{ color: '#43812C', fontWeight: '600' }}>{record.numProd}</TableCell>
-                    <TableCell className="text-xs text-center">{record.numCmnt}</TableCell>
-                    <TableCell className="text-xs text-center">{record.numGrp}</TableCell>
-                    <TableCell className="text-xs text-center">
+                    <TableCell className="px-3 py-2 text-xs font-bold text-info">{record.serviceId}</TableCell>
+                    <TableCell className="px-3 py-2 text-xs font-medium text-foreground">{record.serviceName}</TableCell>
+                    <TableCell className="px-3 py-2 text-xs text-center text-muted-foreground">-</TableCell>
+                    <TableCell className="px-3 py-2 text-xs font-medium text-foreground">{record.provisionType}</TableCell>
+                    <TableCell className="px-3 py-2 text-xs text-center text-muted-foreground">-</TableCell>
+                    <TableCell className="px-3 py-2 font-bold text-xs text-accent">{record.options}</TableCell>
+                    <TableCell className="px-3 py-2 text-center text-xs text-muted-foreground">-</TableCell>
+                    <TableCell className="px-3 py-2 text-xs text-muted-foreground">{record.bencode}</TableCell>
+                    <TableCell className="px-3 py-2 text-xs text-muted-foreground">{record.newBencode}</TableCell>
+                    <TableCell className="px-3 py-2 text-center text-xs font-bold text-secondary">{record.numSplit}</TableCell>
+                    <TableCell className="px-3 py-2 text-center text-xs font-bold text-primary">{record.numProv}</TableCell>
+                    <TableCell className="px-3 py-2 text-center text-xs font-bold text-success">{record.numProd}</TableCell>
+                    <TableCell className="px-3 py-2 text-xs text-center text-muted-foreground">{record.numCmnt}</TableCell>
+                    <TableCell className="px-3 py-2 text-xs text-center text-muted-foreground">{record.numGrp}</TableCell>
+                    <TableCell className="px-3 py-2 text-xs text-center">
                       <ApprovalStatusIndicators statuses={record.approvalStatuses} />
                     </TableCell>
                   </TableRow>
                 ))}
+                {/* Empty state row */}
+                {filteredAndSortedData.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={17} className="h-24 text-center text-muted-foreground">
+                      <div className="flex flex-col items-center gap-2">
+                        <MagnifyingGlass className="h-8 w-8 text-muted-foreground/50" />
+                        <p className="text-sm font-medium">No records found</p>
+                        <p className="text-xs">Try adjusting your search or filter criteria</p>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                )}
               </TableBody>
             </Table>
           </div>
