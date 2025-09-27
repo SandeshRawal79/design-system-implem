@@ -42,26 +42,33 @@ const mockClusterData = [
 // Component to render approval status indicators with design system compliance
 function ApprovalStatusIndicators({ statuses }: { statuses: string[] }) {
   return (
-    <div className="flex items-center gap-1 justify-center">
+    <div className="flex items-center gap-1 justify-center" role="group" aria-label="Approval status indicators">
       {statuses.map((status, index) => {
         let icon;
         let colorClass;
+        let ariaLabel;
         
         if (status === '✓') {
-          icon = <CheckCircle className="h-3 w-3" />;
-          colorClass = "text-success bg-success/10 border-success/30";
+          icon = <CheckCircle className="h-3 w-3" aria-hidden="true" />;
+          colorClass = "text-success bg-success/10 border-success/30 hover:bg-success/20";
+          ariaLabel = `Approved step ${index + 1}`;
         } else if (status === '✗') {
-          icon = <XCircle className="h-3 w-3" />;
-          colorClass = "text-destructive bg-destructive/10 border-destructive/30";
+          icon = <XCircle className="h-3 w-3" aria-hidden="true" />;
+          colorClass = "text-destructive bg-destructive/10 border-destructive/30 hover:bg-destructive/20";
+          ariaLabel = `Rejected step ${index + 1}`;
         } else {
-          icon = <Clock className="h-3 w-3" />;
-          colorClass = "text-muted-foreground bg-muted border-border";
+          icon = <Clock className="h-3 w-3" aria-hidden="true" />;
+          colorClass = "text-muted-foreground bg-muted border-border hover:bg-muted/80";
+          ariaLabel = `Pending step ${index + 1}`;
         }
         
         return (
           <span
             key={index}
-            className={`inline-flex items-center justify-center w-5 h-5 text-xs font-medium rounded-full border transition-colors ${colorClass}`}
+            className={`inline-flex items-center justify-center w-5 h-5 text-xs font-medium rounded-full border transition-colors duration-200 cursor-default ${colorClass}`}
+            role="status"
+            aria-label={ariaLabel}
+            title={ariaLabel}
           >
             {icon}
           </span>
@@ -601,51 +608,179 @@ export function ClusterDetails() {
                   </TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody>
+              <TableBody data-slot="table-body">
                 {filteredAndSortedData.map((record, index) => (
                   <TableRow 
-                    key={record.id} 
-                    className="hover:bg-muted/30 transition-colors border-b border-border/50"
+                    key={record.id}
+                    data-slot="table-row" 
+                    className="hover:bg-muted/30 data-[state=selected]:bg-muted border-b border-border transition-colors duration-200 font-['Proxima_Nova',sans-serif] group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    tabIndex={0}
+                    role="row"
+                    aria-rowindex={index + 2}
                   >
-                    <TableCell className="px-3 py-2 text-xs text-center font-semibold text-primary">
-                      {index + 1}
+                    <TableCell 
+                      data-slot="table-cell"
+                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center font-semibold text-primary"
+                      role="gridcell"
+                      aria-describedby="row-number"
+                    >
+                      <span className="text-xs font-bold text-primary" aria-label={`Row ${index + 1}`}>
+                        {index + 1}
+                      </span>
                     </TableCell>
-                    <TableCell className="px-3 py-2 text-xs">
+                    <TableCell 
+                      data-slot="table-cell"
+                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]"
+                      role="gridcell"
+                    >
                       <Button 
                         variant="link" 
-                        className="h-auto p-0 text-info hover:text-info/80 text-xs font-semibold underline-offset-2 focus:ring-2 focus:ring-info focus:ring-offset-1 rounded-sm"
-                        onClick={() => {}}
+                        size="sm"
+                        className="h-auto p-0 text-info hover:text-info/80 focus-visible:text-info/60 text-xs font-semibold underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-info focus-visible:ring-offset-1 rounded-sm transition-colors duration-200 cursor-pointer"
+                        onClick={() => {
+                          console.log('Navigate to ABCD details:', record.id)
+                          // Navigation logic here
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault()
+                            console.log('Navigate to ABCD details:', record.id)
+                          }
+                        }}
+                        aria-label={`View details for ABCD ${record.id}`}
                       >
                         {record.id}
                       </Button>
                     </TableCell>
-                    <TableCell className="px-3 py-2 text-xs font-bold text-info">{record.serviceId}</TableCell>
-                    <TableCell className="px-3 py-2 text-xs font-medium text-foreground">{record.serviceName}</TableCell>
-                    <TableCell className="px-3 py-2 text-xs text-center text-muted-foreground">-</TableCell>
-                    <TableCell className="px-3 py-2 text-xs font-medium text-foreground">{record.provisionType}</TableCell>
-                    <TableCell className="px-3 py-2 text-xs text-center text-muted-foreground">-</TableCell>
-                    <TableCell className="px-3 py-2 font-bold text-xs text-accent">{record.options}</TableCell>
-                    <TableCell className="px-3 py-2 text-center text-xs text-muted-foreground">-</TableCell>
-                    <TableCell className="px-3 py-2 text-xs text-muted-foreground">{record.bencode}</TableCell>
-                    <TableCell className="px-3 py-2 text-xs text-muted-foreground">{record.newBencode}</TableCell>
-                    <TableCell className="px-3 py-2 text-center text-xs font-bold text-secondary">{record.numSplit}</TableCell>
-                    <TableCell className="px-3 py-2 text-center text-xs font-bold text-primary">{record.numProv}</TableCell>
-                    <TableCell className="px-3 py-2 text-center text-xs font-bold text-success">{record.numProd}</TableCell>
-                    <TableCell className="px-3 py-2 text-xs text-center text-muted-foreground">{record.numCmnt}</TableCell>
-                    <TableCell className="px-3 py-2 text-xs text-center text-muted-foreground">{record.numGrp}</TableCell>
-                    <TableCell className="px-3 py-2 text-xs text-center">
+                    <TableCell 
+                      data-slot="table-cell"
+                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
+                      role="gridcell"
+                    >
+                      <span className="text-xs font-bold text-info">{record.serviceId}</span>
+                    </TableCell>
+                    <TableCell 
+                      data-slot="table-cell"
+                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]"
+                      role="gridcell"
+                    >
+                      <span className="text-xs font-medium text-foreground">{record.serviceName}</span>
+                    </TableCell>
+                    <TableCell 
+                      data-slot="table-cell"
+                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
+                      role="gridcell"
+                    >
+                      <span className="text-xs text-muted-foreground">-</span>
+                    </TableCell>
+                    <TableCell 
+                      data-slot="table-cell"
+                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]"
+                      role="gridcell"
+                    >
+                      <span className="text-xs font-medium text-foreground">{record.provisionType}</span>
+                    </TableCell>
+                    <TableCell 
+                      data-slot="table-cell"
+                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
+                      role="gridcell"
+                    >
+                      <span className="text-xs text-muted-foreground">-</span>
+                    </TableCell>
+                    <TableCell 
+                      data-slot="table-cell"
+                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]"
+                      role="gridcell"
+                    >
+                      <span className="text-xs font-bold text-accent">{record.options}</span>
+                    </TableCell>
+                    <TableCell 
+                      data-slot="table-cell"
+                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
+                      role="gridcell"
+                    >
+                      <span className="text-xs text-muted-foreground">-</span>
+                    </TableCell>
+                    <TableCell 
+                      data-slot="table-cell"
+                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]"
+                      role="gridcell"
+                    >
+                      <span className="text-xs text-muted-foreground">{record.bencode || '-'}</span>
+                    </TableCell>
+                    <TableCell 
+                      data-slot="table-cell"
+                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]"
+                      role="gridcell"
+                    >
+                      <span className="text-xs text-muted-foreground">{record.newBencode || '-'}</span>
+                    </TableCell>
+                    <TableCell 
+                      data-slot="table-cell"
+                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
+                      role="gridcell"
+                    >
+                      <span className="text-xs font-bold text-secondary">{record.numSplit}</span>
+                    </TableCell>
+                    <TableCell 
+                      data-slot="table-cell"
+                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
+                      role="gridcell"
+                    >
+                      <span className="text-xs font-bold text-primary">{record.numProv}</span>
+                    </TableCell>
+                    <TableCell 
+                      data-slot="table-cell"
+                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
+                      role="gridcell"
+                    >
+                      <span className="text-xs font-bold text-success">{record.numProd}</span>
+                    </TableCell>
+                    <TableCell 
+                      data-slot="table-cell"
+                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
+                      role="gridcell"
+                    >
+                      <span className="text-xs text-muted-foreground">{record.numCmnt || '-'}</span>
+                    </TableCell>
+                    <TableCell 
+                      data-slot="table-cell"
+                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
+                      role="gridcell"
+                    >
+                      <span className="text-xs text-muted-foreground">{record.numGrp || '-'}</span>
+                    </TableCell>
+                    <TableCell 
+                      data-slot="table-cell"
+                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
+                      role="gridcell"
+                      aria-label={`Approval status: ${record.approvalStatuses.join(', ')}`}
+                    >
                       <ApprovalStatusIndicators statuses={record.approvalStatuses} />
                     </TableCell>
                   </TableRow>
                 ))}
-                {/* Empty state row */}
+                {/* Empty state row - Design System Compliant */}
                 {filteredAndSortedData.length === 0 && (
-                  <TableRow>
-                    <TableCell colSpan={17} className="h-24 text-center text-muted-foreground">
-                      <div className="flex flex-col items-center gap-2">
-                        <MagnifyingGlass className="h-8 w-8 text-muted-foreground/50" />
-                        <p className="text-sm font-medium">No records found</p>
-                        <p className="text-xs">Try adjusting your search or filter criteria</p>
+                  <TableRow 
+                    data-slot="table-row"
+                    className="hover:bg-transparent border-b border-border font-['Proxima_Nova',sans-serif]"
+                    role="row"
+                  >
+                    <TableCell 
+                      colSpan={17} 
+                      data-slot="table-cell"
+                      className="h-24 px-2 text-center text-muted-foreground align-middle font-medium text-sm"
+                      role="gridcell"
+                    >
+                      <div className="flex flex-col items-center gap-3 py-8">
+                        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-muted/30">
+                          <MagnifyingGlass className="h-6 w-6 text-muted-foreground/60" />
+                        </div>
+                        <div className="space-y-1">
+                          <p className="text-sm font-semibold text-foreground">No records found</p>
+                          <p className="text-xs text-muted-foreground">Try adjusting your search or filter criteria</p>
+                        </div>
                       </div>
                     </TableCell>
                   </TableRow>
