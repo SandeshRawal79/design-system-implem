@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { ArrowLeft, MagnifyingGlass, CaretDown, CaretUp, Funnel, X, SortAscending, SortDescending, CheckCircle, XCircle, Clock } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -469,15 +469,15 @@ export function ClusterDetails() {
           
           {/* Responsive Table - Design System Compliant */}
           <div className="responsive-table-wrapper max-h-[calc(100vh-520px)] overflow-y-auto">
-            <Table className="responsive-table border-separate border-spacing-0">
-              <TableHeader data-slot="table-header" className="[&_tr]:border-b sticky-header">
-                <TableRow data-slot="table-row" className="hover:bg-muted/50 data-[state=selected]:bg-muted border-b border-border/60 transition-colors">
-                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+            <table data-slot="table" className="w-full caption-bottom text-sm border-collapse">
+              <thead data-slot="table-header" className="[&_tr]:border-b">
+                <tr data-slot="table-row" className="hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors">
+                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]">
                     <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
                       <div className="flex items-center">#</div>
                     </button>
-                  </TableHead>
-                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                  </th>
+                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" 
                       onClick={() => handleSort('id')}
                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('id'); }}
@@ -488,13 +488,13 @@ export function ClusterDetails() {
                         <i className="fas fa-sort text-muted-foreground ml-2"></i>
                       </div>
                     </button>
-                  </TableHead>
-                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                  </th>
+                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
                       <div className="flex items-center">Service ID</div>
                     </button>
-                  </TableHead>
-                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                  </th>
+                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" 
                       onClick={() => handleSort('serviceName')}
                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('serviceName'); }}
@@ -505,13 +505,13 @@ export function ClusterDetails() {
                         <i className="fas fa-sort text-muted-foreground ml-2"></i>
                       </div>
                     </button>
-                  </TableHead>
-                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                  </th>
+                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
                       <div className="flex items-center">P</div>
                     </button>
-                  </TableHead>
-                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                  </th>
+                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" 
                       onClick={() => handleSort('provisionType')}
                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('provisionType'); }}
@@ -522,13 +522,13 @@ export function ClusterDetails() {
                         <i className="fas fa-sort text-muted-foreground ml-2"></i>
                       </div>
                     </button>
-                  </TableHead>
-                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                  </th>
+                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
                       <div className="flex items-center">O</div>
                     </button>
-                  </TableHead>
-                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                  </th>
+                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" 
                       onClick={() => handleSort('options')}
                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('options'); }}
@@ -539,23 +539,23 @@ export function ClusterDetails() {
                         <i className="fas fa-sort text-muted-foreground ml-2"></i>
                       </div>
                     </button>
-                  </TableHead>
-                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                  </th>
+                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
                       <div className="flex items-center">PTy Type</div>
                     </button>
-                  </TableHead>
-                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                  </th>
+                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
                       <div className="flex items-center">Bencode</div>
                     </button>
-                  </TableHead>
-                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                  </th>
+                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
                       <div className="flex items-center">New Bencode</div>
                     </button>
-                  </TableHead>
-                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                  </th>
+                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" 
                       onClick={() => handleSort('numSplit')}
                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('numSplit'); }}
@@ -566,8 +566,8 @@ export function ClusterDetails() {
                         <i className="fas fa-sort text-muted-foreground ml-2"></i>
                       </div>
                     </button>
-                  </TableHead>
-                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                  </th>
+                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" 
                       onClick={() => handleSort('numProv')}
                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('numProv'); }}
@@ -578,8 +578,8 @@ export function ClusterDetails() {
                         <i className="fas fa-sort text-muted-foreground ml-2"></i>
                       </div>
                     </button>
-                  </TableHead>
-                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                  </th>
+                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" 
                       onClick={() => handleSort('numProd')}
                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('numProd'); }}
@@ -590,188 +590,155 @@ export function ClusterDetails() {
                         <i className="fas fa-sort text-muted-foreground ml-2"></i>
                       </div>
                     </button>
-                  </TableHead>
-                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                  </th>
+                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
                       <div className="flex items-center">Num Cmnt</div>
                     </button>
-                  </TableHead>
-                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                  </th>
+                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
                       <div className="flex items-center">Num Grp</div>
                     </button>
-                  </TableHead>
-                  <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
+                  </th>
+                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                     <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
                       <div className="flex items-center">Approve</div>
                     </button>
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody data-slot="table-body">
+                  </th>
+                </tr>
+              </thead>
+              <tbody data-slot="table-body" className="[&_tr:last-child]:border-0">
                 {filteredAndSortedData.map((record, index) => (
-                  <TableRow 
+                  <tr 
                     key={record.id}
                     data-slot="table-row" 
-                    className="hover:bg-muted/30 data-[state=selected]:bg-muted border-b border-border/60 transition-colors duration-200 font-['Proxima_Nova',sans-serif] group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                    tabIndex={0}
-                    role="row"
-                    aria-rowindex={index + 2}
+                    className="data-[state=selected]:bg-muted border-b hover:bg-muted/30 transition-colors"
                   >
-                    <TableCell 
-                      data-slot="table-cell"
-                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center font-semibold text-primary"
-                      role="gridcell"
-                      aria-describedby="row-number"
+                    <td 
+                      data-slot="table-cell" 
+                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
                     >
                       <span className="text-xs font-bold text-primary" aria-label={`Row ${index + 1}`}>
                         {index + 1}
                       </span>
-                    </TableCell>
-                    <TableCell 
-                      data-slot="table-cell"
-                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]"
-                      role="gridcell"
+                    </td>
+                    <td 
+                      data-slot="table-cell" 
+                      className="p-2 align-middle whitespace-nowrap py-4"
                     >
-                      <Button 
-                        variant="link" 
-                        size="sm"
-                        className="h-auto p-0 text-info hover:text-info/80 focus-visible:text-info/60 text-xs font-semibold underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-info focus-visible:ring-offset-1 rounded-sm transition-colors duration-200 cursor-pointer"
+                      <button 
+                        data-slot="button" 
+                        className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:text-accent-foreground dark:hover:bg-accent/50 h-auto p-0 text-info hover:text-info/80 underline underline-offset-2"
                         onClick={() => {
                           console.log('Navigate to ABCD details:', record.id)
-                          // Navigation logic here
                         }}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault()
-                            console.log('Navigate to ABCD details:', record.id)
-                          }
-                        }}
-                        aria-label={`View details for ABCD ${record.id}`}
                       >
                         {record.id}
-                      </Button>
-                    </TableCell>
-                    <TableCell 
-                      data-slot="table-cell"
-                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
-                      role="gridcell"
+                      </button>
+                    </td>
+                    <td 
+                      data-slot="table-cell" 
+                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
                     >
                       <span className="text-xs font-bold text-info">{record.serviceId}</span>
-                    </TableCell>
-                    <TableCell 
-                      data-slot="table-cell"
-                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]"
-                      role="gridcell"
+                    </td>
+                    <td 
+                      data-slot="table-cell" 
+                      className="p-2 align-middle whitespace-nowrap py-4"
                     >
                       <span className="text-xs font-medium text-foreground">{record.serviceName}</span>
-                    </TableCell>
-                    <TableCell 
-                      data-slot="table-cell"
-                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
-                      role="gridcell"
+                    </td>
+                    <td 
+                      data-slot="table-cell" 
+                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
                     >
                       <span className="text-xs text-muted-foreground">-</span>
-                    </TableCell>
-                    <TableCell 
-                      data-slot="table-cell"
-                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]"
-                      role="gridcell"
+                    </td>
+                    <td 
+                      data-slot="table-cell" 
+                      className="p-2 align-middle whitespace-nowrap py-4"
                     >
                       <span className="text-xs font-medium text-foreground">{record.provisionType}</span>
-                    </TableCell>
-                    <TableCell 
-                      data-slot="table-cell"
-                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
-                      role="gridcell"
+                    </td>
+                    <td 
+                      data-slot="table-cell" 
+                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
                     >
                       <span className="text-xs text-muted-foreground">-</span>
-                    </TableCell>
-                    <TableCell 
-                      data-slot="table-cell"
-                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]"
-                      role="gridcell"
+                    </td>
+                    <td 
+                      data-slot="table-cell" 
+                      className="p-2 align-middle whitespace-nowrap py-4"
                     >
                       <span className="text-xs font-bold text-accent">{record.options}</span>
-                    </TableCell>
-                    <TableCell 
-                      data-slot="table-cell"
-                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
-                      role="gridcell"
+                    </td>
+                    <td 
+                      data-slot="table-cell" 
+                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
                     >
                       <span className="text-xs text-muted-foreground">-</span>
-                    </TableCell>
-                    <TableCell 
-                      data-slot="table-cell"
-                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]"
-                      role="gridcell"
+                    </td>
+                    <td 
+                      data-slot="table-cell" 
+                      className="p-2 align-middle whitespace-nowrap py-4"
                     >
                       <span className="text-xs text-muted-foreground">{record.bencode || '-'}</span>
-                    </TableCell>
-                    <TableCell 
-                      data-slot="table-cell"
-                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]"
-                      role="gridcell"
+                    </td>
+                    <td 
+                      data-slot="table-cell" 
+                      className="p-2 align-middle whitespace-nowrap py-4"
                     >
                       <span className="text-xs text-muted-foreground">{record.newBencode || '-'}</span>
-                    </TableCell>
-                    <TableCell 
-                      data-slot="table-cell"
-                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
-                      role="gridcell"
+                    </td>
+                    <td 
+                      data-slot="table-cell" 
+                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
                     >
                       <span className="text-xs font-bold text-secondary">{record.numSplit}</span>
-                    </TableCell>
-                    <TableCell 
-                      data-slot="table-cell"
-                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
-                      role="gridcell"
+                    </td>
+                    <td 
+                      data-slot="table-cell" 
+                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
                     >
                       <span className="text-xs font-bold text-primary">{record.numProv}</span>
-                    </TableCell>
-                    <TableCell 
-                      data-slot="table-cell"
-                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
-                      role="gridcell"
+                    </td>
+                    <td 
+                      data-slot="table-cell" 
+                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
                     >
                       <span className="text-xs font-bold text-success">{record.numProd}</span>
-                    </TableCell>
-                    <TableCell 
-                      data-slot="table-cell"
-                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
-                      role="gridcell"
+                    </td>
+                    <td 
+                      data-slot="table-cell" 
+                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
                     >
                       <span className="text-xs text-muted-foreground">{record.numCmnt || '-'}</span>
-                    </TableCell>
-                    <TableCell 
-                      data-slot="table-cell"
-                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
-                      role="gridcell"
+                    </td>
+                    <td 
+                      data-slot="table-cell" 
+                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
                     >
                       <span className="text-xs text-muted-foreground">{record.numGrp || '-'}</span>
-                    </TableCell>
-                    <TableCell 
-                      data-slot="table-cell"
-                      className="h-12 px-2 text-left align-middle font-medium text-sm text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-center"
-                      role="gridcell"
-                      aria-label={`Approval status: ${record.approvalStatuses.join(', ')}`}
+                    </td>
+                    <td 
+                      data-slot="table-cell" 
+                      className="p-2 align-middle whitespace-nowrap py-4 text-center"
                     >
                       <ApprovalStatusIndicators statuses={record.approvalStatuses} />
-                    </TableCell>
-                  </TableRow>
+                    </td>
+                  </tr>
                 ))}
                 {/* Empty state row - Design System Compliant */}
                 {filteredAndSortedData.length === 0 && (
-                  <TableRow 
+                  <tr 
                     data-slot="table-row"
-                    className="hover:bg-transparent border-b border-border/60 font-['Proxima_Nova',sans-serif]"
-                    role="row"
+                    className="hover:bg-transparent border-b"
                   >
-                    <TableCell 
+                    <td 
                       colSpan={17} 
                       data-slot="table-cell"
-                      className="h-24 px-2 text-center text-muted-foreground align-middle font-medium text-sm"
-                      role="gridcell"
+                      className="h-24 p-2 text-center text-muted-foreground align-middle"
                     >
                       <div className="flex flex-col items-center gap-3 py-8">
                         <div className="flex items-center justify-center w-12 h-12 rounded-full bg-muted/30">
@@ -782,11 +749,11 @@ export function ClusterDetails() {
                           <p className="text-xs text-muted-foreground">Try adjusting your search or filter criteria</p>
                         </div>
                       </div>
-                    </TableCell>
-                  </TableRow>
+                    </td>
+                  </tr>
                 )}
-              </TableBody>
-            </Table>
+              </tbody>
+            </table>
           </div>
         </CardContent>
       </Card>
