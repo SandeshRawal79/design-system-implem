@@ -469,9 +469,9 @@ export function ClusterDetails() {
           
           {/* Responsive Table - Design System Compliant */}
           <div className="responsive-table-wrapper max-h-[calc(100vh-520px)] overflow-y-auto">
-            <Table className="responsive-table">
+            <Table className="responsive-table border-separate border-spacing-0">
               <TableHeader data-slot="table-header" className="[&_tr]:border-b sticky-header">
-                <TableRow data-slot="table-row" className="hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors">
+                <TableRow data-slot="table-row" className="hover:bg-muted/50 data-[state=selected]:bg-muted border-b border-border/60 transition-colors">
                   <TableHead data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-card">
                     <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
                       <div className="flex items-center">#</div>
@@ -613,7 +613,7 @@ export function ClusterDetails() {
                   <TableRow 
                     key={record.id}
                     data-slot="table-row" 
-                    className="hover:bg-muted/30 data-[state=selected]:bg-muted border-b border-border transition-colors duration-200 font-['Proxima_Nova',sans-serif] group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    className="hover:bg-muted/30 data-[state=selected]:bg-muted border-b border-border/60 transition-colors duration-200 font-['Proxima_Nova',sans-serif] group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     tabIndex={0}
                     role="row"
                     aria-rowindex={index + 2}
@@ -764,7 +764,7 @@ export function ClusterDetails() {
                 {filteredAndSortedData.length === 0 && (
                   <TableRow 
                     data-slot="table-row"
-                    className="hover:bg-transparent border-b border-border font-['Proxima_Nova',sans-serif]"
+                    className="hover:bg-transparent border-b border-border/60 font-['Proxima_Nova',sans-serif]"
                     role="row"
                   >
                     <TableCell 
