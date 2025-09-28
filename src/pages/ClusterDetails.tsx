@@ -707,10 +707,6 @@ export function ClusterDetails() {
                     <div className="flex items-center justify-center">
                       Clients
                       {getSortIcon('num_clients')}
-                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-clients" onClick={() => handleSort('num_clients')}>
-                    <div className="flex items-center justify-center">
-                      Clients
-                      {getSortIcon('num_clients')}
                     </div>
                   </th>
                   <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-groups" onClick={() => handleSort('num_groups')}>
