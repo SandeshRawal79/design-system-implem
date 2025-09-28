@@ -434,58 +434,41 @@ export function ClusterDetails() {
   const uniqueProvisionTypes = Array.from(new Set(mockClusterData.map(item => item.provision_type)))
 
   return (
-    <div className="page-layout-full-width font-['Proxima_Nova',sans-serif]">
-      {/* Page Header with Back Button and Title - Design System Compliant */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
+    <div className="min-h-screen flex flex-col font-['Proxima_Nova',sans-serif] cluster-details-1920">
+      {/* Optimized Page Header for 1920x1080 - Minimal vertical space */}
+      <div className="flex items-center justify-between mb-4 py-2 page-header">
+        <div className="flex items-center gap-6">
           <Button
             variant="outline"
             size="sm"
             onClick={() => navigate(`/clusters/${serviceId}`)}
-            className="back-to-dashboard h-9 px-4 font-medium text-sm text-foreground border-border hover:bg-muted focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            className="h-8 px-3 font-medium text-xs text-foreground border-border hover:bg-muted focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all"
           >
-            <ArrowLeft className="h-4 w-4 mr-2" />
+            <ArrowLeft className="h-3 w-3 mr-2" />
             Back to Clusters
           </Button>
           
           <div>
-            <h1 className="text-2xl lg:text-3xl font-bold text-foreground leading-tight">
-              Provision Intelligence Hub - Cluster #{clusterInfo.clusterId} of {clusterInfo.totalClusters} Details
+            <h1 className="text-xl font-bold text-foreground leading-tight">
+              Cluster #{clusterInfo.clusterId} of {clusterInfo.totalClusters} Details - {clusterInfo.xrayProjection}
             </h1>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              {clusterInfo.recordsInCluster} records • Created {clusterInfo.created}
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Compact Cluster Information Cards - Design System Compliant */}
-      <Card className="bg-card border-border p-2 mb-6">
-        <CardContent className="p-0">
-          <div className="flex flex-wrap items-start gap-x-8 gap-y-3">
-            <div className="flex-shrink-0">
-              <span className="font-semibold text-foreground text-sm">X-ray Projection:</span>
-              <p className="text-muted-foreground text-sm mt-0.5">{clusterInfo.xrayProjection}</p>
-            </div>
-            <div className="flex-shrink-0">
-              <span className="font-semibold text-foreground text-sm">Data context:</span>
-              <p className="text-muted-foreground text-sm mt-0.5">{clusterInfo.dataContext}</p>
-            </div>
-            <div className="flex-shrink-0">
-              <span className="font-semibold text-foreground text-sm">Created:</span>
-              <p className="text-muted-foreground text-sm mt-0.5">{clusterInfo.created}</p>
-            </div>
-            <div className="flex-shrink-0">
-              <span className="font-semibold text-foreground text-sm">Records in this Cluster:</span>
-              <p className="font-bold text-sm mt-0.5 text-success">{clusterInfo.recordsInCluster}</p>
-            </div>
-            <div className="flex-shrink-0">
-              <span className="font-semibold text-foreground text-sm">Cluster:</span>
-              <p className="font-bold text-sm mt-0.5 text-primary">{clusterInfo.clusterId}</p>
-            </div>
-            <div className="flex-shrink-0">
-              <span className="font-semibold text-foreground text-sm">Total Clusters:</span>
-              <p className="font-bold text-sm mt-0.5 text-secondary">{clusterInfo.totalClusters}</p>
+      {/* Ultra-Compact Cluster Information Bar for 1920x1080 */}
+      <Card className="bg-card border-border mb-4 shadow-sm">
+        <CardContent className="px-4 py-2 cluster-info-bar">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs">
+            <div className="flex items-center gap-2">
+              <span className="font-medium text-foreground">Data Context:</span>
+              <span className="text-muted-foreground truncate max-w-xs">{clusterInfo.dataContext}</span>
             </div>
             <div className="flex items-center gap-3">
-              <span className="font-semibold text-foreground text-sm">Distance Threshold:</span>
+              <span className="font-medium text-foreground">Distance Threshold:</span>
               <div className="flex items-center gap-2">
                 <Input
                   type="number"
@@ -494,14 +477,13 @@ export function ClusterDetails() {
                   step="0.1"
                   min="0"
                   max="100"
-                  className="w-20 h-8 text-sm border-border font-bold text-accent focus:ring-2 focus:ring-primary focus:border-primary"
+                  className="w-16 h-6 text-xs border-border font-bold text-accent focus:ring-1 focus:ring-primary"
                 />
                 <Button 
                   size="sm" 
-                  className="h-8 px-4 btn-gradient-primary text-sm font-medium focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                  className="h-6 px-3 btn-gradient-primary text-xs font-medium focus:ring-1 focus:ring-primary"
                   onClick={() => {
                     console.log('Update distance threshold to:', distanceThreshold)
-                    // Here you would typically make an API call to update the threshold
                   }}
                 >
                   Update
@@ -511,357 +493,242 @@ export function ClusterDetails() {
           </div>
         </CardContent>
       </Card>
-      {/* Main Cluster Data Table - Design System Compliant */}
-      <Card className="bg-card border-border shadow-sm">
-        <CardContent className="p-0">
-          {/* Enhanced Filter and Search Controls - Single Row Layout */}
-          <div className="flex flex-col xl:flex-row gap-3 px-4 py-4 items-start xl:items-center w-full border-b border-border bg-muted/30">
-            {/* Search Input - Enhanced design system compliance */}
-            <div className="relative w-full xl:w-auto xl:flex-1 xl:max-w-sm">
-              <MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+      {/* Main Data Table - Optimized for 1920x1080 viewing */}
+      <Card className="bg-card border-border shadow-sm flex-1 flex flex-col min-h-0">
+        <CardContent className="p-0 flex flex-col flex-1 min-h-0">
+          {/* Ultra-Compact Filter Controls - Single Row for 1920x1080 */}
+          <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/20 flex-wrap filter-bar">
+            {/* Search Input - Optimized width */}
+            <div className="relative flex-1 min-w-64 max-w-80">
+              <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
               <Input
                 type="text"
                 placeholder="Search records..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-10 py-2 h-9 w-full border-border text-sm font-medium placeholder:text-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary"
+                className="pl-7 pr-7 h-7 w-full border-border text-xs placeholder:text-muted-foreground focus:ring-1 focus:ring-primary"
               />
               {searchTerm && (
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-muted"
+                  className="absolute right-1 top-1/2 transform -translate-y-1/2 h-5 w-5 p-0 hover:bg-muted"
                   onClick={() => setSearchTerm('')}
                 >
-                  <X className="h-3 w-3 text-muted-foreground" />
+                  <X className="h-2 w-2 text-muted-foreground" />
                 </Button>
               )}
             </div>
 
-            {/* Quick Filter Pills - Design System Colors */}
-            <div className="flex items-center gap-2 w-full xl:w-auto xl:flex-shrink-0">
-              <Button
-                variant={filterType === 'all' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setFilterType('all')}
-                className={`h-8 px-3 font-medium text-xs transition-all ${
-                  filterType === 'all' 
-                    ? 'btn-gradient-primary text-primary-foreground' 
-                    : 'border-border text-foreground hover:bg-muted hover:text-foreground'
-                } flex-1 xl:flex-none focus:ring-2 focus:ring-primary focus:ring-offset-1`}
-              >
-                All
-              </Button>
-              <Button
-                variant={filterType === 'with-approvals' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setFilterType('with-approvals')}
-                className={`h-8 px-3 font-medium text-xs transition-all ${
-                  filterType === 'with-approvals' 
-                    ? 'bg-success text-white hover:bg-success/90' 
-                    : 'border-border text-foreground hover:bg-muted hover:text-foreground'
-                } flex-1 xl:flex-none focus:ring-2 focus:ring-success focus:ring-offset-1`}
-              >
-                Approved
-              </Button>
-              <Button
-                variant={filterType === 'pending-approvals' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setFilterType('pending-approvals')}
-                className={`h-8 px-3 font-medium text-xs transition-all ${
-                  filterType === 'pending-approvals' 
-                    ? 'bg-warning text-white hover:bg-warning/90' 
-                    : 'border-border text-foreground hover:bg-muted hover:text-foreground'
-                } flex-1 xl:flex-none focus:ring-2 focus:ring-warning focus:ring-offset-1`}
-              >
-                Pending
-              </Button>
-              <Button
-                variant={filterType === 'no-approvals' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setFilterType('no-approvals')}
-                className={`h-8 px-3 font-medium text-xs transition-all ${
-                  filterType === 'no-approvals' 
-                    ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90' 
-                    : 'border-border text-foreground hover:bg-muted hover:text-foreground'
-                } flex-1 xl:flex-none focus:ring-2 focus:ring-destructive focus:ring-offset-1`}
-              >
-                None
-              </Button>
+            {/* Quick Status Filters - Ultra-compact for 1920x1080 */}
+            <div className="flex items-center gap-1">
+              {['all', 'with-approvals', 'pending-approvals', 'no-approvals'].map((type) => (
+                <Button
+                  key={type}
+                  variant={filterType === type ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setFilterType(type as FilterType)}
+                  className={`h-7 px-2 text-xs font-medium transition-all ${
+                    filterType === type 
+                      ? type === 'all' ? 'btn-gradient-primary' 
+                        : type === 'with-approvals' ? 'bg-success text-white hover:bg-success/90'
+                        : type === 'pending-approvals' ? 'bg-warning text-white hover:bg-warning/90'
+                        : 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
+                      : 'border-border text-foreground hover:bg-muted'
+                  } focus:ring-1 focus:ring-primary`}
+                >
+                  {type === 'all' ? 'All' 
+                    : type === 'with-approvals' ? 'Approved'
+                    : type === 'pending-approvals' ? 'Pending'
+                    : 'None'}
+                </Button>
+              ))}
             </div>
 
-            {/* Advanced Filters - Design System Compliant */}
-            <div className="flex items-center gap-2 w-full xl:w-auto xl:flex-shrink-0">
+            {/* Advanced Filters - Compact Selects */}
+            <div className="flex items-center gap-1">
               <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as StatusFilter)}>
-                <SelectTrigger className="w-full xl:w-36 h-8 text-xs font-medium border-border focus:ring-2 focus:ring-primary">
+                <SelectTrigger className="w-24 h-7 text-xs border-border focus:ring-1 focus:ring-primary">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
-                <SelectContent className="font-['Proxima_Nova',sans-serif]">
-                  <SelectItem value="all" className="text-sm">All Status</SelectItem>
-                  <SelectItem value="approved" className="text-sm">Approved</SelectItem>
-                  <SelectItem value="rejected" className="text-sm">Rejected</SelectItem>
-                  <SelectItem value="pending" className="text-sm">Pending</SelectItem>
+                <SelectContent>
+                  <SelectItem value="all" className="text-xs">All</SelectItem>
+                  <SelectItem value="approved" className="text-xs">✓</SelectItem>
+                  <SelectItem value="rejected" className="text-xs">✗</SelectItem>
+                  <SelectItem value="pending" className="text-xs">-</SelectItem>
                 </SelectContent>
               </Select>
 
               <Select value={provisionTypeFilter} onValueChange={setProvisionTypeFilter}>
-                <SelectTrigger className="w-full xl:w-40 h-8 text-xs font-medium border-border focus:ring-2 focus:ring-primary">
+                <SelectTrigger className="w-32 h-7 text-xs border-border focus:ring-1 focus:ring-primary">
                   <SelectValue placeholder="Type" />
                 </SelectTrigger>
-                <SelectContent className="font-['Proxima_Nova',sans-serif]">
-                  <SelectItem value="all" className="text-sm">All Types</SelectItem>
+                <SelectContent>
+                  <SelectItem value="all" className="text-xs">All Types</SelectItem>
                   {uniqueProvisionTypes.map(type => (
-                    <SelectItem key={type} value={type} className="text-sm">{type}</SelectItem>
+                    <SelectItem key={type} value={type} className="text-xs">{type.substring(0, 20)}...</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-            </div>
 
-            {/* Sort Controls - Enhanced */}
-            <div className="flex items-center gap-2 w-full xl:w-auto xl:flex-shrink-0">
               <Select value={sortField} onValueChange={(value) => setSortField(value as SortField)}>
-                <SelectTrigger className="w-full xl:w-32 h-8 text-xs font-medium border-border focus:ring-2 focus:ring-primary">
+                <SelectTrigger className="w-20 h-7 text-xs border-border focus:ring-1 focus:ring-primary">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="font-['Proxima_Nova',sans-serif]">
-                  <SelectItem value="abcd_1up" className="text-sm">ABCD 1-Up</SelectItem>
-                  <SelectItem value="service_name" className="text-sm">Name</SelectItem>
-                  <SelectItem value="provision_type" className="text-sm">Type</SelectItem>
-                  <SelectItem value="options" className="text-sm">Options</SelectItem>
-                  <SelectItem value="num_provisions" className="text-sm">Prov</SelectItem>
-                  <SelectItem value="num_products" className="text-sm">Prod</SelectItem>
+                <SelectContent>
+                  <SelectItem value="abcd_1up" className="text-xs">ABCD</SelectItem>
+                  <SelectItem value="service_name" className="text-xs">Name</SelectItem>
+                  <SelectItem value="provision_type" className="text-xs">Type</SelectItem>
+                  <SelectItem value="options" className="text-xs">Options</SelectItem>
+                  <SelectItem value="num_provisions" className="text-xs">Prov</SelectItem>
+                  <SelectItem value="num_products" className="text-xs">Prod</SelectItem>
                 </SelectContent>
               </Select>
+
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
-                className="h-8 w-8 p-0 border-border hover:bg-muted focus:ring-2 focus:ring-primary focus:ring-offset-1"
+                className="h-7 w-7 p-0 border-border hover:bg-muted focus:ring-1 focus:ring-primary"
               >
                 {sortDirection === 'asc' ? 
-                  <SortAscending className="h-4 w-4 text-foreground" /> : 
-                  <SortDescending className="h-4 w-4 text-foreground" />
+                  <SortAscending className="h-3 w-3" /> : 
+                  <SortDescending className="h-3 w-3" />
                 }
               </Button>
             </div>
 
-            {/* Clear Filters & Results Count */}
-            <div className="flex items-center gap-4 w-full xl:w-auto xl:ml-auto xl:flex-shrink-0 justify-between xl:justify-end">
+            {/* Results & Clear */}
+            <div className="flex items-center gap-2 ml-auto">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={clearFilters}
-                className="h-8 px-3 text-muted-foreground hover:text-foreground hover:bg-muted text-sm font-medium focus:ring-2 focus:ring-primary focus:ring-offset-1"
+                className="h-7 px-2 text-muted-foreground hover:text-foreground hover:bg-muted text-xs focus:ring-1 focus:ring-primary"
               >
-                <X className="h-3 w-3 mr-1" />
+                <X className="h-2 w-2 mr-1" />
                 Clear
               </Button>
-              <Badge variant="outline" className="text-xs font-medium px-2 py-1 bg-muted/50 text-muted-foreground border-border">
-                {filteredAndSortedData.length} of {mockClusterData.length} records
+              <Badge variant="outline" className="text-xs px-2 py-0.5 bg-muted/50 border-border">
+                {filteredAndSortedData.length}/{mockClusterData.length}
               </Badge>
             </div>
           </div>
-
-          {/* Table Header */}
-          <div className="px-4 py-3 bg-card border-b border-border">
-            <h2 className="text-lg font-bold text-foreground">Main Cluster Data</h2>
-          </div>
           
-          {/* Table using provided shadcn-style structure */}
-          <div className="max-h-[calc(100vh-520px)] overflow-y-auto">
-            <table data-slot="table" className="w-full caption-bottom text-sm">
-              <thead data-slot="table-header" className="[&_tr]:border-b">
-                <tr data-slot="table-row" className="hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors">
-                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]">
-                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
-                      <div className="flex items-center">#</div>
-                    </button>
+          {/* Table Container - Maximized for 1920x1080 */}
+          <div className="flex-1 min-h-0 overflow-auto table-container">
+            <table className="w-full text-xs border-collapse">
+              <thead className="sticky top-0 bg-card border-b border-border z-10">
+                <tr>
+                  <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap">#</th>
+                  <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors" onClick={() => handleSort('abcd_1up')}>
+                    <div className="flex items-center">
+                      ABCD 1-Up
+                      {getSortIcon('abcd_1up')}
+                    </div>
                   </th>
-                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
-                    <button data-slot="button" 
-                      onClick={() => handleSort('abcd_1up')}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('abcd_1up'); }}
-                      className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
-                    >
-                      <div className="flex items-center">ABCD 1-Up<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
-                    </button>
+                  <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap">Service ID</th>
+                  <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors" onClick={() => handleSort('service_name')}>
+                    <div className="flex items-center">
+                      Service Name
+                      {getSortIcon('service_name')}
+                    </div>
                   </th>
-                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
-                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
-                      <div className="flex items-center">Service ID</div>
-                    </button>
+                  <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors" onClick={() => handleSort('provision_type')}>
+                    <div className="flex items-center">
+                      Provision Type
+                      {getSortIcon('provision_type')}
+                    </div>
                   </th>
-                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
-                    <button data-slot="button" 
-                      onClick={() => handleSort('service_name')}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('service_name'); }}
-                      className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
-                    >
-                      <div className="flex items-center">Service Name<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
-                    </button>
+                  <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors" onClick={() => handleSort('options')}>
+                    <div className="flex items-center">
+                      Options
+                      {getSortIcon('options')}
+                    </div>
                   </th>
-                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
-                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
-                      <div className="flex items-center">P</div>
-                    </button>
+                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors" onClick={() => handleSort('num_splits')}>
+                    <div className="flex items-center justify-center">
+                      Splits
+                      {getSortIcon('num_splits')}
+                    </div>
                   </th>
-                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
-                    <button data-slot="button" 
-                      onClick={() => handleSort('provision_type')}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('provision_type'); }}
-                      className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
-                    >
-                      <div className="flex items-center">Provision Type<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
-                    </button>
+                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors" onClick={() => handleSort('num_provisions')}>
+                    <div className="flex items-center justify-center">
+                      Provisions
+                      {getSortIcon('num_provisions')}
+                    </div>
                   </th>
-                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
-                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
-                      <div className="flex items-center">O</div>
-                    </button>
+                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors" onClick={() => handleSort('num_products')}>
+                    <div className="flex items-center justify-center">
+                      Products
+                      {getSortIcon('num_products')}
+                    </div>
                   </th>
-                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
-                    <button data-slot="button" 
-                      onClick={() => handleSort('options')}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('options'); }}
-                      className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
-                    >
-                      <div className="flex items-center">Options<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
-                    </button>
-                  </th>
-                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
-                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
-                      <div className="flex items-center">PTy Type</div>
-                    </button>
-                  </th>
-                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
-                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
-                      <div className="flex items-center">Bencode</div>
-                    </button>
-                  </th>
-                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
-                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
-                      <div className="flex items-center">New Bencode</div>
-                    </button>
-                  </th>
-                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
-                    <button data-slot="button" 
-                      onClick={() => handleSort('num_splits')}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('num_splits'); }}
-                      className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
-                    >
-                      <div className="flex items-center">Num Split<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
-                    </button>
-                  </th>
-                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
-                    <button data-slot="button" 
-                      onClick={() => handleSort('num_provisions')}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('num_provisions'); }}
-                      className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
-                    >
-                      <div className="flex items-center">Num Prov<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
-                    </button>
-                  </th>
-                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
-                    <button data-slot="button" 
-                      onClick={() => handleSort('num_products')}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSort('num_products'); }}
-                      className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start cursor-pointer"
-                    >
-                      <div className="flex items-center">Num Prod<i className="fas fa-sort text-muted-foreground ml-2"></i></div>
-                    </button>
-                  </th>
-                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
-                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
-                      <div className="flex items-center">Num Clients</div>
-                    </button>
-                  </th>
-                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
-                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
-                      <div className="flex items-center">Num Groups</div>
-                    </button>
-                  </th>
-                  <th data-slot="table-head" className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
-                    <button data-slot="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 has-[>svg]:px-3 h-auto p-0 font-medium text-muted-foreground hover:text-foreground hover:bg-transparent justify-start">
-                      <div className="flex items-center">Approve</div>
-                    </button>
-                  </th>
+                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap">Clients</th>
+                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap">Groups</th>
+                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap">Approval</th>
                 </tr>
               </thead>
-              <tbody data-slot="table-body" className="[&_tr:last-child]:border-0">
+              <tbody>
                 {filteredAndSortedData.map((record, index) => (
-                  <tr key={record.abcd_1up} data-slot="table-row" className="data-[state=selected]:bg-muted border-b hover:bg-muted/30 transition-colors">
-                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
-                      <span className="text-xs font-bold text-primary">{index + 1}</span>
+                  <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors">
+                    <td className="px-2 py-1.5 text-center">
+                      <span className="text-primary font-bold">{index + 1}</span>
                     </td>
-                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4">
-                      <button 
-                        data-slot="button" 
-                        className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:text-accent-foreground dark:hover:bg-accent/50 rounded-md gap-1.5 has-[>svg]:px-2.5 p-1 h-6 w-6 hover:bg-muted/50 text-primary font-bold"
-                        onClick={() => console.log('Navigate to ABCD details:', record.abcd_1up)}
-                      >
+                    <td className="px-2 py-1.5">
+                      <Button variant="link" className="p-0 h-auto text-primary hover:underline text-xs font-bold">
                         {record.abcd_1up}
-                      </button>
+                      </Button>
                     </td>
-                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
-                      <span className="text-xs font-bold text-info">{record.service_id}</span>
+                    <td className="px-2 py-1.5 text-center">
+                      <span className="font-bold text-info">{record.service_id}</span>
                     </td>
-                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4">
-                      <div className="flex items-center gap-2">
-                        <i className="fas fa-scroll text-primary"></i>
-                        <span className="font-medium text-foreground">{record.service_name}</span>
+                    <td className="px-2 py-1.5">
+                      <div className="flex items-center gap-1">
+                        <i className="fas fa-scroll text-primary text-xs"></i>
+                        <span className="font-medium text-foreground truncate-content" title={record.service_name}>
+                          {record.service_name}
+                        </span>
                       </div>
                     </td>
-                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
-                      <span className="text-xs text-muted-foreground">-</span>
+                    <td className="px-2 py-1.5">
+                      <span className="font-medium text-foreground truncate-content" title={record.provision_type}>
+                        {record.provision_type}
+                      </span>
                     </td>
-                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4">
-                      <span className="text-xs font-medium text-foreground">{record.provision_type}</span>
+                    <td className="px-2 py-1.5">
+                      <span className="font-medium text-accent truncate-content" title={record.options}>
+                        {record.options}
+                      </span>
                     </td>
-                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
-                      <span className="text-xs text-muted-foreground">-</span>
+                    <td className="px-2 py-1.5 text-center">
+                      <span className="font-bold text-secondary">{record.num_splits}</span>
                     </td>
-                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4">
-                      <span className="text-xs font-bold text-accent max-w-xs truncate block" title={record.options}>{record.options}</span>
+                    <td className="px-2 py-1.5 text-center">
+                      <span className="font-bold text-primary">{record.num_provisions.toLocaleString()}</span>
                     </td>
-                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
-                      <span className="text-xs text-muted-foreground">-</span>
+                    <td className="px-2 py-1.5 text-center">
+                      <span className="font-bold text-success">{record.num_products.toLocaleString()}</span>
                     </td>
-                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4">
-                      <span className="text-xs text-muted-foreground">-</span>
+                    <td className="px-2 py-1.5 text-center">
+                      <span className="text-info font-bold">{record.num_clients?.toLocaleString() || '-'}</span>
                     </td>
-                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4">
-                      <span className="text-xs text-muted-foreground">-</span>
+                    <td className="px-2 py-1.5 text-center">
+                      <span className="text-warning font-bold">{record.num_groups?.toLocaleString() || '-'}</span>
                     </td>
-                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
-                      <span className="text-xs font-bold text-secondary">{record.num_splits}</span>
-                    </td>
-                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
-                      <span className="text-xs font-bold text-primary">{record.num_provisions.toLocaleString()}</span>
-                    </td>
-                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
-                      <span className="text-xs font-bold text-success">{record.num_products.toLocaleString()}</span>
-                    </td>
-                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
-                      <span className="text-xs text-info font-bold">{record.num_clients?.toLocaleString() || '-'}</span>
-                    </td>
-                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
-                      <span className="text-xs text-warning font-bold">{record.num_groups?.toLocaleString() || '-'}</span>
-                    </td>
-                    <td data-slot="table-cell" className="p-2 align-middle whitespace-nowrap py-4 text-center">
+                    <td className="px-2 py-1.5 text-center">
                       <ApprovalStatusIndicators statuses={record.approvalStatuses} />
                     </td>
                   </tr>
                 ))}
                 {filteredAndSortedData.length === 0 && (
-                  <tr data-slot="table-row" className="hover:bg-transparent">
-                    <td colSpan={17} data-slot="table-cell" className="h-24 p-2 text-center text-muted-foreground align-middle">
-                      <div className="flex flex-col items-center gap-3 py-8">
-                        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-muted/30">
-                          <MagnifyingGlass className="h-6 w-6 text-muted-foreground/60" />
-                        </div>
-                        <div className="space-y-1">
-                          <p className="text-sm font-semibold text-foreground">No records found</p>
-                          <p className="text-xs text-muted-foreground">Try adjusting your search or filter criteria</p>
+                  <tr>
+                    <td colSpan={12} className="text-center py-8 text-muted-foreground">
+                      <div className="flex flex-col items-center gap-2">
+                        <MagnifyingGlass className="h-8 w-8 text-muted-foreground/40" />
+                        <div>
+                          <p className="font-semibold">No records found</p>
+                          <p className="text-xs">Try adjusting your search or filter criteria</p>
                         </div>
                       </div>
                     </td>
