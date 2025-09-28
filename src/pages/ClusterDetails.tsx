@@ -447,34 +447,70 @@ export function ClusterDetails() {
     <div className="min-h-screen flex flex-col font-['Proxima_Nova',sans-serif] cluster-details-1920">
       {/* Ultra-Compact Cluster Information Bar for 1920x1080 */}
       <Card className="bg-card border-border mb-4 shadow-sm">
-        <CardContent className="px-4 py-2 cluster-info-bar">
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs">
-            <div className="flex items-center gap-2">
-              <span className="font-medium text-foreground">Data Context:</span>
-              <span className="text-muted-foreground truncate max-w-xs">{clusterInfo.dataContext}</span>
+        <CardContent className="px-4 py-3 cluster-info-bar">
+          <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-x-6 gap-y-2 text-xs">
+            <div className="flex flex-col gap-1">
+              <span className="font-medium text-foreground">X-ray Projection:</span>
+              <span className="text-muted-foreground font-mono bg-muted/30 px-2 py-0.5 rounded text-xs">{clusterInfo.xrayProjection}</span>
             </div>
-            <div className="flex items-center gap-3">
-              <span className="font-medium text-foreground">Distance Threshold:</span>
+            
+            <div className="flex flex-col gap-1">
+              <span className="font-medium text-foreground">Data Context:</span>
+              <span className="text-muted-foreground font-mono bg-muted/30 px-2 py-0.5 rounded text-xs truncate" title={clusterInfo.dataContext}>
+                {clusterInfo.dataContext.length > 25 ? `${clusterInfo.dataContext.substring(0, 25)}...` : clusterInfo.dataContext}
+              </span>
+            </div>
+            
+            <div className="flex flex-col gap-1">
+              <span className="font-medium text-foreground">Created:</span>
+              <span className="text-muted-foreground font-mono bg-muted/30 px-2 py-0.5 rounded text-xs">{clusterInfo.created}</span>
+            </div>
+            
+            <div className="flex flex-col gap-1">
+              <span className="font-medium text-foreground">Records in this Cluster:</span>
+              <span className="text-primary font-bold bg-primary/10 px-2 py-0.5 rounded text-xs">{clusterInfo.recordsInCluster}</span>
+            </div>
+            
+            <div className="flex flex-col gap-1">
+              <span className="font-medium text-foreground">Cluster:</span>
+              <span className="text-secondary font-bold bg-secondary/10 px-2 py-0.5 rounded text-xs">{clusterInfo.clusterId}</span>
+            </div>
+            
+            <div className="flex flex-col gap-1">
+              <span className="font-medium text-foreground">Total Clusters:</span>
+              <span className="text-accent font-bold bg-accent/10 px-2 py-0.5 rounded text-xs">{clusterInfo.totalClusters}</span>
+            </div>
+          </div>
+          
+          <div className="flex items-center justify-between mt-3 pt-3 border-t border-border/50">
+            <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                <Input
-                  type="number"
-                  value={distanceThreshold}
-                  onChange={(e) => setDistanceThreshold(e.target.value)}
-                  step="0.1"
-                  min="0"
-                  max="100"
-                  className="w-16 h-6 text-xs border-border font-bold text-accent focus:ring-1 focus:ring-primary"
-                />
-                <Button 
-                  size="sm" 
-                  className="h-6 px-3 btn-gradient-primary text-xs font-medium focus:ring-1 focus:ring-primary"
-                  onClick={() => {
-                    console.log('Update distance threshold to:', distanceThreshold)
-                  }}
-                >
-                  Update
-                </Button>
+                <span className="font-medium text-foreground text-xs">Distance Threshold:</span>
+                <div className="flex items-center gap-2">
+                  <Input
+                    type="number"
+                    value={distanceThreshold}
+                    onChange={(e) => setDistanceThreshold(e.target.value)}
+                    step="0.1"
+                    min="0"
+                    max="100"
+                    className="w-16 h-6 text-xs border-border font-bold text-accent focus:ring-1 focus:ring-primary"
+                  />
+                  <Button 
+                    size="sm" 
+                    className="h-6 px-3 btn-gradient-primary text-xs font-medium focus:ring-1 focus:ring-primary"
+                    onClick={() => {
+                      console.log('Update distance threshold to:', distanceThreshold)
+                    }}
+                  >
+                    Update
+                  </Button>
+                </div>
               </div>
+            </div>
+            
+            <div className="text-xs text-muted-foreground">
+              Viewing cluster data with {clusterInfo.dendrogramTypeName} projection
             </div>
           </div>
         </CardContent>
