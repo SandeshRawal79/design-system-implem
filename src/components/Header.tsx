@@ -65,8 +65,8 @@ export function Header({ clusterInfo }: HeaderProps) {
   return (
     <>
       <header className="bg-white border-b border-border shadow-sm px-4 sm:px-6 lg:px-8 py-2.5 relative min-h-[3.5rem]">
-        <div className="flex items-center justify-between max-w-7xl mx-auto h-full">
-          {/* Logo and Title - Optimized for 1920x1080 */}
+        <div className="flex items-center justify-between w-full h-full">
+          {/* Logo and Title - Left Aligned */}
           <div className="flex items-center gap-3 min-w-0 flex-1">
             <div className="flex items-center gap-3">
               <div 
@@ -113,8 +113,8 @@ export function Header({ clusterInfo }: HeaderProps) {
             </div>
           </div>
 
-          {/* Desktop Accessibility Controls - Compact Layout */}
-          <div className="hidden md:flex items-center gap-1.5">
+          {/* Desktop Accessibility Controls - Right Aligned */}
+          <div className="hidden md:flex items-center gap-1.5 flex-shrink-0">
             <Button
               variant="ghost"
               size="sm"
@@ -156,12 +156,12 @@ export function Header({ clusterInfo }: HeaderProps) {
             </Button>
           </div>
 
-          {/* Mobile Menu Button - Compact */}
+          {/* Mobile Menu Button - Right Aligned */}
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden icon-hover p-1.5 cursor-pointer h-8 w-8"
+            className="md:hidden icon-hover p-1.5 cursor-pointer h-8 w-8 flex-shrink-0"
             aria-label="Toggle menu"
           >
             <FontAwesomeIcon 

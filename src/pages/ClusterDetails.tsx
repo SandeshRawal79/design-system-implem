@@ -447,12 +447,12 @@ export function ClusterDetails() {
     <div className="min-h-screen flex flex-col font-['Proxima_Nova',sans-serif] cluster-details-1920">
       {/* Compact Cluster Information Card - Data Context and Distance Threshold Only */}
       <Card className="bg-card border-border mb-4 shadow-sm">
-        <CardContent className="px-4 py-3">
+        <CardContent className="px-4">
           <div className="flex items-center justify-between gap-4">
             {/* Data Context */}
             <div className="flex items-center gap-2">
-              <span className="font-medium text-foreground text-sm">Data Context:</span>
-              <span className="text-muted-foreground font-mono bg-muted/30 px-2 py-1 rounded text-sm" title={clusterInfo.dataContext}>
+              <span className="text-sm font-semibold text-foreground leading-tight truncate">Data Context:</span>
+              <span className="text-sm text-muted-foreground leading-non" title={clusterInfo.dataContext}>
                 {clusterInfo.dataContext}
               </span>
             </div>
