@@ -469,7 +469,7 @@ button, .btn, [role="button"], .cursor-pointer {
   }
   
   .cluster-details-1920 .truncate-content {
-    max-width: 200px;
+    max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -892,7 +892,31 @@ button[data-slot="button"]:disabled {
   max-width: none;
 }
 
-/* Better spacing for dashboard metrics on 1920x1080 */
+/* Cluster Details Table Column Width Optimization */
+.cluster-details-table {
+  table-layout: fixed;
+}
+
+.cluster-details-table .col-index { width: 48px; }        /* # */
+.cluster-details-table .col-abcd { width: 80px; }         /* ABCD 1-Up */
+.cluster-details-table .col-service-id { width: 80px; }   /* Service ID */
+.cluster-details-table .col-service-name { width: 160px; } /* Service Name - Increased */
+.cluster-details-table .col-provision-type { width: 160px; } /* Provision Type - Same as Service Name */
+.cluster-details-table .col-options { width: 120px; }     /* Options - Reduced */
+.cluster-details-table .col-splits { width: 64px; }       /* Splits */
+.cluster-details-table .col-provisions { width: 80px; }   /* Provisions */
+.cluster-details-table .col-products { width: 80px; }     /* Products */
+.cluster-details-table .col-clients { width: 64px; }      /* Clients */
+.cluster-details-table .col-groups { width: 64px; }       /* Groups */
+.cluster-details-table .col-approval { width: 96px; }     /* Approval */
+
+/* Text wrapping for wider columns */
+.cluster-details-table .col-service-name span,
+.cluster-details-table .col-provision-type span {
+  white-space: normal;
+  word-wrap: break-word;
+  line-height: 1.2;
+}
 @media (min-width: 1920px) {
   .dashboard-metrics {
     gap: 1.5rem; /* Increased gap for ultra-wide layouts */
