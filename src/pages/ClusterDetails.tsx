@@ -627,68 +627,68 @@ export function ClusterDetails() {
               </colgroup>
               <thead className="sticky top-0 bg-card border-b border-border z-10">
                 <tr>
-                  <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-index" style={{ fontSize: 'var(--font-label)' }}>#</th>
-                  <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-abcd" onClick={() => handleSort('abcd_1up')} style={{ fontSize: 'var(--font-label)' }}>
+                  <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-index" style={{ fontSize: 'var(--font-body)' }}>#</th>
+                  <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-abcd" onClick={() => handleSort('abcd_1up')} style={{ fontSize: 'var(--font-body)' }}>
                     <div className="flex items-center">
                       ABCD 1-Up
                       {getSortIcon('abcd_1up')}
                     </div>
                   </th>
-                  <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-service-id" onClick={() => handleSort('service_id')} style={{ fontSize: 'var(--font-label)' }}>
+                  <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-service-id" onClick={() => handleSort('service_id')} style={{ fontSize: 'var(--font-body)' }}>
                     <div className="flex items-center">
                       Service ID
                       {getSortIcon('service_id')}
                     </div>
                   </th>
-                  <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors col-service-name" onClick={() => handleSort('service_name')} style={{ fontSize: 'var(--font-label)' }}>
+                  <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors col-service-name" onClick={() => handleSort('service_name')} style={{ fontSize: 'var(--font-body)' }}>
                     <div className="flex items-center">
                       Service Name
                       {getSortIcon('service_name')}
                     </div>
                   </th>
-                  <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors col-provision-type" onClick={() => handleSort('provision_type')} style={{ fontSize: 'var(--font-label)' }}>
+                  <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors col-provision-type" onClick={() => handleSort('provision_type')} style={{ fontSize: 'var(--font-body)' }}>
                     <div className="flex items-center">
                       Provision Type
                       {getSortIcon('provision_type')}
                     </div>
                   </th>
-                  <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-options" onClick={() => handleSort('options')} style={{ fontSize: 'var(--font-label)' }}>
+                  <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-options" onClick={() => handleSort('options')} style={{ fontSize: 'var(--font-body)' }}>
                     <div className="flex items-center">
                       Options
                       {getSortIcon('options')}
                     </div>
                   </th>
-                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-splits" onClick={() => handleSort('num_splits')} style={{ fontSize: 'var(--font-label)' }}>
+                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-splits" onClick={() => handleSort('num_splits')} style={{ fontSize: 'var(--font-body)' }}>
                     <div className="flex items-center justify-center">
                       Splits
                       {getSortIcon('num_splits')}
                     </div>
                   </th>
-                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-provisions" onClick={() => handleSort('num_provisions')} style={{ fontSize: 'var(--font-label)' }}>
+                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-provisions" onClick={() => handleSort('num_provisions')} style={{ fontSize: 'var(--font-body)' }}>
                     <div className="flex items-center justify-center">
                       Provisions
                       {getSortIcon('num_provisions')}
                     </div>
                   </th>
-                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-products" onClick={() => handleSort('num_products')} style={{ fontSize: 'var(--font-label)' }}>
+                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-products" onClick={() => handleSort('num_products')} style={{ fontSize: 'var(--font-body)' }}>
                     <div className="flex items-center justify-center">
                       Products
                       {getSortIcon('num_products')}
                     </div>
                   </th>
-                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-clients" onClick={() => handleSort('num_clients')} style={{ fontSize: 'var(--font-label)' }}>
+                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-clients" onClick={() => handleSort('num_clients')} style={{ fontSize: 'var(--font-body)' }}>
                     <div className="flex items-center justify-center">
                       Clients
                       {getSortIcon('num_clients')}
                     </div>
                   </th>
-                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-groups" onClick={() => handleSort('num_groups')} style={{ fontSize: 'var(--font-label)' }}>
+                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-groups" onClick={() => handleSort('num_groups')} style={{ fontSize: 'var(--font-body)' }}>
                     <div className="flex items-center justify-center">
                       Groups
                       {getSortIcon('num_groups')}
                     </div>
                   </th>
-                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-approval" style={{ fontSize: 'var(--font-label)' }}>Approval</th>
+                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-approval" style={{ fontSize: 'var(--font-body)' }}>Approval</th>
                 </tr>
               </thead>
               <tbody>
