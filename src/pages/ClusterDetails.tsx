@@ -1,11 +1,9 @@
 import { useState, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { MagnifyingGlass, CaretDown, CaretUp, X, SortAscending, SortDescending } from '@phosphor-icons/react'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Card, CardContent } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 // Types for filtering and sorting
