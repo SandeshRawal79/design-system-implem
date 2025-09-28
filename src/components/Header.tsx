@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
   faBars, 
@@ -9,8 +8,7 @@ import {
   faMoon, 
   faSun,
   faComments,
-  faTimes,
-  faArrowLeft
+  faTimes
 } from '@fortawesome/free-solid-svg-icons'
 import { Button } from '@/components/ui/button'
 import { useKV } from '@github/spark/hooks'
@@ -29,7 +27,6 @@ interface HeaderProps {
 }
 
 export function Header({ clusterInfo }: HeaderProps) {
-  const navigate = useNavigate()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isDarkMode, setIsDarkMode] = useKV('theme-dark-mode', 'false')
   const [fontSize, setFontSize] = useKV('accessibility-font-size', '1')
@@ -89,39 +86,16 @@ export function Header({ clusterInfo }: HeaderProps) {
                     </p>
                   </div>
                   {clusterInfo && (
-                    <>
-                      {/* Desktop cluster info display */}
-                      <div className="hidden lg:flex items-center gap-3 ml-6 pl-6 border-l border-border">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => navigate(`/clusters/${clusterInfo.serviceId}`)}
-                          className="h-8 px-3 font-medium text-xs text-foreground border-border hover:bg-muted focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all"
-                        >
-                          <FontAwesomeIcon icon={faArrowLeft} className="w-3 h-3 mr-2" />
-                          Back to Clusters
-                        </Button>
-                        <div className="min-w-0">
-                          <h2 className="text-sm font-semibold text-foreground leading-tight truncate">
-                            Cluster #{clusterInfo.clusterId} of {clusterInfo.totalClusters} Details - {clusterInfo.xrayProjection}
-                          </h2>
-                          <p className="text-xs text-muted-foreground leading-none">
-                            {clusterInfo.recordsInCluster} records • Created {clusterInfo.created}
-                          </p>
-                        </div>
+                    <div className="hidden lg:flex items-center gap-3 ml-6 pl-6 border-l border-border">
+                      <div className="min-w-0">
+                        <h2 className="text-sm font-semibold text-foreground leading-tight truncate">
+                          Cluster #{clusterInfo.clusterId} of {clusterInfo.totalClusters} Details - {clusterInfo.xrayProjection}
+                        </h2>
+                        <p className="text-xs text-muted-foreground leading-none">
+                          {clusterInfo.recordsInCluster} records • Created {clusterInfo.created}
+                        </p>
                       </div>
-                      {/* Mobile cluster back button */}
-                      <div className="lg:hidden ml-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => navigate(`/clusters/${clusterInfo.serviceId}`)}
-                          className="h-8 px-2 font-medium text-xs text-foreground border-border hover:bg-muted focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all"
-                        >
-                          <FontAwesomeIcon icon={faArrowLeft} className="w-3 h-3" />
-                        </Button>
-                      </div>
-                    </>
+                    </div>
                   )}
                 </div>
                 {/* Mobile cluster info display */}
