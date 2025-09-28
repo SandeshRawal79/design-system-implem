@@ -64,7 +64,7 @@ export function Header({ clusterInfo }: HeaderProps) {
 
   return (
     <>
-      <header className="bg-white border-b border-border shadow-sm px-4 sm:px-6 lg:px-8 py-2.5 relative min-h-[3.5rem]">
+      <header className="bg-white border-b border-border shadow-sm px-4 sm:px-6 lg:px-8 py-2.5 relative" style={{ minHeight: '42px' }}>
         <div className="flex items-center justify-between w-full h-full">
           {/* Logo and Title - Left Aligned */}
           <div className="flex items-center gap-3 min-w-0 flex-1">
@@ -119,39 +119,44 @@ export function Header({ clusterInfo }: HeaderProps) {
               variant="ghost"
               size="sm"
               onClick={decreaseFontSize}
-              className="icon-hover p-1.5 cursor-pointer h-8 w-8"
+              className="icon-hover p-1.5 cursor-pointer"
+              style={{ height: '24px', width: '24px' }}
               aria-label="Decrease font size"
             >
-              <FontAwesomeIcon icon={faMinus} className="w-3.5 h-3.5 text-icon" />
+              <FontAwesomeIcon icon={faMinus} style={{ width: '16px', height: '16px' }} className="text-icon" />
             </Button>
             <Button
               variant="ghost"
               size="sm"
               onClick={increaseFontSize}
-              className="icon-hover p-1.5 cursor-pointer h-8 w-8"
+              className="icon-hover p-1.5 cursor-pointer"
+              style={{ height: '24px', width: '24px' }}
               aria-label="Increase font size"
             >
-              <FontAwesomeIcon icon={faPlus} className="w-3.5 h-3.5 text-icon" />
+              <FontAwesomeIcon icon={faPlus} style={{ width: '16px', height: '16px' }} className="text-icon" />
             </Button>
             <Button
               variant="ghost"
               size="sm"
               onClick={toggleLanguage}
-              className="icon-hover p-1.5 cursor-pointer h-8 w-8"
+              className="icon-hover p-1.5 cursor-pointer"
+              style={{ height: '24px', width: '24px' }}
               aria-label={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
             >
-              <FontAwesomeIcon icon={faLanguage} className="w-3.5 h-3.5 text-icon" />
+              <FontAwesomeIcon icon={faLanguage} style={{ width: '16px', height: '16px' }} className="text-icon" />
             </Button>
             <Button
               variant="ghost"
               size="sm"
               onClick={toggleTheme}
-              className="icon-hover p-1.5 cursor-pointer h-8 w-8"
+              className="icon-hover p-1.5 cursor-pointer"
+              style={{ height: '24px', width: '24px' }}
               aria-label="Toggle theme"
             >
               <FontAwesomeIcon 
                 icon={isDarkMode === 'true' ? faSun : faMoon} 
-                className="w-3.5 h-3.5 text-icon" 
+                style={{ width: '16px', height: '16px' }}
+                className="text-icon" 
               />
             </Button>
           </div>
@@ -161,12 +166,14 @@ export function Header({ clusterInfo }: HeaderProps) {
             variant="ghost"
             size="sm"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden icon-hover p-1.5 cursor-pointer h-8 w-8 flex-shrink-0"
+            className="md:hidden icon-hover p-1.5 cursor-pointer flex-shrink-0"
+            style={{ height: '24px', width: '24px' }}
             aria-label="Toggle menu"
           >
             <FontAwesomeIcon 
               icon={isMenuOpen ? faTimes : faBars} 
-              className="w-3.5 h-3.5 text-icon" 
+              style={{ width: '16px', height: '16px' }}
+              className="text-icon" 
             />
           </Button>
         </div>
@@ -183,38 +190,43 @@ export function Header({ clusterInfo }: HeaderProps) {
                   variant="ghost"
                   size="sm"
                   onClick={decreaseFontSize}
-                  className="flex items-center gap-2 cursor-pointer text-xs h-8"
+                  className="flex items-center gap-2 cursor-pointer text-xs"
+                  style={{ height: '30px' }}
                 >
-                  <FontAwesomeIcon icon={faMinus} className="w-3 h-3 text-icon" />
+                  <FontAwesomeIcon icon={faMinus} style={{ width: '16px', height: '16px' }} className="text-icon" />
                   <span>Decrease Font</span>
                 </Button>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={increaseFontSize}
-                  className="flex items-center gap-2 cursor-pointer text-xs h-8"
+                  className="flex items-center gap-2 cursor-pointer text-xs"
+                  style={{ height: '30px' }}
                 >
-                  <FontAwesomeIcon icon={faPlus} className="w-3 h-3 text-icon" />
+                  <FontAwesomeIcon icon={faPlus} style={{ width: '16px', height: '16px' }} className="text-icon" />
                   <span>Increase Font</span>
                 </Button>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={toggleLanguage}
-                  className="flex items-center gap-2 cursor-pointer text-xs h-8"
+                  className="flex items-center gap-2 cursor-pointer text-xs"
+                  style={{ height: '30px' }}
                 >
-                  <FontAwesomeIcon icon={faLanguage} className="w-3 h-3 text-icon" />
+                  <FontAwesomeIcon icon={faLanguage} style={{ width: '16px', height: '16px' }} className="text-icon" />
                   <span>{language === 'en' ? 'Español' : 'English'}</span>
                 </Button>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={toggleTheme}
-                  className="flex items-center gap-2 cursor-pointer text-xs h-8"
+                  className="flex items-center gap-2 cursor-pointer text-xs"
+                  style={{ height: '30px' }}
                 >
                   <FontAwesomeIcon 
                     icon={isDarkMode === 'true' ? faSun : faMoon} 
-                    className="w-3 h-3 text-icon" 
+                    style={{ width: '16px', height: '16px' }}
+                    className="text-icon" 
                   />
                   <span>{isDarkMode === 'true' ? 'Light Mode' : 'Dark Mode'}</span>
                 </Button>
@@ -224,12 +236,13 @@ export function Header({ clusterInfo }: HeaderProps) {
         )}
       </header>
 
-      {/* Floating ChatBot - Optimized positioning for 1920x1080 */}
+      {/* Floating ChatBot - Following exact specifications */}
       <Button
-        className="fixed bottom-5 right-5 w-12 h-12 sm:w-13 sm:h-13 rounded-full shadow-lg hover:shadow-xl z-50 btn-gradient-primary cursor-pointer transition-all duration-300"
+        className="fixed bottom-5 right-5 rounded-full shadow-lg hover:shadow-xl z-50 btn-gradient-primary cursor-pointer transition-all duration-300"
+        style={{ width: '42px', height: '42px' }}
         aria-label="Open chat support"
       >
-        <FontAwesomeIcon icon={faComments} className="w-5 h-5 text-white" />
+        <FontAwesomeIcon icon={faComments} style={{ width: '16px', height: '16px' }} className="text-white" />
       </Button>
     </>
   )

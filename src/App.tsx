@@ -46,8 +46,8 @@ function AppContent() {
       </main>
       
       {/* Compact Footer with exact specifications */}
-      <footer className="h-6 border-t border-border bg-white px-8 flex items-center justify-center mt-auto">
-        <p className="text-xs text-muted-foreground text-center">
+      <footer className="border-t border-border bg-white px-8 flex items-center justify-center mt-auto" style={{ height: '24px' }}>
+        <p className="text-muted-foreground text-center" style={{ fontSize: 'var(--font-caption)' }}>
           © 2024 Provision Intelligence Hub. Powered by SHC.AI
         </p>
       </footer>

@@ -37,35 +37,9 @@
 }
 
 :root {
-    /* Design System Colors with New Design Tokens */
-    --font-sans: ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    /* Design System Colors - Exact Specifications */
+    --font-sans: 'Proxima Nova', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-mono: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-    --color-red-50: oklch(97.1% .013 17.38);
-    --color-red-100: oklch(93.6% .032 17.717);
-    --color-red-500: oklch(63.7% .237 25.331);
-    --color-orange-50: oklch(98% .016 73.684);
-    --color-orange-100: oklch(95.4% .038 75.164);
-    --color-orange-500: oklch(70.5% .213 47.604);
-    --color-yellow-50: oklch(98.7% .026 102.212);
-    --color-yellow-100: oklch(97.3% .071 103.193);
-    --color-yellow-400: oklch(85.2% .199 91.936);
-    --color-yellow-500: oklch(79.5% .184 86.047);
-    --color-green-100: oklch(96.2% .044 156.743);
-    --color-green-500: oklch(72.3% .219 149.579);
-    --color-blue-100: oklch(93.2% .032 255.585);
-    --color-blue-500: oklch(62.3% .214 259.815);
-    --color-purple-50: oklch(97.7% .014 308.299);
-    --color-purple-100: oklch(94.6% .033 307.174);
-    --color-purple-600: oklch(55.8% .288 302.321);
-    --color-gray-50: oklch(98.5% .002 247.839);
-    --color-gray-200: oklch(92.8% .006 264.531);
-    --color-gray-300: oklch(87.2% .01 258.338);
-    --color-gray-400: oklch(70.7% .022 261.325);
-    --color-gray-500: oklch(55.1% .027 264.364);
-    --color-gray-600: oklch(44.6% .03 256.802);
-    --color-gray-800: oklch(27.8% .033 256.848);
-    --color-black: #000;
-    --color-white: #fff;
     --spacing: .25rem;
     --container-sm: 24rem;
     --container-md: 28rem;
@@ -111,57 +85,66 @@
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
     
-    /* Keep existing design system colors */
+    /* Design System Colors - Exact Color Specifications */
     --background: #f8f8fb;
-    --foreground: #222;
-    --card: #fff;
-    --card-foreground: #222;
-    --popover: #fff;
-    --popover-foreground: #222;
-    --primary: #474a9e;
-    --primary-foreground: #fff;
-    --secondary: #1f8a7a;
-    --secondary-foreground: #fff;
-    --accent: #f48436;
-    --accent-foreground: #fff;
-    --success: #43812c;
-    --success-foreground: #fff;
-    --destructive: #e22a2a;
-    --destructive-foreground: #fff;
-    --warning: #f48436;
-    --warning-foreground: #fff;
-    --info: #0174b2;
-    --info-foreground: #fff;
-    --text-disabled: #888;
-    --icon-color: #666;
+    --foreground: #222222;
+    --card: #ffffff;
+    --card-foreground: #222222;
+    --popover: #ffffff;
+    --popover-foreground: #222222;
+    --primary: #474A9E;
+    --primary-foreground: #ffffff;
+    --secondary: #1F8A7A;
+    --secondary-foreground: #ffffff;
+    --accent: #F48436;
+    --accent-foreground: #ffffff;
+    --success: #43812C;
+    --success-foreground: #ffffff;
+    --destructive: #E22A2A;
+    --destructive-foreground: #ffffff;
+    --warning: #F48436;
+    --warning-foreground: #ffffff;
+    --info: #0174B2;
+    --info-foreground: #ffffff;
+    --text: #222222;
+    --text-disabled: #888888;
+    --icon: #666666;
     --icon-disabled: #909090;
+    --icon-hover-bg: #F6F6F6;
     --muted: #f6f6f6;
-    --muted-foreground: #888;
-    --border: #c8c8d5;
-    --input: #c8c8d5;
-    --ring: #474a9e;
-    --primary-gradient: linear-gradient(135deg,#474a9e 0%,#36a798 100%);
-    --primary-gradient-hover: linear-gradient(135deg,#36a798 0%,#474a9e 100%);
-    --secondary-gradient: linear-gradient(135deg,#474a9e 0%,#36a798 100%);
+    --muted-foreground: #888888;
+    --border: #C8C8D5;
+    --input: #C8C8D5;
+    --ring: #474A9E;
+    --primary-gradient: linear-gradient(135deg, #474A9E 0%, #36A798 100%);
+    --primary-gradient-hover: linear-gradient(135deg, #36A798 0%, #474A9E 100%);
+    --secondary-gradient: linear-gradient(135deg, #474A9E 0%, #36A798 100%);
     --grid-base: 4px;
     --outer-margin: 32px; /* Exact 32px outer margin as specified */
     --radius: 8px;
-    --font-h1: 4rem; /* 64px - H1 exact specification */
-    --font-h2: 3rem; /* 48px - H2 exact specification */
-    --font-h3: 2rem; /* 32px - H3 exact specification */
-    --font-h4: 1.5rem; /* 24px - H4 exact specification */
-    --font-h5: 1.25rem; /* 20px - H5 exact specification */
-    --font-h6: 1rem; /* 16px - H6 exact specification */
-    --font-subtitle: 0.875rem; /* 14px - Subtitle exact specification */
-    --font-body: 0.875rem; /* 14px - Body exact specification */
-    --font-caption: 0.75rem; /* 12px - Caption exact specification */
-    --font-label: 0.75rem; /* 12px - Label exact specification */
+    /* Typography System - Exact Specifications for 1920x1080 */
+    --font-h1: 64px; /* 64px - H1 exact specification */
+    --font-h2: 48px; /* 48px - H2 exact specification */
+    --font-h3: 32px; /* 32px - H3 exact specification */
+    --font-h4: 24px; /* 24px - H4 exact specification */
+    --font-h5: 20px; /* 20px - H5 exact specification */
+    --font-h6: 16px; /* 16px - H6 exact specification */
+    --font-subtitle: 14px; /* 14px - Subtitle exact specification */
+    --font-body: 14px; /* 14px - Body exact specification */
+    --font-caption: 12px; /* 12px - Caption exact specification */
+    --font-label: 12px; /* 12px - Label exact specification */
+    
+    /* Button Heights - Exact Specifications */
     --button-lg: 42px;
     --button-md: 36px;
     --button-sm: 30px;
     --button-xs: 24px;
-    --header-height: 48px;
+    
+    /* Header & Footer - Exact Specifications */
+    --header-height: 42px;
     --footer-height: 24px;
+    
+    /* Icon sizing - Exact Specifications */
     --icon-size: 16px;
     --icon-frame: 24px;
     font-family: Proxima Nova,Inter,system-ui,-apple-system,sans-serif;
@@ -224,62 +207,65 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
   
-  /* Status colors */
+  /* Status colors - Following Design System */
   --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
   --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
   --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
   
-  /* Icon colors */
+  /* Icon colors - Following Design System */
   --color-icon: var(--icon);
   --color-icon-disabled: var(--icon-disabled);
   --color-icon-hover-bg: var(--icon-hover-bg);
   
-  /* Typography Scale - Exact specs for 1920x1080 */
-  --font-size-h1: 4rem; /* 64px - H1 exact specification */
-  --font-size-h2: 3rem; /* 48px - H2 exact specification */
-  --font-size-h3: 2rem; /* 32px - H3 exact specification */
-  --font-size-h4: 1.5rem; /* 24px - H4 exact specification */
-  --font-size-h5: 1.25rem; /* 20px - H5 exact specification */
-  --font-size-h6: 1rem; /* 16px - H6 exact specification */
-  --font-size-subtitle: 0.875rem; /* 14px - Subtitle specification */
-  --font-size-body: 0.875rem; /* 14px - Body exact specification */
-  --font-size-caption: 0.75rem; /* 12px - Caption exact specification */
-  --font-size-label: 0.75rem; /* 12px - Label exact specification */
+  /* Text colors - Following Design System */
+  --color-text: var(--text);
+  --color-text-disabled: var(--text-disabled);
   
-  /* Responsive typography - scaled down for smaller screens */
-  --font-size-h1-sm: 2.5rem; /* 40px on mobile */
-  --font-size-h2-sm: 2rem; /* 32px on mobile */
-  --font-size-h3-sm: 1.5rem; /* 24px on mobile */
+  /* Typography Scale - Responsive variables */
+  --font-size-h1: var(--font-h1);
+  --font-size-h2: var(--font-h2);
+  --font-size-h3: var(--font-h3);
+  --font-size-h4: var(--font-h4);
+  --font-size-h5: var(--font-h5);
+  --font-size-h6: var(--font-h6);
+  --font-size-subtitle: var(--font-subtitle);
+  --font-size-body: var(--font-body);
+  --font-size-caption: var(--font-caption);
+  --font-size-label: var(--font-label);
   
-  /* Button Heights - Optimized for 1920x1080 */
-  --button-height-lg: 2.5rem; /* 40px */
-  --button-height-md: 2.125rem; /* 34px */
-  --button-height-sm: 1.75rem; /* 28px */
-  --button-height-xs: 1.5rem; /* 24px */
+  /* Button Heights - Following exact specifications */
+  --button-height-lg: var(--button-lg);
+  --button-height-md: var(--button-md);
+  --button-height-sm: var(--button-sm);
+  --button-height-xs: var(--button-xs);
   
-  /* Header & Footer - More compact */
-  --header-height: 3.5rem; /* 56px - increased slightly for better proportion */
-  --footer-height: 1.5rem; /* 24px */
+  /* Header & Footer - Following exact specifications */
+  --header-height: var(--header-height);
+  --footer-height: var(--footer-height);
   
-  /* Icon sizing */
-  --icon-size: 1rem; /* 16px */
-  --icon-frame: 1.5rem; /* 24px */
+  /* Icon sizing - Following exact specifications */
+  --icon-size: var(--icon-size);
+  --icon-frame: var(--icon-frame);
   
-  /* Spacing system (4px base) - Optimized for content density at 1920x1080 */
-  --spacing-1: 0.25rem; /* 4px */
-  --spacing-2: 0.5rem; /* 8px */
-  --spacing-3: 0.75rem; /* 12px */
-  --spacing-4: 1rem; /* 16px */
-  --spacing-5: 1.25rem; /* 20px - new intermediate size */
-  --spacing-6: 1.5rem; /* 24px */
-  --spacing-8: 2rem; /* 32px */
-  --spacing-10: 2.5rem; /* 40px - new intermediate size */
-  --spacing-12: 3rem; /* 48px */
-  --spacing-16: 4rem; /* 64px */
+  /* Spacing system (4px base) - Following Grid System */
+  --spacing-1: calc(var(--grid-base) * 1); /* 4px */
+  --spacing-2: calc(var(--grid-base) * 2); /* 8px */
+  --spacing-3: calc(var(--grid-base) * 3); /* 12px */
+  --spacing-4: calc(var(--grid-base) * 4); /* 16px */
+  --spacing-5: calc(var(--grid-base) * 5); /* 20px */
+  --spacing-6: calc(var(--grid-base) * 6); /* 24px */
+  --spacing-8: calc(var(--grid-base) * 8); /* 32px */
+  --spacing-10: calc(var(--grid-base) * 10); /* 40px */
+  --spacing-12: calc(var(--grid-base) * 12); /* 48px */
+  --spacing-16: calc(var(--grid-base) * 16); /* 64px */
 }
 
 /* Custom gradient button classes */
@@ -341,54 +327,124 @@
   }
 }
 
-/* Responsive breakpoints classes - Optimized for 1920x1080 as standard */
+/* Responsive Design System - Following exact specifications */
+
+/* Extra Small (XS) - Mobile phones - < 480px */
 @media (max-width: 479px) {
-  .text-h1-responsive { font-size: 1.875rem; line-height: 1.2; } /* 30px */
-  .text-h2-responsive { font-size: 1.625rem; line-height: 1.3; } /* 26px */
-  .text-h3-responsive { font-size: 1.25rem; line-height: 1.4; } /* 20px */
+  :root {
+    --font-h1: 32px; /* 50% reduction for mobile */
+    --font-h2: 24px; 
+    --font-h3: 18px;
+    --font-h4: 16px;
+    --font-h5: 14px;
+    --font-h6: 12px;
+    --button-lg: 36px; /* Reduced for mobile */
+    --button-md: 32px;
+    --button-sm: 28px;
+    --button-xs: 24px;
+    --outer-margin: 16px; /* Reduced margin for mobile */
+  }
+  
+  .text-h1-responsive { font-size: 32px; line-height: 1.2; }
+  .text-h2-responsive { font-size: 24px; line-height: 1.3; }
+  .text-h3-responsive { font-size: 18px; line-height: 1.4; }
   
   /* More compact buttons on mobile */
   .btn-gradient-primary, .btn-gradient-secondary {
-    min-height: 40px; /* iOS touch target - reduced */
-    padding: 0.625rem 0.875rem; /* more compact */
-    font-size: 0.8125rem; /* 13px */
+    min-height: 36px; /* iOS touch target */
+    padding: 0.625rem 0.875rem;
+    font-size: 13px;
   }
   
   /* Tighter card spacing on mobile */
   .intelligence-card {
-    margin-bottom: 0.75rem; /* reduced from 1rem */
+    margin-bottom: 0.75rem;
   }
 }
 
+/* Small (SM) - Mobile portrait & landscape - 480px to 767px */
 @media (min-width: 480px) and (max-width: 767px) {
-  .text-h1-responsive { font-size: 2rem; } /* 32px */
-  .text-h2-responsive { font-size: 1.75rem; } /* 28px */
-  .text-h3-responsive { font-size: 1.375rem; } /* 22px */
+  :root {
+    --font-h1: 40px; /* Scaled up from XS */
+    --font-h2: 30px;
+    --font-h3: 22px;
+    --font-h4: 18px;
+    --font-h5: 16px;
+    --font-h6: 14px;
+    --outer-margin: 20px;
+  }
+  
+  .text-h1-responsive { font-size: 40px; }
+  .text-h2-responsive { font-size: 30px; }
+  .text-h3-responsive { font-size: 22px; }
 }
 
+/* Medium (MD) - Tablets, small laptops - 768px to 1023px */
 @media (min-width: 768px) and (max-width: 1023px) {
-  .text-h1-responsive { font-size: 2.25rem; } /* 36px */
-  .text-h2-responsive { font-size: 1.875rem; } /* 30px */
-  .text-h3-responsive { font-size: 1.5rem; } /* 24px */
+  :root {
+    --font-h1: 48px; /* Tablet sizing */
+    --font-h2: 36px;
+    --font-h3: 24px;
+    --font-h4: 20px;
+    --font-h5: 18px;
+    --font-h6: 16px;
+    --outer-margin: 24px;
+  }
+  
+  .text-h1-responsive { font-size: 48px; }
+  .text-h2-responsive { font-size: 36px; }
+  .text-h3-responsive { font-size: 24px; }
 }
 
+/* Large (LG) - Standard desktops, large tablets - 1024px to 1439px */
 @media (min-width: 1024px) and (max-width: 1439px) {
-  .text-h1-responsive { font-size: 2.5rem; } /* 40px */
-  .text-h2-responsive { font-size: 2rem; } /* 32px */
-  .text-h3-responsive { font-size: 1.625rem; } /* 26px */
+  :root {
+    --font-h1: 56px; /* Desktop sizing */
+    --font-h2: 42px;
+    --font-h3: 28px;
+    --font-h4: 22px;
+    --font-h5: 20px;
+    --font-h6: 16px;
+    --outer-margin: 28px;
+  }
+  
+  .text-h1-responsive { font-size: 56px; }
+  .text-h2-responsive { font-size: 42px; }
+  .text-h3-responsive { font-size: 28px; }
 }
 
-/* Standard 1920x1080 and above - optimal experience with exact specifications */
-@media (min-width: 1440px) {
-  .text-h1-responsive { font-size: 4rem; } /* 64px - H1 exact */
-  .text-h2-responsive { font-size: 3rem; } /* 48px - H2 exact */
-  .text-h3-responsive { font-size: 2rem; } /* 32px - H3 exact */
+/* Extra Large (XL) - Large desktops, dashboards - 1440px to 1919px */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  :root {
+    --font-h1: 60px; /* Near-full sizing */
+    --font-h2: 45px;
+    --font-h3: 30px;
+    --font-h4: 24px;
+    --font-h5: 20px;
+    --font-h6: 16px;
+    --outer-margin: 30px;
+  }
+  
+  .text-h1-responsive { font-size: 60px; }
+  .text-h2-responsive { font-size: 45px; }
+  .text-h3-responsive { font-size: 30px; }
 }
 
+/* XXL - Ultra-wide monitors, enterprise - ≥ 1920px */
 @media (min-width: 1920px) {
-  .text-h1-responsive { font-size: 4rem; } /* 64px - Keep consistent at 1920+ */
-  .text-h2-responsive { font-size: 3rem; } /* 48px */
-  .text-h3-responsive { font-size: 2rem; } /* 32px */
+  :root {
+    --font-h1: 64px; /* Full specification sizing */
+    --font-h2: 48px;
+    --font-h3: 32px;
+    --font-h4: 24px;
+    --font-h5: 20px;
+    --font-h6: 16px;
+    --outer-margin: 32px; /* Full specification */
+  }
+  
+  .text-h1-responsive { font-size: 64px; }
+  .text-h2-responsive { font-size: 48px; }
+  .text-h3-responsive { font-size: 32px; }
   
   /* Ensure proper font family application */
   body, .text-h1-responsive, .text-h2-responsive, .text-h3-responsive {
@@ -397,19 +453,14 @@
   
   /* Apply exact 4px grid system and 32px outer margin */
   .container, .page-layout-full-width {
-    margin-left: 2rem; /* 32px outer margin */
-    margin-right: 2rem; /* 32px outer margin */
+    margin-left: 32px; /* 32px outer margin */
+    margin-right: 32px; /* 32px outer margin */
   }
   
-  /* Spacing follows exact 4px increments */
-  .spacing-grid-1 { margin: 0.25rem; } /* 4px */
-  .spacing-grid-2 { margin: 0.5rem; } /* 8px */
-  .spacing-grid-3 { margin: 0.75rem; } /* 12px */
-  .spacing-grid-4 { margin: 1rem; } /* 16px */
-  .spacing-grid-5 { margin: 1.25rem; } /* 20px */
-  .spacing-grid-6 { margin: 1.5rem; } /* 24px */
-  .spacing-grid-7 { margin: 1.75rem; } /* 28px */
-  .spacing-grid-8 { margin: 2rem; } /* 32px */
+  /* Dashboard metrics optimized for ultra-wide */
+  .dashboard-metrics {
+    gap: 1.5rem; /* Increased gap for ultra-wide layouts */
+  }
 }
 
 /* Status indicator animations */
@@ -892,39 +943,101 @@ button[data-slot="button"]:disabled {
   max-width: none;
 }
 
-/* Cluster Details Table Column Width Optimization for 1920x1080 */
-.cluster-details-table {
-  table-layout: fixed;
-  min-width: 1400px; /* Ensure table uses adequate width at 1920x1080 */
+/* Cluster Details Responsive Design - Following exact breakpoint specifications */
+
+/* Base styles - Mobile first */
+.cluster-details-1920 {
+  font-family: 'Proxima Nova', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-/* Base column widths - optimized for extensive text data */
-.cluster-details-table .col-index { width: 48px; }        /* # */
-.cluster-details-table .col-abcd { width: 80px; }         /* ABCD 1-Up */
-.cluster-details-table .col-service-id { width: 80px; }   /* Service ID */
-.cluster-details-table .col-service-name { width: 220px; } /* Service Name - Increased significantly for long service names */
-.cluster-details-table .col-provision-type { width: 220px; } /* Provision Type - Matched with Service Name for consistency */
-.cluster-details-table .col-options { width: 400px; }     /* Options - Dramatically increased for extensive option text data */
-.cluster-details-table .col-splits { width: 60px; }       /* Splits - Slightly reduced */
-.cluster-details-table .col-provisions { width: 75px; }   /* Provisions - Slightly reduced */
-.cluster-details-table .col-products { width: 75px; }     /* Products - Slightly reduced */
-.cluster-details-table .col-clients { width: 60px; }      /* Clients - Slightly reduced */
-.cluster-details-table .col-groups { width: 60px; }       /* Groups - Slightly reduced */
-.cluster-details-table .col-approval { width: 100px; }    /* Approval - Kept adequate */
+.cluster-details-table {
+  table-layout: fixed;
+  min-width: 800px; /* Base mobile width */
+}
 
-/* Enhanced column widths specifically for 1920x1080 resolution */
-@media (min-width: 1920px) {
+/* Base column widths - Mobile */
+.cluster-details-table .col-index { width: 40px; }
+.cluster-details-table .col-abcd { width: 60px; }
+.cluster-details-table .col-service-id { width: 60px; }
+.cluster-details-table .col-service-name { width: 120px; }
+.cluster-details-table .col-provision-type { width: 120px; }
+.cluster-details-table .col-options { width: 200px; }
+.cluster-details-table .col-splits { width: 50px; }
+.cluster-details-table .col-provisions { width: 60px; }
+.cluster-details-table .col-products { width: 60px; }
+.cluster-details-table .col-clients { width: 50px; }
+.cluster-details-table .col-groups { width: 50px; }
+.cluster-details-table .col-approval { width: 80px; }
+
+/* Small (SM) - 480px to 767px */
+@media (min-width: 480px) and (max-width: 767px) {
   .cluster-details-table {
-    min-width: 1600px; /* Use more of the available 1856px content width (1920 - 64px margins) */
+    min-width: 900px;
   }
   
-  /* Further optimize for maximum text visibility on large screens */
-  .cluster-details-table .col-service-name { width: 280px; } /* Even more space for service names */
-  .cluster-details-table .col-provision-type { width: 280px; } /* Match service name width */
-  .cluster-details-table .col-options { width: 500px; } /* Maximum space for extensive options text */
-  .cluster-details-table .col-provisions { width: 85px; } /* Slightly more room for large numbers */
-  .cluster-details-table .col-products { width: 85px; } /* Slightly more room for large numbers */
-  .cluster-details-table .col-approval { width: 110px; } /* More space for approval indicators */
+  .cluster-details-table .col-service-name { width: 140px; }
+  .cluster-details-table .col-provision-type { width: 140px; }
+  .cluster-details-table .col-options { width: 240px; }
+}
+
+/* Medium (MD) - 768px to 1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .cluster-details-table {
+    min-width: 1100px;
+  }
+  
+  .cluster-details-table .col-service-name { width: 160px; }
+  .cluster-details-table .col-provision-type { width: 160px; }
+  .cluster-details-table .col-options { width: 280px; }
+  .cluster-details-table .col-provisions { width: 70px; }
+  .cluster-details-table .col-products { width: 70px; }
+}
+
+/* Large (LG) - 1024px to 1439px */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .cluster-details-table {
+    min-width: 1300px;
+  }
+  
+  .cluster-details-table .col-service-name { width: 200px; }
+  .cluster-details-table .col-provision-type { width: 200px; }
+  .cluster-details-table .col-options { width: 350px; }
+  .cluster-details-table .col-provisions { width: 75px; }
+  .cluster-details-table .col-products { width: 75px; }
+  .cluster-details-table .col-approval { width: 90px; }
+}
+
+/* Extra Large (XL) - 1440px to 1919px */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .cluster-details-table {
+    min-width: 1450px;
+  }
+  
+  .cluster-details-table .col-service-name { width: 240px; }
+  .cluster-details-table .col-provision-type { width: 240px; }
+  .cluster-details-table .col-options { width: 400px; }
+  .cluster-details-table .col-provisions { width: 80px; }
+  .cluster-details-table .col-products { width: 80px; }
+  .cluster-details-table .col-approval { width: 100px; }
+}
+
+/* XXL - 1920px and above - Full specification */
+@media (min-width: 1920px) {
+  .cluster-details-1920 {
+    margin: 0 var(--outer-margin); /* Exact 32px outer margin */
+  }
+  
+  .cluster-details-table {
+    min-width: 1600px; /* Full width utilization */
+  }
+  
+  /* Optimized for maximum text visibility on large screens */
+  .cluster-details-table .col-service-name { width: 280px; }
+  .cluster-details-table .col-provision-type { width: 280px; }
+  .cluster-details-table .col-options { width: 500px; }
+  .cluster-details-table .col-provisions { width: 85px; }
+  .cluster-details-table .col-products { width: 85px; }
+  .cluster-details-table .col-approval { width: 110px; }
 }
 
 /* Text wrapping for content-heavy columns */
@@ -954,6 +1067,35 @@ button[data-slot="button"]:disabled {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
+/* Spacing Grid System - 4px base increments */
+.spacing-grid-1 { margin: calc(var(--grid-base) * 1); } /* 4px */
+.spacing-grid-2 { margin: calc(var(--grid-base) * 2); } /* 8px */
+.spacing-grid-3 { margin: calc(var(--grid-base) * 3); } /* 12px */
+.spacing-grid-4 { margin: calc(var(--grid-base) * 4); } /* 16px */
+.spacing-grid-5 { margin: calc(var(--grid-base) * 5); } /* 20px */
+.spacing-grid-6 { margin: calc(var(--grid-base) * 6); } /* 24px */
+.spacing-grid-7 { margin: calc(var(--grid-base) * 7); } /* 28px */
+.spacing-grid-8 { margin: calc(var(--grid-base) * 8); } /* 32px */
+
+/* Padding variants */
+.padding-grid-1 { padding: calc(var(--grid-base) * 1); } /* 4px */
+.padding-grid-2 { padding: calc(var(--grid-base) * 2); } /* 8px */
+.padding-grid-3 { padding: calc(var(--grid-base) * 3); } /* 12px */
+.padding-grid-4 { padding: calc(var(--grid-base) * 4); } /* 16px */
+.padding-grid-5 { padding: calc(var(--grid-base) * 5); } /* 20px */
+.padding-grid-6 { padding: calc(var(--grid-base) * 6); } /* 24px */
+.padding-grid-7 { padding: calc(var(--grid-base) * 7); } /* 28px */
+.padding-grid-8 { padding: calc(var(--grid-base) * 8); } /* 32px */
+
+/* Gap variants for flex/grid layouts */
+.gap-grid-1 { gap: calc(var(--grid-base) * 1); } /* 4px */
+.gap-grid-2 { gap: calc(var(--grid-base) * 2); } /* 8px */
+.gap-grid-3 { gap: calc(var(--grid-base) * 3); } /* 12px */
+.gap-grid-4 { gap: calc(var(--grid-base) * 4); } /* 16px */
+.gap-grid-5 { gap: calc(var(--grid-base) * 5); } /* 20px */
+.gap-grid-6 { gap: calc(var(--grid-base) * 6); } /* 24px */
+.gap-grid-7 { gap: calc(var(--grid-base) * 7); } /* 28px */
+.gap-grid-8 { gap: calc(var(--grid-base) * 8); } /* 32px */
 @media (min-width: 1920px) {
   .dashboard-metrics {
     gap: 1.5rem; /* Increased gap for ultra-wide layouts */
@@ -973,35 +1115,66 @@ button[data-slot="button"]:disabled {
   }
 }
 
-/* Improved focus states for accessibility */
+/* Accessibility & WCAG AAA Compliance */
+
+/* Enhanced focus states for WCAG AAA compliance */
 button:focus-visible,
 [role="button"]:focus-visible,
-.cursor-pointer:focus-visible {
-  outline: 2px solid #474A9E;
+.cursor-pointer:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--primary);
   outline-offset: 2px;
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--primary) 25%, transparent);
 }
 
-/* Loading states */
-.loading {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: .5;
-  }
-}
-
-/* High contrast mode support */
+/* High contrast mode support for accessibility */
 @media (prefers-contrast: high) {
+  :root {
+    --foreground: #000000;
+    --background: #ffffff;
+    --border: #000000;
+    --primary: #000080;
+    --secondary: #008000;
+    --accent: #FF4500;
+    --destructive: #FF0000;
+    --success: #008000;
+    --warning: #FFA500;
+    --info: #0000FF;
+  }
+  
   .btn-gradient-primary, .btn-gradient-secondary {
-    border: 2px solid #000;
+    border: 2px solid #000000;
+    background: var(--primary);
+    color: #ffffff;
   }
   
   .text-muted-foreground {
-    color: #000;
+    color: #000000;
+  }
+  
+  /* Ensure all interactive elements have high contrast borders */
+  button, input, select, textarea, [role="button"] {
+    border: 2px solid #000000 !important;
+  }
+}
+
+/* Reduced motion support for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .intelligence-card:hover,
+  .interactive-element:hover,
+  .icon-hover:hover {
+    transform: none !important;
   }
 }
