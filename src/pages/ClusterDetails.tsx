@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 
 // Types for filtering and sorting
-type SortField = 'abcd_1up' | 'service_name' | 'provision_type' | 'options' | 'num_provisions' | 'num_products' | 'num_splits'
+type SortField = 'abcd_1up' | 'service_id' | 'service_name' | 'provision_type' | 'options' | 'num_provisions' | 'num_products' | 'num_splits' | 'num_clients' | 'num_groups'
 type SortDirection = 'asc' | 'desc'
 type FilterType = 'all' | 'with-approvals' | 'pending-approvals' | 'no-approvals'
 type StatusFilter = 'all' | 'approved' | 'rejected' | 'pending'
@@ -369,6 +369,10 @@ export function ClusterDetails() {
           aValue = a.abcd_1up
           bValue = b.abcd_1up
           break
+        case 'service_id':
+          aValue = a.service_id
+          bValue = b.service_id
+          break
         case 'service_name':
           aValue = a.service_name
           bValue = b.service_name
@@ -392,6 +396,14 @@ export function ClusterDetails() {
         case 'num_splits':
           aValue = a.num_splits
           bValue = b.num_splits
+          break
+        case 'num_clients':
+          aValue = a.num_clients
+          bValue = b.num_clients
+          break
+        case 'num_groups':
+          aValue = a.num_groups
+          bValue = b.num_groups
           break
         default:
           return 0
@@ -577,11 +589,14 @@ export function ClusterDetails() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="abcd_1up" className="text-xs">ABCD</SelectItem>
+                  <SelectItem value="service_id" className="text-xs">Service ID</SelectItem>
                   <SelectItem value="service_name" className="text-xs">Name</SelectItem>
                   <SelectItem value="provision_type" className="text-xs">Type</SelectItem>
                   <SelectItem value="options" className="text-xs">Options</SelectItem>
                   <SelectItem value="num_provisions" className="text-xs">Prov</SelectItem>
                   <SelectItem value="num_products" className="text-xs">Prod</SelectItem>
+                  <SelectItem value="num_clients" className="text-xs">Clients</SelectItem>
+                  <SelectItem value="num_groups" className="text-xs">Groups</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -647,7 +662,12 @@ export function ClusterDetails() {
                       {getSortIcon('abcd_1up')}
                     </div>
                   </th>
-                  <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-service-id">Service ID</th>
+                  <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-service-id" onClick={() => handleSort('service_id')}>
+                    <div className="flex items-center">
+                      Service ID
+                      {getSortIcon('service_id')}
+                    </div>
+                  </th>
                   <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors col-service-name" onClick={() => handleSort('service_name')}>
                     <div className="flex items-center">
                       Service Name
@@ -684,15 +704,25 @@ export function ClusterDetails() {
                       {getSortIcon('num_products')}
                     </div>
                   </th>
-                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-clients">Clients</th>
-                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-groups">Groups</th>
+                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-clients" onClick={() => handleSort('num_clients')}>
+                    <div className="flex items-center justify-center">
+                      Clients
+                      {getSortIcon('num_clients')}
+                    </div>
+                  </th>
+                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-groups" onClick={() => handleSort('num_groups')}>
+                    <div className="flex items-center justify-center">
+                      Groups
+                      {getSortIcon('num_groups')}
+                    </div>
+                  </th>
                   <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-approval">Approval</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredAndSortedData.map((record, index) => (
                   <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
-                    <td className="px-2 py-2 text-center col-index align-middle">
+                    <td className="px-2 py-2 text-left col-index align-middle">
                       <span className="text-primary font-bold">{index + 1}</span>
                     </td>
                     <td className="px-2 py-2 col-abcd align-middle">
