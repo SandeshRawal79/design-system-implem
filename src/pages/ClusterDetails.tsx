@@ -1,13 +1,12 @@
 import { useState, useMemo } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft, MagnifyingGlass, CaretDown, CaretUp, Funnel, X, SortAscending, SortDescending } from '@phosphor-icons/react'
+import { useParams } from 'react-router-dom'
+import { MagnifyingGlass, CaretDown, CaretUp, X, SortAscending, SortDescending } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 
 // Types for filtering and sorting
 type SortField = 'abcd_1up' | 'service_id' | 'service_name' | 'provision_type' | 'options' | 'num_provisions' | 'num_products' | 'num_splits' | 'num_clients' | 'num_groups'
@@ -276,7 +275,6 @@ function ApprovalStatusIndicators({ statuses }: { statuses: string[] }) {
 
 export function ClusterDetails() {
   const { serviceId, clusterId } = useParams()
-  const navigate = useNavigate()
 
   const clusterInfo = {
     xrayProjection: 'Only Options (D)',
@@ -447,30 +445,6 @@ export function ClusterDetails() {
 
   return (
     <div className="min-h-screen flex flex-col font-['Proxima_Nova',sans-serif] cluster-details-1920">
-      {/* Optimized Page Header for 1920x1080 - Minimal vertical space */}
-      <div className="flex items-center justify-between mb-4 py-2 page-header">
-        <div className="flex items-center gap-6">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => navigate(`/clusters/${serviceId}`)}
-            className="h-8 px-3 font-medium text-xs text-foreground border-border hover:bg-muted focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all"
-          >
-            <ArrowLeft className="h-3 w-3 mr-2" />
-            Back to Clusters
-          </Button>
-          
-          <div>
-            <h1 className="text-xl font-bold text-foreground leading-tight">
-              Cluster #{clusterInfo.clusterId} of {clusterInfo.totalClusters} Details - {clusterInfo.xrayProjection}
-            </h1>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              {clusterInfo.recordsInCluster} records • Created {clusterInfo.created}
-            </p>
-          </div>
-        </div>
-      </div>
-
       {/* Ultra-Compact Cluster Information Bar for 1920x1080 */}
       <Card className="bg-card border-border mb-4 shadow-sm">
         <CardContent className="px-4 py-2 cluster-info-bar">

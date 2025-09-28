@@ -210,6 +210,13 @@ export function ClustersView() {
               <ArrowLeft size={16} />
               Back to 3-dendrograms view
             </Button>
+            <Button
+              variant="outline"
+              onClick={() => navigate(`/clusters/${serviceId}/cluster/1`)}
+              className="back-to-dashboard flex items-center gap-2 ml-2"
+            >
+              View Cluster Details
+            </Button>
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 bg-gradient-to-r from-primary to-secondary rounded-sm"></div>
               <h1 className="text-2xl font-bold text-foreground">
