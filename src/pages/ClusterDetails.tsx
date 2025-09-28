@@ -617,7 +617,21 @@ export function ClusterDetails() {
           
           {/* Table Container - Maximized for 1920x1080 */}
           <div className="flex-1 min-h-0 overflow-auto table-container">
-            <table className="w-full text-xs border-collapse">
+            <table className="w-full text-xs border-collapse table-fixed">
+              <colgroup>
+                <col className="w-12" /> {/* # - 48px */}
+                <col className="w-20" /> {/* ABCD 1-Up - 80px */}
+                <col className="w-20" /> {/* Service ID - 80px */}
+                <col className="w-44" /> {/* Service Name - 176px (increased) */}
+                <col className="w-44" /> {/* Provision Type - 176px (same as Service Name) */}
+                <col className="w-40" /> {/* Options - 160px (reduced from auto) */}
+                <col className="w-16" /> {/* Splits - 64px */}
+                <col className="w-20" /> {/* Provisions - 80px */}
+                <col className="w-20" /> {/* Products - 80px */}
+                <col className="w-16" /> {/* Clients - 64px */}
+                <col className="w-16" /> {/* Groups - 64px */}
+                <col className="w-20" /> {/* Approval - 80px */}
+              </colgroup>
               <thead className="sticky top-0 bg-card border-b border-border z-10">
                 <tr>
                   <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap">#</th>
@@ -685,18 +699,18 @@ export function ClusterDetails() {
                     </td>
                     <td className="px-2 py-1.5">
                       <div className="flex items-center gap-1">
-                        <span className="font-medium text-foreground truncate-content" title={record.service_name}>
+                        <span className="font-medium text-foreground truncate max-w-full" title={record.service_name}>
                           {record.service_name}
                         </span>
                       </div>
                     </td>
                     <td className="px-2 py-1.5">
-                      <span className="font-medium text-foreground truncate-content" title={record.provision_type}>
+                      <span className="font-medium text-foreground truncate max-w-full" title={record.provision_type}>
                         {record.provision_type}
                       </span>
                     </td>
                     <td className="px-2 py-1.5">
-                      <span className="font-medium text-accent truncate-content" title={record.options}>
+                      <span className="font-medium text-accent truncate max-w-full" title={record.options}>
                         {record.options}
                       </span>
                     </td>
