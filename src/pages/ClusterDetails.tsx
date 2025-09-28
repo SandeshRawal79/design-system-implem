@@ -615,7 +615,13 @@ export function ClusterDetails() {
             </div>
           </div>
           
-          {/* Table Container - Maximized for 1920x1080 */}
+          {/* Table Container - Maximized for 1920x1080 with optimized column widths */}
+          {/* Column Width Strategy:
+              - Service Name & Provision Type: 280px each (1920px) for extensive service descriptions
+              - Options: 500px (1920px) to accommodate complex option strings like drug formulary details
+              - Numeric columns: Optimized for readability while conserving space
+              - Total table width: ~1600px, using majority of 1856px content area (1920 - 64px margins)
+          */}
           <div className="flex-1 min-h-0 overflow-auto table-container">
             <table className="w-full text-xs border-collapse cluster-details-table">
               <colgroup>
@@ -634,102 +640,102 @@ export function ClusterDetails() {
               </colgroup>
               <thead className="sticky top-0 bg-card border-b border-border z-10">
                 <tr>
-                  <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap col-index">#</th>
-                  <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-abcd" onClick={() => handleSort('abcd_1up')}>
+                  <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-index">#</th>
+                  <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-abcd" onClick={() => handleSort('abcd_1up')}>
                     <div className="flex items-center">
                       ABCD 1-Up
                       {getSortIcon('abcd_1up')}
                     </div>
                   </th>
-                  <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap col-service-id">Service ID</th>
-                  <th className="text-left px-2 py-2 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors col-service-name" onClick={() => handleSort('service_name')}>
+                  <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-service-id">Service ID</th>
+                  <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors col-service-name" onClick={() => handleSort('service_name')}>
                     <div className="flex items-center">
                       Service Name
                       {getSortIcon('service_name')}
                     </div>
                   </th>
-                  <th className="text-left px-2 py-2 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors col-provision-type" onClick={() => handleSort('provision_type')}>
+                  <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors col-provision-type" onClick={() => handleSort('provision_type')}>
                     <div className="flex items-center">
                       Provision Type
                       {getSortIcon('provision_type')}
                     </div>
                   </th>
-                  <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-options" onClick={() => handleSort('options')}>
+                  <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-options" onClick={() => handleSort('options')}>
                     <div className="flex items-center">
                       Options
                       {getSortIcon('options')}
                     </div>
                   </th>
-                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-splits" onClick={() => handleSort('num_splits')}>
+                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-splits" onClick={() => handleSort('num_splits')}>
                     <div className="flex items-center justify-center">
                       Splits
                       {getSortIcon('num_splits')}
                     </div>
                   </th>
-                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-provisions" onClick={() => handleSort('num_provisions')}>
+                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-provisions" onClick={() => handleSort('num_provisions')}>
                     <div className="flex items-center justify-center">
                       Provisions
                       {getSortIcon('num_provisions')}
                     </div>
                   </th>
-                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-products" onClick={() => handleSort('num_products')}>
+                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-products" onClick={() => handleSort('num_products')}>
                     <div className="flex items-center justify-center">
                       Products
                       {getSortIcon('num_products')}
                     </div>
                   </th>
-                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap col-clients">Clients</th>
-                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap col-groups">Groups</th>
-                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap col-approval">Approval</th>
+                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-clients">Clients</th>
+                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-groups">Groups</th>
+                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-approval">Approval</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredAndSortedData.map((record, index) => (
-                  <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors">
-                    <td className="px-2 py-1.5 text-center col-index">
+                  <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
+                    <td className="px-2 py-2 text-center col-index align-middle">
                       <span className="text-primary font-bold">{index + 1}</span>
                     </td>
-                    <td className="px-2 py-1.5 col-abcd">
+                    <td className="px-2 py-2 col-abcd align-middle">
                       <Button variant="link" className="p-0 h-auto text-primary hover:underline text-xs font-bold">
                         {record.abcd_1up}
                       </Button>
                     </td>
-                    <td className="px-2 py-1.5 text-center col-service-id">
+                    <td className="px-2 py-2 text-center col-service-id align-middle">
                       <span className="font-bold text-info">{record.service_id}</span>
                     </td>
-                    <td className="px-2 py-1.5 col-service-name">
-                      <div className="flex items-center gap-1">
-                        <span className="font-medium text-foreground break-words" title={record.service_name}>
+                    <td className="px-2 py-2 col-service-name align-top">
+                      <div className="flex items-start gap-1">
+                        <span className="font-medium text-foreground break-words leading-tight" title={record.service_name}>
                           {record.service_name}
                         </span>
                       </div>
                     </td>
-                    <td className="px-2 py-1.5 col-provision-type">
-                      <span className="font-medium text-foreground break-words" title={record.provision_type}>
+                    <td className="px-2 py-2 col-provision-type align-top">
+                      <span className="font-medium text-foreground break-words leading-tight" title={record.provision_type}>
                         {record.provision_type}
                       </span>
                     </td>
-                    <td className="px-2 py-1.5 col-options">
-                      <span className="font-medium text-accent truncate-content" title={record.options}>
+                    <td className="px-2 py-2 col-options align-top">
+                      <span className="font-medium text-accent break-words leading-tight block" title={record.options}>
                         {record.options}
                       </span>
                     </td>
-                    <td className="px-2 py-1.5 text-center col-splits">
+                    <td className="px-2 py-2 text-center col-splits align-middle">
                       <span className="font-bold text-secondary">{record.num_splits}</span>
                     </td>
-                    <td className="px-2 py-1.5 text-center col-provisions">
+                    <td className="px-2 py-2 text-center col-provisions align-middle">
                       <span className="font-bold text-primary">{record.num_provisions.toLocaleString()}</span>
                     </td>
-                    <td className="px-2 py-1.5 text-center col-products">
+                    <td className="px-2 py-2 text-center col-products align-middle">
                       <span className="font-bold text-success">{record.num_products.toLocaleString()}</span>
                     </td>
-                    <td className="px-2 py-1.5 text-center col-clients">
+                    <td className="px-2 py-2 text-center col-clients align-middle">
                       <span className="text-info font-bold">{record.num_clients?.toLocaleString() || '-'}</span>
                     </td>
-                    <td className="px-2 py-1.5 text-center col-groups">
+                    <td className="px-2 py-2 text-center col-groups align-middle">
                       <span className="text-warning font-bold">{record.num_groups?.toLocaleString() || '-'}</span>
                     </td>
-                    <td className="px-2 py-1.5 text-center col-approval">
+                    <td className="px-2 py-2 text-center col-approval align-middle">
                       <ApprovalStatusIndicators statuses={record.approvalStatuses} />
                     </td>
                   </tr>

@@ -892,30 +892,67 @@ button[data-slot="button"]:disabled {
   max-width: none;
 }
 
-/* Cluster Details Table Column Width Optimization */
+/* Cluster Details Table Column Width Optimization for 1920x1080 */
 .cluster-details-table {
   table-layout: fixed;
+  min-width: 1400px; /* Ensure table uses adequate width at 1920x1080 */
 }
 
+/* Base column widths - optimized for extensive text data */
 .cluster-details-table .col-index { width: 48px; }        /* # */
 .cluster-details-table .col-abcd { width: 80px; }         /* ABCD 1-Up */
 .cluster-details-table .col-service-id { width: 80px; }   /* Service ID */
-.cluster-details-table .col-service-name { width: 160px; } /* Service Name - Increased */
-.cluster-details-table .col-provision-type { width: 160px; } /* Provision Type - Same as Service Name */
-.cluster-details-table .col-options { width: 120px; }     /* Options - Reduced */
-.cluster-details-table .col-splits { width: 64px; }       /* Splits */
-.cluster-details-table .col-provisions { width: 80px; }   /* Provisions */
-.cluster-details-table .col-products { width: 80px; }     /* Products */
-.cluster-details-table .col-clients { width: 64px; }      /* Clients */
-.cluster-details-table .col-groups { width: 64px; }       /* Groups */
-.cluster-details-table .col-approval { width: 96px; }     /* Approval */
+.cluster-details-table .col-service-name { width: 220px; } /* Service Name - Increased significantly for long service names */
+.cluster-details-table .col-provision-type { width: 220px; } /* Provision Type - Matched with Service Name for consistency */
+.cluster-details-table .col-options { width: 400px; }     /* Options - Dramatically increased for extensive option text data */
+.cluster-details-table .col-splits { width: 60px; }       /* Splits - Slightly reduced */
+.cluster-details-table .col-provisions { width: 75px; }   /* Provisions - Slightly reduced */
+.cluster-details-table .col-products { width: 75px; }     /* Products - Slightly reduced */
+.cluster-details-table .col-clients { width: 60px; }      /* Clients - Slightly reduced */
+.cluster-details-table .col-groups { width: 60px; }       /* Groups - Slightly reduced */
+.cluster-details-table .col-approval { width: 100px; }    /* Approval - Kept adequate */
 
-/* Text wrapping for wider columns */
+/* Enhanced column widths specifically for 1920x1080 resolution */
+@media (min-width: 1920px) {
+  .cluster-details-table {
+    min-width: 1600px; /* Use more of the available 1856px content width (1920 - 64px margins) */
+  }
+  
+  /* Further optimize for maximum text visibility on large screens */
+  .cluster-details-table .col-service-name { width: 280px; } /* Even more space for service names */
+  .cluster-details-table .col-provision-type { width: 280px; } /* Match service name width */
+  .cluster-details-table .col-options { width: 500px; } /* Maximum space for extensive options text */
+  .cluster-details-table .col-provisions { width: 85px; } /* Slightly more room for large numbers */
+  .cluster-details-table .col-products { width: 85px; } /* Slightly more room for large numbers */
+  .cluster-details-table .col-approval { width: 110px; } /* More space for approval indicators */
+}
+
+/* Text wrapping for content-heavy columns */
 .cluster-details-table .col-service-name span,
-.cluster-details-table .col-provision-type span {
+.cluster-details-table .col-provision-type span,
+.cluster-details-table .col-options span {
   white-space: normal;
   word-wrap: break-word;
   line-height: 1.2;
+  display: block;
+  overflow-wrap: break-word;
+}
+
+/* Ensure proper vertical alignment for multi-line content */
+.cluster-details-table .col-service-name,
+.cluster-details-table .col-provision-type,
+.cluster-details-table .col-options {
+  vertical-align: top;
+}
+
+/* Row height adjustment for multi-line content */
+.cluster-details-table tbody tr {
+  min-height: 2.5rem; /* Accommodate multi-line text */
+}
+
+.cluster-details-table tbody td {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 @media (min-width: 1920px) {
   .dashboard-metrics {
