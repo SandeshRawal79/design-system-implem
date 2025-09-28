@@ -469,7 +469,7 @@ button, .btn, [role="button"], .cursor-pointer {
   }
   
   .cluster-details-1920 .truncate-content {
-    max-width: 200px;
+    max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
