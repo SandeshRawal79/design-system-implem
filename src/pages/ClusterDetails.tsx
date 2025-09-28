@@ -1,15 +1,13 @@
 import { useState, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { MagnifyingGlass, CaretDown, CaretUp, X, SortAscending, SortDescending } from '@phosphor-icons/react'
-import { Button } from '@/components/ui/button'
+import { MagnifyingGlass, CaretDown, CaretUp, X } from '@phosphor-icons/react'
 import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
-// Types for filtering and sorting
-type SortField = 'abcd_1up' | 'service_id' | 'service_name' | 'provision_type' | 'options' | 'num_provisions' | 'num_products' | 'num_splits' | 'num_clients' | 'num_groups'
-type FilterType = 'all' | 'with-approvals' | 'pending-approvals' | 'no-approvals'
+type SortField = 'abcd_1up' | 'service_id' | 'service_name' | 'provision_type' | 'options' | 'num_splits' | 'num_provisions' | 'num_products' | 'num_clients' | 'num_groups'
 type StatusFilter = 'all' | 'approved' | 'rejected' | 'pending'
 
 // Mock data interface
@@ -35,24 +33,27 @@ interface ClusterRecord {
   approvalStatuses: string[]
 }
 
-const generateApprovalStatuses = () => {
-  const statuses = ['✓', '✗', '-']
-  return Array.from({ length: 5 }, () => statuses[Math.floor(Math.random() * statuses.length)])
+// Generate mock approval statuses
+function generateApprovalStatuses(): string[] {
+  const statuses = ['✓', '✗', '⏸']
+  const length = Math.floor(Math.random() * 5) + 3 // 3-7 statuses
+  return Array.from({ length }, () => statuses[Math.floor(Math.random() * statuses.length)])
 }
 
+// Mock data
 const mockClusterData: ClusterRecord[] = [
   {
-    abcd_1up: 2001,
+    abcd_1up: 2021,
     service_id: 15001,
     service_name: "Federal Legend Drugs",
     provision_type_1up: null,
-    provision_type: "Anti Cancer Deductible",
-    options: "Does Not Apply",
+    provision_type: "Initial Cov Period Spec Tier Copay NonPref",
+    options: "Yes Brand Drug 50 Dollars Generic Drug 50 Dollars Brand Drug if Generic Drug Available 50 Dollars",
     num_splits: 0,
     is_single_split_with_no_change: null,
-    num_provisions: 8412,
-    num_products: 4,
-    num_clients: 953,
+    num_provisions: 182,
+    num_products: 8,
+    num_clients: 5,
     num_groups: 1,
     splits: [],
     phase_included_in_bm: 0,
@@ -72,7 +73,7 @@ const mockClusterData: ClusterRecord[] = [
     num_splits: 0,
     is_single_split_with_no_change: null,
     num_provisions: 16,
-    num_products: 8,
+    num_products: 3,
     num_clients: 2,
     num_groups: 1,
     splits: [],
@@ -92,9 +93,9 @@ const mockClusterData: ClusterRecord[] = [
     options: "Yes Brand Drug 40 Percent of Allowed Charge Generic Drug 40 Percent of Allowed Charge Brand Drug if Generic Drug Available 40 Percent of Allowed Charge",
     num_splits: 0,
     is_single_split_with_no_change: null,
-    num_provisions: 182,
+    num_provisions: 21,
     num_products: 11,
-    num_clients: 5,
+    num_clients: 7,
     num_groups: 20,
     splits: [],
     phase_included_in_bm: 0,
@@ -114,9 +115,9 @@ const mockClusterData: ClusterRecord[] = [
     num_splits: 0,
     is_single_split_with_no_change: null,
     num_provisions: 56,
-    num_products: 9,
+    num_products: 15,
     num_clients: 4,
-    num_groups: 8,
+    num_groups: 18,
     splits: [],
     phase_included_in_bm: 0,
     approver_groups_needed_bm: 1,
@@ -132,9 +133,9 @@ const mockClusterData: ClusterRecord[] = [
     provision_type_1up: null,
     provision_type: "Specialty Tier Copay Form",
     options: "No",
-    num_splits: 2,
+    num_splits: 0,
     is_single_split_with_no_change: null,
-    num_provisions: 34,
+    num_provisions: 42,
     num_products: 15,
     num_clients: 8,
     num_groups: 31,
@@ -145,111 +146,26 @@ const mockClusterData: ClusterRecord[] = [
     approvals_done_by_abcd_set_1up: null,
     member_of_sets: null,
     approvalStatuses: generateApprovalStatuses()
-  },
-  {
-    abcd_1up: 2048,
-    service_id: 15001,
-    service_name: "Federal Legend Drugs",
-    provision_type_1up: null,
-    provision_type: "Specialty Tier Copay NonForm",
-    options: "No",
-    num_splits: 0,
-    is_single_split_with_no_change: null,
-    num_provisions: 17,
-    num_products: 6,
-    num_clients: 7,
-    num_groups: 12,
-    splits: [],
-    phase_included_in_bm: 0,
-    approver_groups_needed_bm: 1,
-    approvals_given_bm: 0,
-    approvals_done_by_abcd_set_1up: null,
-    member_of_sets: null,
-    approvalStatuses: generateApprovalStatuses()
-  },
-  {
-    abcd_1up: 2058,
-    service_id: 15001,
-    service_name: "Federal Legend Drugs",
-    provision_type_1up: null,
-    provision_type: "Specialty Tier Copay NonForm",
-    options: "Yes Brand Drug 250 Dollars Generic Drug 250 Dollars Brand Drug if Generic Drug Available 250 Dollars",
-    num_splits: 1,
-    is_single_split_with_no_change: null,
-    num_provisions: 89,
-    num_products: 31,
-    num_clients: 12,
-    num_groups: 54,
-    splits: [],
-    phase_included_in_bm: 0,
-    approver_groups_needed_bm: 1,
-    approvals_given_bm: 0,
-    approvals_done_by_abcd_set_1up: null,
-    member_of_sets: null,
-    approvalStatuses: generateApprovalStatuses()
-  },
-  {
-    abcd_1up: 2060,
-    service_id: 15001,
-    service_name: "Federal Legend Drugs",
-    provision_type_1up: null,
-    provision_type: "Specialty Tier Max Copay Form",
-    options: "Yes Brand Drug 250 Dollars, per Days Range One Generic Drug 250 Dollars, per Days Range One Brand Drug if Generic Drug Available 250 Dollars, per Days Range One Brand Drug 500 Dollars, per Days Range Two Generic Drug 500 Dollars, per Days Range Two Brand Drug if Generic Drug Available 500 Dollars, per Days Range Two",
-    num_splits: 0,
-    is_single_split_with_no_change: null,
-    num_provisions: 14,
-    num_products: 7,
-    num_clients: 1,
-    num_groups: 3,
-    splits: [],
-    phase_included_in_bm: 0,
-    approver_groups_needed_bm: 1,
-    approvals_given_bm: 0,
-    approvals_done_by_abcd_set_1up: null,
-    member_of_sets: null,
-    approvalStatuses: generateApprovalStatuses()
-  },
-  {
-    abcd_1up: 2071,
-    service_id: 15001,
-    service_name: "Federal Legend Drugs",
-    provision_type_1up: null,
-    provision_type: "Specialty Tier Max Copay Form",
-    options: "Yes Brand Drug 700 Dollars Generic Drug 700 Dollars Brand Drug if Generic Drug Available 700 Dollars",
-    num_splits: 0,
-    is_single_split_with_no_change: null,
-    num_provisions: 28,
-    num_products: 9,
-    num_clients: 6,
-    num_groups: 2,
-    splits: [],
-    phase_included_in_bm: 0,
-    approver_groups_needed_bm: 1,
-    approvals_given_bm: 0,
-    approvals_done_by_abcd_set_1up: null,
-    member_of_sets: null,
-    approvalStatuses: generateApprovalStatuses()
   }
 ]
 
-// Component to render approval status indicators in compact format
 function ApprovalStatusIndicators({ statuses }: { statuses: string[] }) {
   return (
     <div className="flex items-center justify-center gap-0.5 font-mono text-sm" role="group" aria-label="Approval status indicators">
       {statuses.map((status, index) => {
-        let displaySymbol = status
         let colorClass = ''
         let ariaLabel = ''
+        let displaySymbol = status
         
         if (status === '✓') {
-          colorClass = "text-success font-bold"
-          ariaLabel = `Approved step ${index + 1}`
+          colorClass = 'text-success bg-success/10'
+          ariaLabel = 'Approved'
         } else if (status === '✗') {
-          colorClass = "text-destructive font-bold"
-          ariaLabel = `Rejected step ${index + 1}`
+          colorClass = 'text-destructive bg-destructive/10'
+          ariaLabel = 'Rejected'
         } else {
-          colorClass = "text-muted-foreground font-bold"
-          ariaLabel = `Pending step ${index + 1}`
+          colorClass = 'text-warning bg-warning/10'
+          ariaLabel = 'Pending'
         }
         
         return (
@@ -270,6 +186,12 @@ function ApprovalStatusIndicators({ statuses }: { statuses: string[] }) {
 
 export function ClusterDetails() {
   const { serviceId, clusterId } = useParams()
+  
+  // State for filtering and sorting
+  const [searchTerm, setSearchTerm] = useState('')
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
+  const [sortField, setSortField] = useState<SortField>('abcd_1up')
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
 
   const clusterInfo = {
     xrayProjection: 'Only Options (D)',
@@ -279,61 +201,38 @@ export function ClusterDetails() {
     clusterId: clusterId || '1',
     totalClusters: 1,
     distanceThreshold: 10,
-    dendrogramId: "15001",
-    dendrogramType: "d"
+    dendrogramId: "15001"
   }
 
-  // State for filtering and sorting
-  const [searchTerm, setSearchTerm] = useState('')
-  const [provisionTypeFilter, setProvisionTypeFilter] = useState('all')
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
-  const [sortField, setSortField] = useState<SortField>('abcd_1up')
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
-
-  // Filter and sort data
+  // Filtering and sorting logic
   const filteredAndSortedData = useMemo(() => {
     let filtered = mockClusterData
 
     // Apply search filter
     if (searchTerm) {
-      filtered = filtered.filter(item =>
-        item.service_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.provision_type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.options.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.abcd_1up.toString().includes(searchTerm)
+      filtered = filtered.filter(record =>
+        record.service_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        record.provision_type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        record.options.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        record.abcd_1up.toString().includes(searchTerm) ||
+        record.service_id.toString().includes(searchTerm)
       )
-    }
-
-    // Apply provision type filter
-    if (provisionTypeFilter !== 'all') {
-      filtered = filtered.filter(item => {
-        switch (provisionTypeFilter) {
-          case 'copay':
-            return item.provision_type.toLowerCase().includes('copay')
-          case 'deductible':
-            return item.provision_type.toLowerCase().includes('deductible')
-          case 'coins':
-            return item.provision_type.toLowerCase().includes('coins')
-          default:
-            return true
-        }
-      })
     }
 
     // Apply status filter
     if (statusFilter !== 'all') {
-      filtered = filtered.filter(item => {
-        const approvedCount = item.approvalStatuses.filter(status => status === '✓').length
-        const rejectedCount = item.approvalStatuses.filter(status => status === '✗').length
-        const pendingCount = item.approvalStatuses.filter(status => status === '-').length
-
+      filtered = filtered.filter(record => {
+        const hasApproved = record.approvalStatuses.includes('✓')
+        const hasRejected = record.approvalStatuses.includes('✗')
+        const hasPending = record.approvalStatuses.includes('⏸')
+        
         switch (statusFilter) {
           case 'approved':
-            return approvedCount > 0 && rejectedCount === 0
+            return hasApproved && !hasRejected && !hasPending
           case 'rejected':
-            return rejectedCount > 0
+            return hasRejected
           case 'pending':
-            return pendingCount > 0 && approvedCount === 0 && rejectedCount === 0
+            return hasPending && !hasApproved && !hasRejected
           default:
             return true
         }
@@ -341,38 +240,21 @@ export function ClusterDetails() {
     }
 
     // Apply sorting
-    const sorted = [...filtered].sort((a, b) => {
-      let aValue: string | number = ''
-      let bValue: string | number = ''
-
-      switch (sortField) {
-        case 'service_name':
-          aValue = a.service_name
-          bValue = b.service_name
-          break
-        case 'provision_type':
-          aValue = a.provision_type
-          bValue = b.provision_type
-          break
-        case 'options':
-          aValue = a.options
-          bValue = b.options
-          break
-        default:
-          aValue = a[sortField] || 0
-          bValue = b[sortField] || 0
-          break
-      }
-
+    return filtered.sort((a, b) => {
+      let aValue = a[sortField]
+      let bValue = b[sortField]
+      
+      // Handle string comparisons
       if (typeof aValue === 'string' && typeof bValue === 'string') {
-        return sortDirection === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue)
+        aValue = aValue.toLowerCase()
+        bValue = bValue.toLowerCase()
       }
       
-      return sortDirection === 'asc' ? Number(aValue) - Number(bValue) : Number(bValue) - Number(aValue)
+      if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1
+      if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1
+      return 0
     })
-
-    return sorted
-  }, [searchTerm, provisionTypeFilter, statusFilter, sortField, sortDirection])
+  }, [searchTerm, statusFilter, sortField, sortDirection])
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -392,67 +274,31 @@ export function ClusterDetails() {
 
   const clearFilters = () => {
     setSearchTerm('')
-    setProvisionTypeFilter('all')
     setStatusFilter('all')
+    setSortField('abcd_1up')
+    setSortDirection('asc')
   }
 
   return (
-    <div className="cluster-details-1920 page-layout-full-width">
-      <Card className="h-full flex flex-col border-border bg-card shadow-sm">
-        <CardHeader className="pb-4 border-b border-border bg-card">
-          <CardTitle className="text-h3-responsive font-bold text-foreground">
-            Cluster {clusterId} Details
-          </CardTitle>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
-            <div className="space-y-1">
-              <span className="text-muted-foreground font-medium">X-ray Projection:</span>
-              <p className="text-foreground font-semibold">{clusterInfo.xrayProjection}</p>
-            </div>
-            <div className="space-y-1">
-              <span className="text-muted-foreground font-medium">Records:</span>
-              <p className="text-foreground font-semibold">{clusterInfo.recordsInCluster}</p>
-            </div>
-            <div className="space-y-1">
-              <span className="text-muted-foreground font-medium">Service ID:</span>
-              <p className="text-foreground font-semibold">{serviceId}</p>
-            </div>
-            <div className="space-y-1">
-              <span className="text-muted-foreground font-medium">Created:</span>
-              <p className="text-foreground font-semibold">{clusterInfo.created}</p>
-            </div>
-          </div>
-        </CardHeader>
-        
-        <CardContent className="flex-1 flex flex-col p-4 min-h-0">
-          {/* Filter Controls */}
-          <div className="flex flex-wrap items-center gap-2 mb-4 filter-bar">
+    <div className="cluster-details-1920 h-full flex flex-col">
+      <Card className="flex-1 min-h-0 shadow-sm border-border">
+        <CardContent className="p-4 flex flex-col h-full">
+          {/* Filter Bar */}
+          <div className="flex items-center gap-3 pb-4 border-b border-border filter-bar flex-wrap">
             {/* Search */}
-            <div className="relative flex-1 min-w-48">
+            <div className="relative flex-1 min-w-64">
               <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
               <Input
                 placeholder="Search records..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-7 h-7 text-xs border-border focus:ring-1 focus:ring-primary"
+                className="h-7 pl-7 text-xs border-border focus:ring-1 focus:ring-primary"
               />
             </div>
 
-            {/* Provision Type Filter */}
-            <Select value={provisionTypeFilter} onValueChange={setProvisionTypeFilter}>
-              <SelectTrigger className="w-36 h-7 text-xs border-border focus:ring-1 focus:ring-primary">
-                <SelectValue placeholder="Provision Type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all" className="text-xs">All Types</SelectItem>
-                <SelectItem value="copay" className="text-xs">Copay</SelectItem>
-                <SelectItem value="deductible" className="text-xs">Deductible</SelectItem>
-                <SelectItem value="coins" className="text-xs">Coins</SelectItem>
-              </SelectContent>
-            </Select>
-
             {/* Status Filter */}
-            <Select value={statusFilter} onValueChange={(value: StatusFilter) => setStatusFilter(value)}>
-              <SelectTrigger className="w-32 h-7 text-xs border-border focus:ring-1 focus:ring-primary">
+            <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as StatusFilter)}>
+              <SelectTrigger className="w-28 h-7 text-xs border-border hover:bg-muted focus:ring-1 focus:ring-primary">
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
@@ -465,16 +311,17 @@ export function ClusterDetails() {
 
             {/* Sort Controls */}
             <div className="flex items-center gap-1">
-              <Select value={sortField} onValueChange={(value: SortField) => setSortField(value)}>
-                <SelectTrigger className="w-28 h-7 text-xs border-border focus:ring-1 focus:ring-primary">
+              <Select value={sortField} onValueChange={(value) => setSortField(value as SortField)}>
+                <SelectTrigger className="w-32 h-7 text-xs border-border hover:bg-muted focus:ring-1 focus:ring-primary">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="abcd_1up" className="text-xs">ABCD</SelectItem>
+                  <SelectItem value="abcd_1up" className="text-xs">ABCD 1-Up</SelectItem>
                   <SelectItem value="service_id" className="text-xs">Service ID</SelectItem>
-                  <SelectItem value="service_name" className="text-xs">Service</SelectItem>
-                  <SelectItem value="provision_type" className="text-xs">Type</SelectItem>
+                  <SelectItem value="service_name" className="text-xs">Service Name</SelectItem>
+                  <SelectItem value="provision_type" className="text-xs">Provision Type</SelectItem>
                   <SelectItem value="options" className="text-xs">Options</SelectItem>
+                  <SelectItem value="num_splits" className="text-xs">Splits</SelectItem>
                   <SelectItem value="num_provisions" className="text-xs">Provisions</SelectItem>
                   <SelectItem value="num_products" className="text-xs">Products</SelectItem>
                   <SelectItem value="num_clients" className="text-xs">Clients</SelectItem>
@@ -489,8 +336,8 @@ export function ClusterDetails() {
                 className="h-7 w-7 p-0 border-border hover:bg-muted focus:ring-1 focus:ring-primary"
               >
                 {sortDirection === 'asc' ? 
-                  <SortAscending className="h-3 w-3" /> : 
-                  <SortDescending className="h-3 w-3" />
+                  <CaretUp className="h-3 w-3" /> : 
+                  <CaretDown className="h-3 w-3" />
                 }
               </Button>
             </div>
@@ -512,7 +359,7 @@ export function ClusterDetails() {
             </div>
           </div>
           
-          {/* Table Container */}
+          {/* Table */}
           <div className="flex-1 min-h-0 overflow-auto table-container">
             <table className="w-full border-collapse cluster-details-table" style={{ fontSize: 'var(--font-caption)' }}>
               <colgroup>
