@@ -1,11 +1,11 @@
 import { useState, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { MagnifyingGlass, CaretDown, CaretUp, X } from '@phosphor-icons/react'
 import { Badge } from '@/components/ui/badge'
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { X, CaretUp, CaretDown, MagnifyingGlass } from '@phosphor-icons/react'
 
 type SortField = 'abcd_1up' | 'service_id' | 'service_name' | 'provision_type' | 'options' | 'num_splits' | 'num_provisions' | 'num_products' | 'num_clients' | 'num_groups'
 type StatusFilter = 'all' | 'approved' | 'rejected' | 'pending'
