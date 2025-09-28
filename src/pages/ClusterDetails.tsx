@@ -595,7 +595,6 @@ export function ClusterDetails() {
                   <SelectItem value="options" className="text-xs">Options</SelectItem>
                   <SelectItem value="num_provisions" className="text-xs">Prov</SelectItem>
                   <SelectItem value="num_products" className="text-xs">Prod</SelectItem>
-                  <SelectItem value="num_clients" className="text-xs">Clients</SelectItem>
                   <SelectItem value="num_groups" className="text-xs">Groups</SelectItem>
                 </SelectContent>
               </Select>
@@ -708,6 +707,10 @@ export function ClusterDetails() {
                     <div className="flex items-center justify-center">
                       Clients
                       {getSortIcon('num_clients')}
+                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-clients" onClick={() => handleSort('num_clients')}>
+                    <div className="flex items-center justify-center">
+                      Clients
+                      {getSortIcon('num_clients')}
                     </div>
                   </th>
                   <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-groups" onClick={() => handleSort('num_groups')}>
@@ -734,8 +737,8 @@ export function ClusterDetails() {
                       <span className="font-bold text-info">{record.service_id}</span>
                     </td>
                     <td className="px-2 py-2 col-service-name align-top">
-                      <div className="flex items-start gap-1">
-                        <span className="font-medium text-foreground break-words leading-tight" title={record.service_name}>
+                      <div className="max-w-full">
+                        <span className="font-medium text-foreground break-words leading-tight block" title={record.service_name}>
                           {record.service_name}
                         </span>
                       </div>
