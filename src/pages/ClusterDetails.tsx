@@ -697,7 +697,7 @@ export function ClusterDetails() {
                       </span>
                     </td>
                     <td className="px-2 py-1.5">
-                      <span className="font-medium text-accent truncate-content" title={record.options}>
+                      <span className="font-medium text-accent options-content" title={record.options}>
                         {record.options}
                       </span>
                     </td>
