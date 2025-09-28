@@ -235,41 +235,49 @@ const mockClusterData = [
   },
 ]
 
-// Component to render approval status indicators with design system compliance
+// Component to render approval status indicators with compact design
 function ApprovalStatusIndicators({ statuses }: { statuses: string[] }) {
   return (
-    <div className="flex items-center gap-1 justify-center" role="group" aria-label="Approval status indicators">
-      {statuses.map((status, index) => {
-        let icon;
-        let colorClass;
-        let ariaLabel;
-        
-        if (status === '✓') {
-          icon = <CheckCircle className="h-3 w-3" aria-hidden="true" />;
-          colorClass = "text-success bg-success/10 border-success/30 hover:bg-success/20";
-          ariaLabel = `Approved step ${index + 1}`;
-        } else if (status === '✗') {
-          icon = <XCircle className="h-3 w-3" aria-hidden="true" />;
-          colorClass = "text-destructive bg-destructive/10 border-destructive/30 hover:bg-destructive/20";
-          ariaLabel = `Rejected step ${index + 1}`;
-        } else {
-          icon = <Clock className="h-3 w-3" aria-hidden="true" />;
-          colorClass = "text-muted-foreground bg-muted border-border hover:bg-muted/80";
-          ariaLabel = `Pending step ${index + 1}`;
-        }
-        
-        return (
-          <span
-            key={index}
-            className={`inline-flex items-center justify-center w-5 h-5 text-xs font-medium rounded-full border transition-colors duration-200 cursor-default ${colorClass}`}
-            role="status"
-            aria-label={ariaLabel}
-            title={ariaLabel}
-          >
-            {icon}
-          </span>
-        );
-      })}
+    <div className="flex flex-col items-center gap-0.5" role="group" aria-label="Approval status indicators">
+      {/* Blue header */}
+      <div className="bg-blue-500 text-white px-2 py-0.5 rounded-sm text-xs font-medium whitespace-nowrap">
+        Approve
+      </div>
+      
+      {/* Status indicators in compact format */}
+      <div className="flex items-center gap-1 text-xs">
+        {statuses.map((status, index) => {
+          let displayChar;
+          let colorClass;
+          let ariaLabel;
+          
+          if (status === '✓') {
+            displayChar = '✓';
+            colorClass = "text-success font-bold";
+            ariaLabel = `Approved step ${index + 1}`;
+          } else if (status === '✗') {
+            displayChar = 'X';
+            colorClass = "text-destructive font-bold";
+            ariaLabel = `Rejected step ${index + 1}`;
+          } else {
+            displayChar = '-';
+            colorClass = "text-muted-foreground";
+            ariaLabel = `Pending step ${index + 1}`;
+          }
+          
+          return (
+            <span
+              key={index}
+              className={`${colorClass} cursor-default text-xs`}
+              role="status"
+              aria-label={ariaLabel}
+              title={ariaLabel}
+            >
+              {displayChar}
+            </span>
+          );
+        })}
+      </div>
     </div>
   );
 }
