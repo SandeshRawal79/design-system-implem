@@ -634,53 +634,53 @@ export function ClusterDetails() {
               </colgroup>
               <thead className="sticky top-0 bg-card border-b border-border z-10">
                 <tr>
-                  <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap">#</th>
-                  <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors" onClick={() => handleSort('abcd_1up')}>
+                  <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap w-12">#</th>
+                  <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors w-20" onClick={() => handleSort('abcd_1up')}>
                     <div className="flex items-center">
                       ABCD 1-Up
                       {getSortIcon('abcd_1up')}
                     </div>
                   </th>
-                  <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap">Service ID</th>
-                  <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors" onClick={() => handleSort('service_name')}>
+                  <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap w-20">Service ID</th>
+                  <th className="text-left px-2 py-2 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors w-48" onClick={() => handleSort('service_name')}>
                     <div className="flex items-center">
                       Service Name
                       {getSortIcon('service_name')}
                     </div>
                   </th>
-                  <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors" onClick={() => handleSort('provision_type')}>
+                  <th className="text-left px-2 py-2 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors w-48" onClick={() => handleSort('provision_type')}>
                     <div className="flex items-center">
                       Provision Type
                       {getSortIcon('provision_type')}
                     </div>
                   </th>
-                  <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors" onClick={() => handleSort('options')}>
+                  <th className="text-left px-2 py-2 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors w-32" onClick={() => handleSort('options')}>
                     <div className="flex items-center">
                       Options
                       {getSortIcon('options')}
                     </div>
                   </th>
-                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors" onClick={() => handleSort('num_splits')}>
+                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors w-16" onClick={() => handleSort('num_splits')}>
                     <div className="flex items-center justify-center">
                       Splits
                       {getSortIcon('num_splits')}
                     </div>
                   </th>
-                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors" onClick={() => handleSort('num_provisions')}>
+                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors w-20" onClick={() => handleSort('num_provisions')}>
                     <div className="flex items-center justify-center">
                       Provisions
                       {getSortIcon('num_provisions')}
                     </div>
                   </th>
-                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors" onClick={() => handleSort('num_products')}>
+                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors w-20" onClick={() => handleSort('num_products')}>
                     <div className="flex items-center justify-center">
                       Products
                       {getSortIcon('num_products')}
                     </div>
                   </th>
-                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap">Clients</th>
-                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap">Groups</th>
-                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap">Approval</th>
+                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap w-16">Clients</th>
+                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap w-16">Groups</th>
+                  <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap w-24">Approval</th>
                 </tr>
               </thead>
               <tbody>
