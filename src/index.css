@@ -475,6 +475,28 @@ button, .btn, [role="button"], .cursor-pointer {
     white-space: nowrap;
   }
   
+  /* Specific column width adjustments */
+  .cluster-details-1920 .service-name-content {
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .cluster-details-1920 .provision-type-content {
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .cluster-details-1920 .options-content {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
   /* Optimized filter bar for 1920x1080 with exact spacing */
   .cluster-details-1920 .filter-bar {
     padding: 0.5rem 0.75rem; /* 8px 12px - 4px grid multiples */

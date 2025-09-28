@@ -685,18 +685,18 @@ export function ClusterDetails() {
                     </td>
                     <td className="px-2 py-1.5">
                       <div className="flex items-center gap-1">
-                        <span className="font-medium text-foreground truncate-content" title={record.service_name}>
+                        <span className="font-medium text-foreground service-name-content" title={record.service_name}>
                           {record.service_name}
                         </span>
                       </div>
                     </td>
                     <td className="px-2 py-1.5">
-                      <span className="font-medium text-foreground truncate-content" title={record.provision_type}>
+                      <span className="font-medium text-foreground provision-type-content" title={record.provision_type}>
                         {record.provision_type}
                       </span>
                     </td>
                     <td className="px-2 py-1.5">
-                      <span className="font-medium text-accent truncate-content" title={record.options}>
+                      <span className="font-medium text-accent options-content" title={record.options}>
                         {record.options}
                       </span>
                     </td>
