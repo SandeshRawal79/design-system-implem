@@ -685,7 +685,6 @@ export function ClusterDetails() {
                     </td>
                     <td className="px-2 py-1.5">
                       <div className="flex items-center gap-1">
-                        <i className="fas fa-scroll text-primary text-xs"></i>
                         <span className="font-medium text-foreground truncate-content" title={record.service_name}>
                           {record.service_name}
                         </span>
