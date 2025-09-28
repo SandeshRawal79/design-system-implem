@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft, MagnifyingGlass, CaretDown, CaretUp, Funnel, X, SortAscending, SortDescending, CheckCircle, XCircle, Clock } from '@phosphor-icons/react'
+import { ArrowLeft, MagnifyingGlass, CaretDown, CaretUp, Funnel, X, SortAscending, SortDescending } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 
@@ -235,38 +235,38 @@ const mockClusterData = [
   },
 ]
 
-// Component to render approval status indicators with design system compliance
+// Component to render approval status indicators in compact format to save column space
 function ApprovalStatusIndicators({ statuses }: { statuses: string[] }) {
   return (
-    <div className="flex items-center gap-1 justify-center" role="group" aria-label="Approval status indicators">
+    <div className="flex items-center justify-center gap-0.5 font-mono text-sm" role="group" aria-label="Approval status indicators">
       {statuses.map((status, index) => {
-        let icon;
+        let displaySymbol;
         let colorClass;
         let ariaLabel;
         
         if (status === '✓') {
-          icon = <CheckCircle className="h-3 w-3" aria-hidden="true" />;
-          colorClass = "text-success bg-success/10 border-success/30 hover:bg-success/20";
+          displaySymbol = '✓';
+          colorClass = "text-success font-bold";
           ariaLabel = `Approved step ${index + 1}`;
         } else if (status === '✗') {
-          icon = <XCircle className="h-3 w-3" aria-hidden="true" />;
-          colorClass = "text-destructive bg-destructive/10 border-destructive/30 hover:bg-destructive/20";
+          displaySymbol = 'X';
+          colorClass = "text-destructive font-bold";
           ariaLabel = `Rejected step ${index + 1}`;
         } else {
-          icon = <Clock className="h-3 w-3" aria-hidden="true" />;
-          colorClass = "text-muted-foreground bg-muted border-border hover:bg-muted/80";
+          displaySymbol = '-';
+          colorClass = "text-muted-foreground font-bold";
           ariaLabel = `Pending step ${index + 1}`;
         }
         
         return (
           <span
             key={index}
-            className={`inline-flex items-center justify-center w-5 h-5 text-xs font-medium rounded-full border transition-colors duration-200 cursor-default ${colorClass}`}
+            className={`inline-flex items-center justify-center w-4 text-center cursor-default transition-colors duration-200 ${colorClass}`}
             role="status"
             aria-label={ariaLabel}
             title={ariaLabel}
           >
-            {icon}
+            {displaySymbol}
           </span>
         );
       })}
