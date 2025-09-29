@@ -491,7 +491,7 @@ export function ClusterDetails() {
                 className="w-20 border-border font-bold text-accent focus:ring-1 focus:ring-ring"
                 style={{ height: 'var(--button-sm)', fontSize: 'var(--font-body)' }}
               />
-              <Button 
+              <Button
                 size="sm" 
                 className="px-4 btn-gradient-primary font-medium focus:ring-1 focus:ring-ring"
                 style={{ height: 'var(--button-sm)', fontSize: 'var(--font-body)' }}
@@ -512,7 +512,7 @@ export function ClusterDetails() {
           <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/20 flex-wrap filter-bar flex-shrink-0">
             {/* Search Input - Optimized width */}
             <div className="relative flex-1 min-w-64 max-w-80">
-              <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+              <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 text-muted-foreground" style={{ width: 'calc(var(--icon-size) * 0.75)', height: 'calc(var(--icon-size) * 0.75)' }} />
               <Input
                 type="text"
                 placeholder="Search records..."
@@ -529,12 +529,12 @@ export function ClusterDetails() {
                   style={{ height: 'var(--button-xs)', width: 'var(--button-xs)' }}
                   onClick={() => setSearchTerm('')}
                 >
-                  <X className="h-2 w-2 text-muted-foreground" />
+                  <X className="h-2 w-2 text-muted-foreground" style={{ width: 'calc(var(--icon-size) * 0.75)', height: 'calc(var(--icon-size) * 0.75)' }} />
                 </Button>
               )}
             </div>
 
-            {/* Quick Status Filters - Ultra-compact for 1920x1080 */}
+            {/* Quick Status Filters - Following Design System Button Heights & Colors */}
             <div className="flex items-center gap-1">
               {['all', 'with-approvals', 'pending-approvals', 'no-approvals'].map((type) => (
                 <Button
@@ -607,8 +607,8 @@ export function ClusterDetails() {
                 onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
               >
                 {sortDirection === 'asc' ? 
-                  <SortAscending className="h-3 w-3" /> : 
-                  <SortDescending className="h-3 w-3" />
+                  <SortAscending className="h-3 w-3" style={{ width: 'var(--icon-size)', height: 'var(--icon-size)' }} /> : 
+                  <SortDescending className="h-3 w-3" style={{ width: 'var(--icon-size)', height: 'var(--icon-size)' }} />
                 }
               </Button>
             </div>
@@ -625,7 +625,7 @@ export function ClusterDetails() {
                 className="px-2 text-muted-foreground hover:text-foreground hover:bg-muted focus:ring-1 focus:ring-ring transition-colors"
                 style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
               >
-                <X className="h-2 w-2 mr-1" />
+                <X className="mr-1" style={{ width: 'calc(var(--icon-size) * 0.75)', height: 'calc(var(--icon-size) * 0.75)' }} />
                 Clear
               </Button>
             </div>
