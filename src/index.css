@@ -1043,7 +1043,58 @@ button[data-slot="button"]:disabled {
   min-width: 100%;
 }
 
-/* Cluster Details Responsive Design - Following exact breakpoint specifications */
+/* Cluster Details Sticky Header Enhancement */
+.cluster-details-1920 .sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--card);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.cluster-details-1920 .sticky-header th {
+  background-color: var(--card);
+  position: relative;
+}
+
+/* Enhanced table container for fixed height */
+.cluster-details-1920 .table-container-fixed {
+  height: calc(100vh - 200px);
+  overflow: auto;
+  position: relative;
+}
+
+/* Improved sticky header background consistency */
+.cluster-details-1920 thead th {
+  background-color: var(--card) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Table scrollbar styling enhancement */
+.cluster-details-1920 .table-container-fixed::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.cluster-details-1920 .table-container-fixed::-webkit-scrollbar-track {
+  background: color-mix(in oklab, var(--muted) 30%, transparent);
+  border-radius: 4px;
+}
+
+.cluster-details-1920 .table-container-fixed::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--muted-foreground) 30%, transparent);
+  border-radius: 4px;
+}
+
+.cluster-details-1920 .table-container-fixed::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklab, var(--muted-foreground) 50%, transparent);
+}
+
+.cluster-details-1920 .table-container-fixed::-webkit-scrollbar-corner {
+  background: transparent;
+}
 
 /* Base styles - Mobile first */
 .cluster-details-1920 {

@@ -19,7 +19,7 @@ const generateApprovalStatuses = () => {
   return Array.from({ length: 5 }, () => statuses[Math.floor(Math.random() * statuses.length)]);
 };
 
-// Mock data using the provided cluster details data - First 10 records
+// Mock data using the provided cluster details data - Extended dataset for scrolling demonstration
 const mockClusterData = [
   {
     abcd_1up: 2001,
@@ -231,6 +231,28 @@ const mockClusterData = [
     member_of_sets: null,
     approvalStatuses: generateApprovalStatuses()
   },
+  // Add more sample records to demonstrate scrolling
+  ...Array.from({ length: 15 }, (_, i) => ({
+    abcd_1up: 3000 + i,
+    service_id: 15002,
+    service_name: "Medical Services Extended",
+    provision_type_1up: null,
+    provision_type: i % 2 === 0 ? "Premium Drug Coverage" : "Standard Drug Coverage",
+    options: i % 3 === 0 ? "Yes" : i % 3 === 1 ? "No" : "Does Not Apply",
+    num_splits: Math.floor(Math.random() * 5),
+    is_single_split_with_no_change: null,
+    num_provisions: Math.floor(Math.random() * 1000) + 10,
+    num_products: Math.floor(Math.random() * 100) + 1,
+    num_clients: Math.floor(Math.random() * 50) + 1,
+    num_groups: Math.floor(Math.random() * 100) + 1,
+    splits: [],
+    phase_included_in_bm: 0,
+    approver_groups_needed_bm: 1,
+    approvals_given_bm: 0,
+    approvals_done_by_abcd_set_1up: null,
+    member_of_sets: null,
+    approvalStatuses: generateApprovalStatuses()
+  }))
 ]
 
 // Component to render approval status indicators in compact format to save column space
@@ -443,9 +465,9 @@ export function ClusterDetails() {
   const uniqueProvisionTypes = Array.from(new Set(mockClusterData.map(item => item.provision_type)))
 
   return (
-    <div className="min-h-screen flex flex-col font-['Proxima_Nova',sans-serif] cluster-details-1920">
+    <div className="h-screen flex flex-col font-['Proxima_Nova',sans-serif] cluster-details-1920">
       {/* Compact Cluster Information Card - Data Context and Distance Threshold Only */}
-      <Card className="bg-card border-border mb-4 shadow-sm mx-8">
+      <Card className="bg-card border-border mb-4 shadow-sm mx-8 flex-shrink-0">
         <CardContent className="px-4">
           <div className="flex items-center justify-between gap-4">
             {/* Data Context */}
@@ -483,11 +505,11 @@ export function ClusterDetails() {
           </div>
         </CardContent>
       </Card>
-      {/* Main Data Table - Optimized for 1920x1080 viewing */}
-      <Card className="bg-card border-border shadow-sm flex-1 flex flex-col min-h-0 mx-8">
-        <CardContent className="p-0 flex flex-col flex-1 min-h-0">
+      {/* Main Data Table - Fixed height with sticky header */}
+      <Card className="bg-card border-border shadow-sm flex-1 flex flex-col min-h-0 mx-8 overflow-hidden">
+        <CardContent className="p-0 flex flex-col h-full min-h-0">
           {/* Ultra-Compact Filter Controls - Single Row for 1920x1080 */}
-          <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/20 flex-wrap filter-bar">
+          <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/20 flex-wrap filter-bar flex-shrink-0">
             {/* Search Input - Optimized width */}
             <div className="relative flex-1 min-w-64 max-w-80">
               <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
@@ -607,155 +629,157 @@ export function ClusterDetails() {
               </Button>
             </div>
           </div>
-          {/* Table Container - Full width responsive design */}
-          <div className="flex-1 min-h-0 overflow-auto table-container">
-            <table className="w-full border-collapse cluster-details-table-full-width" style={{ fontSize: 'var(--font-body)', minWidth: '100%' }}>
-              <colgroup>
-                <col className="col-index" />
-                <col className="col-abcd" />
-                <col className="col-service-id" />
-                <col className="col-service-name" />
-                <col className="col-provision-type" />
-                <col className="col-options" />
-                <col className="col-splits" />
-                <col className="col-provisions" />
-                <col className="col-products" />
-                <col className="col-clients" />
-                <col className="col-groups" />
-                <col className="col-approval" />
-              </colgroup>
-              <thead className="sticky top-0 bg-card border-b border-border z-10">
-                <tr>
-                  <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-index" style={{ fontSize: 'var(--font-body)' }}>#</th>
-                  <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-abcd" onClick={() => handleSort('abcd_1up')} style={{ fontSize: 'var(--font-body)' }}>
-                    <div className="flex items-center">
-                      ABCD 1-Up
-                      {getSortIcon('abcd_1up')}
-                    </div>
-                  </th>
-                  <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-service-id" onClick={() => handleSort('service_id')} style={{ fontSize: 'var(--font-body)' }}>
-                    <div className="flex items-center">
-                      Service ID
-                      {getSortIcon('service_id')}
-                    </div>
-                  </th>
-                  <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors col-service-name" onClick={() => handleSort('service_name')} style={{ fontSize: 'var(--font-body)' }}>
-                    <div className="flex items-center">
-                      Service Name
-                      {getSortIcon('service_name')}
-                    </div>
-                  </th>
-                  <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors col-provision-type" onClick={() => handleSort('provision_type')} style={{ fontSize: 'var(--font-body)' }}>
-                    <div className="flex items-center">
-                      Provision Type
-                      {getSortIcon('provision_type')}
-                    </div>
-                  </th>
-                  <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-options" onClick={() => handleSort('options')} style={{ fontSize: 'var(--font-body)' }}>
-                    <div className="flex items-center">
-                      Options
-                      {getSortIcon('options')}
-                    </div>
-                  </th>
-                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-splits" onClick={() => handleSort('num_splits')} style={{ fontSize: 'var(--font-body)' }}>
-                    <div className="flex items-center justify-center">
-                      Splits
-                      {getSortIcon('num_splits')}
-                    </div>
-                  </th>
-                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-provisions" onClick={() => handleSort('num_provisions')} style={{ fontSize: 'var(--font-body)' }}>
-                    <div className="flex items-center justify-center">
-                      Provisions
-                      {getSortIcon('num_provisions')}
-                    </div>
-                  </th>
-                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-products" onClick={() => handleSort('num_products')} style={{ fontSize: 'var(--font-body)' }}>
-                    <div className="flex items-center justify-center">
-                      Products
-                      {getSortIcon('num_products')}
-                    </div>
-                  </th>
-                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-clients" onClick={() => handleSort('num_clients')} style={{ fontSize: 'var(--font-body)' }}>
-                    <div className="flex items-center justify-center">
-                      Clients
-                      {getSortIcon('num_clients')}
-                    </div>
-                  </th>
-                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-groups" onClick={() => handleSort('num_groups')} style={{ fontSize: 'var(--font-body)' }}>
-                    <div className="flex items-center justify-center">
-                      Groups
-                      {getSortIcon('num_groups')}
-                    </div>
-                  </th>
-                  <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-approval" style={{ fontSize: 'var(--font-body)' }}>Approval</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredAndSortedData.map((record, index) => (
-                  <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
-                    <td className="px-2 py-2 text-left col-index align-middle" style={{ fontSize: 'var(--font-body)' }}>
-                      <span className="text-primary font-bold">{index + 1}</span>
-                    </td>
-                    <td className="px-2 py-2 col-abcd align-middle">
-                      <Button variant="link" className="p-0 h-auto text-primary hover:underline font-bold" style={{ fontSize: 'var(--font-body)' }}>
-                        {record.abcd_1up}
-                      </Button>
-                    </td>
-                    <td className="px-2 py-2 text-center col-service-id align-middle">
-                      <span className="font-bold text-info" style={{ fontSize: 'var(--font-body)' }}>{record.service_id}</span>
-                    </td>
-                    <td className="px-2 py-2 col-service-name align-top">
-                      <div className="max-w-full">
-                        <span className="font-medium text-foreground break-words leading-tight block" style={{ fontSize: 'var(--font-body)' }} title={record.service_name}>
-                          {record.service_name}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="px-2 py-2 col-provision-type align-top">
-                      <span className="font-medium text-foreground break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.provision_type}>
-                        {record.provision_type}
-                      </span>
-                    </td>
-                    <td className="px-2 py-2 col-options align-top">
-                      <span className="font-medium text-accent break-words leading-tight block" style={{ fontSize: 'var(--font-body)' }} title={record.options}>
-                        {record.options}
-                      </span>
-                    </td>
-                    <td className="px-2 py-2 text-center col-splits align-middle">
-                      <span className="font-bold text-secondary" style={{ fontSize: 'var(--font-body)' }}>{record.num_splits}</span>
-                    </td>
-                    <td className="px-2 py-2 text-center col-provisions align-middle">
-                      <span className="font-bold text-primary" style={{ fontSize: 'var(--font-body)' }}>{record.num_provisions.toLocaleString()}</span>
-                    </td>
-                    <td className="px-2 py-2 text-center col-products align-middle">
-                      <span className="font-bold text-success" style={{ fontSize: 'var(--font-body)' }}>{record.num_products.toLocaleString()}</span>
-                    </td>
-                    <td className="px-2 py-2 text-center col-clients align-middle">
-                      <span className="text-info font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_clients?.toLocaleString() || '-'}</span>
-                    </td>
-                    <td className="px-2 py-2 text-center col-groups align-middle">
-                      <span className="text-warning font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_groups?.toLocaleString() || '-'}</span>
-                    </td>
-                    <td className="px-2 py-2 text-center col-approval align-middle">
-                      <ApprovalStatusIndicators statuses={record.approvalStatuses} />
-                    </td>
-                  </tr>
-                ))}
-                {filteredAndSortedData.length === 0 && (
+          {/* Table Container - Fixed height with sticky header */}
+          <div className="flex-1 overflow-hidden">
+            <div className="h-full overflow-auto">
+              <table className="w-full border-collapse cluster-details-table-full-width" style={{ fontSize: 'var(--font-body)', minWidth: '100%' }}>
+                <colgroup>
+                  <col className="col-index" />
+                  <col className="col-abcd" />
+                  <col className="col-service-id" />
+                  <col className="col-service-name" />
+                  <col className="col-provision-type" />
+                  <col className="col-options" />
+                  <col className="col-splits" />
+                  <col className="col-provisions" />
+                  <col className="col-products" />
+                  <col className="col-clients" />
+                  <col className="col-groups" />
+                  <col className="col-approval" />
+                </colgroup>
+                <thead className="sticky top-0 bg-card border-b border-border z-10 shadow-sm">
                   <tr>
-                    <td colSpan={12} className="text-center py-8 text-muted-foreground">
-                      <div className="flex flex-col items-center gap-2">
-                        <MagnifyingGlass className="h-8 w-8 text-muted-foreground/40" />
-                        <div>
-                          <p className="font-semibold">No records found</p>
-                          <p className="text-xs">Try adjusting your search or filter criteria</p>
-                        </div>
+                    <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-index bg-card" style={{ fontSize: 'var(--font-body)' }}>#</th>
+                    <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-abcd bg-card" onClick={() => handleSort('abcd_1up')} style={{ fontSize: 'var(--font-body)' }}>
+                      <div className="flex items-center">
+                        ABCD 1-Up
+                        {getSortIcon('abcd_1up')}
                       </div>
-                    </td>
+                    </th>
+                    <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-service-id bg-card" onClick={() => handleSort('service_id')} style={{ fontSize: 'var(--font-body)' }}>
+                      <div className="flex items-center">
+                        Service ID
+                        {getSortIcon('service_id')}
+                      </div>
+                    </th>
+                    <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors col-service-name bg-card" onClick={() => handleSort('service_name')} style={{ fontSize: 'var(--font-body)' }}>
+                      <div className="flex items-center">
+                        Service Name
+                        {getSortIcon('service_name')}
+                      </div>
+                    </th>
+                    <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors col-provision-type bg-card" onClick={() => handleSort('provision_type')} style={{ fontSize: 'var(--font-body)' }}>
+                      <div className="flex items-center">
+                        Provision Type
+                        {getSortIcon('provision_type')}
+                      </div>
+                    </th>
+                    <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-options bg-card" onClick={() => handleSort('options')} style={{ fontSize: 'var(--font-body)' }}>
+                      <div className="flex items-center">
+                        Options
+                        {getSortIcon('options')}
+                      </div>
+                    </th>
+                    <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-splits bg-card" onClick={() => handleSort('num_splits')} style={{ fontSize: 'var(--font-body)' }}>
+                      <div className="flex items-center justify-center">
+                        Splits
+                        {getSortIcon('num_splits')}
+                      </div>
+                    </th>
+                    <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-provisions bg-card" onClick={() => handleSort('num_provisions')} style={{ fontSize: 'var(--font-body)' }}>
+                      <div className="flex items-center justify-center">
+                        Provisions
+                        {getSortIcon('num_provisions')}
+                      </div>
+                    </th>
+                    <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-products bg-card" onClick={() => handleSort('num_products')} style={{ fontSize: 'var(--font-body)' }}>
+                      <div className="flex items-center justify-center">
+                        Products
+                        {getSortIcon('num_products')}
+                      </div>
+                    </th>
+                    <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-clients bg-card" onClick={() => handleSort('num_clients')} style={{ fontSize: 'var(--font-body)' }}>
+                      <div className="flex items-center justify-center">
+                        Clients
+                        {getSortIcon('num_clients')}
+                      </div>
+                    </th>
+                    <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-groups bg-card" onClick={() => handleSort('num_groups')} style={{ fontSize: 'var(--font-body)' }}>
+                      <div className="flex items-center justify-center">
+                        Groups
+                        {getSortIcon('num_groups')}
+                      </div>
+                    </th>
+                    <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-approval bg-card" style={{ fontSize: 'var(--font-body)' }}>Approval</th>
                   </tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {filteredAndSortedData.map((record, index) => (
+                    <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
+                      <td className="px-2 py-2 text-left col-index align-middle" style={{ fontSize: 'var(--font-body)' }}>
+                        <span className="text-primary font-bold">{index + 1}</span>
+                      </td>
+                      <td className="px-2 py-2 col-abcd align-middle">
+                        <Button variant="link" className="p-0 h-auto text-primary hover:underline font-bold" style={{ fontSize: 'var(--font-body)' }}>
+                          {record.abcd_1up}
+                        </Button>
+                      </td>
+                      <td className="px-2 py-2 text-center col-service-id align-middle">
+                        <span className="font-bold text-info" style={{ fontSize: 'var(--font-body)' }}>{record.service_id}</span>
+                      </td>
+                      <td className="px-2 py-2 col-service-name align-top">
+                        <div className="max-w-full">
+                          <span className="font-medium text-foreground break-words leading-tight block" style={{ fontSize: 'var(--font-body)' }} title={record.service_name}>
+                            {record.service_name}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-2 py-2 col-provision-type align-top">
+                        <span className="font-medium text-foreground break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.provision_type}>
+                          {record.provision_type}
+                        </span>
+                      </td>
+                      <td className="px-2 py-2 col-options align-top">
+                        <span className="font-medium text-accent break-words leading-tight block" style={{ fontSize: 'var(--font-body)' }} title={record.options}>
+                          {record.options}
+                        </span>
+                      </td>
+                      <td className="px-2 py-2 text-center col-splits align-middle">
+                        <span className="font-bold text-secondary" style={{ fontSize: 'var(--font-body)' }}>{record.num_splits}</span>
+                      </td>
+                      <td className="px-2 py-2 text-center col-provisions align-middle">
+                        <span className="font-bold text-primary" style={{ fontSize: 'var(--font-body)' }}>{record.num_provisions.toLocaleString()}</span>
+                      </td>
+                      <td className="px-2 py-2 text-center col-products align-middle">
+                        <span className="font-bold text-success" style={{ fontSize: 'var(--font-body)' }}>{record.num_products.toLocaleString()}</span>
+                      </td>
+                      <td className="px-2 py-2 text-center col-clients align-middle">
+                        <span className="text-info font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_clients?.toLocaleString() || '-'}</span>
+                      </td>
+                      <td className="px-2 py-2 text-center col-groups align-middle">
+                        <span className="text-warning font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_groups?.toLocaleString() || '-'}</span>
+                      </td>
+                      <td className="px-2 py-2 text-center col-approval align-middle">
+                        <ApprovalStatusIndicators statuses={record.approvalStatuses} />
+                      </td>
+                    </tr>
+                  ))}
+                  {filteredAndSortedData.length === 0 && (
+                    <tr>
+                      <td colSpan={12} className="text-center py-8 text-muted-foreground">
+                        <div className="flex flex-col items-center gap-2">
+                          <MagnifyingGlass className="h-8 w-8 text-muted-foreground/40" />
+                          <div>
+                            <p className="font-semibold">No records found</p>
+                            <p className="text-xs">Try adjusting your search or filter criteria</p>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </CardContent>
       </Card>
