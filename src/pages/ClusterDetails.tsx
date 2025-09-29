@@ -662,7 +662,7 @@ export function ClusterDetails() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredAndSortedData.map((record, index) => (
+                  {filteredData.map((record, index) => (
                     <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
                       <td className="px-2 py-2 text-left col-index align-middle" style={{ fontSize: 'var(--font-body)' }}>
                         <Button 
@@ -671,7 +671,7 @@ export function ClusterDetails() {
                             selectedRecordId === record.abcd_1up && (showSimilarRecords || showExactSameCDRecords) ? 'bg-primary text-primary-foreground' : ''
                           }`}
                           style={{ fontSize: 'var(--font-body)' }}
-                          onClick={() => handleRowNumberClick(record.abcd_1up)}
+                          onClick={() => findSimilarRecords(record.abcd_1up)}
                           title="Click to show/hide similar records and exact same CD records"
                         >
                           {index + 1}
@@ -680,7 +680,7 @@ export function ClusterDetails() {
                       <td className="px-2 py-2 col-abcd align-middle">
                         <Button variant="link" className="p-0 h-auto text-primary underline font-bold" style={{ fontSize: 'var(--font-body)' }}>
                           {record.abcd_1up}
-                        </Badge>
+                        </Button>
                       </td>
                       <td className="px-4 py-2">
                         <span className="font-bold text-info">{record.service_id}</span>
