@@ -274,7 +274,7 @@ export function Header({ clusterInfo }: HeaderProps) {
                   size="sm"
                   onClick={toggleTheme}
                   className="flex items-center gap-2 cursor-pointer"
-                  style={{ 
+                  style={{
                     height: '30px',
                     fontFamily: "'Proxima Nova', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
                     fontSize: 'var(--font-caption)',
