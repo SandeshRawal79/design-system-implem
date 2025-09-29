@@ -916,6 +916,7 @@ export function ClusterDetails() {
             <div className="max-h-96 overflow-auto">
               <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                 <colgroup>
+                  <col className="col-index" />
                   <col className="col-abcd" />
                   <col className="col-service-id" />
                   <col className="col-service-name" />
@@ -930,6 +931,7 @@ export function ClusterDetails() {
                 </colgroup>
                 <thead className="sticky top-0 bg-card border-b border-border z-10 shadow-sm">
                   <tr>
+                    <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap col-index bg-card" style={{ fontSize: 'var(--font-body)' }}>#</th>
                     <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>ABCD 1-Up</th>
                     <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Service ID</th>
                     <th className="text-left px-2 py-2 font-medium text-muted-foreground bg-card" style={{ fontSize: 'var(--font-body)' }}>Service Name</th>
@@ -946,6 +948,9 @@ export function ClusterDetails() {
                 <tbody>
                   {similarRecords.map((record, index) => (
                     <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
+                      <td className="px-2 py-2 text-left col-index align-middle" style={{ fontSize: 'var(--font-body)' }}>
+                        <span className="font-bold text-muted-foreground">{index + 1}</span>
+                      </td>
                       <td className="px-2 py-2">
                         <Button variant="link" className="p-0 h-auto text-primary hover:underline font-bold" style={{ fontSize: 'var(--font-body)' }}>
                           {record.abcd_1up}
@@ -1039,6 +1044,7 @@ export function ClusterDetails() {
             <div className="max-h-96 overflow-auto">
               <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                 <colgroup>
+                  <col className="col-index" />
                   <col className="col-abcd" />
                   <col className="col-service-id" />
                   <col className="col-service-name" />
@@ -1053,6 +1059,7 @@ export function ClusterDetails() {
                 </colgroup>
                 <thead className="sticky top-0 bg-card border-b border-border z-10 shadow-sm">
                   <tr>
+                    <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap col-index bg-card" style={{ fontSize: 'var(--font-body)' }}>#</th>
                     <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>ABCD 1-Up</th>
                     <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Service ID</th>
                     <th className="text-left px-2 py-2 font-medium text-muted-foreground bg-card" style={{ fontSize: 'var(--font-body)' }}>Service Name</th>
@@ -1069,6 +1076,9 @@ export function ClusterDetails() {
                 <tbody>
                   {exactSameCDRecords.map((record, index) => (
                     <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
+                      <td className="px-2 py-2 text-left col-index align-middle" style={{ fontSize: 'var(--font-body)' }}>
+                        <span className="font-bold text-muted-foreground">{index + 1}</span>
+                      </td>
                       <td className="px-2 py-2">
                         <Button variant="link" className="p-0 h-auto text-primary hover:underline font-bold" style={{ fontSize: 'var(--font-body)' }}>
                           {record.abcd_1up}
