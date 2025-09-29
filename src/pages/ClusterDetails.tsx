@@ -519,10 +519,9 @@ export function ClusterDetails() {
                   variant={filterType === type ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => setFilterType(type as FilterType)}
-                  className={`h-7 px-2 font-medium transition-all ${
+                  className={`${
                     filterType === type 
-                      ? type === 'all' ? 'btn-gradient-primary' 
-                        : type === 'with-approvals' ? 'bg-success text-white hover:bg-success/90'
+                      ? type === 'with-approvals' ? 'bg-success text-white hover:bg-success/90'
                         : type === 'pending-approvals' ? 'bg-warning text-white hover:bg-warning/90'
                         : 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
                       : 'border-border text-foreground hover:bg-muted'
@@ -530,7 +529,7 @@ export function ClusterDetails() {
                   style={{ fontSize: 'var(--font-body)' }}
                 >
                   {type === 'all' ? 'All' 
-                    : type === 'with-approvals' ? 'Approved'
+                    : type === 'with-approvals' ? 'With Approvals'
                     : type === 'pending-approvals' ? 'Pending'
                     : 'None'}
                 </Button>
@@ -541,7 +540,7 @@ export function ClusterDetails() {
             <div className="flex items-center gap-1">
               <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as StatusFilter)}>
                 <SelectTrigger className="w-24 h-7 border-border focus:ring-1 focus:ring-primary" style={{ fontSize: 'var(--font-body)' }}>
-                  <SelectValue placeholder="Status" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all" style={{ fontSize: 'var(--font-body)' }}>All</SelectItem>
@@ -553,11 +552,11 @@ export function ClusterDetails() {
 
               <Select value={provisionTypeFilter} onValueChange={setProvisionTypeFilter}>
                 <SelectTrigger className="w-32 h-7 border-border focus:ring-1 focus:ring-primary" style={{ fontSize: 'var(--font-body)' }}>
-                  <SelectValue placeholder="Type" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all" style={{ fontSize: 'var(--font-body)' }}>All Types</SelectItem>
-                  {uniqueProvisionTypes.map(type => (
+                  {uniqueProvisionTypes.map((type) => (
                     <SelectItem key={type} value={type} style={{ fontSize: 'var(--font-body)' }}>{type.substring(0, 20)}...</SelectItem>
                   ))}
                 </SelectContent>
@@ -569,10 +568,7 @@ export function ClusterDetails() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="abcd_1up" style={{ fontSize: 'var(--font-body)' }}>ABCD</SelectItem>
-                  <SelectItem value="service_id" style={{ fontSize: 'var(--font-body)' }}>Service ID</SelectItem>
                   <SelectItem value="service_name" style={{ fontSize: 'var(--font-body)' }}>Name</SelectItem>
-                  <SelectItem value="provision_type" style={{ fontSize: 'var(--font-body)' }}>Type</SelectItem>
-                  <SelectItem value="options" style={{ fontSize: 'var(--font-body)' }}>Options</SelectItem>
                   <SelectItem value="num_provisions" style={{ fontSize: 'var(--font-body)' }}>Prov</SelectItem>
                   <SelectItem value="num_products" style={{ fontSize: 'var(--font-body)' }}>Prod</SelectItem>
                   <SelectItem value="num_groups" style={{ fontSize: 'var(--font-body)' }}>Groups</SelectItem>
@@ -582,8 +578,8 @@ export function ClusterDetails() {
               <Button
                 variant="outline"
                 size="sm"
+                className="h-7 px-2 border-border focus:ring-1 focus:ring-primary"
                 onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
-                className="h-7 w-7 p-0 border-border hover:bg-muted focus:ring-1 focus:ring-primary"
               >
                 {sortDirection === 'asc' ? 
                   <SortAscending className="h-3 w-3" /> : 
@@ -594,6 +590,9 @@ export function ClusterDetails() {
 
             {/* Results & Clear */}
             <div className="flex items-center gap-2 ml-auto">
+              <Badge variant="outline" className="px-2 py-0.5 bg-muted/50 border-border" style={{ fontSize: 'var(--font-body)' }}>
+                {filteredAndSortedData.length}/{mockClusterData.length}
+              </Badge>
               <Button
                 variant="ghost"
                 size="sm"
@@ -604,12 +603,8 @@ export function ClusterDetails() {
                 <X className="h-2 w-2 mr-1" />
                 Clear
               </Button>
-              <Badge variant="outline" className="px-2 py-0.5 bg-muted/50 border-border" style={{ fontSize: 'var(--font-body)' }}>
-                {filteredAndSortedData.length}/{mockClusterData.length}
-              </Badge>
             </div>
           </div>
-          
           {/* Table Container - Responsive design following breakpoints */}
           <div className="flex-1 min-h-0 overflow-auto table-container">
             <table className="w-full border-collapse cluster-details-table" style={{ fontSize: 'var(--font-body)' }}>
