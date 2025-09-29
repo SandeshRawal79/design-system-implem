@@ -29,9 +29,9 @@ function AppContent() {
     <div className="min-h-screen bg-background flex flex-col">
       <Header clusterInfo={clusterInfo} />
       
-      {/* Main Content Area - Full width for tables, optimized for 1920x1080 with exact 32px outer margin */}
-      <main className="flex-1 px-8 py-6 lg:py-8">
-        <div className="w-full mx-auto">
+      {/* Main Content Area - Constrained width with exact 32px outer margin per design system */}
+      <main className="flex-1 py-6 lg:py-8">
+        <div className="max-w-screen-2xl mx-auto px-8">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/phase1-services" element={<Phase1Services />} />
@@ -45,11 +45,13 @@ function AppContent() {
         </div>
       </main>
       
-      {/* Compact Footer with exact specifications */}
-      <footer className="border-t border-border bg-white px-8 flex items-center justify-center mt-auto" style={{ height: '24px' }}>
-        <p className="text-muted-foreground text-center" style={{ fontSize: 'var(--font-caption)' }}>
-          © 2024 Provision Intelligence Hub. Powered by SHC.AI
-        </p>
+      {/* Compact Footer with exact specifications and matching layout constraint */}
+      <footer className="border-t border-border bg-white mt-auto" style={{ height: '24px' }}>
+        <div className="max-w-screen-2xl mx-auto px-8 flex items-center justify-center h-full">
+          <p className="text-muted-foreground text-center" style={{ fontSize: 'var(--font-caption)' }}>
+            © 2024 Provision Intelligence Hub. Powered by SHC.AI
+          </p>
+        </div>
       </footer>
     </div>
   )

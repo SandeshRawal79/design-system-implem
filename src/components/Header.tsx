@@ -64,8 +64,8 @@ export function Header({ clusterInfo }: HeaderProps) {
 
   return (
     <>
-      <header className="bg-white border-b border-border shadow-sm px-4 sm:px-6 lg:px-8 py-1.5 relative" style={{ height: '42px' }}>
-        <div className="flex items-center justify-between w-full h-full">
+      <header className="bg-white border-b border-border shadow-sm py-1.5 relative" style={{ height: '42px' }}>
+        <div className="max-w-screen-2xl mx-auto px-8 flex items-center justify-between w-full h-full">
           {/* Logo and Title - Left Aligned */}
           <div className="flex items-center gap-3 min-w-0 flex-1">
             <div className="flex items-center gap-3">
@@ -183,58 +183,60 @@ export function Header({ clusterInfo }: HeaderProps) {
           </Button>
         </div>
 
-        {/* Mobile Menu Dropdown - Compact */}
+        {/* Mobile Menu Dropdown - Compact with layout constraint */}
         {isMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-white border-b border-border shadow-lg z-50 md:hidden">
-            <div className="px-4 py-3 space-y-2">
-              <div className="font-medium text-foreground mb-2" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif', lineHeight: 'auto', letterSpacing: 'auto' }}>
-                Accessibility Options
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={decreaseFontSize}
-                  className="flex items-center gap-2 cursor-pointer"
-                  style={{ height: 'var(--button-sm)', fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}
-                >
-                  <FontAwesomeIcon icon={faMinus} style={{ width: '16px', height: '16px' }} className="text-icon" />
-                  <span>Decrease Font</span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={increaseFontSize}
-                  className="flex items-center gap-2 cursor-pointer"
-                  style={{ height: 'var(--button-sm)', fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}
-                >
-                  <FontAwesomeIcon icon={faPlus} style={{ width: '16px', height: '16px' }} className="text-icon" />
-                  <span>Increase Font</span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={toggleLanguage}
-                  className="flex items-center gap-2 cursor-pointer"
-                  style={{ height: 'var(--button-sm)', fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}
-                >
-                  <FontAwesomeIcon icon={faLanguage} style={{ width: '16px', height: '16px' }} className="text-icon" />
-                  <span>{language === 'en' ? 'Español' : 'English'}</span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={toggleTheme}
-                  className="flex items-center gap-2 cursor-pointer"
-                  style={{ height: 'var(--button-sm)', fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}
-                >
-                  <FontAwesomeIcon 
-                    icon={isDarkMode === 'true' ? faSun : faMoon} 
-                    style={{ width: '16px', height: '16px' }}
-                    className="text-icon" 
-                  />
-                  <span>{isDarkMode === 'true' ? 'Light Mode' : 'Dark Mode'}</span>
-                </Button>
+            <div className="max-w-screen-2xl mx-auto px-8">
+              <div className="py-3 space-y-2">
+                <div className="font-medium text-foreground mb-2" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif', lineHeight: 'auto', letterSpacing: 'auto' }}>
+                  Accessibility Options
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={decreaseFontSize}
+                    className="flex items-center gap-2 cursor-pointer"
+                    style={{ height: 'var(--button-sm)', fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}
+                  >
+                    <FontAwesomeIcon icon={faMinus} style={{ width: '16px', height: '16px' }} className="text-icon" />
+                    <span>Decrease Font</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={increaseFontSize}
+                    className="flex items-center gap-2 cursor-pointer"
+                    style={{ height: 'var(--button-sm)', fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}
+                  >
+                    <FontAwesomeIcon icon={faPlus} style={{ width: '16px', height: '16px' }} className="text-icon" />
+                    <span>Increase Font</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={toggleLanguage}
+                    className="flex items-center gap-2 cursor-pointer"
+                    style={{ height: 'var(--button-sm)', fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}
+                  >
+                    <FontAwesomeIcon icon={faLanguage} style={{ width: '16px', height: '16px' }} className="text-icon" />
+                    <span>{language === 'en' ? 'Español' : 'English'}</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={toggleTheme}
+                    className="flex items-center gap-2 cursor-pointer"
+                    style={{ height: 'var(--button-sm)', fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}
+                  >
+                    <FontAwesomeIcon 
+                      icon={isDarkMode === 'true' ? faSun : faMoon} 
+                      style={{ width: '16px', height: '16px' }}
+                      className="text-icon" 
+                    />
+                    <span>{isDarkMode === 'true' ? 'Light Mode' : 'Dark Mode'}</span>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

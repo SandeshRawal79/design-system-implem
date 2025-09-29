@@ -451,15 +451,24 @@
     font-family: 'Proxima Nova', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
-  /* Apply exact 4px grid system and 32px outer margin */
-  .container, .page-layout-full-width {
-    margin-left: 32px; /* 32px outer margin */
-    margin-right: 32px; /* 32px outer margin */
-  }
-  
   /* Dashboard metrics optimized for ultra-wide */
   .dashboard-metrics {
     gap: 1.5rem; /* Increased gap for ultra-wide layouts */
+  }
+}
+
+/* Layout constraint system - Following design system max-width approach */
+@media (max-width: 1535px) {
+  /* For screens smaller than 2xl, ensure content doesn't stretch too wide */
+  .max-w-screen-2xl {
+    max-width: calc(100vw - 64px); /* Account for 32px margin on each side */
+  }
+}
+
+/* Responsive content constraints for optimal reading experience */
+@media (min-width: 1536px) {
+  .max-w-screen-2xl {
+    max-width: 1536px; /* Tailwind 2xl breakpoint - optimal for 1920px screens */
   }
 }
 

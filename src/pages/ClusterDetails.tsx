@@ -564,7 +564,7 @@ export function ClusterDetails() {
               </Select>
 
               <Select value={sortField} onValueChange={(value) => setSortField(value as SortField)}>
-                <SelectTrigger className="w-20 border-border focus:ring-1 focus:ring-primary" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
+                <SelectTrigger className="w-40 border-border focus:ring-1 focus:ring-primary" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
