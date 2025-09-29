@@ -496,14 +496,15 @@ export function ClusterDetails() {
                 placeholder="Search records..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-7 pr-7 h-7 w-full border-border placeholder:text-muted-foreground focus:ring-1 focus:ring-primary"
-                style={{ fontSize: 'var(--font-body)' }}
+                className="pl-7 pr-7 border-border placeholder:text-muted-foreground focus:ring-1 focus:ring-primary"
+                style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
               />
               {searchTerm && (
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="absolute right-1 top-1/2 transform -translate-y-1/2 h-5 w-5 p-0 hover:bg-muted"
+                  className="absolute right-1 top-1/2 transform -translate-y-1/2 p-0 hover:bg-muted"
+                  style={{ height: 'var(--button-xs)', width: 'var(--button-xs)' }}
                   onClick={() => setSearchTerm('')}
                 >
                   <X className="h-2 w-2 text-muted-foreground" />
@@ -526,7 +527,7 @@ export function ClusterDetails() {
                         : 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
                       : 'border-border text-foreground hover:bg-muted'
                   } focus:ring-1 focus:ring-primary`}
-                  style={{ fontSize: 'var(--font-body)' }}
+                  style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
                 >
                   {type === 'all' ? 'All' 
                     : type === 'with-approvals' ? 'With Approvals'
@@ -539,7 +540,7 @@ export function ClusterDetails() {
             {/* Advanced Filters - Compact Selects */}
             <div className="flex items-center gap-1">
               <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as StatusFilter)}>
-                <SelectTrigger className="w-24 h-7 border-border focus:ring-1 focus:ring-primary" style={{ fontSize: 'var(--font-body)' }}>
+                <SelectTrigger className="w-24 border-border focus:ring-1 focus:ring-primary" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -551,7 +552,7 @@ export function ClusterDetails() {
               </Select>
 
               <Select value={provisionTypeFilter} onValueChange={setProvisionTypeFilter}>
-                <SelectTrigger className="w-32 h-7 border-border focus:ring-1 focus:ring-primary" style={{ fontSize: 'var(--font-body)' }}>
+                <SelectTrigger className="w-32 border-border focus:ring-1 focus:ring-primary" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -563,7 +564,7 @@ export function ClusterDetails() {
               </Select>
 
               <Select value={sortField} onValueChange={(value) => setSortField(value as SortField)}>
-                <SelectTrigger className="w-20 h-7 border-border focus:ring-1 focus:ring-primary" style={{ fontSize: 'var(--font-body)' }}>
+                <SelectTrigger className="w-20 border-border focus:ring-1 focus:ring-primary" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -578,7 +579,8 @@ export function ClusterDetails() {
               <Button
                 variant="outline"
                 size="sm"
-                className="h-7 px-2 border-border focus:ring-1 focus:ring-primary"
+                className="px-2 border-border focus:ring-1 focus:ring-primary"
+                style={{ height: 'var(--button-sm)' }}
                 onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
               >
                 {sortDirection === 'asc' ? 
@@ -597,8 +599,8 @@ export function ClusterDetails() {
                 variant="ghost"
                 size="sm"
                 onClick={clearFilters}
-                className="h-7 px-2 text-muted-foreground hover:text-foreground hover:bg-muted focus:ring-1 focus:ring-primary"
-                style={{ fontSize: 'var(--font-body)' }}
+                className="px-2 text-muted-foreground hover:text-foreground hover:bg-muted focus:ring-1 focus:ring-primary"
+                style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
               >
                 <X className="h-2 w-2 mr-1" />
                 Clear
