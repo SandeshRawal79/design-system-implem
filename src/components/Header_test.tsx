@@ -78,20 +78,40 @@ export function Header({ clusterInfo }: HeaderProps) {
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-3">
                   <div>
-                    <h1 className="font-semibold text-foreground truncate" style={{ fontSize: 'var(--font-h3)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif', lineHeight: 'auto', letterSpacing: 'auto' }}>
+                    <h1 className="font-semibold text-foreground truncate" style={{ 
+                      fontFamily: "'Proxima Nova', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                      fontSize: 'var(--font-h5)',
+                      lineHeight: 'auto',
+                      letterSpacing: 'auto'
+                    }}>
                       Provision Intelligence Hub
                     </h1>
-                    <p className="text-muted-foreground hidden sm:block" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif', lineHeight: 'auto', letterSpacing: 'auto' }}>
+                    <p className="text-muted-foreground hidden sm:block" style={{ 
+                      fontFamily: "'Proxima Nova', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                      fontSize: 'var(--font-caption)',
+                      lineHeight: 'auto',
+                      letterSpacing: 'auto'
+                    }}>
                       Powered by SHC.AI
                     </p>
                   </div>
                   {clusterInfo && (
                     <div className="hidden lg:flex items-center gap-3 ml-6 pl-6 border-l border-border">
                       <div className="min-w-0">
-                        <h2 className="font-semibold text-foreground truncate" style={{ fontSize: 'var(--font-subtitle)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif', lineHeight: 'auto', letterSpacing: 'auto' }}>
+                        <h2 className="font-semibold text-foreground truncate" style={{ 
+                          fontFamily: "'Proxima Nova', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                          fontSize: 'var(--font-subtitle)',
+                          lineHeight: 'auto',
+                          letterSpacing: 'auto'
+                        }}>
                           Cluster #{clusterInfo.clusterId} of {clusterInfo.totalClusters} Details - {clusterInfo.xrayProjection}
                         </h2>
-                        <p className="text-muted-foreground" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif', lineHeight: 'auto', letterSpacing: 'auto' }}>
+                        <p className="text-muted-foreground" style={{ 
+                          fontFamily: "'Proxima Nova', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                          fontSize: 'var(--font-caption)',
+                          lineHeight: 'auto',
+                          letterSpacing: 'auto'
+                        }}>
                           {clusterInfo.recordsInCluster} records • Created {clusterInfo.created}
                         </p>
                       </div>
@@ -101,10 +121,20 @@ export function Header({ clusterInfo }: HeaderProps) {
                 {/* Mobile cluster info display */}
                 {clusterInfo && (
                   <div className="lg:hidden mt-1">
-                    <h2 className="font-medium text-foreground truncate" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif', lineHeight: 'auto', letterSpacing: 'auto' }}>
+                    <h2 className="font-medium text-foreground truncate" style={{ 
+                      fontFamily: "'Proxima Nova', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                      fontSize: 'var(--font-caption)',
+                      lineHeight: 'auto',
+                      letterSpacing: 'auto'
+                    }}>
                       Cluster #{clusterInfo.clusterId} Details - {clusterInfo.xrayProjection}
                     </h2>
-                    <p className="text-muted-foreground" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif', lineHeight: 'auto', letterSpacing: 'auto' }}>
+                    <p className="text-muted-foreground" style={{ 
+                      fontFamily: "'Proxima Nova', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                      fontSize: 'var(--font-caption)',
+                      lineHeight: 'auto',
+                      letterSpacing: 'auto'
+                    }}>
                       {clusterInfo.recordsInCluster} records
                     </p>
                   </div>
@@ -182,7 +212,12 @@ export function Header({ clusterInfo }: HeaderProps) {
         {isMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-white border-b border-border shadow-lg z-50 md:hidden">
             <div className="px-4 py-3 space-y-2">
-              <div className="font-medium text-foreground mb-2" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif', lineHeight: 'auto', letterSpacing: 'auto' }}>
+              <div className="font-medium text-foreground mb-2" style={{ 
+                fontFamily: "'Proxima Nova', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                fontSize: 'var(--font-caption)',
+                lineHeight: 'auto',
+                letterSpacing: 'auto'
+              }}>
                 Accessibility Options
               </div>
               <div className="flex flex-wrap gap-2">
@@ -191,7 +226,13 @@ export function Header({ clusterInfo }: HeaderProps) {
                   size="sm"
                   onClick={decreaseFontSize}
                   className="flex items-center gap-2 cursor-pointer"
-                  style={{ height: '30px', fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}
+                  style={{ 
+                    height: '30px',
+                    fontFamily: "'Proxima Nova', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                    fontSize: 'var(--font-caption)',
+                    lineHeight: 'auto',
+                    letterSpacing: 'auto'
+                  }}
                 >
                   <FontAwesomeIcon icon={faMinus} style={{ width: '16px', height: '16px' }} className="text-icon" />
                   <span>Decrease Font</span>
@@ -201,7 +242,13 @@ export function Header({ clusterInfo }: HeaderProps) {
                   size="sm"
                   onClick={increaseFontSize}
                   className="flex items-center gap-2 cursor-pointer"
-                  style={{ height: '30px', fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}
+                  style={{ 
+                    height: '30px',
+                    fontFamily: "'Proxima Nova', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                    fontSize: 'var(--font-caption)',
+                    lineHeight: 'auto',
+                    letterSpacing: 'auto'
+                  }}
                 >
                   <FontAwesomeIcon icon={faPlus} style={{ width: '16px', height: '16px' }} className="text-icon" />
                   <span>Increase Font</span>
@@ -211,7 +258,13 @@ export function Header({ clusterInfo }: HeaderProps) {
                   size="sm"
                   onClick={toggleLanguage}
                   className="flex items-center gap-2 cursor-pointer"
-                  style={{ height: '30px', fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}
+                  style={{ 
+                    height: '30px',
+                    fontFamily: "'Proxima Nova', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                    fontSize: 'var(--font-caption)',
+                    lineHeight: 'auto',
+                    letterSpacing: 'auto'
+                  }}
                 >
                   <FontAwesomeIcon icon={faLanguage} style={{ width: '16px', height: '16px' }} className="text-icon" />
                   <span>{language === 'en' ? 'Español' : 'English'}</span>
@@ -221,7 +274,13 @@ export function Header({ clusterInfo }: HeaderProps) {
                   size="sm"
                   onClick={toggleTheme}
                   className="flex items-center gap-2 cursor-pointer"
-                  style={{ height: '30px', fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}
+                  style={{
+                    height: '30px',
+                    fontFamily: "'Proxima Nova', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                    fontSize: 'var(--font-caption)',
+                    lineHeight: 'auto',
+                    letterSpacing: 'auto'
+                  }}
                 >
                   <FontAwesomeIcon 
                     icon={isDarkMode === 'true' ? faSun : faMoon} 
