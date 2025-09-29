@@ -89,6 +89,14 @@ const ApprovalStatusIndicators = ({ statuses }: { statuses: string[] }) => (
 export function ClusterDetails() {
   const { serviceId, clusterId } = useParams();
   
+  // State for filtering and searching
+  const [searchTerm, setSearchTerm] = useState('')
+  const [sortField, setSortField] = useState<SortField>('abcd_1up')
+  const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
+  const [filterType, setFilterType] = useState<FilterType>('all')
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
+  const [provisionTypeFilter, setProvisionTypeFilter] = useState<string>('all')
+  
   // State for similar records
   const [selectedRecordId, setSelectedRecordId] = useState<number | null>(null)
   const [similarRecords, setSimilarRecords] = useState<any[]>([])
@@ -231,8 +239,66 @@ export function ClusterDetails() {
     setSearchTerm('');
     setFilterType('all');
     setStatusFilter('all');
-    setSortBy('abcd_1up');
+    setSortField('abcd_1up');
     setSortDirection('asc');
+  };
+
+  // Generate similar records for demonstration
+  const generateSimilarRecords = (abcdId: number) => {
+    return [
+      {
+        abcd_1up: abcdId + 100,
+        service_id: 15003,
+        service_name: "Federal Legend Drugs - Similar",
+        provision_type: "Anti Cancer Deductible",
+        options: "Only Options (D)",
+        num_provisions: 8200,
+        num_products: 4100,
+        num_clients: 920,
+        num_groups: 3200,
+        similarity_score: "94.5",
+        approvalStatuses: generateApprovalStatuses()
+      },
+      {
+        abcd_1up: abcdId + 200,
+        service_id: 15004,
+        service_name: "Federal Legend Drugs - Similar 2",
+        provision_type: "Anti Cancer Deductible",
+        options: "Does Not Apply",
+        num_provisions: 8300,
+        num_products: 4150,
+        num_clients: 940,
+        num_groups: 3250,
+        similarity_score: "91.8",
+        approvalStatuses: generateApprovalStatuses()
+      }
+    ];
+  };
+
+  // Generate exact same CD records for demonstration
+  const generateExactSameCDRecords = (abcdId: number) => {
+    return [
+      {
+        abcd_1up: abcdId + 50,
+        service_id: 15005,
+        service_name: "Federal Legend Drugs - Exact Match",
+        provision_type: "Anti Cancer Deductible",
+        options: "Only Options (D)",
+        num_provisions: 8412,
+        num_products: 4207,
+        num_clients: 953,
+        num_groups: 3310,
+        approvalStatuses: generateApprovalStatuses()
+      }
+    ];
+  };
+
+  // Find similar records function
+  const findSimilarRecords = (recordId: number) => {
+    setSelectedRecordId(recordId);
+    setSimilarRecords(generateSimilarRecords(recordId));
+    setShowSimilarRecords(true);
+    setIsSimilarRecordsOpen(true);
   };
 
   const getSortIcon = (field: SortField) => {
@@ -267,9 +333,9 @@ export function ClusterDetails() {
   // Simulate finding exact same CD records
   const findExactSameCDRecords = (recordId: number) => {
     setSelectedRecordId(recordId);
-    setExactSameCDRecords(mockClusterData.slice(0, 3));
+    setExactSameCDRecords(generateExactSameCDRecords(recordId));
     setShowExactSameCDRecords(true);
-    setIsExactTableCollapsed(false);
+    setIsExactSameCDRecordsOpen(true);
   };
 
   return (
@@ -299,12 +365,6 @@ export function ClusterDetails() {
                   className="pl-9"
                 />
               </div>
-              <Button onClick={() => findSimilarRecords(15001)}>
-                Find Similar Records
-              </Button>
-              <Button onClick={() => findExactSameCDRecords(15001)}>
-                Find Exact CD Records
-              </Button>
             </div>
 
             {/* Records table */}
@@ -312,6 +372,7 @@ export function ClusterDetails() {
               <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                 <thead className="bg-muted/50 border-b border-border">
                   <tr>
+                    <th className="text-left px-4 py-2 font-medium text-muted-foreground">#</th>
                     <th className="text-left px-4 py-2 font-medium text-muted-foreground">ABCD</th>
                     <th className="text-left px-4 py-2 font-medium text-muted-foreground">Service ID</th>
                     <th className="text-left px-4 py-2 font-medium text-muted-foreground">Service Name</th>
@@ -323,8 +384,18 @@ export function ClusterDetails() {
                   </tr>
                 </thead>
                 <tbody>
-                  {mockClusterData.map((record, index) => (
+                  {filteredAndSortedData.map((record, index) => (
                     <tr key={record.service_id} className="border-b border-border hover:bg-muted/30">
+                      <td className="px-4 py-2">
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={() => handleRowNumberClick(record.abcd_1up)}
+                          className="h-6 w-6 p-0 font-bold text-primary hover:bg-primary/10"
+                        >
+                          {index + 1}
+                        </Button>
+                      </td>
                       <td className="px-4 py-2">
                         <Badge variant="outline" className="bg-accent/10 text-accent border-accent/20">
                           {record.abcd_1up}
