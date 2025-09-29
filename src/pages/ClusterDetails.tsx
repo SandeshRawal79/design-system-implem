@@ -600,32 +600,31 @@ export function ClusterDetails() {
       {/* Main Data Table - Fixed height with sticky header */}
       <Card className="bg-card border-border shadow-sm flex-1 flex flex-col min-h-0 mx-8 overflow-hidden">
         <CardContent className="p-0 flex flex-col h-full min-h-0">
-          {/* Main Table Header with Collapse Button */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20 flex-shrink-0">
-            <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
-              Cluster Records
-            </h3>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsMainTableCollapsed(!isMainTableCollapsed)}
-              className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-2"
-            >
-              <span style={{ fontSize: 'var(--font-body)' }}>
-                {isMainTableCollapsed ? 'Expand' : 'Collapse'}
-              </span>
-              {isMainTableCollapsed ? (
-                <CaretDown className="h-4 w-4" />
-              ) : (
-                <CaretUp className="h-4 w-4" />
-              )}
-            </Button>
-          </div>
-
           {!isMainTableCollapsed && (
             <>
-              {/* Ultra-Compact Filter Controls - Single Row for 1920x1080 */}
+              {/* Ultra-Compact Filter Controls with Title and Collapse Button - Single Row for 1920x1080 */}
               <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/20 flex-wrap filter-bar flex-shrink-0">
+            {/* Title and Collapse Button */}
+            <div className="flex items-center gap-2 mr-4">
+              <h3 className="font-semibold text-foreground whitespace-nowrap" style={{ fontSize: 'var(--font-h6)' }}>
+                Cluster Records
+              </h3>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsMainTableCollapsed(!isMainTableCollapsed)}
+                className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
+              >
+                <span style={{ fontSize: 'var(--font-body)' }}>
+                  {isMainTableCollapsed ? 'Expand' : 'Collapse'}
+                </span>
+                {isMainTableCollapsed ? (
+                  <CaretDown className="h-3 w-3" />
+                ) : (
+                  <CaretUp className="h-3 w-3" />
+                )}
+              </Button>
+            </div>
             {/* Search Input - Optimized width */}
             <div className="relative flex-1 min-w-64 max-w-80">
               <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
@@ -917,7 +916,7 @@ export function ClusterDetails() {
       {showSimilarRecords && selectedRecordId && (
         <Card className="bg-card border-border shadow-sm mt-4 mx-8">
           <CardContent className="p-0">
-            {/* Similar Records Header */}
+            {/* Similar Records Header with Collapse Button */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20">
               <div className="flex items-center gap-3">
                 <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
@@ -960,8 +959,130 @@ export function ClusterDetails() {
               </div>
             </div>
             
-            {/* Similar Records Table */}
             {!isSimilarTableCollapsed && (
+            <>
+            {/* Ultra-Compact Filter Controls for Similar Records */}
+            <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/20 flex-wrap filter-bar flex-shrink-0">
+            {/* Search Input - Optimized width */}
+            <div className="relative flex-1 min-w-64 max-w-80">
+              <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Search similar records..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-7 pr-7 border-border placeholder:text-muted-foreground focus:ring-1 focus:ring-ring transition-colors"
+                style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
+              />
+              {searchTerm && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="absolute right-1 top-1/2 transform -translate-y-1/2 p-0 hover:bg-muted transition-colors"
+                  style={{ height: 'var(--button-xs)', width: 'var(--button-xs)' }}
+                  onClick={() => setSearchTerm('')}
+                >
+                  <X className="h-2 w-2 text-muted-foreground" />
+                </Button>
+              )}
+            </div>
+
+            {/* Quick Status Filters - Ultra-compact for 1920x1080 */}
+            <div className="flex items-center gap-1">
+              {['all', 'with-approvals', 'pending-approvals', 'no-approvals'].map((type) => (
+                <Button
+                  key={type}
+                  variant={filterType === type ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setFilterType(type as FilterType)}
+                  className={`${
+                    filterType === type 
+                      ? type === 'with-approvals' ? 'bg-success text-success-foreground hover:bg-success/90'
+                        : type === 'pending-approvals' ? 'bg-warning text-warning-foreground hover:bg-warning/90'
+                        : type === 'no-approvals' ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
+                        : 'bg-primary text-primary-foreground hover:bg-primary/90'
+                      : 'border-border text-foreground hover:bg-muted'
+                  } focus:ring-1 focus:ring-ring transition-colors`}
+                  style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
+                >
+                  {type === 'all' ? 'All' 
+                    : type === 'with-approvals' ? 'With Approvals'
+                    : type === 'pending-approvals' ? 'Pending'
+                    : 'None'}
+                </Button>
+              ))}
+            </div>
+
+            {/* Advanced Filters - Compact Selects */}
+            <div className="flex items-center gap-1">
+              <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as StatusFilter)}>
+                <SelectTrigger className="w-24 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all" style={{ fontSize: 'var(--font-body)' }}>All</SelectItem>
+                  <SelectItem value="approved" style={{ fontSize: 'var(--font-body)' }}>✓</SelectItem>
+                  <SelectItem value="rejected" style={{ fontSize: 'var(--font-body)' }}>✗</SelectItem>
+                  <SelectItem value="pending" style={{ fontSize: 'var(--font-body)' }}>-</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select value={provisionTypeFilter} onValueChange={setProvisionTypeFilter}>
+                <SelectTrigger className="w-32 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all" style={{ fontSize: 'var(--font-body)' }}>All Types</SelectItem>
+                  {uniqueProvisionTypes.map((type) => (
+                    <SelectItem key={type} value={type} style={{ fontSize: 'var(--font-body)' }}>{type.substring(0, 20)}...</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select value={sortField} onValueChange={(value) => setSortField(value as SortField)}>
+                <SelectTrigger className="w-40 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="abcd_1up" style={{ fontSize: 'var(--font-body)' }}>ABCD</SelectItem>
+                  <SelectItem value="service_name" style={{ fontSize: 'var(--font-body)' }}>Name</SelectItem>
+                  <SelectItem value="num_provisions" style={{ fontSize: 'var(--font-body)' }}>Prov</SelectItem>
+                  <SelectItem value="num_products" style={{ fontSize: 'var(--font-body)' }}>Prod</SelectItem>
+                  <SelectItem value="num_groups" style={{ fontSize: 'var(--font-body)' }}>Groups</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Button
+                variant="outline"
+                size="sm"
+                className="px-2 border-border focus:ring-1 focus:ring-ring transition-colors hover:bg-muted"
+                style={{ height: 'var(--button-sm)' }}
+                onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
+              >
+                {sortDirection === 'asc' ? 
+                  <SortAscending className="h-3 w-3" /> : 
+                  <SortDescending className="h-3 w-3" />
+                }
+              </Button>
+            </div>
+
+            {/* Results & Clear */}
+            <div className="flex items-center gap-2 ml-auto">
+              <Badge variant="outline" className="px-2 py-0.5 bg-muted/50 border-border" style={{ fontSize: 'var(--font-body)' }}>
+                {similarRecords.length}/{similarRecords.length}
+              </Badge>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearFilters}
+                className="px-2 text-muted-foreground hover:text-foreground hover:bg-muted focus:ring-1 focus:ring-ring transition-colors"
+                style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
+              >
+                <X className="h-2 w-2 mr-1" />
+                Clear
+              </Button>
+            </div>
+          </div>
             <div className="max-h-96 overflow-auto">
               <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                 <colgroup>
@@ -1055,6 +1176,7 @@ export function ClusterDetails() {
                 </tbody>
               </table>
             </div>
+            </>
             )}
           </CardContent>
         </Card>
@@ -1064,7 +1186,7 @@ export function ClusterDetails() {
       {showExactSameCDRecords && selectedRecordId && (
         <Card className="bg-card border-border shadow-sm mt-4 mx-8">
           <CardContent className="p-0">
-            {/* Exact Same CD Records Header */}
+            {/* Exact Same CD Records Header with Collapse Button */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20">
               <div className="flex items-center gap-3">
                 <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
@@ -1107,8 +1229,130 @@ export function ClusterDetails() {
               </div>
             </div>
             
-            {/* Exact Same CD Records Table */}
             {!isExactSameCDTableCollapsed && (
+            <>
+            {/* Ultra-Compact Filter Controls for Exact Same CD Records */}
+            <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/20 flex-wrap filter-bar flex-shrink-0">
+            {/* Search Input - Optimized width */}
+            <div className="relative flex-1 min-w-64 max-w-80">
+              <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Search exact CD records..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-7 pr-7 border-border placeholder:text-muted-foreground focus:ring-1 focus:ring-ring transition-colors"
+                style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
+              />
+              {searchTerm && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="absolute right-1 top-1/2 transform -translate-y-1/2 p-0 hover:bg-muted transition-colors"
+                  style={{ height: 'var(--button-xs)', width: 'var(--button-xs)' }}
+                  onClick={() => setSearchTerm('')}
+                >
+                  <X className="h-2 w-2 text-muted-foreground" />
+                </Button>
+              )}
+            </div>
+
+            {/* Quick Status Filters - Ultra-compact for 1920x1080 */}
+            <div className="flex items-center gap-1">
+              {['all', 'with-approvals', 'pending-approvals', 'no-approvals'].map((type) => (
+                <Button
+                  key={type}
+                  variant={filterType === type ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setFilterType(type as FilterType)}
+                  className={`${
+                    filterType === type 
+                      ? type === 'with-approvals' ? 'bg-success text-success-foreground hover:bg-success/90'
+                        : type === 'pending-approvals' ? 'bg-warning text-warning-foreground hover:bg-warning/90'
+                        : type === 'no-approvals' ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
+                        : 'bg-primary text-primary-foreground hover:bg-primary/90'
+                      : 'border-border text-foreground hover:bg-muted'
+                  } focus:ring-1 focus:ring-ring transition-colors`}
+                  style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
+                >
+                  {type === 'all' ? 'All' 
+                    : type === 'with-approvals' ? 'With Approvals'
+                    : type === 'pending-approvals' ? 'Pending'
+                    : 'None'}
+                </Button>
+              ))}
+            </div>
+
+            {/* Advanced Filters - Compact Selects */}
+            <div className="flex items-center gap-1">
+              <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as StatusFilter)}>
+                <SelectTrigger className="w-24 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all" style={{ fontSize: 'var(--font-body)' }}>All</SelectItem>
+                  <SelectItem value="approved" style={{ fontSize: 'var(--font-body)' }}>✓</SelectItem>
+                  <SelectItem value="rejected" style={{ fontSize: 'var(--font-body)' }}>✗</SelectItem>
+                  <SelectItem value="pending" style={{ fontSize: 'var(--font-body)' }}>-</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select value={provisionTypeFilter} onValueChange={setProvisionTypeFilter}>
+                <SelectTrigger className="w-32 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all" style={{ fontSize: 'var(--font-body)' }}>All Types</SelectItem>
+                  {uniqueProvisionTypes.map((type) => (
+                    <SelectItem key={type} value={type} style={{ fontSize: 'var(--font-body)' }}>{type.substring(0, 20)}...</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select value={sortField} onValueChange={(value) => setSortField(value as SortField)}>
+                <SelectTrigger className="w-40 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="abcd_1up" style={{ fontSize: 'var(--font-body)' }}>ABCD</SelectItem>
+                  <SelectItem value="service_name" style={{ fontSize: 'var(--font-body)' }}>Name</SelectItem>
+                  <SelectItem value="num_provisions" style={{ fontSize: 'var(--font-body)' }}>Prov</SelectItem>
+                  <SelectItem value="num_products" style={{ fontSize: 'var(--font-body)' }}>Prod</SelectItem>
+                  <SelectItem value="num_groups" style={{ fontSize: 'var(--font-body)' }}>Groups</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Button
+                variant="outline"
+                size="sm"
+                className="px-2 border-border focus:ring-1 focus:ring-ring transition-colors hover:bg-muted"
+                style={{ height: 'var(--button-sm)' }}
+                onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
+              >
+                {sortDirection === 'asc' ? 
+                  <SortAscending className="h-3 w-3" /> : 
+                  <SortDescending className="h-3 w-3" />
+                }
+              </Button>
+            </div>
+
+            {/* Results & Clear */}
+            <div className="flex items-center gap-2 ml-auto">
+              <Badge variant="outline" className="px-2 py-0.5 bg-muted/50 border-border" style={{ fontSize: 'var(--font-body)' }}>
+                {exactSameCDRecords.length}/{exactSameCDRecords.length}
+              </Badge>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearFilters}
+                className="px-2 text-muted-foreground hover:text-foreground hover:bg-muted focus:ring-1 focus:ring-ring transition-colors"
+                style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
+              >
+                <X className="h-2 w-2 mr-1" />
+                Clear
+              </Button>
+            </div>
+          </div>
             <div className="max-h-96 overflow-auto">
               <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                 <colgroup>
@@ -1198,6 +1442,7 @@ export function ClusterDetails() {
                 </tbody>
               </table>
             </div>
+            </>
             )}
           </CardContent>
         </Card>
