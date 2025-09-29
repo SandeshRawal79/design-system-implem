@@ -45,30 +45,26 @@ const mockClusterData = [
     similarity_score: "95.2"
   },
   {
-    abcd_1up: 2019,
+    abcd_1up: 2002,
     service_id: 15002,
-    service_name: "Federal Legend Drugs",
+    service_name: "State Legend Drugs",
     provision_type_1up: null,
     provision_type: "Anti Cancer Deductible",
     options: "Only Options (D)",
-    num_splits: 1,
-    is_single_split_with_no_change: null,
     num_provisions: 8412,
     num_products: 4207,
-    num_clients: 953,
+    is_single_split_with_no_change: null,
+    num_clients: 850,
     num_groups: 3310,
     splits: [],
     phase_included_in_bm: 0,
     approver_groups_needed_bm: 1,
-    approvals_given_bm: 0,
-    approvals_done_by_abcd_set_1up: null,
     member_of_sets: null,
     approvalStatuses: generateApprovalStatuses(),
     similarity_score: "92.8"
   }
 ];
 
-// ApprovalStatusIndicators component
 const ApprovalStatusIndicators = ({ statuses }: { statuses: string[] }) => (
   <div className="flex gap-1 justify-center">
     {statuses.map((status, index) => (
@@ -87,7 +83,7 @@ const ApprovalStatusIndicators = ({ statuses }: { statuses: string[] }) => (
 );
 
 export function ClusterDetails() {
-  const { serviceId, clusterId } = useParams();
+  const { clusterId, serviceId } = useParams()
   
   // State for filtering and searching
   const [searchTerm, setSearchTerm] = useState('')
@@ -101,21 +97,19 @@ export function ClusterDetails() {
   const [selectedRecordId, setSelectedRecordId] = useState<number | null>(null)
   const [similarRecords, setSimilarRecords] = useState<any[]>([])
   const [showSimilarRecords, setShowSimilarRecords] = useState(false)
-  const [isSimilarRecordsOpen, setIsSimilarRecordsOpen] = useState(true)
   
   // State for exact same CD records
   const [exactSameCDRecords, setExactSameCDRecords] = useState<any[]>([])
   const [showExactSameCDRecords, setShowExactSameCDRecords] = useState(false)
+  const [isSimilarRecordsOpen, setIsSimilarRecordsOpen] = useState(true)
   const [isExactSameCDRecordsOpen, setIsExactSameCDRecordsOpen] = useState(true)
 
   // Filter and sort data
-  const filteredAndSortedData = useMemo(() => {
+  const filteredData = useMemo(() => {
     let filtered = [...mockClusterData]
 
-    // Apply search filter
     if (searchTerm) {
       filtered = filtered.filter(item =>
-        item.abcd_1up.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.service_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.provision_type.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.options.toLowerCase().includes(searchTerm.toLowerCase())
@@ -202,16 +196,16 @@ export function ClusterDetails() {
           bValue = b.num_products
           break
         case 'num_splits':
-          aValue = a.num_splits
-          bValue = b.num_splits
+          aValue = a.num_splits || 0
+          bValue = b.num_splits || 0
           break
         case 'num_clients':
-          aValue = a.num_clients
-          bValue = b.num_clients
+          aValue = a.num_clients || 0
+          bValue = b.num_clients || 0
           break
         case 'num_groups':
-          aValue = a.num_groups
-          bValue = b.num_groups
+          aValue = a.num_groups || 0
+          bValue = b.num_groups || 0
           break
         default:
           return 0
@@ -239,68 +233,9 @@ export function ClusterDetails() {
     setSearchTerm('');
     setFilterType('all');
     setStatusFilter('all');
-    setSortField('abcd_1up');
-    setSortDirection('asc');
+    setProvisionTypeFilter('all');
   };
-
-  // Generate similar records for demonstration
-  const generateSimilarRecords = (abcdId: number) => {
-    return [
-      {
-        abcd_1up: abcdId + 100,
-        service_id: 15003,
-        service_name: "Federal Legend Drugs - Similar",
-        provision_type: "Anti Cancer Deductible",
-        options: "Only Options (D)",
-        num_provisions: 8200,
-        num_products: 4100,
-        num_clients: 920,
-        num_groups: 3200,
-        similarity_score: "94.5",
-        approvalStatuses: generateApprovalStatuses()
-      },
-      {
-        abcd_1up: abcdId + 200,
-        service_id: 15004,
-        service_name: "Federal Legend Drugs - Similar 2",
-        provision_type: "Anti Cancer Deductible",
-        options: "Does Not Apply",
-        num_provisions: 8300,
-        num_products: 4150,
-        num_clients: 940,
-        num_groups: 3250,
-        similarity_score: "91.8",
-        approvalStatuses: generateApprovalStatuses()
-      }
-    ];
-  };
-
-  // Generate exact same CD records for demonstration
-  const generateExactSameCDRecords = (abcdId: number) => {
-    return [
-      {
-        abcd_1up: abcdId + 50,
-        service_id: 15005,
-        service_name: "Federal Legend Drugs - Exact Match",
-        provision_type: "Anti Cancer Deductible",
-        options: "Only Options (D)",
-        num_provisions: 8412,
-        num_products: 4207,
-        num_clients: 953,
-        num_groups: 3310,
-        approvalStatuses: generateApprovalStatuses()
-      }
-    ];
-  };
-
-  // Find similar records function
-  const findSimilarRecords = (recordId: number) => {
-    setSelectedRecordId(recordId);
-    setSimilarRecords(generateSimilarRecords(recordId));
-    setShowSimilarRecords(true);
-    setIsSimilarRecordsOpen(true);
-  };
-
+  
   const getSortIcon = (field: SortField) => {
     if (sortField !== field) return null
     return sortDirection === 'asc' ? 
@@ -308,20 +243,19 @@ export function ClusterDetails() {
       <CaretDown className="h-3 w-3 ml-1" />
   }
   
-  // Handle clicking on the # column to show similar records
-  const handleRowNumberClick = (abcdId: number) => {
-    if (selectedRecordId === abcdId && showSimilarRecords && showExactSameCDRecords) {
-      // If already showing both tables for this row, hide them
-      setShowSimilarRecords(false)
-      setShowExactSameCDRecords(false)
+  // Simulate finding similar records by clicking on the # column to show similar records
+  const findSimilarRecords = (abcdId: number) => {
+    if (selectedRecordId === abcdId) {
       setSelectedRecordId(null)
       setSimilarRecords([])
       setExactSameCDRecords([])
+      setShowSimilarRecords(false)
+      setShowExactSameCDRecords(false)
     } else {
       // Show both tables for this row
       setSelectedRecordId(abcdId)
-      setSimilarRecords(generateSimilarRecords(abcdId))
-      setExactSameCDRecords(generateExactSameCDRecords(abcdId))
+      setSimilarRecords(mockClusterData.slice(0, 3))
+      setExactSameCDRecords(mockClusterData.slice(0, 2))
       setShowSimilarRecords(true)
       setShowExactSameCDRecords(true)
       // Reset collapsible state to open when showing new records
@@ -333,29 +267,26 @@ export function ClusterDetails() {
   // Simulate finding exact same CD records
   const findExactSameCDRecords = (recordId: number) => {
     setSelectedRecordId(recordId);
-    setExactSameCDRecords(generateExactSameCDRecords(recordId));
+    setExactSameCDRecords(mockClusterData.slice(0, 3));
     setShowExactSameCDRecords(true);
-    setIsExactSameCDRecordsOpen(true);
-  };
+    setIsExactSameCDRecordsOpen(true)
+  }
 
   return (
     <div className="space-y-6 p-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between bg-background">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Cluster Details</h1>
-          <p className="text-muted-foreground">Service ID: {serviceId} | Cluster: {clusterId}</p>
         </div>
       </div>
 
-      {/* Main cluster data table */}
       <Card className="border border-border shadow-sm">
         <CardContent className="p-4">
           <div className="space-y-4">
             <h2 className="text-lg font-semibold text-foreground">Cluster Records</h2>
             
             {/* Search and filters */}
-            <div className="flex gap-4 items-center">
+            <div className="flex items-center justify-between">
               <div className="relative flex-1 max-w-md">
                 <MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -365,6 +296,12 @@ export function ClusterDetails() {
                   className="pl-9"
                 />
               </div>
+              <Button onClick={() => findSimilarRecords(15001)}>
+                Find Similar Records
+              </Button>
+              <Button onClick={() => findExactSameCDRecords(15001)}>
+                Find Exact CD Records
+              </Button>
             </div>
 
             {/* Records table */}
@@ -372,7 +309,6 @@ export function ClusterDetails() {
               <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                 <thead className="bg-muted/50 border-b border-border">
                   <tr>
-                    <th className="text-left px-4 py-2 font-medium text-muted-foreground">#</th>
                     <th className="text-left px-4 py-2 font-medium text-muted-foreground">ABCD</th>
                     <th className="text-left px-4 py-2 font-medium text-muted-foreground">Service ID</th>
                     <th className="text-left px-4 py-2 font-medium text-muted-foreground">Service Name</th>
@@ -384,18 +320,8 @@ export function ClusterDetails() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredAndSortedData.map((record, index) => (
+                  {filteredData.map((record, index) => (
                     <tr key={record.service_id} className="border-b border-border hover:bg-muted/30">
-                      <td className="px-4 py-2">
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          onClick={() => handleRowNumberClick(record.abcd_1up)}
-                          className="h-6 w-6 p-0 font-bold text-primary hover:bg-primary/10"
-                        >
-                          {index + 1}
-                        </Button>
-                      </td>
                       <td className="px-4 py-2">
                         <Badge variant="outline" className="bg-accent/10 text-accent border-accent/20">
                           {record.abcd_1up}
@@ -405,7 +331,7 @@ export function ClusterDetails() {
                         <span className="font-bold text-info">{record.service_id}</span>
                       </td>
                       <td className="px-4 py-2">
-                        <span className="font-medium text-foreground">{record.service_name}</span>
+                        <span className="text-foreground">{record.service_name}</span>
                       </td>
                       <td className="px-4 py-2">
                         <span className="text-foreground">{record.provision_type}</span>
@@ -414,7 +340,7 @@ export function ClusterDetails() {
                         <span className="text-accent">{record.options}</span>
                       </td>
                       <td className="px-4 py-2 text-center">
-                        <span className="font-bold text-primary">{record.num_provisions.toLocaleString()}</span>
+                        <span className="font-bold text-success">{record.num_provisions.toLocaleString()}</span>
                       </td>
                       <td className="px-4 py-2 text-center">
                         <span className="font-bold text-success">{record.num_products.toLocaleString()}</span>
@@ -436,7 +362,7 @@ export function ClusterDetails() {
         <Card className="bg-card border-border shadow-sm mt-4 mx-8">
           <CardContent className="p-0">
             <Collapsible open={isSimilarRecordsOpen} onOpenChange={setIsSimilarRecordsOpen}>
-              {/* Similar Records Header with Collapsible Trigger */}
+              {/* Collapsible Trigger */}
               <CollapsibleTrigger asChild>
                 <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20 cursor-pointer hover:bg-muted/30 transition-colors">
                   <div className="flex items-center gap-3">
@@ -444,8 +370,8 @@ export function ClusterDetails() {
                     <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
                       Similar Records for ABCD {selectedRecordId}
                     </h3>
-                    <Badge variant="outline" className="px-2 py-0.5 bg-info/10 text-info border-info/20">
-                      {similarRecords.length} records found
+                    <Badge variant="outline" className="ml-2 px-2 py-0.5 bg-info/10 text-info border-info/20">
+                      {similarRecords.length} records
                     </Badge>
                   </div>
                   <Button
@@ -470,23 +396,9 @@ export function ClusterDetails() {
               <CollapsibleContent>
                 <div className="max-h-96 overflow-auto">
                   <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
-                    <colgroup>
-                      <col className="col-index" />
-                      <col className="col-abcd" />
-                      <col className="col-service-id" />
-                      <col className="col-service-name" />
-                      <col className="col-provision-type" />
-                      <col className="col-options" />
-                      <col className="col-provisions" />
-                      <col className="col-products" />
-                      <col className="col-clients" />
-                      <col className="col-groups" />
-                      <col className="col-similarity" />
-                      <col className="col-approval" />
-                    </colgroup>
-                    <thead className="sticky top-0 bg-card border-b border-border z-10 shadow-sm">
+                    <thead className="sticky top-0 bg-card border-b-2 border-muted z-10 shadow-sm">
                       <tr>
-                        <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap col-index bg-card" style={{ fontSize: 'var(--font-body)' }}>#</th>
+                        <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>#</th>
                         <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>ABCD 1-Up</th>
                         <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Service ID</th>
                         <th className="text-left px-2 py-2 font-medium text-muted-foreground bg-card" style={{ fontSize: 'var(--font-body)' }}>Service Name</th>
@@ -503,7 +415,7 @@ export function ClusterDetails() {
                     <tbody>
                       {similarRecords.map((record, index) => (
                         <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
-                          <td className="px-2 py-2 text-left col-index align-middle" style={{ fontSize: 'var(--font-body)' }}>
+                          <td className="px-2 py-2 text-left align-middle" style={{ fontSize: 'var(--font-body)' }}>
                             <span className="font-bold text-muted-foreground">{index + 1}</span>
                           </td>
                           <td className="px-2 py-2">
@@ -525,7 +437,7 @@ export function ClusterDetails() {
                             </span>
                           </td>
                           <td className="px-2 py-2 align-top">
-                            <span className="font-medium text-accent break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.options}>
+                            <span className="text-accent break-words leading-tight" style={{ fontSize: 'var(--font-body)' }}>
                               {record.options}
                             </span>
                           </td>
@@ -572,16 +484,16 @@ export function ClusterDetails() {
         <Card className="bg-card border-border shadow-sm mt-4 mx-8">
           <CardContent className="p-0">
             <Collapsible open={isExactSameCDRecordsOpen} onOpenChange={setIsExactSameCDRecordsOpen}>
-              {/* Exact Same CD Records Header with Collapsible Trigger */}
+              {/* Collapsible Trigger */}
               <CollapsibleTrigger asChild>
                 <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20 cursor-pointer hover:bg-muted/30 transition-colors">
                   <div className="flex items-center gap-3">
                     <CaretDown className={`h-4 w-4 transition-transform ${isExactSameCDRecordsOpen ? 'rotate-0' : '-rotate-90'}`} />
                     <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
-                      Exact Same CD Records (Based on Selected ABCD) for ABCD {selectedRecordId}
+                      Exact Same Coverage Definition (CD) for ABCD {selectedRecordId}
                     </h3>
-                    <Badge variant="outline" className="px-2 py-0.5 bg-success/10 text-success border-success/20">
-                      {exactSameCDRecords.length} exact matches found
+                    <Badge variant="outline" className="ml-2 px-2 py-0.5 bg-success/10 text-success border-success/20">
+                      {exactSameCDRecords.length} records
                     </Badge>
                   </div>
                   <Button
@@ -606,23 +518,9 @@ export function ClusterDetails() {
               <CollapsibleContent>
                 <div className="max-h-96 overflow-auto">
                   <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
-                    <colgroup>
-                      <col className="col-index" />
-                      <col className="col-abcd" />
-                      <col className="col-service-id" />
-                      <col className="col-service-name" />
-                      <col className="col-provision-type" />
-                      <col className="col-options" />
-                      <col className="col-provisions" />
-                      <col className="col-products" />
-                      <col className="col-clients" />
-                      <col className="col-groups" />
-                      <col className="col-match-type" />
-                      <col className="col-approval" />
-                    </colgroup>
-                    <thead className="sticky top-0 bg-card border-b border-border z-10 shadow-sm">
+                    <thead className="sticky top-0 bg-card border-b-2 border-muted z-10 shadow-sm">
                       <tr>
-                        <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap col-index bg-card" style={{ fontSize: 'var(--font-body)' }}>#</th>
+                        <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>#</th>
                         <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>ABCD 1-Up</th>
                         <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Service ID</th>
                         <th className="text-left px-2 py-2 font-medium text-muted-foreground bg-card" style={{ fontSize: 'var(--font-body)' }}>Service Name</th>
@@ -639,7 +537,7 @@ export function ClusterDetails() {
                     <tbody>
                       {exactSameCDRecords.map((record, index) => (
                         <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
-                          <td className="px-2 py-2 text-left col-index align-middle" style={{ fontSize: 'var(--font-body)' }}>
+                          <td className="px-2 py-2 text-left align-middle" style={{ fontSize: 'var(--font-body)' }}>
                             <span className="font-bold text-muted-foreground">{index + 1}</span>
                           </td>
                           <td className="px-2 py-2">
@@ -661,7 +559,7 @@ export function ClusterDetails() {
                             </span>
                           </td>
                           <td className="px-2 py-2 align-top">
-                            <span className="font-medium text-accent break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.options}>
+                            <span className="text-accent break-words leading-tight" style={{ fontSize: 'var(--font-body)' }}>
                               {record.options}
                             </span>
                           </td>
