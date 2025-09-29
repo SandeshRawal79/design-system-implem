@@ -254,6 +254,35 @@ const mockClusterData = [
     approvalStatuses: generateApprovalStatuses()
   }))
 ]
+// Generate similar records for a given ABCD ID
+const generateSimilarRecords = (abcdId: number) => {
+  const baseRecord = mockClusterData.find(r => r.abcd_1up === abcdId)
+  if (!baseRecord) return []
+  
+  return Array.from({ length: 5 + Math.floor(Math.random() * 8) }, (_, i) => ({
+    abcd_1up: abcdId + 10000 + i,
+    service_id: baseRecord.service_id + Math.floor(Math.random() * 5),
+    service_name: baseRecord.service_name,
+    provision_type_1up: null,
+    provision_type: baseRecord.provision_type,
+    options: i % 3 === 0 ? baseRecord.options : 
+             i % 3 === 1 ? "Similar Option Variant" : "Alternative Configuration",
+    num_splits: Math.floor(Math.random() * 3),
+    is_single_split_with_no_change: null,
+    num_provisions: Math.floor(baseRecord.num_provisions * (0.5 + Math.random())),
+    num_products: Math.floor(baseRecord.num_products * (0.7 + Math.random() * 0.6)),
+    num_clients: Math.floor((baseRecord.num_clients || 1) * (0.8 + Math.random() * 0.4)),
+    num_groups: Math.floor((baseRecord.num_groups || 1) * (0.6 + Math.random() * 0.8)),
+    splits: [],
+    phase_included_in_bm: 0,
+    approver_groups_needed_bm: 1,
+    approvals_given_bm: 0,
+    approvals_done_by_abcd_set_1up: null,
+    member_of_sets: null,
+    approvalStatuses: generateApprovalStatuses(),
+    similarity_score: (85 + Math.random() * 15).toFixed(1)
+  }))
+}
 
 // Component to render approval status indicators in compact format to save column space
 function ApprovalStatusIndicators({ statuses }: { statuses: string[] }) {
@@ -318,6 +347,11 @@ export function ClusterDetails() {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
   const [provisionTypeFilter, setProvisionTypeFilter] = useState('all')
   const [distanceThreshold, setDistanceThreshold] = useState(clusterInfo.distanceThreshold.toString())
+  
+  // State for similar records
+  const [selectedRecordId, setSelectedRecordId] = useState<number | null>(null)
+  const [similarRecords, setSimilarRecords] = useState<any[]>([])
+  const [showSimilarRecords, setShowSimilarRecords] = useState(false)
 
   // Filter and sort data
   const filteredAndSortedData = useMemo(() => {
@@ -459,6 +493,21 @@ export function ClusterDetails() {
     return sortDirection === 'asc' ? 
       <CaretUp className="h-3 w-3 ml-1" /> : 
       <CaretDown className="h-3 w-3 ml-1" />
+  }
+  
+  // Handle clicking on the # column to show similar records
+  const handleRowNumberClick = (abcdId: number) => {
+    if (selectedRecordId === abcdId && showSimilarRecords) {
+      // If already showing similar records for this row, hide them
+      setShowSimilarRecords(false)
+      setSelectedRecordId(null)
+      setSimilarRecords([])
+    } else {
+      // Show similar records for this row
+      setSelectedRecordId(abcdId)
+      setSimilarRecords(generateSimilarRecords(abcdId))
+      setShowSimilarRecords(true)
+    }
   }
 
   // Get unique provision types for filter
@@ -718,7 +767,17 @@ export function ClusterDetails() {
                   {filteredAndSortedData.map((record, index) => (
                     <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
                       <td className="px-2 py-2 text-left col-index align-middle" style={{ fontSize: 'var(--font-body)' }}>
-                        <span className="text-primary font-bold">{index + 1}</span>
+                        <Button 
+                          variant="ghost" 
+                          className={`p-1 h-auto text-primary hover:text-primary-foreground hover:bg-primary font-bold transition-colors ${
+                            selectedRecordId === record.abcd_1up && showSimilarRecords ? 'bg-primary text-primary-foreground' : ''
+                          }`}
+                          style={{ fontSize: 'var(--font-body)' }}
+                          onClick={() => handleRowNumberClick(record.abcd_1up)}
+                          title="Click to show/hide similar records"
+                        >
+                          {index + 1}
+                        </Button>
                       </td>
                       <td className="px-2 py-2 col-abcd align-middle">
                         <Button variant="link" className="p-0 h-auto text-primary hover:underline font-bold" style={{ fontSize: 'var(--font-body)' }}>
@@ -784,6 +843,123 @@ export function ClusterDetails() {
           </div>
         </CardContent>
       </Card>
+      
+      {/* Similar Records Table */}
+      {showSimilarRecords && selectedRecordId && (
+        <Card className="bg-card border-border shadow-sm mt-4 mx-8">
+          <CardContent className="p-0">
+            {/* Similar Records Header */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20">
+              <div className="flex items-center gap-3">
+                <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
+                  Similar Records for ABCD {selectedRecordId}
+                </h3>
+                <Badge variant="outline" className="px-2 py-0.5 bg-info/10 text-info border-info/20">
+                  {similarRecords.length} records found
+                </Badge>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowSimilarRecords(false)}
+                className="text-muted-foreground hover:text-foreground hover:bg-muted"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+            
+            {/* Similar Records Table */}
+            <div className="max-h-96 overflow-auto">
+              <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
+                <colgroup>
+                  <col className="col-abcd" />
+                  <col className="col-service-id" />
+                  <col className="col-service-name" />
+                  <col className="col-provision-type" />
+                  <col className="col-options" />
+                  <col className="col-provisions" />
+                  <col className="col-products" />
+                  <col className="col-clients" />
+                  <col className="col-groups" />
+                  <col className="col-similarity" />
+                  <col className="col-approval" />
+                </colgroup>
+                <thead className="sticky top-0 bg-card border-b border-border z-10 shadow-sm">
+                  <tr>
+                    <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>ABCD 1-Up</th>
+                    <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Service ID</th>
+                    <th className="text-left px-2 py-2 font-medium text-muted-foreground bg-card" style={{ fontSize: 'var(--font-body)' }}>Service Name</th>
+                    <th className="text-left px-2 py-2 font-medium text-muted-foreground bg-card" style={{ fontSize: 'var(--font-body)' }}>Provision Type</th>
+                    <th className="text-left px-2 py-2 font-medium text-muted-foreground bg-card" style={{ fontSize: 'var(--font-body)' }}>Options</th>
+                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Provisions</th>
+                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Products</th>
+                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Clients</th>
+                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Groups</th>
+                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Similarity</th>
+                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Approval</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {similarRecords.map((record, index) => (
+                    <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
+                      <td className="px-2 py-2">
+                        <Button variant="link" className="p-0 h-auto text-primary hover:underline font-bold" style={{ fontSize: 'var(--font-body)' }}>
+                          {record.abcd_1up}
+                        </Button>
+                      </td>
+                      <td className="px-2 py-2 text-center">
+                        <span className="font-bold text-info" style={{ fontSize: 'var(--font-body)' }}>{record.service_id}</span>
+                      </td>
+                      <td className="px-2 py-2 align-top">
+                        <span className="font-medium text-foreground break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.service_name}>
+                          {record.service_name}
+                        </span>
+                      </td>
+                      <td className="px-2 py-2 align-top">
+                        <span className="font-medium text-foreground break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.provision_type}>
+                          {record.provision_type}
+                        </span>
+                      </td>
+                      <td className="px-2 py-2 align-top">
+                        <span className="font-medium text-accent break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.options}>
+                          {record.options}
+                        </span>
+                      </td>
+                      <td className="px-2 py-2 text-center align-middle">
+                        <span className="font-bold text-primary" style={{ fontSize: 'var(--font-body)' }}>{record.num_provisions.toLocaleString()}</span>
+                      </td>
+                      <td className="px-2 py-2 text-center align-middle">
+                        <span className="font-bold text-success" style={{ fontSize: 'var(--font-body)' }}>{record.num_products.toLocaleString()}</span>
+                      </td>
+                      <td className="px-2 py-2 text-center align-middle">
+                        <span className="text-info font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_clients?.toLocaleString() || '-'}</span>
+                      </td>
+                      <td className="px-2 py-2 text-center align-middle">
+                        <span className="text-warning font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_groups?.toLocaleString() || '-'}</span>
+                      </td>
+                      <td className="px-2 py-2 text-center align-middle">
+                        <Badge 
+                          variant="outline" 
+                          className={`font-bold ${
+                            parseFloat(record.similarity_score) >= 95 ? 'bg-success/10 text-success border-success/20' :
+                            parseFloat(record.similarity_score) >= 90 ? 'bg-warning/10 text-warning border-warning/20' :
+                            'bg-info/10 text-info border-info/20'
+                          }`}
+                        >
+                          {record.similarity_score}%
+                        </Badge>
+                      </td>
+                      <td className="px-2 py-2 text-center align-middle">
+                        <ApprovalStatusIndicators statuses={record.approvalStatuses} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }
