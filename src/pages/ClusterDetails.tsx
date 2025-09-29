@@ -284,6 +284,36 @@ const generateSimilarRecords = (abcdId: number) => {
   }))
 }
 
+// Generate exact same CD records based on selected ABCD
+const generateExactSameCDRecords = (abcdId: number) => {
+  const baseRecord = mockClusterData.find(r => r.abcd_1up === abcdId)
+  if (!baseRecord) return []
+  
+  // Generate records with exactly same CD (provision_type and options) but different ABCD IDs
+  return Array.from({ length: 3 + Math.floor(Math.random() * 5) }, (_, i) => ({
+    abcd_1up: abcdId + 20000 + i,
+    service_id: baseRecord.service_id,
+    service_name: baseRecord.service_name,
+    provision_type_1up: null,
+    provision_type: baseRecord.provision_type, // Exact same provision type
+    options: baseRecord.options, // Exact same options
+    num_splits: baseRecord.num_splits,
+    is_single_split_with_no_change: null,
+    num_provisions: Math.floor(baseRecord.num_provisions * (0.8 + Math.random() * 0.4)),
+    num_products: Math.floor(baseRecord.num_products * (0.9 + Math.random() * 0.2)),
+    num_clients: Math.floor((baseRecord.num_clients || 1) * (0.9 + Math.random() * 0.2)),
+    num_groups: Math.floor((baseRecord.num_groups || 1) * (0.85 + Math.random() * 0.3)),
+    splits: [],
+    phase_included_in_bm: 0,
+    approver_groups_needed_bm: 1,
+    approvals_given_bm: 0,
+    approvals_done_by_abcd_set_1up: null,
+    member_of_sets: null,
+    approvalStatuses: generateApprovalStatuses(),
+    exact_match: true
+  }))
+}
+
 // Component to render approval status indicators in compact format to save column space
 function ApprovalStatusIndicators({ statuses }: { statuses: string[] }) {
   return (
@@ -352,6 +382,10 @@ export function ClusterDetails() {
   const [selectedRecordId, setSelectedRecordId] = useState<number | null>(null)
   const [similarRecords, setSimilarRecords] = useState<any[]>([])
   const [showSimilarRecords, setShowSimilarRecords] = useState(false)
+  
+  // State for exact same CD records
+  const [exactSameCDRecords, setExactSameCDRecords] = useState<any[]>([])
+  const [showExactSameCDRecords, setShowExactSameCDRecords] = useState(false)
 
   // Filter and sort data
   const filteredAndSortedData = useMemo(() => {
@@ -497,16 +531,20 @@ export function ClusterDetails() {
   
   // Handle clicking on the # column to show similar records
   const handleRowNumberClick = (abcdId: number) => {
-    if (selectedRecordId === abcdId && showSimilarRecords) {
-      // If already showing similar records for this row, hide them
+    if (selectedRecordId === abcdId && showSimilarRecords && showExactSameCDRecords) {
+      // If already showing both tables for this row, hide them
       setShowSimilarRecords(false)
+      setShowExactSameCDRecords(false)
       setSelectedRecordId(null)
       setSimilarRecords([])
+      setExactSameCDRecords([])
     } else {
-      // Show similar records for this row
+      // Show both tables for this row
       setSelectedRecordId(abcdId)
       setSimilarRecords(generateSimilarRecords(abcdId))
+      setExactSameCDRecords(generateExactSameCDRecords(abcdId))
       setShowSimilarRecords(true)
+      setShowExactSameCDRecords(true)
     }
   }
 
@@ -770,11 +808,11 @@ export function ClusterDetails() {
                         <Button 
                           variant="ghost" 
                           className={`p-1 h-auto text-primary hover:text-primary-foreground hover:bg-primary font-bold transition-colors ${
-                            selectedRecordId === record.abcd_1up && showSimilarRecords ? 'bg-primary text-primary-foreground' : ''
+                            selectedRecordId === record.abcd_1up && (showSimilarRecords || showExactSameCDRecords) ? 'bg-primary text-primary-foreground' : ''
                           }`}
                           style={{ fontSize: 'var(--font-body)' }}
                           onClick={() => handleRowNumberClick(record.abcd_1up)}
-                          title="Click to show/hide similar records"
+                          title="Click to show/hide similar records and exact same CD records"
                         >
                           {index + 1}
                         </Button>
@@ -861,7 +899,13 @@ export function ClusterDetails() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setShowSimilarRecords(false)}
+                onClick={() => {
+                  setShowSimilarRecords(false)
+                  setShowExactSameCDRecords(false)
+                  setSelectedRecordId(null)
+                  setSimilarRecords([])
+                  setExactSameCDRecords([])
+                }}
                 className="text-muted-foreground hover:text-foreground hover:bg-muted"
               >
                 <X className="h-4 w-4" />
@@ -947,6 +991,125 @@ export function ClusterDetails() {
                           }`}
                         >
                           {record.similarity_score}%
+                        </Badge>
+                      </td>
+                      <td className="px-2 py-2 text-center align-middle">
+                        <ApprovalStatusIndicators statuses={record.approvalStatuses} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+      
+      {/* Exact Same CD Records Table */}
+      {showExactSameCDRecords && selectedRecordId && (
+        <Card className="bg-card border-border shadow-sm mt-4 mx-8">
+          <CardContent className="p-0">
+            {/* Exact Same CD Records Header */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20">
+              <div className="flex items-center gap-3">
+                <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
+                  Exact Same CD Records (Based on Selected ABCD) for ABCD {selectedRecordId}
+                </h3>
+                <Badge variant="outline" className="px-2 py-0.5 bg-success/10 text-success border-success/20">
+                  {exactSameCDRecords.length} exact matches found
+                </Badge>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setShowSimilarRecords(false)
+                  setShowExactSameCDRecords(false)
+                  setSelectedRecordId(null)
+                  setSimilarRecords([])
+                  setExactSameCDRecords([])
+                }}
+                className="text-muted-foreground hover:text-foreground hover:bg-muted"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+            
+            {/* Exact Same CD Records Table */}
+            <div className="max-h-96 overflow-auto">
+              <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
+                <colgroup>
+                  <col className="col-abcd" />
+                  <col className="col-service-id" />
+                  <col className="col-service-name" />
+                  <col className="col-provision-type" />
+                  <col className="col-options" />
+                  <col className="col-provisions" />
+                  <col className="col-products" />
+                  <col className="col-clients" />
+                  <col className="col-groups" />
+                  <col className="col-match-type" />
+                  <col className="col-approval" />
+                </colgroup>
+                <thead className="sticky top-0 bg-card border-b border-border z-10 shadow-sm">
+                  <tr>
+                    <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>ABCD 1-Up</th>
+                    <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Service ID</th>
+                    <th className="text-left px-2 py-2 font-medium text-muted-foreground bg-card" style={{ fontSize: 'var(--font-body)' }}>Service Name</th>
+                    <th className="text-left px-2 py-2 font-medium text-muted-foreground bg-card" style={{ fontSize: 'var(--font-body)' }}>Provision Type</th>
+                    <th className="text-left px-2 py-2 font-medium text-muted-foreground bg-card" style={{ fontSize: 'var(--font-body)' }}>Options</th>
+                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Provisions</th>
+                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Products</th>
+                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Clients</th>
+                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Groups</th>
+                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Match Type</th>
+                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Approval</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {exactSameCDRecords.map((record, index) => (
+                    <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
+                      <td className="px-2 py-2">
+                        <Button variant="link" className="p-0 h-auto text-primary hover:underline font-bold" style={{ fontSize: 'var(--font-body)' }}>
+                          {record.abcd_1up}
+                        </Button>
+                      </td>
+                      <td className="px-2 py-2 text-center">
+                        <span className="font-bold text-info" style={{ fontSize: 'var(--font-body)' }}>{record.service_id}</span>
+                      </td>
+                      <td className="px-2 py-2 align-top">
+                        <span className="font-medium text-foreground break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.service_name}>
+                          {record.service_name}
+                        </span>
+                      </td>
+                      <td className="px-2 py-2 align-top">
+                        <span className="font-medium text-foreground break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.provision_type}>
+                          {record.provision_type}
+                        </span>
+                      </td>
+                      <td className="px-2 py-2 align-top">
+                        <span className="font-medium text-accent break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.options}>
+                          {record.options}
+                        </span>
+                      </td>
+                      <td className="px-2 py-2 text-center align-middle">
+                        <span className="font-bold text-primary" style={{ fontSize: 'var(--font-body)' }}>{record.num_provisions.toLocaleString()}</span>
+                      </td>
+                      <td className="px-2 py-2 text-center align-middle">
+                        <span className="font-bold text-success" style={{ fontSize: 'var(--font-body)' }}>{record.num_products.toLocaleString()}</span>
+                      </td>
+                      <td className="px-2 py-2 text-center align-middle">
+                        <span className="text-info font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_clients?.toLocaleString() || '-'}</span>
+                      </td>
+                      <td className="px-2 py-2 text-center align-middle">
+                        <span className="text-warning font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_groups?.toLocaleString() || '-'}</span>
+                      </td>
+                      <td className="px-2 py-2 text-center align-middle">
+                        <Badge 
+                          variant="outline" 
+                          className="bg-success/10 text-success border-success/20 font-bold"
+                        >
+                          Exact CD Match
                         </Badge>
                       </td>
                       <td className="px-2 py-2 text-center align-middle">
