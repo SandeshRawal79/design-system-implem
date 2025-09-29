@@ -219,43 +219,39 @@
 
 .btn-gradient-secondary:hover {
   background: linear-gradient(135deg, #474A9E 0%, #36A798 100%);
-  color: white;
   border-image: none;
   border-color: transparent;
   transform: translateY(-2px);
   box-shadow: 0 10px 25px -5px rgba(71, 74, 158, 0.25);
   cursor: pointer;
+  color: white;
 }
 
 /* Icon hover animation with better mobile support */
 .icon-hover {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 0.375rem;
-  padding: 0.25rem;
   cursor: pointer;
 }
 
 .icon-hover:hover {
   background-color: #F6F6F6;
-  cursor: pointer;
-  transform: scale(1.05);
 }
 
 @media (hover: none) {
   .icon-hover:hover {
-    transform: none;
+    background-color: transparent;
   }
 }
 
 /* Enhanced cursor pointer utilities */
-button, .btn, [role="button"], .cursor-pointer {
+.cursor-pointer {
   cursor: pointer !important;
 }
 
 /* Interactive elements */
 .interactive-element {
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -276,30 +272,21 @@ button, .btn, [role="button"], .cursor-pointer {
 .intelligence-card {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
 }
 
 .intelligence-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px -10px rgba(71, 74, 158, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px -5px rgba(71, 74, 158, 0.1);
   border-color: rgba(71, 74, 158, 0.2);
 }
 
-@media (hover: none) {
-  .intelligence-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px -8px rgba(71, 74, 158, 0.1);
-  }
-}
-
 /* Responsive adjustments for mobile */
-@media (max-width: 479px) {
+@media (max-width: 768px) {
   h1 { font-size: 2rem; } /* 32px - reduced for mobile */
   h2 { font-size: 1.5rem; } /* 24px - reduced for mobile */
   h3 { font-size: 1.125rem; } /* 18px - reduced for mobile */
   h4 { font-size: 1rem; } /* 16px - reduced for mobile */
   h5 { font-size: 0.875rem; } /* 14px - reduced for mobile */
-  h6 { font-size: 0.75rem; } /* 12px - reduced for mobile */
 }
 
 /* Enhanced focus states for accessibility */
@@ -309,7 +296,7 @@ input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid var(--primary);
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
   box-shadow: 0 0 0 4px color-mix(in oklab, var(--primary) 25%, transparent);
 }
@@ -324,7 +311,6 @@ textarea:focus-visible,
     transition-duration: 0.01ms !important;
   }
   
-  .intelligence-card:hover,
   .interactive-element:hover,
   .icon-hover:hover {
     transform: none !important;
