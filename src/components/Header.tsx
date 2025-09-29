@@ -78,7 +78,7 @@ export function Header({ clusterInfo }: HeaderProps) {
       <header className="bg-white border-b border-border shadow-sm py-1.5 relative" style={{ height: '42px' }}>
         <div className={containerClass}>
           {/* Logo and Title - Left Aligned */}
-          <div className="flex items-center gap-3 min-w-0 flex-1">
+          <div className="flex items-center gap-3 min-w-0 flex-1 header-logo-section">
             <div className="flex items-center gap-3">
               <img 
                 src={bniLogo} 
