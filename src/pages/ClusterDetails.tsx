@@ -488,12 +488,12 @@ export function ClusterDetails() {
                 step="0.1"
                 min="0"
                 max="100"
-                className="w-20 border-border font-bold text-accent focus:ring-1 focus:ring-primary"
+                className="w-20 border-input font-bold text-accent transition-all duration-300 focus:ring-2 focus:ring-primary focus:ring-offset-1"
                 style={{ height: 'var(--button-sm)', fontSize: 'var(--font-body)' }}
               />
-              <Button 
+              <Button
                 size="sm" 
-                className="px-4 btn-gradient-primary font-medium focus:ring-1 focus:ring-primary"
+                className="px-4 btn-gradient-primary font-medium transition-all duration-300 focus:ring-2 focus:ring-primary focus:ring-offset-2"
                 style={{ height: 'var(--button-sm)', fontSize: 'var(--font-body)' }}
                 onClick={() => {
                   console.log('Update distance threshold to:', distanceThreshold)
@@ -512,29 +512,29 @@ export function ClusterDetails() {
           <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/20 flex-wrap filter-bar flex-shrink-0">
             {/* Search Input - Optimized width */}
             <div className="relative flex-1 min-w-64 max-w-80">
-              <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+              <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 text-muted-foreground" style={{ width: 'calc(var(--icon-size) * 0.75)', height: 'calc(var(--icon-size) * 0.75)' }} />
               <Input
                 type="text"
                 placeholder="Search records..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-7 pr-7 border-border placeholder:text-muted-foreground focus:ring-1 focus:ring-primary"
+                className="pl-7 pr-7 border-input placeholder:text-muted-foreground transition-all duration-300 focus:ring-2 focus:ring-primary focus:ring-offset-1"
                 style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
               />
               {searchTerm && (
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="absolute right-1 top-1/2 transform -translate-y-1/2 p-0 hover:bg-muted"
+                  className="absolute right-1 top-1/2 transform -translate-y-1/2 p-0 hover:bg-muted transition-all duration-300"
                   style={{ height: 'var(--button-xs)', width: 'var(--button-xs)' }}
                   onClick={() => setSearchTerm('')}
                 >
-                  <X className="h-2 w-2 text-muted-foreground" />
+                  <X className="h-2 w-2 text-muted-foreground" style={{ width: 'calc(var(--icon-size) * 0.75)', height: 'calc(var(--icon-size) * 0.75)' }} />
                 </Button>
               )}
             </div>
 
-            {/* Quick Status Filters - Ultra-compact for 1920x1080 */}
+            {/* Quick Status Filters - Following Design System Button Heights & Colors */}
             <div className="flex items-center gap-1">
               {['all', 'with-approvals', 'pending-approvals', 'no-approvals'].map((type) => (
                 <Button
@@ -544,11 +544,12 @@ export function ClusterDetails() {
                   onClick={() => setFilterType(type as FilterType)}
                   className={`${
                     filterType === type 
-                      ? type === 'with-approvals' ? 'bg-success text-white hover:bg-success/90'
-                        : type === 'pending-approvals' ? 'bg-warning text-white hover:bg-warning/90'
-                        : 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
-                      : 'border-border text-foreground hover:bg-muted'
-                  } focus:ring-1 focus:ring-primary`}
+                      ? type === 'with-approvals' ? 'btn-gradient-primary'
+                        : type === 'pending-approvals' ? 'bg-warning text-warning-foreground hover:bg-warning/90'
+                        : type === 'no-approvals' ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
+                        : 'btn-gradient-primary'
+                      : 'btn-gradient-secondary'
+                  } transition-all duration-300 focus:ring-2 focus:ring-primary focus:ring-offset-2`}
                   style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
                 >
                   {type === 'all' ? 'All' 
@@ -562,7 +563,7 @@ export function ClusterDetails() {
             {/* Advanced Filters - Compact Selects */}
             <div className="flex items-center gap-1">
               <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as StatusFilter)}>
-                <SelectTrigger className="w-24 border-border focus:ring-1 focus:ring-primary" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
+                <SelectTrigger className="w-24 border-input transition-all duration-300 focus:ring-2 focus:ring-primary focus:ring-offset-1" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -574,7 +575,7 @@ export function ClusterDetails() {
               </Select>
 
               <Select value={provisionTypeFilter} onValueChange={setProvisionTypeFilter}>
-                <SelectTrigger className="w-32 border-border focus:ring-1 focus:ring-primary" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
+                <SelectTrigger className="w-32 border-input transition-all duration-300 focus:ring-2 focus:ring-primary focus:ring-offset-1" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -586,7 +587,7 @@ export function ClusterDetails() {
               </Select>
 
               <Select value={sortField} onValueChange={(value) => setSortField(value as SortField)}>
-                <SelectTrigger className="w-40 border-border focus:ring-1 focus:ring-primary" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
+                <SelectTrigger className="w-40 border-input transition-all duration-300 focus:ring-2 focus:ring-primary focus:ring-offset-1" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -601,13 +602,13 @@ export function ClusterDetails() {
               <Button
                 variant="outline"
                 size="sm"
-                className="px-2 border-border focus:ring-1 focus:ring-primary"
+                className="px-2 btn-gradient-secondary transition-all duration-300 focus:ring-2 focus:ring-primary focus:ring-offset-2"
                 style={{ height: 'var(--button-sm)' }}
                 onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
               >
                 {sortDirection === 'asc' ? 
-                  <SortAscending className="h-3 w-3" /> : 
-                  <SortDescending className="h-3 w-3" />
+                  <SortAscending className="h-3 w-3" style={{ width: 'var(--icon-size)', height: 'var(--icon-size)' }} /> : 
+                  <SortDescending className="h-3 w-3" style={{ width: 'var(--icon-size)', height: 'var(--icon-size)' }} />
                 }
               </Button>
             </div>
@@ -621,10 +622,10 @@ export function ClusterDetails() {
                 variant="ghost"
                 size="sm"
                 onClick={clearFilters}
-                className="px-2 text-muted-foreground hover:text-foreground hover:bg-muted focus:ring-1 focus:ring-primary"
+                className="px-2 text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-300 focus:ring-2 focus:ring-primary focus:ring-offset-1"
                 style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
               >
-                <X className="h-2 w-2 mr-1" />
+                <X className="mr-1" style={{ width: 'calc(var(--icon-size) * 0.75)', height: 'calc(var(--icon-size) * 0.75)' }} />
                 Clear
               </Button>
             </div>
