@@ -807,7 +807,7 @@ export function ClusterDetails() {
                       <td className="px-2 py-2 text-left col-index align-middle" style={{ fontSize: 'var(--font-body)' }}>
                         <Button 
                           variant="ghost" 
-                          className={`p-1 h-auto text-primary hover:text-primary-foreground hover:bg-primary font-bold transition-colors ${
+                          className={`p-1 h-auto text-primary underline hover:text-primary-foreground hover:bg-primary font-bold transition-colors ${
                             selectedRecordId === record.abcd_1up && (showSimilarRecords || showExactSameCDRecords) ? 'bg-primary text-primary-foreground' : ''
                           }`}
                           style={{ fontSize: 'var(--font-body)' }}
@@ -818,7 +818,7 @@ export function ClusterDetails() {
                         </Button>
                       </td>
                       <td className="px-2 py-2 col-abcd align-middle">
-                        <Button variant="link" className="p-0 h-auto text-primary hover:underline font-bold" style={{ fontSize: 'var(--font-body)' }}>
+                        <Button variant="link" className="p-0 h-auto text-primary underline font-bold" style={{ fontSize: 'var(--font-body)' }}>
                           {record.abcd_1up}
                         </Button>
                       </td>
