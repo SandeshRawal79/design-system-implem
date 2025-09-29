@@ -64,7 +64,7 @@ export function Header({ clusterInfo }: HeaderProps) {
 
   return (
     <>
-      <header className="bg-white border-b border-border shadow-sm px-4 sm:px-6 lg:px-8 py-2.5 relative" style={{ height: '42px' }}>
+      <header className="bg-white border-b border-border shadow-sm px-4 sm:px-6 lg:px-8 py-1.5 relative" style={{ height: '42px' }}>
         <div className="flex items-center justify-between w-full h-full">
           {/* Logo and Title - Left Aligned */}
           <div className="flex items-center gap-3 min-w-0 flex-1">
@@ -82,21 +82,21 @@ export function Header({ clusterInfo }: HeaderProps) {
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-3">
-                  <div>
-                    <h1 className="font-semibold text-foreground truncate" style={{ fontSize: 'var(--font-h4)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif', lineHeight: 'auto', letterSpacing: 'auto' }}>
+                  <div className="flex flex-col justify-center">
+                    <h1 className="font-semibold text-foreground truncate leading-none" style={{ fontSize: 'var(--font-body)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
                       Provision Intelligence Hub
                     </h1>
-                    <p className="text-muted-foreground hidden sm:block" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif', lineHeight: 'auto', letterSpacing: 'auto' }}>
+                    <p className="text-muted-foreground hidden sm:block leading-none mt-0.5" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
                       Powered by SHC.AI
                     </p>
                   </div>
                   {clusterInfo && (
                     <div className="hidden lg:flex items-center gap-3 ml-6 pl-6 border-l border-border">
-                      <div className="min-w-0">
-                        <h2 className="font-semibold text-foreground truncate" style={{ fontSize: 'var(--font-body)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif', lineHeight: 'auto', letterSpacing: 'auto' }}>
+                      <div className="min-w-0 flex flex-col justify-center">
+                        <h2 className="font-semibold text-foreground truncate leading-none" style={{ fontSize: 'var(--font-body)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
                           Cluster #{clusterInfo.clusterId} of {clusterInfo.totalClusters} Details - {clusterInfo.xrayProjection}
                         </h2>
-                        <p className="text-muted-foreground" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif', lineHeight: 'auto', letterSpacing: 'auto' }}>
+                        <p className="text-muted-foreground leading-none mt-0.5" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
                           {clusterInfo.recordsInCluster} records • Created {clusterInfo.created}
                         </p>
                       </div>
@@ -105,11 +105,11 @@ export function Header({ clusterInfo }: HeaderProps) {
                 </div>
                 {/* Mobile cluster info display */}
                 {clusterInfo && (
-                  <div className="lg:hidden mt-1">
-                    <h2 className="font-medium text-foreground truncate" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif', lineHeight: 'auto', letterSpacing: 'auto' }}>
+                  <div className="lg:hidden mt-0.5">
+                    <h2 className="font-medium text-foreground truncate leading-none" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
                       Cluster #{clusterInfo.clusterId} Details - {clusterInfo.xrayProjection}
                     </h2>
-                    <p className="text-muted-foreground" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif', lineHeight: 'auto', letterSpacing: 'auto' }}>
+                    <p className="text-muted-foreground leading-none mt-0.5" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
                       {clusterInfo.recordsInCluster} records
                     </p>
                   </div>
