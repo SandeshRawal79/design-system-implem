@@ -386,6 +386,11 @@ export function ClusterDetails() {
   // State for exact same CD records
   const [exactSameCDRecords, setExactSameCDRecords] = useState<any[]>([])
   const [showExactSameCDRecords, setShowExactSameCDRecords] = useState(false)
+  
+  // State for collapsible tables
+  const [isMainTableCollapsed, setIsMainTableCollapsed] = useState(false)
+  const [isSimilarTableCollapsed, setIsSimilarTableCollapsed] = useState(false)
+  const [isExactSameCDTableCollapsed, setIsExactSameCDTableCollapsed] = useState(false)
 
   // Filter and sort data
   const filteredAndSortedData = useMemo(() => {
@@ -902,6 +907,8 @@ export function ClusterDetails() {
               </table>
             </div>
           </div>
+          </>
+          )}
         </CardContent>
       </Card>
       
@@ -918,6 +925,14 @@ export function ClusterDetails() {
                 <Badge variant="outline" className="px-2 py-0.5 bg-info/10 text-info border-info/20">
                   {similarRecords.length} records found
                 </Badge>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsSimilarTableCollapsed(!isSimilarTableCollapsed)}
+                  className="text-muted-foreground hover:text-foreground hover:bg-muted"
+                >
+                  {isSimilarTableCollapsed ? <CaretDown className="h-4 w-4" /> : <CaretUp className="h-4 w-4" />}
+                </Button>
               </div>
               <Button
                 variant="ghost"
@@ -1171,6 +1186,14 @@ export function ClusterDetails() {
                 <Badge variant="outline" className="px-2 py-0.5 bg-success/10 text-success border-success/20">
                   {exactSameCDRecords.length} exact matches found
                 </Badge>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsExactSameCDTableCollapsed(!isExactSameCDTableCollapsed)}
+                  className="text-muted-foreground hover:text-foreground hover:bg-muted"
+                >
+                  {isExactSameCDTableCollapsed ? <CaretDown className="h-4 w-4" /> : <CaretUp className="h-4 w-4" />}
+                </Button>
               </div>
               <Button
                 variant="ghost"
