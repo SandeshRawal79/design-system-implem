@@ -12,6 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { Button } from '@/components/ui/button'
 import { useKV } from '@github/spark/hooks'
+import bniLogo from '@/assets/images/bni-logo.svg'
 
 interface ClusterInfo {
   clusterId: string
@@ -69,17 +70,16 @@ export function Header({ clusterInfo }: HeaderProps) {
           {/* Logo and Title - Left Aligned */}
           <div className="flex items-center gap-3 min-w-0 flex-1">
             <div className="flex items-center gap-3">
-              <div 
-                className="rounded-lg flex items-center justify-center text-white font-bold cursor-pointer shadow-sm" 
+              <img 
+                src={bniLogo} 
+                alt="BNi Logo" 
+                className="cursor-pointer"
                 style={{ 
-                  background: 'linear-gradient(135deg, #474A9E 0%, #36A798 100%)', 
-                  width: '24px',
-                  height: '24px',
-                  fontSize: 'var(--font-caption)'
+                  height: '28px',
+                  width: 'auto',
+                  filter: 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1))'
                 }}
-              >
-                PIH
-              </div>
+              />
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-3">
                   <div className="flex flex-col justify-center">
