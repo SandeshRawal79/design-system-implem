@@ -29,20 +29,26 @@ function AppContent() {
     <div className="min-h-screen bg-background flex flex-col">
       <Header clusterInfo={clusterInfo} />
       
-      {/* Main Content Area - Constrained width with exact 32px outer margin per design system */}
+      {/* Main Content Area */}
       <main className="flex-1 py-6 lg:py-8">
-        <div className="max-w-screen-2xl mx-auto px-8">
+        {/* Conditional layout - Full width for ClusterDetails, constrained for others */}
+        {isClusterDetailsPage ? (
           <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/phase1-services" element={<Phase1Services />} />
-            <Route path="/service-groups" element={<ServiceGroups />} />
-            <Route path="/abcd-sets" element={<AbcdSets />} />
-            <Route path="/abcd" element={<AbcdPage />} />
-            <Route path="/dendrogram/:serviceId" element={<DendrogramView />} />
-            <Route path="/clusters/:serviceId" element={<ClustersView />} />
             <Route path="/clusters/:serviceId/cluster/:clusterId" element={<ClusterDetails />} />
           </Routes>
-        </div>
+        ) : (
+          <div className="max-w-screen-2xl mx-auto px-8">
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/phase1-services" element={<Phase1Services />} />
+              <Route path="/service-groups" element={<ServiceGroups />} />
+              <Route path="/abcd-sets" element={<AbcdSets />} />
+              <Route path="/abcd" element={<AbcdPage />} />
+              <Route path="/dendrogram/:serviceId" element={<DendrogramView />} />
+              <Route path="/clusters/:serviceId" element={<ClustersView />} />
+            </Routes>
+          </div>
+        )}
       </main>
       
       {/* Compact Footer with exact specifications and matching layout constraint */}

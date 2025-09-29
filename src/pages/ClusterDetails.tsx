@@ -443,9 +443,9 @@ export function ClusterDetails() {
   const uniqueProvisionTypes = Array.from(new Set(mockClusterData.map(item => item.provision_type)))
 
   return (
-    <div className="min-h-screen flex flex-col font-['Proxima_Nova',sans-serif] cluster-details-1920" style={{ marginLeft: '0', marginRight: '0' }}>
+    <div className="min-h-screen flex flex-col font-['Proxima_Nova',sans-serif] cluster-details-1920">
       {/* Compact Cluster Information Card - Data Context and Distance Threshold Only */}
-      <Card className="bg-card border-border mb-4 shadow-sm">
+      <Card className="bg-card border-border mb-4 shadow-sm mx-8">
         <CardContent className="px-4">
           <div className="flex items-center justify-between gap-4">
             {/* Data Context */}
@@ -484,7 +484,7 @@ export function ClusterDetails() {
         </CardContent>
       </Card>
       {/* Main Data Table - Optimized for 1920x1080 viewing */}
-      <Card className="bg-card border-border shadow-sm flex-1 flex flex-col min-h-0">
+      <Card className="bg-card border-border shadow-sm flex-1 flex flex-col min-h-0 mx-8">
         <CardContent className="p-0 flex flex-col flex-1 min-h-0">
           {/* Ultra-Compact Filter Controls - Single Row for 1920x1080 */}
           <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/20 flex-wrap filter-bar">
@@ -607,9 +607,9 @@ export function ClusterDetails() {
               </Button>
             </div>
           </div>
-          {/* Table Container - Responsive design following breakpoints */}
+          {/* Table Container - Full width responsive design */}
           <div className="flex-1 min-h-0 overflow-auto table-container">
-            <table className="w-full border-collapse cluster-details-table" style={{ fontSize: 'var(--font-body)' }}>
+            <table className="w-full border-collapse cluster-details-table-full-width" style={{ fontSize: 'var(--font-body)', minWidth: '100%' }}>
               <colgroup>
                 <col className="col-index" />
                 <col className="col-abcd" />
