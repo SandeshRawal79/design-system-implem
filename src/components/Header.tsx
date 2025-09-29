@@ -80,16 +80,6 @@ export function Header({ clusterInfo }: HeaderProps) {
           {/* Logo and Title - Left Aligned */}
           <div className="flex items-center gap-3 min-w-0 flex-1 header-logo-section">
             <div className="flex items-center gap-3">
-              <img 
-                src={bniLogo} 
-                alt="BNi Logo" 
-                className="cursor-pointer"
-                style={{ 
-                  height: '28px',
-                  width: 'auto',
-                  filter: 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1))'
-                }}
-              />
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-3">
                   <div className="flex flex-col justify-center">
