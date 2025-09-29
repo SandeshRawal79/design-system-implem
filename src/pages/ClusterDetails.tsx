@@ -600,32 +600,45 @@ export function ClusterDetails() {
       {/* Main Data Table - Fixed height with sticky header */}
       <Card className="bg-card border-border shadow-sm flex-1 flex flex-col min-h-0 mx-8 overflow-hidden">
         <CardContent className="p-0 flex flex-col h-full min-h-0">
-          {/* Main Table Header with Collapse Button */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20 flex-shrink-0">
-            <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
-              Cluster Records
-            </h3>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsMainTableCollapsed(!isMainTableCollapsed)}
-              className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-2"
-            >
-              <span style={{ fontSize: 'var(--font-body)' }}>
-                {isMainTableCollapsed ? 'Expand' : 'Collapse'}
-              </span>
-              {isMainTableCollapsed ? (
-                <CaretDown className="h-4 w-4" />
-              ) : (
-                <CaretUp className="h-4 w-4" />
-              )}
-            </Button>
-          </div>
+          {/* Collapsed State - Just Title and Expand Button */}
+          {isMainTableCollapsed && (
+            <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/20 flex-shrink-0">
+              <h3 className="font-semibold text-foreground whitespace-nowrap" style={{ fontSize: 'var(--font-h6)' }}>
+                Cluster Records
+              </h3>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsMainTableCollapsed(!isMainTableCollapsed)}
+                className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1 px-2"
+                style={{ height: 'var(--button-sm)' }}
+              >
+                <span style={{ fontSize: 'var(--font-body)' }}>Expand</span>
+                <CaretDown className="h-3 w-3" />
+              </Button>
+            </div>
+          )}
 
           {!isMainTableCollapsed && (
             <>
-              {/* Ultra-Compact Filter Controls - Single Row for 1920x1080 */}
+              {/* Ultra-Compact Filter Controls with Title and Collapse Button */}
               <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/20 flex-wrap filter-bar flex-shrink-0">
+            {/* Cluster Records Title and Collapse Button */}
+            <div className="flex items-center gap-2 mr-4">
+              <h3 className="font-semibold text-foreground whitespace-nowrap" style={{ fontSize: 'var(--font-h6)' }}>
+                Cluster Records
+              </h3>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsMainTableCollapsed(!isMainTableCollapsed)}
+                className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1 px-2"
+                style={{ height: 'var(--button-sm)' }}
+              >
+                <span style={{ fontSize: 'var(--font-body)' }}>Collapse</span>
+                <CaretUp className="h-3 w-3" />
+              </Button>
+            </div>
             {/* Search Input - Optimized width */}
             <div className="relative flex-1 min-w-64 max-w-80">
               <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
