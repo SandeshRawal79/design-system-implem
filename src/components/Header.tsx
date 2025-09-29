@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
   faBars, 
@@ -28,10 +29,15 @@ interface HeaderProps {
 }
 
 export function Header({ clusterInfo }: HeaderProps) {
+  const location = useLocation()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isDarkMode, setIsDarkMode] = useKV('theme-dark-mode', 'false')
   const [fontSize, setFontSize] = useKV('accessibility-font-size', '1')
   const [language, setLanguage] = useKV('language', 'en')
+
+  // Determine if we're on ClusterDetails page for dynamic header layout
+  const isClusterDetailsPage = location.pathname.includes('/clusters/') && location.pathname.includes('/cluster/')
+  const headerLayoutClass = isClusterDetailsPage ? 'header-fullwidth' : 'header-constrained'
 
   const increaseFontSize = () => {
     setFontSize((currentSize) => {
@@ -65,10 +71,10 @@ export function Header({ clusterInfo }: HeaderProps) {
 
   return (
     <>
-      <header className="bg-white border-b border-border shadow-sm py-1.5 relative" style={{ height: '42px' }}>
-        <div className="max-w-screen-2xl mx-auto px-8 flex items-center justify-between w-full h-full">
+      <header className={`bg-white border-b border-border shadow-sm py-1.5 relative ${headerLayoutClass}`} style={{ height: '42px' }}>
+        <div className="header-container flex items-center justify-between w-full h-full">
           {/* Logo and Title - Left Aligned */}
-          <div className="flex items-center gap-3 min-w-0 flex-1">
+          <div className="flex items-center gap-3 min-w-0 flex-1 header-logo-section">
             <div className="flex items-center gap-3">
               <img 
                 src={bniLogo} 
@@ -186,7 +192,7 @@ export function Header({ clusterInfo }: HeaderProps) {
         {/* Mobile Menu Dropdown - Compact with layout constraint */}
         {isMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-white border-b border-border shadow-lg z-50 md:hidden">
-            <div className="max-w-screen-2xl mx-auto px-8">
+            <div className="header-container">
               <div className="py-3 space-y-2">
                 <div className="font-medium text-foreground mb-2" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif', lineHeight: 'auto', letterSpacing: 'auto' }}>
                   Accessibility Options

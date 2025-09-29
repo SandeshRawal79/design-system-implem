@@ -1266,6 +1266,66 @@ button[data-slot="button"]:disabled {
   }
 }
 
+/* Dynamic Header Layout - Responsive Logo Alignment */
+
+/* Base header layout for constrained pages (uses max-w-screen-2xl) */
+.header-constrained .header-container {
+  max-width: 1536px; /* 2xl breakpoint */
+  margin: 0 auto;
+  padding: 0 2rem; /* 32px - standard outer margin */
+}
+
+/* Full-width header layout for ClusterDetails (no container constraint) */
+.header-fullwidth .header-container {
+  max-width: none;
+  margin: 0;
+  padding: 0 2rem; /* 32px - aligns with ClusterDetails mx-8 */
+}
+
+/* Ensure logo alignment is consistent across both layouts */
+.header-logo-section {
+  position: relative;
+  z-index: 1;
+}
+
+/* Responsive adjustments for header layouts */
+@media (min-width: 1920px) {
+  /* On ultra-wide screens, ensure proper alignment */
+  .header-constrained .header-container {
+    padding: 0 2rem; /* Maintain 32px outer margin */
+  }
+  
+  .header-fullwidth .header-container {
+    padding: 0 2rem; /* Match ClusterDetails 32px outer margin */
+  }
+}
+
+@media (max-width: 1535px) {
+  /* For screens smaller than 2xl, ensure both layouts use consistent margins */
+  .header-constrained .header-container {
+    max-width: calc(100vw - 4rem); /* Account for 32px margin on each side */
+    padding: 0 2rem;
+  }
+  
+  .header-fullwidth .header-container {
+    padding: 0 2rem;
+  }
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 767px) {
+  .header-constrained .header-container,
+  .header-fullwidth .header-container {
+    padding: 0 1rem; /* Reduced padding on mobile */
+  }
+}
+
+/* Smooth transitions for layout changes */
+.header-container {
+  transition: max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* Accessibility & WCAG AAA Compliance */
 
 /* Enhanced focus states for WCAG AAA compliance */
