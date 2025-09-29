@@ -83,7 +83,7 @@ export function Header({ clusterInfo }: HeaderProps) {
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-3">
                   <div className="flex flex-col justify-center">
-                    <h1 className="font-semibold text-foreground truncate leading-none" style={{ fontSize: 'var(--font-body)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
+                    <h1 className="text-lg font-semibold text-foreground" style={{ fontSize: 'var(--font-body)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
                       Provision Intelligence Hub
                     </h1>
                     <p className="text-muted-foreground hidden sm:block leading-none mt-0.5" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>

@@ -443,7 +443,7 @@ export function ClusterDetails() {
   const uniqueProvisionTypes = Array.from(new Set(mockClusterData.map(item => item.provision_type)))
 
   return (
-    <div className="min-h-screen flex flex-col font-['Proxima_Nova',sans-serif] cluster-details-1920" style={{ margin: `0 var(--outer-margin)` }}>
+    <div className="min-h-screen flex flex-col font-['Proxima_Nova',sans-serif] cluster-details-1920" style={{ marginLeft: '0', marginRight: '0' }}>
       {/* Compact Cluster Information Card - Data Context and Distance Threshold Only */}
       <Card className="bg-card border-border mb-4 shadow-sm">
         <CardContent className="px-4">
