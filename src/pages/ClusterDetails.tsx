@@ -101,6 +101,22 @@ export function ClusterDetails() {
   const [showExactSameCDRecords, setShowExactSameCDRecords] = useState(false)
   const [isSimilarRecordsCollapsed, setIsSimilarRecordsCollapsed] = useState(false)
   const [isExactSameCDRecordsCollapsed, setIsExactSameCDRecordsCollapsed] = useState(false)
+  
+  // Similar Records filters and sorting
+  const [similarSearchTerm, setSimilarSearchTerm] = useState('')
+  const [similarSortField, setSimilarSortField] = useState<SortField>('abcd_1up')
+  const [similarSortDirection, setSimilarSortDirection] = useState<SortDirection>('asc')
+  const [similarFilterType, setSimilarFilterType] = useState<FilterType>('all')
+  const [similarStatusFilter, setSimilarStatusFilter] = useState<StatusFilter>('all')
+  const [similarProvisionTypeFilter, setSimilarProvisionTypeFilter] = useState<string>('all')
+  
+  // Exact Same CD Records filters and sorting
+  const [exactSearchTerm, setExactSearchTerm] = useState('')
+  const [exactSortField, setExactSortField] = useState<SortField>('abcd_1up')
+  const [exactSortDirection, setExactSortDirection] = useState<SortDirection>('asc')
+  const [exactFilterType, setExactFilterType] = useState<FilterType>('all')
+  const [exactStatusFilter, setExactStatusFilter] = useState<StatusFilter>('all')
+  const [exactProvisionTypeFilter, setExactProvisionTypeFilter] = useState<string>('all')
 
   // Filter and sort data
   const filteredData = useMemo(() => {
@@ -451,240 +467,6 @@ export function ClusterDetails() {
     return filtered
   }, [exactSameCDRecords, exactSearchTerm, exactSortField, exactSortDirection, exactFilterType, exactStatusFilter, exactProvisionTypeFilter])
 
-  // Filter and sort similar records
-  const filteredAndSortedSimilarRecords = useMemo(() => {
-    let filtered = [...similarRecords]
-
-    // Apply search filter
-    if (similarSearchTerm) {
-      filtered = filtered.filter(item =>
-        item.abcd_1up.toString().toLowerCase().includes(similarSearchTerm.toLowerCase()) ||
-        item.service_name.toLowerCase().includes(similarSearchTerm.toLowerCase()) ||
-        item.provision_type.toLowerCase().includes(similarSearchTerm.toLowerCase()) ||
-        item.options.toLowerCase().includes(similarSearchTerm.toLowerCase())
-      )
-    }
-
-    // Apply provision type filter
-    if (similarProvisionTypeFilter !== 'all') {
-      filtered = filtered.filter(item => item.provision_type === similarProvisionTypeFilter)
-    }
-
-    // Apply approval status filter
-    if (similarFilterType !== 'all') {
-      filtered = filtered.filter(item => {
-        const hasApprovals = item.approvalStatuses.includes('✓')
-        const hasRejections = item.approvalStatuses.includes('✗')
-        const hasPending = item.approvalStatuses.includes('-')
-        
-        switch (similarFilterType) {
-          case 'with-approvals':
-            return hasApprovals
-          case 'pending-approvals':
-            return hasPending && !hasApprovals && !hasRejections
-          case 'no-approvals':
-            return !hasApprovals && !hasRejections
-          default:
-            return true
-        }
-      })
-    }
-
-    // Apply status filter
-    if (similarStatusFilter !== 'all') {
-      filtered = filtered.filter(item => {
-        const approvedCount = item.approvalStatuses.filter(s => s === '✓').length
-        const rejectedCount = item.approvalStatuses.filter(s => s === '✗').length
-        const pendingCount = item.approvalStatuses.filter(s => s === '-').length
-        
-        switch (similarStatusFilter) {
-          case 'approved':
-            return approvedCount > rejectedCount && approvedCount > 0
-          case 'rejected':
-            return rejectedCount > approvedCount && rejectedCount > 0
-          case 'pending':
-            return pendingCount > 0 && approvedCount === 0 && rejectedCount === 0
-          default:
-            return true
-        }
-      })
-    }
-
-    // Apply sorting
-    filtered.sort((a, b) => {
-      let aValue: string | number = ''
-      let bValue: string | number = ''
-
-      switch (similarSortField) {
-        case 'abcd_1up':
-          aValue = a.abcd_1up
-          bValue = b.abcd_1up
-          break
-        case 'service_id':
-          aValue = a.service_id
-          bValue = b.service_id
-          break
-        case 'service_name':
-          aValue = a.service_name
-          bValue = b.service_name
-          break
-        case 'provision_type':
-          aValue = a.provision_type
-          bValue = b.provision_type
-          break
-        case 'options':
-          aValue = a.options
-          bValue = b.options
-          break
-        case 'num_provisions':
-          aValue = a.num_provisions
-          bValue = b.num_provisions
-          break
-        case 'num_products':
-          aValue = a.num_products
-          bValue = b.num_products
-          break
-        case 'num_splits':
-          aValue = a.num_splits
-          bValue = b.num_splits
-          break
-        case 'num_clients':
-          aValue = a.num_clients
-          bValue = b.num_clients
-          break
-        case 'num_groups':
-          aValue = a.num_groups
-          bValue = b.num_groups
-          break
-        default:
-          return 0
-      }
-
-      if (aValue < bValue) return similarSortDirection === 'asc' ? -1 : 1
-      if (aValue > bValue) return similarSortDirection === 'asc' ? 1 : -1
-      return 0
-    })
-
-    return filtered
-  }, [similarRecords, similarSearchTerm, similarSortField, similarSortDirection, similarFilterType, similarStatusFilter, similarProvisionTypeFilter])
-
-  // Filter and sort exact same CD records
-  const filteredAndSortedExactRecords = useMemo(() => {
-    let filtered = [...exactSameCDRecords]
-
-    // Apply search filter
-    if (exactSearchTerm) {
-      filtered = filtered.filter(item =>
-        item.abcd_1up.toString().toLowerCase().includes(exactSearchTerm.toLowerCase()) ||
-        item.service_name.toLowerCase().includes(exactSearchTerm.toLowerCase()) ||
-        item.provision_type.toLowerCase().includes(exactSearchTerm.toLowerCase()) ||
-        item.options.toLowerCase().includes(exactSearchTerm.toLowerCase())
-      )
-    }
-
-    // Apply provision type filter
-    if (exactProvisionTypeFilter !== 'all') {
-      filtered = filtered.filter(item => item.provision_type === exactProvisionTypeFilter)
-    }
-
-    // Apply approval status filter
-    if (exactFilterType !== 'all') {
-      filtered = filtered.filter(item => {
-        const hasApprovals = item.approvalStatuses.includes('✓')
-        const hasRejections = item.approvalStatuses.includes('✗')
-        const hasPending = item.approvalStatuses.includes('-')
-        
-        switch (exactFilterType) {
-          case 'with-approvals':
-            return hasApprovals
-          case 'pending-approvals':
-            return hasPending && !hasApprovals && !hasRejections
-          case 'no-approvals':
-            return !hasApprovals && !hasRejections
-          default:
-            return true
-        }
-      })
-    }
-
-    // Apply status filter
-    if (exactStatusFilter !== 'all') {
-      filtered = filtered.filter(item => {
-        const approvedCount = item.approvalStatuses.filter(s => s === '✓').length
-        const rejectedCount = item.approvalStatuses.filter(s => s === '✗').length
-        const pendingCount = item.approvalStatuses.filter(s => s === '-').length
-        
-        switch (exactStatusFilter) {
-          case 'approved':
-            return approvedCount > rejectedCount && approvedCount > 0
-          case 'rejected':
-            return rejectedCount > approvedCount && rejectedCount > 0
-          case 'pending':
-            return pendingCount > 0 && approvedCount === 0 && rejectedCount === 0
-          default:
-            return true
-        }
-      })
-    }
-
-    // Apply sorting
-    filtered.sort((a, b) => {
-      let aValue: string | number = ''
-      let bValue: string | number = ''
-
-      switch (exactSortField) {
-        case 'abcd_1up':
-          aValue = a.abcd_1up
-          bValue = b.abcd_1up
-          break
-        case 'service_id':
-          aValue = a.service_id
-          bValue = b.service_id
-          break
-        case 'service_name':
-          aValue = a.service_name
-          bValue = b.service_name
-          break
-        case 'provision_type':
-          aValue = a.provision_type
-          bValue = b.provision_type
-          break
-        case 'options':
-          aValue = a.options
-          bValue = b.options
-          break
-        case 'num_provisions':
-          aValue = a.num_provisions
-          bValue = b.num_provisions
-          break
-        case 'num_products':
-          aValue = a.num_products
-          bValue = b.num_products
-          break
-        case 'num_splits':
-          aValue = a.num_splits
-          bValue = b.num_splits
-          break
-        case 'num_clients':
-          aValue = a.num_clients
-          bValue = b.num_clients
-          break
-        case 'num_groups':
-          aValue = a.num_groups
-          bValue = b.num_groups
-          break
-        default:
-          return 0
-      }
-
-      if (aValue < bValue) return exactSortDirection === 'asc' ? -1 : 1
-      if (aValue > bValue) return exactSortDirection === 'asc' ? 1 : -1
-      return 0
-    })
-
-    return filtered
-  }, [exactSameCDRecords, exactSearchTerm, exactSortField, exactSortDirection, exactFilterType, exactStatusFilter, exactProvisionTypeFilter])
-
   const handleSort = (field: SortField) => {
     if (sortField === field) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
@@ -739,23 +521,23 @@ export function ClusterDetails() {
     setExactSortDirection('asc')
   }
 
-  const getSortIcon = (field: SortField) => {
-    if (sortField !== field) return null
-    return sortDirection === 'asc' ? 
+  const getSortIcon = (field: SortField, currentField: SortField, direction: SortDirection) => {
+    if (currentField !== field) return null
+    return direction === 'asc' ? 
       <CaretUp className="h-3 w-3 ml-1" /> : 
       <CaretDown className="h-3 w-3 ml-1" />
   }
 
-  const getSimilarSortIcon = (field: SortField) => {
-    if (similarSortField !== field) return null
-    return similarSortDirection === 'asc' ? 
+  const getSimilarSortIcon = (field: SortField, currentField: SortField, direction: SortDirection) => {
+    if (currentField !== field) return null
+    return direction === 'asc' ? 
       <CaretUp className="h-3 w-3 ml-1" /> : 
       <CaretDown className="h-3 w-3 ml-1" />
   }
 
-  const getExactSortIcon = (field: SortField) => {
-    if (exactSortField !== field) return null
-    return exactSortDirection === 'asc' ? 
+  const getExactSortIcon = (field: SortField, currentField: SortField, direction: SortDirection) => {
+    if (currentField !== field) return null
+    return direction === 'asc' ? 
       <CaretUp className="h-3 w-3 ml-1" /> : 
       <CaretDown className="h-3 w-3 ml-1" />
   }
@@ -778,6 +560,11 @@ export function ClusterDetails() {
       setIsSimilarRecordsCollapsed(false)
       setIsExactSameCDRecordsCollapsed(false)
     }
+  }
+
+  // Find exact same CD records function
+  const findExactSameCDRecords = (abcdId: number) => {
+    findSimilarRecords(abcdId) // Use the same logic for now
   }
 
   // Get unique provision types for filter
