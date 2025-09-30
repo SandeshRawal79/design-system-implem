@@ -8,17 +8,19 @@ import { AbcdPage } from './pages/AbcdPage'
 import { DendrogramView } from './pages/DendrogramView'
 import { ClustersView } from './pages/ClustersView'
 import { ClusterDetails } from './pages/ClusterDetails'
-import { TableHeaderProvider, useTableHeader } from './contexts/TableHeaderContext'
+import { TableHeaderProvider } from './contexts/TableHeaderContext'
 
 function AppContent() {
   const location = useLocation()
-  const { tableHeader } = useTableHeader()
   
   // Check if we're on a cluster details page to pass cluster info to header
   const isClusterDetailsPage = location.pathname.includes('/clusters/') && location.pathname.includes('/cluster/')
   
   // Check if we're on the ABCD page to show the dashboard title
   const isAbcdPage = location.pathname === '/abcd'
+  
+  // Check if we're on Phase1Services page to show the ABCD Dashboard title
+  const isPhase1ServicesPage = location.pathname === '/phase1-services'
   
   // Extract cluster info from URL if on cluster details page
   const clusterInfo = isClusterDetailsPage ? {
@@ -31,7 +33,7 @@ function AppContent() {
   } : undefined
   
   // Set page title for ABCD Dashboard
-  const pageTitle = isAbcdPage ? 'ABCD Dashboard (Phase 1 Services)' : undefined
+  const pageTitle = (isAbcdPage || isPhase1ServicesPage) ? 'ABCD Dashboard (Phase 1 Services)' : undefined
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
