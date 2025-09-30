@@ -149,6 +149,12 @@ export function ServiceGroups() {
       <CaretDown className="h-3 w-3 ml-1" />
   }
 
+  // State for filtering and sorting
+  const [searchTerm, setSearchTerm] = useState('')
+  const [sortField, setSortField] = useState<SortField>('id')
+  const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
+  const [assigneeFilter, setAssigneeFilter] = useState('all')
+
   const handleModify = (groupId: number) => {
     console.log('Modify group:', groupId)
   }
