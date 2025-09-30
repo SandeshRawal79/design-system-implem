@@ -42,6 +42,7 @@ function AppContent() {
   const pageTitle = (() => {
     if (isAbcdPage || isPhase1ServicesPage) return 'ABCD Dashboard (Phase 1 Services)'
     if (isServiceGroupsPage) return 'Service Groups'
+    if (isAbcdSetsPage) return 'ABCD Sets - Manage and view ABCD set configurations and provisions'
     return undefined
   })()
 
