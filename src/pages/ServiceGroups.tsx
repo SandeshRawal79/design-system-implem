@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
-import { PageLayout } from '@/components/PageLayout'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
@@ -167,29 +166,12 @@ export function ServiceGroups() {
   const uniqueAssignees = Array.from(new Set(serviceGroups.map(item => item.assignee)))
 
   return (
-    <PageLayout
-      title="Service Groups"
-      subtitle="Manage and view service group assignments"
-      badge={{
-        count: serviceGroups.length,
-        label: "service groups found"
-      }}
-    >
+    <div className="space-y-6">
       {/* Service Groups Table - Constrained width, not full width like ClusterDetails */}
       <Card className="bg-card border-border shadow-sm flex flex-col overflow-hidden max-w-9xl mx-auto">
         <CardContent className="p-0 flex flex-col h-full min-h-0">
           {/* Table Header with Filter Controls */}
           <div className="flex items-center gap-4 px-4 py-3 border-b border-border bg-muted/20 flex-shrink-0 flex-wrap">
-            {/* Left Section: Title and Badge */}
-            <div className="flex items-center gap-3">
-              <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
-                Service Groups
-              </h3>
-              <Badge variant="outline" className="px-2 py-0.5 bg-primary/10 text-primary border-primary/20">
-                {filteredAndSortedData.length} groups
-              </Badge>
-            </div>
-
             {/* Filter Controls Section */}
             <div className="flex items-center gap-3 flex-1 min-w-0">
               {/* Search Input */}
@@ -399,6 +381,6 @@ export function ServiceGroups() {
           </div>
         </CardContent>
       </Card>
-    </PageLayout>
+    </div>
   )
 }
