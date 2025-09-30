@@ -929,8 +929,9 @@ export function ClusterDetails() {
       <Collapsible open={!isMainTableCollapsed} onOpenChange={(open) => setIsMainTableCollapsed(!open)}>
         <Card className="bg-card border-border shadow-sm flex-1 flex flex-col min-h-0 mx-8 overflow-hidden">
         <CardContent className="p-0 flex flex-col h-full min-h-0">
-          {/* Main Table Header with Collapse Control */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20 flex-shrink-0">
+          {/* Merged Table Header with Collapse Control and Filter Controls */}
+          <div className="flex items-center gap-4 px-3 py-2 border-b border-border bg-muted/20 flex-shrink-0 flex-wrap">
+            {/* Left Section: Title, Badge, and Collapse Control */}
             <div className="flex items-center gap-3">
               <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
                 Main Cluster Data
@@ -938,21 +939,20 @@ export function ClusterDetails() {
               <Badge variant="outline" className="px-2 py-0.5 bg-primary/10 text-primary border-primary/20">
                 {filteredAndSortedData.length} records
               </Badge>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsMainTableCollapsed(!isMainTableCollapsed)}
+                className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
+                style={{ height: 'var(--button-sm)' }}
+              >
+                {isMainTableCollapsed ? <CaretDown className="h-3 w-3" /> : <CaretUp className="h-3 w-3" />}
+                {isMainTableCollapsed ? 'Expand' : 'Collapse'}
+              </Button>
             </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsMainTableCollapsed(!isMainTableCollapsed)}
-              className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
-            >
-              {isMainTableCollapsed ? <CaretDown className="h-4 w-4" /> : <CaretUp className="h-4 w-4" />}
-              {isMainTableCollapsed ? 'Expand' : 'Collapse'}
-            </Button>
-          </div>
-          
-          <CollapsibleContent className="flex flex-col h-full min-h-0">
-              {/* Ultra-Compact Filter Controls - Single Row for 1920x1080 */}
-              <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/20 flex-wrap filter-bar flex-shrink-0">
+
+            {/* Filter Controls Section - Merged into header row */}
+            <div className="flex items-center gap-2 flex-1 min-w-0">
             {/* Search Input - Optimized width */}
             <div className="relative flex-1 min-w-64 max-w-80">
               <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
@@ -1072,7 +1072,10 @@ export function ClusterDetails() {
                 Clear
               </Button>
             </div>
-              </div>
+            </div>
+          </div>
+          
+          <CollapsibleContent className="flex flex-col h-full min-h-0">
           {/* Table Container - Fixed height with sticky header */}
           {!isMainTableCollapsed && (
           <>
@@ -1247,8 +1250,9 @@ export function ClusterDetails() {
         <Collapsible open={!isSimilarRecordsCollapsed} onOpenChange={(open) => setIsSimilarRecordsCollapsed(!open)}>
           <Card ref={similarRecordsRef} className="bg-card border-border shadow-sm mt-4 mx-8 h-96 flex flex-col">
             <CardContent className="p-0 flex flex-col h-full">
-              {/* Similar Records Header */}
-              <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20 flex-shrink-0">
+              {/* Merged Similar Records Header with Collapse Control and Filter Controls */}
+              <div className="flex items-center gap-4 px-3 py-2 border-b border-border bg-muted/20 flex-shrink-0 flex-wrap">
+                {/* Left Section: Title, Badge, and Collapse Control */}
                 <div className="flex items-center gap-3">
                   <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
                     Similar Records for ABCD {selectedRecordId}
@@ -1256,30 +1260,27 @@ export function ClusterDetails() {
                   <Badge variant="outline" className="px-2 py-0.5 bg-info/10 text-info border-info/20">
                     {filteredAndSortedSimilarRecords.length} records found
                   </Badge>
-                </div>
-                <div className="flex items-center gap-2">
                   <CollapsibleTrigger asChild>
                      <Button
                       variant="ghost"
                       size="sm"
-                      className="text-muted-foreground hover:text-foreground hover:bg-muted"
+                      className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
+                      style={{ height: 'var(--button-sm)' }}
                      >
-                      {isSimilarRecordsCollapsed ? <CaretDown className="h-4 w-4" /> : <CaretUp className="h-4 w-4" />}
+                      {isSimilarRecordsCollapsed ? <CaretDown className="h-3 w-3" /> : <CaretUp className="h-3 w-3" />}
                       {isSimilarRecordsCollapsed ? 'Expand' : 'Collapse'}
                     </Button>
                   </CollapsibleTrigger>
                 </div>
-              </div>
-            
-            <CollapsibleContent className="flex flex-col h-full min-h-0">
-              {/* Ultra-Compact Filter Controls for Similar Records */}
-              <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/20 flex-wrap filter-bar flex-shrink-0">
-                {/* Search Input */}
-                <div className="relative flex-1 min-w-64 max-w-80">
-                  <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
-                  <Input
-                    type="text"
-                    placeholder="Search similar records..."
+
+                {/* Filter Controls Section - Merged into header row */}
+                <div className="flex items-center gap-2 flex-1 min-w-0">
+                  {/* Search Input */}
+                  <div className="relative flex-1 min-w-64 max-w-80">
+                    <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+                    <Input
+                      type="text"
+                      placeholder="Search similar records..."
                     value={similarSearchTerm}
                     onChange={(e) => setSimilarSearchTerm(e.target.value)}
                     className="pl-7 pr-7 border-border placeholder:text-muted-foreground focus:ring-1 focus:ring-ring transition-colors"
@@ -1394,7 +1395,10 @@ export function ClusterDetails() {
                     Clear
                   </Button>
                 </div>
+                </div>
               </div>
+              
+              <CollapsibleContent className="flex flex-col h-full min-h-0">
 
             {/* Similar Records Table */}
             {!isSimilarRecordsCollapsed && (
@@ -1566,8 +1570,9 @@ export function ClusterDetails() {
         <Collapsible open={!isExactSameCDCollapsed} onOpenChange={(open) => setIsExactSameCDCollapsed(!open)}>
           <Card ref={exactSameCDRecordsRef} className="bg-card border-border shadow-sm mt-4 mx-8 h-96 flex flex-col">
             <CardContent className="p-0 flex flex-col h-full">
-              {/* Exact Same CD Records Header */}
-              <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20 flex-shrink-0">
+              {/* Merged Exact Same CD Records Header with Collapse Control and Filter Controls */}
+              <div className="flex items-center gap-4 px-3 py-2 border-b border-border bg-muted/20 flex-shrink-0 flex-wrap">
+                {/* Left Section: Title, Badge, and Collapse Control */}
                 <div className="flex items-center gap-3">
                   <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
                     Exact Same CD Records (Based on Selected ABCD) for ABCD {selectedRecordId}
@@ -1575,30 +1580,27 @@ export function ClusterDetails() {
                   <Badge variant="outline" className="px-2 py-0.5 bg-success/10 text-success border-success/20">
                     {filteredAndSortedExactRecords.length} exact matches found
                   </Badge>
-                </div>
-                <div className="flex items-center gap-2">
                   <CollapsibleTrigger asChild>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-muted-foreground hover:text-foreground hover:bg-muted"
+                      className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
+                      style={{ height: 'var(--button-sm)' }}
                      >
-                      {isExactSameCDCollapsed ? <CaretDown className="h-4 w-4" /> : <CaretUp className="h-4 w-4" />}
+                      {isExactSameCDCollapsed ? <CaretDown className="h-3 w-3" /> : <CaretUp className="h-3 w-3" />}
                       {isExactSameCDCollapsed ? 'Expand' : 'Collapse'}
                     </Button>
                   </CollapsibleTrigger>
                 </div>
-              </div>
-            
-            <CollapsibleContent className="flex flex-col h-full min-h-0">
-              {/* Ultra-Compact Filter Controls for Exact Same CD Records */}
-              <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/20 flex-wrap filter-bar flex-shrink-0">
-                {/* Search Input */}
-                <div className="relative flex-1 min-w-64 max-w-80">
-                  <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
-                  <Input
-                    type="text"
-                    placeholder="Search exact CD records..."
+
+                {/* Filter Controls Section - Merged into header row */}
+                <div className="flex items-center gap-2 flex-1 min-w-0">
+                  {/* Search Input */}
+                  <div className="relative flex-1 min-w-64 max-w-80">
+                    <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+                    <Input
+                      type="text"
+                      placeholder="Search exact CD records..."
                     value={exactSearchTerm}
                     onChange={(e) => setExactSearchTerm(e.target.value)}
                     className="pl-7 pr-7 border-border placeholder:text-muted-foreground focus:ring-1 focus:ring-ring transition-colors"
@@ -1712,7 +1714,10 @@ export function ClusterDetails() {
                     Clear
                   </Button>
                 </div>
+                </div>
               </div>
+              
+              <CollapsibleContent className="flex flex-col h-full min-h-0">
 
             {/* Exact Same CD Records Table */}
             {!isExactSameCDCollapsed && (
