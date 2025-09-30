@@ -632,7 +632,7 @@ export function AbcdSets() {
                         </th>
                         <th className="text-center px-3 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('abcdTup')} style={{ fontSize: 'var(--font-body)' }}>
                           <div className="flex items-center justify-center">
-                            ABCD Tup
+                            ABCD 1up
                             {getSortIcon('abcdTup')}
                           </div>
                         </th>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
   faBars, 
@@ -9,9 +9,11 @@ import {
   faMoon, 
   faSun,
   faComments,
-  faTimes
+  faTimes,
+  faDatabase
 } from '@fortawesome/free-solid-svg-icons'
 import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import { useKV } from '@github/spark/hooks'
 import bniLogo from '@/assets/images/BNi.png'
 
@@ -32,6 +34,7 @@ interface HeaderProps {
 
 export function Header({ clusterInfo, pageTitle, pageSubtitle }: HeaderProps) {
   const location = useLocation()
+  const navigate = useNavigate()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isDarkMode, setIsDarkMode] = useKV('theme-dark-mode', 'false')
   const [fontSize, setFontSize] = useKV('accessibility-font-size', '1')
@@ -157,6 +160,27 @@ export function Header({ clusterInfo, pageTitle, pageSubtitle }: HeaderProps) {
             </div>
           </div>
 
+          {/* ABCD Sets Quick Access - Right of center */}
+          <div className="hidden lg:flex items-center gap-2 flex-shrink-0 mx-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => navigate('/abcd-sets')}
+              className="flex items-center gap-2 px-3 py-1.5 border-border hover:bg-muted transition-colors cursor-pointer"
+              style={{ height: 'var(--button-sm)', fontSize: 'var(--font-body)' }}
+            >
+              <FontAwesomeIcon 
+                icon={faDatabase} 
+                style={{ width: '14px', height: '14px' }}
+                className="text-primary" 
+              />
+              <span className="font-medium text-foreground">ABCD Sets</span>
+              <Badge variant="secondary" className="ml-1 px-1.5 py-0.5 text-xs">
+                7
+              </Badge>
+            </Button>
+          </div>
+
           {/* Desktop Accessibility Controls - Right Aligned */}
           <div className="hidden md:flex items-center gap-1.5 flex-shrink-0">
             <Button
@@ -274,6 +298,25 @@ export function Header({ clusterInfo, pageTitle, pageSubtitle }: HeaderProps) {
                       className="text-icon" 
                     />
                     <span>{isDarkMode === 'true' ? 'Light Mode' : 'Dark Mode'}</span>
+                  </Button>
+                </div>
+                {/* Mobile ABCD Sets link */}
+                <div className="pt-2 border-t border-border mt-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      navigate('/abcd-sets')
+                      setIsMenuOpen(false)
+                    }}
+                    className="flex items-center gap-2 w-full justify-start cursor-pointer"
+                    style={{ height: 'var(--button-sm)', fontSize: 'var(--font-body)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}
+                  >
+                    <FontAwesomeIcon icon={faDatabase} style={{ width: '16px', height: '16px' }} className="text-primary" />
+                    <span>ABCD Sets</span>
+                    <Badge variant="secondary" className="ml-auto px-1.5 py-0.5 text-xs">
+                      7
+                    </Badge>
                   </Button>
                 </div>
               </div>
