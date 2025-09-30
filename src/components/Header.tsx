@@ -82,7 +82,7 @@ export function Header({ clusterInfo }: HeaderProps) {
             <div className="flex items-center gap-3">
               <img 
                 src={bniLogo} 
-                alt="BNi Logo" 
+                alt="BNI Logo" 
                 className="cursor-pointer"
                 style={{ 
                   height: '28px',
