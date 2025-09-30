@@ -25,7 +25,7 @@ function IntelligenceCard({
   
   return (
     <Card 
-      className="p-6 h-[320px] flex flex-col intelligence-card border-2 hover:border-primary/20 cursor-pointer"
+      className="p-6 min-h-[320px] h-full flex flex-col intelligence-card border-2 hover:border-primary/20 cursor-pointer"
       onClick={onCardClick}
     >
       <div className="flex-1 flex flex-col">
@@ -157,7 +157,7 @@ export function IntelligenceCatalog() {
         </Badge>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
         {services.map((service, index) => (
           <IntelligenceCard key={index} {...service} />
         ))}
