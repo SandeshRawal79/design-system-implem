@@ -180,18 +180,8 @@ export function ServiceGroups() {
         <CardContent className="p-0 flex flex-col h-full min-h-0">
           {/* Table Header with Filter Controls */}
           <div className="flex items-center gap-4 px-4 py-3 border-b border-border bg-muted/20 flex-shrink-0 flex-wrap">
-            {/* Left Section: Title and Badge */}
-            <div className="flex items-center gap-3">
-              <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
-                Service Groups
-              </h3>
-              <Badge variant="outline" className="px-2 py-0.5 bg-primary/10 text-primary border-primary/20">
-                {filteredAndSortedData.length} groups
-              </Badge>
-            </div>
-
-            {/* Filter Controls Section */}
-            <div className="flex items-center gap-3 flex-1 min-w-0">
+            {/* Search and Controls */}
+            <div className="flex items-center gap-2 flex-1 min-w-0">
               {/* Search Input */}
               <div className="relative flex-1 min-w-64 max-w-80">
                 <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
@@ -217,45 +207,43 @@ export function ServiceGroups() {
               </div>
 
               {/* Assignee Filter */}
-              <div className="flex items-center gap-2">
-                <Select value={assigneeFilter} onValueChange={setAssigneeFilter}>
-                  <SelectTrigger className="w-40 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all" style={{ fontSize: 'var(--font-body)' }}>All Assignees</SelectItem>
-                    {uniqueAssignees.map((assignee) => (
-                      <SelectItem key={assignee} value={assignee} style={{ fontSize: 'var(--font-body)' }}>{assignee}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+              <Select value={assigneeFilter} onValueChange={setAssigneeFilter}>
+                <SelectTrigger className="w-40 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all" style={{ fontSize: 'var(--font-body)' }}>All Assignees</SelectItem>
+                  {uniqueAssignees.map((assignee) => (
+                    <SelectItem key={assignee} value={assignee} style={{ fontSize: 'var(--font-body)' }}>{assignee}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
 
-                <Select value={sortField} onValueChange={(value) => setSortField(value as SortField)}>
-                  <SelectTrigger className="w-32 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="id" style={{ fontSize: 'var(--font-body)' }}>ID</SelectItem>
-                    <SelectItem value="name" style={{ fontSize: 'var(--font-body)' }}>Name</SelectItem>
-                    <SelectItem value="assignee" style={{ fontSize: 'var(--font-body)' }}>Assignee</SelectItem>
-                    <SelectItem value="members" style={{ fontSize: 'var(--font-body)' }}>Members</SelectItem>
-                    <SelectItem value="created" style={{ fontSize: 'var(--font-body)' }}>Created</SelectItem>
-                  </SelectContent>
-                </Select>
+              <Select value={sortField} onValueChange={(value) => setSortField(value as SortField)}>
+                <SelectTrigger className="w-32 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="id" style={{ fontSize: 'var(--font-body)' }}>ID</SelectItem>
+                  <SelectItem value="name" style={{ fontSize: 'var(--font-body)' }}>Name</SelectItem>
+                  <SelectItem value="assignee" style={{ fontSize: 'var(--font-body)' }}>Assignee</SelectItem>
+                  <SelectItem value="members" style={{ fontSize: 'var(--font-body)' }}>Members</SelectItem>
+                  <SelectItem value="created" style={{ fontSize: 'var(--font-body)' }}>Created</SelectItem>
+                </SelectContent>
+              </Select>
 
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="px-2 border-border focus:ring-1 focus:ring-ring transition-colors hover:bg-muted"
-                  style={{ height: 'var(--button-sm)' }}
-                  onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
-                >
-                  {sortDirection === 'asc' ? 
-                    <SortAscending className="h-3 w-3" /> : 
-                    <SortDescending className="h-3 w-3" />
-                  }
-                </Button>
-              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                className="px-2 border-border focus:ring-1 focus:ring-ring transition-colors hover:bg-muted"
+                style={{ height: 'var(--button-sm)' }}
+                onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
+              >
+                {sortDirection === 'asc' ? 
+                  <SortAscending className="h-3 w-3" /> : 
+                  <SortDescending className="h-3 w-3" />
+                }
+              </Button>
 
               {/* Results & Clear */}
               <div className="flex items-center gap-2 ml-auto">
