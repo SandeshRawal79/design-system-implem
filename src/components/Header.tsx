@@ -26,9 +26,10 @@ interface ClusterInfo {
 
 interface HeaderProps {
   clusterInfo?: ClusterInfo
+  tableHeader?: React.ReactNode
 }
 
-export function Header({ clusterInfo }: HeaderProps) {
+export function Header({ clusterInfo, tableHeader }: HeaderProps) {
   const location = useLocation()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isDarkMode, setIsDarkMode] = useKV('theme-dark-mode', 'false')
@@ -252,6 +253,15 @@ export function Header({ clusterInfo }: HeaderProps) {
           </div>
         )}
       </header>
+
+      {/* Table Header Section - Rendered only when tableHeader prop is provided */}
+      {tableHeader && (
+        <div className="bg-muted/20 border-b border-border">
+          <div className="max-w-screen-2xl mx-auto px-8">
+            {tableHeader}
+          </div>
+        </div>
+      )}
 
       {/* Floating ChatBot - Following exact specifications */}
       <Button

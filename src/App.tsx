@@ -8,12 +8,17 @@ import { AbcdPage } from './pages/AbcdPage'
 import { DendrogramView } from './pages/DendrogramView'
 import { ClustersView } from './pages/ClustersView'
 import { ClusterDetails } from './pages/ClusterDetails'
+import { TableHeaderProvider, useTableHeader } from './contexts/TableHeaderContext'
 
 function AppContent() {
   const location = useLocation()
+  const { tableHeader } = useTableHeader()
   
   // Check if we're on a cluster details page to pass cluster info to header
   const isClusterDetailsPage = location.pathname.includes('/clusters/') && location.pathname.includes('/cluster/')
+  
+  // Check if we're on the Phase1Services page
+  const isPhase1ServicesPage = location.pathname === '/phase1-services'
   
   // Extract cluster info from URL if on cluster details page
   const clusterInfo = isClusterDetailsPage ? {
@@ -27,7 +32,7 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <Header clusterInfo={clusterInfo} />
+      <Header clusterInfo={clusterInfo} tableHeader={tableHeader} />
       
       {/* Main Content Area */}
       <main className="flex-1 py-6 lg:py-8">
@@ -66,7 +71,9 @@ function AppContent() {
 function App() {
   return (
     <Router>
-      <AppContent />
+      <TableHeaderProvider>
+        <AppContent />
+      </TableHeaderProvider>
     </Router>
   )
 }
