@@ -42,12 +42,19 @@ function AppContent() {
   const pageTitle = (() => {
     if (isAbcdPage || isPhase1ServicesPage) return 'ABCD Dashboard (Phase 1 Services)'
     if (isServiceGroupsPage) return 'Service Groups'
+    if (isAbcdSetsPage) return 'ABCD Sets'
+    return undefined
+  })()
+  
+  // Set page subtitle for different pages  
+  const pageSubtitle = (() => {
+    if (isAbcdSetsPage) return 'Manage and view ABCD set configurations and provisions'
     return undefined
   })()
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <Header clusterInfo={clusterInfo} pageTitle={pageTitle} />
+      <Header clusterInfo={clusterInfo} pageTitle={pageTitle} pageSubtitle={pageSubtitle} />
       
       {/* Main Content Area */}
       <main className="flex-1 py-6 lg:py-8">

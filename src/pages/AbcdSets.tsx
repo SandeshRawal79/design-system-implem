@@ -485,15 +485,6 @@ export function AbcdSets() {
 
   return (
     <div className="flex flex-col font-['Proxima_Nova',sans-serif] px-8 py-6">
-      {/* Page Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-foreground mb-2">ABCD Sets</h1>
-        <p className="text-muted-foreground">Manage and view ABCD set configurations and provisions</p>
-        <Badge variant="outline" className="mt-2 px-2 py-0.5 bg-primary/10 text-primary border-primary/20">
-          {filteredAndSortedData.length} ABCD sets found
-        </Badge>
-      </div>
-
       {/* Main ABCD Sets Table */}
       <Collapsible open={!isMainTableCollapsed} onOpenChange={(open) => setIsMainTableCollapsed(!open)}>
         <Card className="bg-card border-border shadow-sm flex-1 flex flex-col min-h-0 overflow-hidden">

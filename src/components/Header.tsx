@@ -27,9 +27,10 @@ interface ClusterInfo {
 interface HeaderProps {
   clusterInfo?: ClusterInfo
   pageTitle?: string
+  pageSubtitle?: string
 }
 
-export function Header({ clusterInfo, pageTitle }: HeaderProps) {
+export function Header({ clusterInfo, pageTitle, pageSubtitle }: HeaderProps) {
   const location = useLocation()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isDarkMode, setIsDarkMode] = useKV('theme-dark-mode', 'false')
@@ -107,6 +108,11 @@ export function Header({ clusterInfo, pageTitle }: HeaderProps) {
                         <h2 className="font-semibold text-foreground truncate leading-none" style={{ fontSize: 'var(--font-body)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
                           {pageTitle}
                         </h2>
+                        {pageSubtitle && (
+                          <p className="text-muted-foreground leading-none mt-0.5" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
+                            {pageSubtitle}
+                          </p>
+                        )}
                       </div>
                     </div>
                   )}
@@ -140,6 +146,11 @@ export function Header({ clusterInfo, pageTitle }: HeaderProps) {
                     <h2 className="font-medium text-foreground truncate leading-none" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
                       {pageTitle}
                     </h2>
+                    {pageSubtitle && (
+                      <p className="text-muted-foreground leading-none mt-0.5" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
+                        {pageSubtitle}
+                      </p>
+                    )}
                   </div>
                 )}
               </div>
