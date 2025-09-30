@@ -623,8 +623,7 @@ export function ClusterDetails() {
             </Button>
           </div>
           
-          {!isMainTableCollapsed && (
-            <>
+          <CollapsibleContent className="flex flex-col h-full min-h-0">
               {/* Ultra-Compact Filter Controls - Single Row for 1920x1080 */}
               <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/20 flex-wrap filter-bar flex-shrink-0">
             {/* Search Input - Optimized width */}
@@ -909,8 +908,7 @@ export function ClusterDetails() {
               </table>
             </div>
           </div>
-          </>
-          )}
+          </CollapsibleContent>
         </CardContent>
       </Card>
       </Collapsible>
@@ -918,10 +916,10 @@ export function ClusterDetails() {
       {/* Similar Records Table */}
       {showSimilarRecords && selectedRecordId && (
         <Collapsible open={!isSimilarRecordsCollapsed} onOpenChange={(open) => setIsSimilarRecordsCollapsed(!open)}>
-          <Card className="bg-card border-border shadow-sm mt-4 mx-8">
-            <CardContent className="p-0">
+          <Card className="bg-card border-border shadow-sm mt-4 mx-8 h-96 flex flex-col">
+            <CardContent className="p-0 flex flex-col h-full">
               {/* Similar Records Header */}
-              <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20">
+              <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20 flex-shrink-0">
                 <div className="flex items-center gap-3">
                   <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
                     Similar Records for ABCD {selectedRecordId}
@@ -963,7 +961,7 @@ export function ClusterDetails() {
             
             {/* Similar Records Table */}
             {!isSimilarRecordsCollapsed && (
-              <div className="max-h-96 overflow-auto">
+              <div className="h-80 overflow-auto">
               <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                 <colgroup>
                   <col className="col-index" />
@@ -1056,7 +1054,7 @@ export function ClusterDetails() {
                 </tbody>
               </table>
             </div>
-            )}
+            </CollapsibleContent>
           </CardContent>
         </Card>
         </Collapsible>
@@ -1065,10 +1063,10 @@ export function ClusterDetails() {
       {/* Exact Same CD Records Table */}
       {showExactSameCDRecords && selectedRecordId && (
         <Collapsible open={!isExactSameCDCollapsed} onOpenChange={(open) => setIsExactSameCDCollapsed(!open)}>
-          <Card className="bg-card border-border shadow-sm mt-4 mx-8">
-            <CardContent className="p-0">
+          <Card className="bg-card border-border shadow-sm mt-4 mx-8 h-96 flex flex-col">
+            <CardContent className="p-0 flex flex-col h-full">
               {/* Exact Same CD Records Header */}
-              <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20">
+              <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20 flex-shrink-0">
                 <div className="flex items-center gap-3">
                   <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
                     Exact Same CD Records (Based on Selected ABCD) for ABCD {selectedRecordId}
@@ -1110,7 +1108,7 @@ export function ClusterDetails() {
             
             {/* Exact Same CD Records Table */}
             {!isExactSameCDCollapsed && (
-              <div className="max-h-96 overflow-auto">
+              <div className="h-80 overflow-auto">
               <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                 <colgroup>
                   <col className="col-index" />
@@ -1199,7 +1197,7 @@ export function ClusterDetails() {
                 </tbody>
               </table>
             </div>
-            )}
+            </CollapsibleContent>
           </CardContent>
         </Card>
         </Collapsible>
