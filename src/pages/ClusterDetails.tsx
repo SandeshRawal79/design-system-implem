@@ -386,6 +386,11 @@ export function ClusterDetails() {
   // State for exact same CD records
   const [exactSameCDRecords, setExactSameCDRecords] = useState<any[]>([])
   const [showExactSameCDRecords, setShowExactSameCDRecords] = useState(false)
+  
+  // State for collapsible tables
+  const [isMainTableCollapsed, setIsMainTableCollapsed] = useState(false)
+  const [isSimilarRecordsCollapsed, setIsSimilarRecordsCollapsed] = useState(false)
+  const [isExactSameCDCollapsed, setIsExactSameCDCollapsed] = useState(false)
 
   // Filter and sort data
   const filteredAndSortedData = useMemo(() => {
@@ -595,8 +600,31 @@ export function ClusterDetails() {
       {/* Main Data Table - Fixed height with sticky header */}
       <Card className="bg-card border-border shadow-sm flex-1 flex flex-col min-h-0 mx-8 overflow-hidden">
         <CardContent className="p-0 flex flex-col h-full min-h-0">
-          {/* Ultra-Compact Filter Controls - Single Row for 1920x1080 */}
-          <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/20 flex-wrap filter-bar flex-shrink-0">
+          {/* Main Table Header with Collapse Control */}
+          <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20 flex-shrink-0">
+            <div className="flex items-center gap-3">
+              <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
+                Cluster Details - Main Records
+              </h3>
+              <Badge variant="outline" className="px-2 py-0.5 bg-primary/10 text-primary border-primary/20">
+                {filteredAndSortedData.length} records
+              </Badge>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsMainTableCollapsed(!isMainTableCollapsed)}
+              className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
+            >
+              {isMainTableCollapsed ? <CaretDown className="h-4 w-4" /> : <CaretUp className="h-4 w-4" />}
+              {isMainTableCollapsed ? 'Expand' : 'Collapse'}
+            </Button>
+          </div>
+          
+          {!isMainTableCollapsed && (
+            <>
+              {/* Ultra-Compact Filter Controls - Single Row for 1920x1080 */}
+              <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/20 flex-wrap filter-bar flex-shrink-0">
             {/* Search Input - Optimized width */}
             <div className="relative flex-1 min-w-64 max-w-80">
               <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
@@ -879,6 +907,8 @@ export function ClusterDetails() {
               </table>
             </div>
           </div>
+          </>
+          )}
         </CardContent>
       </Card>
       
@@ -896,24 +926,36 @@ export function ClusterDetails() {
                   {similarRecords.length} records found
                 </Badge>
               </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  setShowSimilarRecords(false)
-                  setShowExactSameCDRecords(false)
-                  setSelectedRecordId(null)
-                  setSimilarRecords([])
-                  setExactSameCDRecords([])
-                }}
-                className="text-muted-foreground hover:text-foreground hover:bg-muted"
-              >
-                <X className="h-4 w-4" />
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsSimilarRecordsCollapsed(!isSimilarRecordsCollapsed)}
+                  className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
+                >
+                  {isSimilarRecordsCollapsed ? <CaretDown className="h-4 w-4" /> : <CaretUp className="h-4 w-4" />}
+                  {isSimilarRecordsCollapsed ? 'Expand' : 'Collapse'}
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setShowSimilarRecords(false)
+                    setShowExactSameCDRecords(false)
+                    setSelectedRecordId(null)
+                    setSimilarRecords([])
+                    setExactSameCDRecords([])
+                  }}
+                  className="text-muted-foreground hover:text-foreground hover:bg-muted"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
             
             {/* Similar Records Table */}
-            <div className="max-h-96 overflow-auto">
+            {!isSimilarRecordsCollapsed && (
+              <div className="max-h-96 overflow-auto">
               <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                 <colgroup>
                   <col className="col-index" />
@@ -1006,6 +1048,7 @@ export function ClusterDetails() {
                 </tbody>
               </table>
             </div>
+            )}
           </CardContent>
         </Card>
       )}
@@ -1024,24 +1067,36 @@ export function ClusterDetails() {
                   {exactSameCDRecords.length} exact matches found
                 </Badge>
               </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  setShowSimilarRecords(false)
-                  setShowExactSameCDRecords(false)
-                  setSelectedRecordId(null)
-                  setSimilarRecords([])
-                  setExactSameCDRecords([])
-                }}
-                className="text-muted-foreground hover:text-foreground hover:bg-muted"
-              >
-                <X className="h-4 w-4" />
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsExactSameCDCollapsed(!isExactSameCDCollapsed)}
+                  className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
+                >
+                  {isExactSameCDCollapsed ? <CaretDown className="h-4 w-4" /> : <CaretUp className="h-4 w-4" />}
+                  {isExactSameCDCollapsed ? 'Expand' : 'Collapse'}
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setShowSimilarRecords(false)
+                    setShowExactSameCDRecords(false)
+                    setSelectedRecordId(null)
+                    setSimilarRecords([])
+                    setExactSameCDRecords([])
+                  }}
+                  className="text-muted-foreground hover:text-foreground hover:bg-muted"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
             
             {/* Exact Same CD Records Table */}
-            <div className="max-h-96 overflow-auto">
+            {!isExactSameCDCollapsed && (
+              <div className="max-h-96 overflow-auto">
               <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                 <colgroup>
                   <col className="col-index" />
@@ -1130,6 +1185,7 @@ export function ClusterDetails() {
                 </tbody>
               </table>
             </div>
+            )}
           </CardContent>
         </Card>
       )}
