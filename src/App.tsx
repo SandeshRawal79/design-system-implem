@@ -22,6 +22,9 @@ function AppContent() {
   // Check if we're on Phase1Services page to show the ABCD Dashboard title
   const isPhase1ServicesPage = location.pathname === '/phase1-services'
   
+  // Check if we're on Service Groups page to show the Service Groups title
+  const isServiceGroupsPage = location.pathname === '/service-groups'
+  
   // Extract cluster info from URL if on cluster details page
   const clusterInfo = isClusterDetailsPage ? {
     clusterId: location.pathname.split('/cluster/')[1] || '1',
@@ -32,8 +35,12 @@ function AppContent() {
     serviceId: location.pathname.split('/clusters/')[1]?.split('/cluster/')[0] || ''
   } : undefined
   
-  // Set page title for ABCD Dashboard
-  const pageTitle = (isAbcdPage || isPhase1ServicesPage) ? 'ABCD Dashboard (Phase 1 Services)' : undefined
+  // Set page title for different pages
+  const pageTitle = (() => {
+    if (isAbcdPage || isPhase1ServicesPage) return 'ABCD Dashboard (Phase 1 Services)'
+    if (isServiceGroupsPage) return 'Service Groups'
+    return undefined
+  })()
 
   return (
     <div className="min-h-screen bg-background flex flex-col">

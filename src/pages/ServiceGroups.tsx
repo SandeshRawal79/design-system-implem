@@ -1,11 +1,11 @@
 import { useState, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
-import { PageLayout } from '@/components/PageLayout'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { MagnifyingGlass, X, CaretUp, CaretDown, SortAscending, SortDescending } from '@phosphor-icons/react'
+import { Badge } from '@/components/ui/badge'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import { MagnifyingGlass, X, CaretUp, CaretDown } from '@phosphor-icons/react'
 
 interface ServiceGroup {
   id: number
@@ -16,12 +16,18 @@ interface ServiceGroup {
   created: string
 }
 
+// Types for sorting
 type SortField = 'id' | 'name' | 'description' | 'assignee' | 'members' | 'created'
 type SortDirection = 'asc' | 'desc'
 
 export function ServiceGroups() {
+  const [searchTerm, setSearchTerm] = useState('')
+  const [sortField, setSortField] = useState<SortField>('id')
+  const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
+  const [isTableCollapsed, setIsTableCollapsed] = useState(false)
+
   // Mock data based on the screenshot
-  const [serviceGroups] = useState<ServiceGroup[]>([
+  const serviceGroups: ServiceGroup[] = [
     {
       id: 1,
       name: "Cycle 1 service group",
@@ -62,21 +68,7 @@ export function ServiceGroups() {
       members: 1,
       created: "2025-09-22 14:29"
     }
-  ])
-
-  // State for filtering and sorting
-  const [searchTerm, setSearchTerm] = useState('')
-  const [sortField, setSortField] = useState<SortField>('id')
-  const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
-  const [assigneeFilter, setAssigneeFilter] = useState('all')
-
-  const handleModify = (groupId: number) => {
-    console.log('Modify group:', groupId)
-  }
-
-  const handleCreateView = (groupId: number) => {
-    console.log('Create/View group:', groupId)
-  }
+  ]
 
   // Filter and sort data
   const filteredAndSortedData = useMemo(() => {
@@ -89,13 +81,9 @@ export function ServiceGroups() {
         item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.assignee.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.members.toString().includes(searchTerm.toLowerCase()) ||
         item.created.toLowerCase().includes(searchTerm.toLowerCase())
       )
-    }
-
-    // Apply assignee filter
-    if (assigneeFilter !== 'all') {
-      filtered = filtered.filter(item => item.assignee === assigneeFilter)
     }
 
     // Apply sorting
@@ -138,7 +126,7 @@ export function ServiceGroups() {
     })
 
     return filtered
-  }, [serviceGroups, searchTerm, sortField, sortDirection, assigneeFilter])
+  }, [serviceGroups, searchTerm, sortField, sortDirection])
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -151,7 +139,6 @@ export function ServiceGroups() {
 
   const clearFilters = () => {
     setSearchTerm('')
-    setAssigneeFilter('all')
     setSortField('id')
     setSortDirection('asc')
   }
@@ -163,18 +150,18 @@ export function ServiceGroups() {
       <CaretDown className="h-3 w-3 ml-1" />
   }
 
-  // Get unique assignees for filter
-  const uniqueAssignees = Array.from(new Set(serviceGroups.map(item => item.assignee)))
+  const [assigneeFilter, setAssigneeFilter] = useState('all')
+
+  const handleModify = (groupId: number) => {
+    console.log('Modify group:', groupId)
+  }
+
+  const handleCreateView = (groupId: number) => {
+    console.log('Create/View group:', groupId)
+  }
 
   return (
-    <PageLayout
-      title="Service Groups"
-      subtitle="Manage and view service group assignments"
-      badge={{
-        count: serviceGroups.length,
-        label: "service groups found"
-      }}
-    >
+    <div className="space-y-6">
       {/* Service Groups Table - Constrained width, not full width like ClusterDetails */}
       <Card className="bg-card border-border shadow-sm flex flex-col overflow-hidden max-w-9xl mx-auto">
         <CardContent className="p-0 flex flex-col h-full min-h-0">
@@ -197,11 +184,12 @@ export function ServiceGroups() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="absolute right-1 top-1/2 transform -translate-y-1/2 p-0 hover:bg-muted transition-colors"
-                    style={{ height: 'var(--button-xs)', width: 'var(--button-xs)' }}
-                    onClick={() => setSearchTerm('')}
+                    onClick={clearFilters}
+                    className="px-2 text-muted-foreground hover:text-foreground hover:bg-muted focus:ring-1 focus:ring-ring transition-colors"
+                    style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
                   >
-                    <X className="h-2 w-2 text-muted-foreground" />
+                    <X className="h-2 w-2 mr-1" />
+                    Clear
                   </Button>
                 )}
               </div>
@@ -387,6 +375,6 @@ export function ServiceGroups() {
           </div>
         </CardContent>
       </Card>
-    </PageLayout>
+    </div>
   )
 }
