@@ -15,6 +15,9 @@ function AppContent() {
   // Check if we're on a cluster details page to pass cluster info to header
   const isClusterDetailsPage = location.pathname.includes('/clusters/') && location.pathname.includes('/cluster/')
   
+  // Check if we're on the ABCD page to show the dashboard title
+  const isAbcdPage = location.pathname === '/abcd'
+  
   // Extract cluster info from URL if on cluster details page
   const clusterInfo = isClusterDetailsPage ? {
     clusterId: location.pathname.split('/cluster/')[1] || '1',
@@ -24,10 +27,13 @@ function AppContent() {
     created: '2023-03-16 10:56:57',
     serviceId: location.pathname.split('/clusters/')[1]?.split('/cluster/')[0] || ''
   } : undefined
+  
+  // Set page title for ABCD Dashboard
+  const pageTitle = isAbcdPage ? 'ABCD Dashboard (Phase 1 Services)' : undefined
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <Header clusterInfo={clusterInfo} />
+      <Header clusterInfo={clusterInfo} pageTitle={pageTitle} />
       
       {/* Main Content Area */}
       <main className="flex-1 py-6 lg:py-8">

@@ -26,9 +26,10 @@ interface ClusterInfo {
 
 interface HeaderProps {
   clusterInfo?: ClusterInfo
+  pageTitle?: string
 }
 
-export function Header({ clusterInfo }: HeaderProps) {
+export function Header({ clusterInfo, pageTitle }: HeaderProps) {
   const location = useLocation()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isDarkMode, setIsDarkMode] = useKV('theme-dark-mode', 'false')
@@ -100,6 +101,15 @@ export function Header({ clusterInfo }: HeaderProps) {
                       Powered by SHC.AI
                     </p>
                   </div>
+                  {pageTitle && (
+                    <div className="hidden lg:flex items-center gap-3 ml-6 pl-6 border-l border-border">
+                      <div className="min-w-0 flex flex-col justify-center">
+                        <h2 className="font-semibold text-foreground truncate leading-none" style={{ fontSize: 'var(--font-body)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
+                          {pageTitle}
+                        </h2>
+                      </div>
+                    </div>
+                  )}
                   {clusterInfo && (
                     <div className="hidden lg:flex items-center gap-3 ml-6 pl-6 border-l border-border">
                       <div className="min-w-0 flex flex-col justify-center">
@@ -122,6 +132,14 @@ export function Header({ clusterInfo }: HeaderProps) {
                     <p className="text-muted-foreground leading-none mt-0.5" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
                       {clusterInfo.recordsInCluster} records
                     </p>
+                  </div>
+                )}
+                {/* Mobile page title display */}
+                {pageTitle && !clusterInfo && (
+                  <div className="lg:hidden mt-0.5">
+                    <h2 className="font-medium text-foreground truncate leading-none" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
+                      {pageTitle}
+                    </h2>
                   </div>
                 )}
               </div>

@@ -220,10 +220,9 @@ export function AbcdPage() {
   return (
     <div className="abcd-page-compact">
       <PageLayout
-        title="ABCD"
+        title=""
         subtitle={`Service Group: ${serviceGroupNames[selectedServiceGroup as keyof typeof serviceGroupNames] || selectedServiceGroup}`}
-        backButtonLabel="Back to Dashboard"
-        backButtonPath="/"
+        showTopBackButton={false}
         rightContent={
           <ServiceGroupSelector 
             selectedServiceGroup={selectedServiceGroup}
