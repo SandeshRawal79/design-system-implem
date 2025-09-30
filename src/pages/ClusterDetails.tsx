@@ -400,6 +400,7 @@ export function ClusterDetails() {
   const [similarFilterType, setSimilarFilterType] = useState<FilterType>('all')
   const [similarStatusFilter, setSimilarStatusFilter] = useState<StatusFilter>('all')
   const [similarProvisionTypeFilter, setSimilarProvisionTypeFilter] = useState('all')
+  const [similarRecordsViewMode, setSimilarRecordsViewMode] = useState('Only Options (D)')
 
   // Filter state for Exact Same CD Records table
   const [exactSearchTerm, setExactSearchTerm] = useState('')
@@ -939,16 +940,6 @@ export function ClusterDetails() {
               <Badge variant="outline" className="px-2 py-0.5 bg-primary/10 text-primary border-primary/20">
                 {filteredAndSortedData.length} records
               </Badge>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsMainTableCollapsed(!isMainTableCollapsed)}
-                className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
-                style={{ height: 'var(--button-sm)' }}
-              >
-                {isMainTableCollapsed ? <CaretDown className="h-3 w-3" /> : <CaretUp className="h-3 w-3" />}
-                {isMainTableCollapsed ? 'Expand' : 'Collapse'}
-              </Button>
             </div>
 
             {/* Filter Controls Section - Merged into header row */}
@@ -1070,6 +1061,16 @@ export function ClusterDetails() {
               >
                 <X className="h-2 w-2 mr-1" />
                 Clear
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsMainTableCollapsed(!isMainTableCollapsed)}
+                className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
+                style={{ height: 'var(--button-sm)' }}
+              >
+                {isMainTableCollapsed ? <CaretDown className="h-3 w-3" /> : <CaretUp className="h-3 w-3" />}
+                {isMainTableCollapsed ? 'Expand' : 'Collapse'}
               </Button>
             </div>
             </div>
@@ -1251,25 +1252,25 @@ export function ClusterDetails() {
             <CardContent className="p-0 flex flex-col h-full">
               {/* Merged Similar Records Header with Collapse Control and Filter Controls */}
               <div className="flex items-center gap-4 px-3 py-2 border-b border-border bg-muted/20 flex-shrink-0 flex-wrap">
-                {/* Left Section: Title, Badge, and Collapse Control */}
+                {/* Left Section: Title, Badge, Dropdown, and Collapse Control */}
                 <div className="flex items-center gap-3">
                   <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
-                    Similar Records for ABCD {selectedRecordId}
+                    Similar Records
                   </h3>
+                  <Select value={similarRecordsViewMode} onValueChange={setSimilarRecordsViewMode}>
+                    <SelectTrigger className="w-64 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Only Options (D)" style={{ fontSize: 'var(--font-body)' }}>Only Options (D)</SelectItem>
+                      <SelectItem value="Provision Type + Options (C+D)" style={{ fontSize: 'var(--font-body)' }}>Provision Type + Options (C+D)</SelectItem>
+                      <SelectItem value="Service ID/Name + Provision Type + Options (A+B+C+D)" style={{ fontSize: 'var(--font-body)' }}>Service ID/Name + Provision Type + Options (A+B+C+D)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <span className="text-muted-foreground" style={{ fontSize: 'var(--font-body)' }}>for ABCD {selectedRecordId}</span>
                   <Badge variant="outline" className="px-2 py-0.5 bg-info/10 text-info border-info/20">
                     {filteredAndSortedSimilarRecords.length} records found
                   </Badge>
-                  <CollapsibleTrigger asChild>
-                     <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
-                      style={{ height: 'var(--button-sm)' }}
-                     >
-                      {isSimilarRecordsCollapsed ? <CaretDown className="h-3 w-3" /> : <CaretUp className="h-3 w-3" />}
-                      {isSimilarRecordsCollapsed ? 'Expand' : 'Collapse'}
-                    </Button>
-                  </CollapsibleTrigger>
                 </div>
 
                 {/* Filter Controls Section - Merged into header row */}
@@ -1393,6 +1394,17 @@ export function ClusterDetails() {
                     <X className="h-2 w-2 mr-1" />
                     Clear
                   </Button>
+                  <CollapsibleTrigger asChild>
+                     <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
+                      style={{ height: 'var(--button-sm)' }}
+                     >
+                      {isSimilarRecordsCollapsed ? <CaretDown className="h-3 w-3" /> : <CaretUp className="h-3 w-3" />}
+                      {isSimilarRecordsCollapsed ? 'Expand' : 'Collapse'}
+                    </Button>
+                  </CollapsibleTrigger>
                 </div>
                 </div>
               </div>
@@ -1572,22 +1584,11 @@ export function ClusterDetails() {
                 {/* Left Section: Title, Badge, and Collapse Control */}
                 <div className="flex items-center gap-3">
                   <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
-                    Exact Same CD Records (Based on Selected ABCD) for ABCD {selectedRecordId}
+                    Exact Same CD Records for ABCD {selectedRecordId}
                   </h3>
                   <Badge variant="outline" className="px-2 py-0.5 bg-success/10 text-success border-success/20">
                     {filteredAndSortedExactRecords.length} exact matches found
                   </Badge>
-                  <CollapsibleTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
-                      style={{ height: 'var(--button-sm)' }}
-                     >
-                      {isExactSameCDCollapsed ? <CaretDown className="h-3 w-3" /> : <CaretUp className="h-3 w-3" />}
-                      {isExactSameCDCollapsed ? 'Expand' : 'Collapse'}
-                    </Button>
-                  </CollapsibleTrigger>
                 </div>
 
                 {/* Filter Controls Section - Merged into header row */}
@@ -1710,6 +1711,17 @@ export function ClusterDetails() {
                     <X className="h-2 w-2 mr-1" />
                     Clear
                   </Button>
+                  <CollapsibleTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
+                      style={{ height: 'var(--button-sm)' }}
+                     >
+                      {isExactSameCDCollapsed ? <CaretDown className="h-3 w-3" /> : <CaretUp className="h-3 w-3" />}
+                      {isExactSameCDCollapsed ? 'Expand' : 'Collapse'}
+                    </Button>
+                  </CollapsibleTrigger>
                 </div>
                 </div>
               </div>
