@@ -1246,9 +1246,8 @@ export function ClusterDetails() {
       </Collapsible>
       
       {/* Similar Records Table */}
-      {showSimilarRecords && (
         <Collapsible open={!isSimilarRecordsCollapsed} onOpenChange={(open) => setIsSimilarRecordsCollapsed(!open)}>
-          <Card ref={similarRecordsRef} className="bg-card border-border shadow-sm mt-4 mx-8 h-96 flex flex-col">
+          <Card ref={similarRecordsRef} className="bg-card border-border shadow-sm mt-4 mx-8 flex flex-col">
             <CardContent className="p-0 flex flex-col h-full">
               {/* Merged Similar Records Header with Collapse Control and Filter Controls */}
               <div className="flex items-center gap-4 px-3 py-2 border-b border-border bg-muted/20 flex-shrink-0 flex-wrap">
@@ -1563,12 +1562,10 @@ export function ClusterDetails() {
           </CardContent>
         </Card>
         </Collapsible>
-      )}
       
       {/* Exact Same CD Records Table */}
-      {showExactSameCDRecords && (
         <Collapsible open={!isExactSameCDCollapsed} onOpenChange={(open) => setIsExactSameCDCollapsed(!open)}>
-          <Card ref={exactSameCDRecordsRef} className="bg-card border-border shadow-sm mt-4 mx-8 h-96 flex flex-col">
+          <Card ref={exactSameCDRecordsRef} className="bg-card border-border shadow-sm mt-4 mx-8 flex flex-col">
             <CardContent className="p-0 flex flex-col h-full">
               {/* Merged Exact Same CD Records Header with Collapse Control and Filter Controls */}
               <div className="flex items-center gap-4 px-3 py-2 border-b border-border bg-muted/20 flex-shrink-0 flex-wrap">
@@ -1873,7 +1870,6 @@ export function ClusterDetails() {
           </CardContent>
         </Card>
         </Collapsible>
-      )}
     </div>
   );
 }

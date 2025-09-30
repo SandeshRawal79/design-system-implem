@@ -20,7 +20,7 @@ function AppContent() {
     clusterId: location.pathname.split('/cluster/')[1] || '1',
     totalClusters: 1,
     xrayProjection: 'Only Options (D)',
-    recordsInCluster: 225,
+    recordsInCluster: 25,
     created: '2023-03-16 10:56:57',
     serviceId: location.pathname.split('/clusters/')[1]?.split('/cluster/')[0] || ''
   } : undefined
