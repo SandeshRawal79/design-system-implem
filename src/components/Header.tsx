@@ -13,7 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { Button } from '@/components/ui/button'
 import { useKV } from '@github/spark/hooks'
-import bniLogo from '@/assets/images/bni-logo.svg'
+import bniLogo from '@/assets/images/BNi.png'
 
 interface ClusterInfo {
   clusterId: string
