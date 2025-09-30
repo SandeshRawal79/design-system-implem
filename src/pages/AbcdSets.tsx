@@ -46,6 +46,45 @@ const generateApprovalStatuses = () => {
   return Array.from({ length: 5 }, () => statuses[Math.floor(Math.random() * statuses.length)]);
 };
 
+// Component to render approval status indicators in compact format to save column space
+function ApprovalStatusIndicators({ statuses }: { statuses: string[] }) {
+  return (
+    <div className="flex items-center justify-center gap-0.5 font-mono text-sm" role="group" aria-label="Approval status indicators">
+      {statuses.map((status, index) => {
+        let displaySymbol;
+        let colorClass;
+        let ariaLabel;
+        
+        if (status === '✓') {
+          displaySymbol = '✓';
+          colorClass = "text-success font-bold";
+          ariaLabel = `Approved step ${index + 1}`;
+        } else if (status === '✗') {
+          displaySymbol = 'X';
+          colorClass = "text-destructive font-bold";
+          ariaLabel = `Rejected step ${index + 1}`;
+        } else {
+          displaySymbol = '-';
+          colorClass = "text-muted-foreground font-bold";
+          ariaLabel = `Pending step ${index + 1}`;
+        }
+        
+        return (
+          <span
+            key={index}
+            className={`inline-flex items-center justify-center w-4 text-center cursor-default transition-colors duration-200 ${colorClass}`}
+            role="status"
+            aria-label={ariaLabel}
+            title={ariaLabel}
+          >
+            {displaySymbol}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
 // Mock data for ABCD Sets
 const mockAbcdSets: AbcdSet[] = [
   {
@@ -169,45 +208,6 @@ const generateSetMembers = (setId: number): AbcdSetMember[] => {
     num_groups: Math.floor(Math.random() * 30) + 1,
     approvalStatuses: generateApprovalStatuses()
   }))
-}
-
-// Component to render approval status indicators in compact format to save column space
-function ApprovalStatusIndicators({ statuses }: { statuses: string[] }) {
-  return (
-    <div className="flex items-center justify-center gap-0.5 font-mono text-sm" role="group" aria-label="Approval status indicators">
-      {statuses.map((status, index) => {
-        let displaySymbol;
-        let colorClass;
-        let ariaLabel;
-        
-        if (status === '✓') {
-          displaySymbol = '✓';
-          colorClass = "text-success font-bold";
-          ariaLabel = `Approved step ${index + 1}`;
-        } else if (status === '✗') {
-          displaySymbol = 'X';
-          colorClass = "text-destructive font-bold";
-          ariaLabel = `Rejected step ${index + 1}`;
-        } else {
-          displaySymbol = '-';
-          colorClass = "text-muted-foreground font-bold";
-          ariaLabel = `Pending step ${index + 1}`;
-        }
-        
-        return (
-          <span
-            key={index}
-            className={`inline-flex items-center justify-center w-4 text-center cursor-default transition-colors duration-200 ${colorClass}`}
-            role="status"
-            aria-label={ariaLabel}
-            title={ariaLabel}
-          >
-            {displaySymbol}
-          </span>
-        );
-      })}
-    </div>
-  );
 }
 
 export function AbcdSets() {
