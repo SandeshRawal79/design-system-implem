@@ -747,6 +747,8 @@ export function ClusterDetails() {
             </div>
               </div>
           {/* Table Container - Fixed height with sticky header */}
+          {!isMainTableCollapsed && (
+          <>
             <div className="max-h-112 overflow-auto">
               <table className="w-full border-collapse cluster-details-table-full-width" style={{ fontSize: 'var(--font-body)', minWidth: '100%' }}>
                 <colgroup>
@@ -908,6 +910,7 @@ export function ClusterDetails() {
             </div>
           </>
           )}
+          </CollapsibleContent>
         </CardContent>
       </Card>
       </Collapsible>
@@ -940,6 +943,7 @@ export function ClusterDetails() {
                 </div>
               </div>
             
+            <CollapsibleContent className="flex flex-col h-full min-h-0">
             {/* Similar Records Table */}
             {!isSimilarRecordsCollapsed && (
               <div className="max-h-112 overflow-auto">
@@ -1035,6 +1039,7 @@ export function ClusterDetails() {
                 </tbody>
               </table>
             </div>
+            )}
             </CollapsibleContent>
           </CardContent>
         </Card>
@@ -1068,6 +1073,7 @@ export function ClusterDetails() {
                 </div>
               </div>
             
+            <CollapsibleContent className="flex flex-col h-full min-h-0">
             {/* Exact Same CD Records Table */}
             {!isExactSameCDCollapsed && (
               <div className="max-h-112 overflow-auto">
@@ -1159,6 +1165,7 @@ export function ClusterDetails() {
                 </tbody>
               </table>
             </div>
+            )}
             </CollapsibleContent>
           </CardContent>
         </Card>
