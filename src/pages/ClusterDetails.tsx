@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -393,6 +393,10 @@ export function ClusterDetails() {
   const [isSimilarRecordsCollapsed, setIsSimilarRecordsCollapsed] = useState(false)
   const [isExactSameCDCollapsed, setIsExactSameCDCollapsed] = useState(false)
 
+  // Refs for scrolling to tables
+  const similarRecordsRef = useRef<HTMLDivElement>(null)
+  const exactSameCDRecordsRef = useRef<HTMLDivElement>(null)
+
   // Filter and sort data
   const filteredAndSortedData = useMemo(() => {
     let filtered = [...mockClusterData]
@@ -535,7 +539,7 @@ export function ClusterDetails() {
       <CaretDown className="h-3 w-3 ml-1" />
   }
   
-  // Handle clicking on the # column to show similar records
+  // Handle clicking on the # column to show similar records and scroll to them
   const handleRowNumberClick = (abcdId: number) => {
     if (selectedRecordId === abcdId && showSimilarRecords && showExactSameCDRecords) {
       // If already showing both tables for this row, hide them
@@ -551,6 +555,17 @@ export function ClusterDetails() {
       setExactSameCDRecords(generateExactSameCDRecords(abcdId))
       setShowSimilarRecords(true)
       setShowExactSameCDRecords(true)
+      setIsSimilarRecordsCollapsed(false) // Ensure tables are expanded when showing
+      setIsExactSameCDCollapsed(false)
+      
+      // Scroll to Similar Records table after a brief delay to allow rendering
+      setTimeout(() => {
+        similarRecordsRef.current?.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start',
+          inline: 'nearest' 
+        })
+      }, 100)
     }
   }
 
@@ -916,8 +931,9 @@ export function ClusterDetails() {
       </Collapsible>
       
       {/* Similar Records Table */}
+      {showSimilarRecords && (
         <Collapsible open={!isSimilarRecordsCollapsed} onOpenChange={(open) => setIsSimilarRecordsCollapsed(!open)}>
-          <Card className="bg-card border-border shadow-sm mt-4 mx-8 h-96 flex flex-col">
+          <Card ref={similarRecordsRef} className="bg-card border-border shadow-sm mt-4 mx-8 h-96 flex flex-col">
             <CardContent className="p-0 flex flex-col h-full">
               {/* Similar Records Header */}
               <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20 flex-shrink-0">
@@ -1044,10 +1060,12 @@ export function ClusterDetails() {
           </CardContent>
         </Card>
         </Collapsible>
+      )}
       
       {/* Exact Same CD Records Table */}
+      {showExactSameCDRecords && (
         <Collapsible open={!isExactSameCDCollapsed} onOpenChange={(open) => setIsExactSameCDCollapsed(!open)}>
-          <Card className="bg-card border-border shadow-sm mt-4 mx-8 h-96 flex flex-col">
+          <Card ref={exactSameCDRecordsRef} className="bg-card border-border shadow-sm mt-4 mx-8 h-96 flex flex-col">
             <CardContent className="p-0 flex flex-col h-full">
               {/* Exact Same CD Records Header */}
               <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20 flex-shrink-0">
@@ -1170,6 +1188,7 @@ export function ClusterDetails() {
           </CardContent>
         </Card>
         </Collapsible>
+      )}
     </div>
   );
 }
