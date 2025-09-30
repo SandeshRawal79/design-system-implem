@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { MagnifyingGlass, X, CaretUp, CaretDown, SortAscending, SortDescending } from '@phosphor-icons/react'
 
 // Types for filtering and sorting
@@ -744,7 +745,7 @@ export function ClusterDetails() {
                 Clear
               </Button>
             </div>
-          </div>
+              </div>
           {/* Table Container - Fixed height with sticky header */}
           <div className="flex-1 overflow-hidden">
             <div className="h-full overflow-auto">
@@ -911,20 +912,52 @@ export function ClusterDetails() {
           )}
         </CardContent>
       </Card>
+      </Collapsible>
       
       {/* Similar Records Table */}
       {showSimilarRecords && selectedRecordId && (
-        <Card className="bg-card border-border shadow-sm mt-4 mx-8">
-          <CardContent className="p-0">
-            {/* Similar Records Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20">
-              <div className="flex items-center gap-3">
-                <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
-                  Similar Records for ABCD {selectedRecordId}
-                </h3>
-                <Badge variant="outline" className="px-2 py-0.5 bg-info/10 text-info border-info/20">
-                  {similarRecords.length} records found
-                </Badge>
+        <Collapsible open={!isSimilarTableCollapsed} onOpenChange={(open) => setIsSimilarTableCollapsed(!open)}>
+          <Card className="bg-card border-border shadow-sm mt-4 mx-8">
+            <CardContent className="p-0">
+              {/* Similar Records Header */}
+              <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20">
+                <div className="flex items-center gap-3">
+                  <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
+                    Similar Records for ABCD {selectedRecordId}
+                  </h3>
+                  <Badge variant="outline" className="px-2 py-0.5 bg-info/10 text-info border-info/20">
+                    {similarRecords.length} records found
+                  </Badge>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CollapsibleTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-muted-foreground hover:text-foreground hover:bg-muted"
+                    >
+                      {isSimilarTableCollapsed ? (
+                        <CaretDown className="h-4 w-4" />
+                      ) : (
+                        <CaretUp className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </CollapsibleTrigger>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      setShowSimilarRecords(false)
+                      setShowExactSameCDRecords(false)
+                      setSelectedRecordId(null)
+                      setSimilarRecords([])
+                      setExactSameCDRecords([])
+                    }}
+                    className="text-muted-foreground hover:text-foreground hover:bg-muted"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
               <div className="flex items-center gap-2">
                 <Button
@@ -1055,17 +1088,48 @@ export function ClusterDetails() {
       
       {/* Exact Same CD Records Table */}
       {showExactSameCDRecords && selectedRecordId && (
-        <Card className="bg-card border-border shadow-sm mt-4 mx-8">
-          <CardContent className="p-0">
-            {/* Exact Same CD Records Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20">
-              <div className="flex items-center gap-3">
-                <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
-                  Exact Same CD Records (Based on Selected ABCD) for ABCD {selectedRecordId}
-                </h3>
-                <Badge variant="outline" className="px-2 py-0.5 bg-success/10 text-success border-success/20">
-                  {exactSameCDRecords.length} exact matches found
-                </Badge>
+        <Collapsible open={!isExactSameTableCollapsed} onOpenChange={(open) => setIsExactSameTableCollapsed(!open)}>
+          <Card className="bg-card border-border shadow-sm mt-4 mx-8">
+            <CardContent className="p-0">
+              {/* Exact Same CD Records Header */}
+              <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20">
+                <div className="flex items-center gap-3">
+                  <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
+                    Exact Same CD Records (Based on Selected ABCD) for ABCD {selectedRecordId}
+                  </h3>
+                  <Badge variant="outline" className="px-2 py-0.5 bg-success/10 text-success border-success/20">
+                    {exactSameCDRecords.length} exact matches found
+                  </Badge>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CollapsibleTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-muted-foreground hover:text-foreground hover:bg-muted"
+                    >
+                      {isExactSameTableCollapsed ? (
+                        <CaretDown className="h-4 w-4" />
+                      ) : (
+                        <CaretUp className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </CollapsibleTrigger>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      setShowSimilarRecords(false)
+                      setShowExactSameCDRecords(false)
+                      setSelectedRecordId(null)
+                      setSimilarRecords([])
+                      setExactSameCDRecords([])
+                    }}
+                    className="text-muted-foreground hover:text-foreground hover:bg-muted"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
               <div className="flex items-center gap-2">
                 <Button
