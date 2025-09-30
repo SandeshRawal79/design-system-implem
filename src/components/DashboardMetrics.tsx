@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom'
 interface MetricCardProps {
   title: string
   value: string
-  subtitle: string
   additionalInfo: string
   icon: typeof faUsers
   iconColor: string
@@ -23,7 +22,6 @@ interface MetricCardProps {
 function MetricCard({ 
   title, 
   value, 
-  subtitle, 
   additionalInfo, 
   icon, 
   iconColor, 
@@ -33,7 +31,7 @@ function MetricCard({
 }: MetricCardProps) {
   return (
     <Card 
-      className={`p-6 h-[140px] flex flex-col justify-between hover:shadow-md transition-all cursor-pointer ${
+      className={`p-6 h-[166px] flex flex-col justify-between hover:shadow-md transition-all cursor-pointer ${
         isClickable ? 'hover:scale-[1.02] interactive-element' : ''
       }`}
       onClick={onClick}
@@ -59,14 +57,6 @@ function MetricCard({
             {additionalInfo.split(' ').slice(2).join(' ')}
           </span>
         </div>
-        {isActive && (
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full status-active" style={{ backgroundColor: '#43812C' }}></div>
-            <span className="text-sm font-medium" style={{ color: '#43812C' }}>
-              {subtitle}
-            </span>
-          </div>
-        )}
       </div>
     </Card>
   );
@@ -79,7 +69,6 @@ export function DashboardMetrics() {
     {
       title: "Phase 1 Cycle 2 Services",
       value: "80",
-      subtitle: "Currently active",
       additionalInfo: "1298 Total Services",
       icon: faUsers,
       iconColor: "#1F8A7A",
@@ -89,7 +78,6 @@ export function DashboardMetrics() {
     {
       title: "Total Service Groups",
       value: "7",
-      subtitle: "Currently active",
       additionalInfo: "1298 Total Services",
       icon: faTag,
       iconColor: "#0174B2",
@@ -99,8 +87,7 @@ export function DashboardMetrics() {
     {
       title: "ABCD Sets",
       value: "66",
-      subtitle: "Currently active",
-      additionalInfo: "Managed Currently active",
+      additionalInfo: "",
       icon: faDatabase,
       iconColor: "#F48436",
       isActive: true,
@@ -110,7 +97,6 @@ export function DashboardMetrics() {
     {
       title: "Phase 1 Cycle 2 ABCDs",
       value: "3940",
-      subtitle: "Currently active",
       additionalInfo: "18105 Total ABCDs",
       icon: faFile,
       iconColor: "#1F8A7A",

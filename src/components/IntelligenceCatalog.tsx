@@ -40,12 +40,12 @@ function IntelligenceCard({
           {type}
         </Badge>
         
-        <p className="text-sm text-muted-foreground mb-6 leading-relaxed flex-1">
+        <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
           {description}
         </p>
         
         {teamStats && (
-          <div className="space-y-2 mt-auto">
+          <div className="space-y-2 mb-4">
             {teamStats.map((stat, index) => (
               <div 
                 key={index} 
@@ -98,6 +98,8 @@ function IntelligenceCard({
             ))}
           </div>
         )}
+        
+        <div className="flex-1"></div>
       </div>
     </Card>
   )
