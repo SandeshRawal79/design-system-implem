@@ -603,58 +603,58 @@ export function AbcdSets() {
                   <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                     <thead className="sticky top-0 bg-card border-b border-border z-10 shadow-sm">
                       <tr>
-                        <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('id')} style={{ fontSize: 'var(--font-body)' }}>
+                        <th className="text-left px-3 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('id')} style={{ fontSize: 'var(--font-body)' }}>
                           <div className="flex items-center">
                             ID
                             {getSortIcon('id')}
                           </div>
                         </th>
-                        <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('creator')} style={{ fontSize: 'var(--font-body)' }}>
+                        <th className="text-left px-3 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('creator')} style={{ fontSize: 'var(--font-body)' }}>
                           <div className="flex items-center">
                             Creator
                             {getSortIcon('creator')}
                           </div>
                         </th>
-                        <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('name')} style={{ fontSize: 'var(--font-body)' }}>
+                        <th className="text-left px-3 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('name')} style={{ fontSize: 'var(--font-body)' }}>
                           <div className="flex items-center">
                             ABCD Set Name
                             {getSortIcon('name')}
                           </div>
                         </th>
-                        <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('setCount')} style={{ fontSize: 'var(--font-body)' }}>
+                        <th className="text-center px-3 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('setCount')} style={{ fontSize: 'var(--font-body)' }}>
                           <div className="flex items-center justify-center">
                             Set Count
                             {getSortIcon('setCount')}
                           </div>
                         </th>
-                        <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" style={{ fontSize: 'var(--font-body)' }}>
+                        <th className="text-left px-3 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" style={{ fontSize: 'var(--font-body)' }}>
                           Description
                         </th>
-                        <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('abcdTup')} style={{ fontSize: 'var(--font-body)' }}>
+                        <th className="text-center px-3 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('abcdTup')} style={{ fontSize: 'var(--font-body)' }}>
                           <div className="flex items-center justify-center">
                             ABCD Tup
                             {getSortIcon('abcdTup')}
                           </div>
                         </th>
-                        <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('serviceName')} style={{ fontSize: 'var(--font-body)' }}>
+                        <th className="text-left px-3 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('serviceName')} style={{ fontSize: 'var(--font-body)' }}>
                           <div className="flex items-center">
                             Service Name
                             {getSortIcon('serviceName')}
                           </div>
                         </th>
-                        <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('provisionType')} style={{ fontSize: 'var(--font-body)' }}>
+                        <th className="text-left px-3 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('provisionType')} style={{ fontSize: 'var(--font-body)' }}>
                           <div className="flex items-center">
                             Provision Type
                             {getSortIcon('provisionType')}
                           </div>
                         </th>
-                        <th className="text-left px-2 py-3 font-medium text-muted-foreground bg-card" style={{ fontSize: 'var(--font-body)' }}>
+                        <th className="text-left px-3 py-3 font-medium text-muted-foreground bg-card" style={{ fontSize: 'var(--font-body)' }}>
                           Options
                         </th>
-                        <th className="text-left px-2 py-3 font-medium text-muted-foreground bg-card" style={{ fontSize: 'var(--font-body)' }}>
+                        <th className="text-center px-3 py-3 font-medium text-muted-foreground bg-card" style={{ fontSize: 'var(--font-body)' }}>
                           Approvals Needed
                         </th>
-                        <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('timestamp')} style={{ fontSize: 'var(--font-body)' }}>
+                        <th className="text-left px-3 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('timestamp')} style={{ fontSize: 'var(--font-body)' }}>
                           <div className="flex items-center">
                             Timestamp
                             {getSortIcon('timestamp')}
@@ -665,7 +665,7 @@ export function AbcdSets() {
                     <tbody>
                       {filteredAndSortedData.map((record, index) => (
                         <tr key={record.id} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
-                          <td className="px-2 py-2 align-middle">
+                          <td className="px-3 py-3 align-middle">
                             <Button 
                               variant="link" 
                               className="p-0 h-auto text-primary underline hover:text-primary-foreground hover:bg-primary font-bold transition-colors cursor-pointer"
@@ -676,7 +676,7 @@ export function AbcdSets() {
                               {record.id}
                             </Button>
                           </td>
-                          <td className="px-2 py-2 align-middle">
+                          <td className="px-3 py-3 align-middle">
                             <Button 
                               variant="link" 
                               className="p-0 h-auto text-info underline cursor-pointer font-medium transition-colors"
@@ -686,7 +686,7 @@ export function AbcdSets() {
                               {record.creator}
                             </Button>
                           </td>
-                          <td className="px-2 py-2 align-top">
+                          <td className="px-3 py-3 align-top">
                             <Button 
                               variant="link" 
                               className="p-0 h-auto text-info hover:text-info/80 cursor-pointer font-medium transition-colors break-words leading-tight"
@@ -697,36 +697,36 @@ export function AbcdSets() {
                               {record.name}
                             </Button>
                           </td>
-                          <td className="px-2 py-2 text-center align-middle">
+                          <td className="px-3 py-3 text-center align-middle">
                             <Badge variant="secondary" className="cursor-pointer font-bold" onClick={() => handleElementClick(record.id)} style={{ fontSize: 'var(--font-body)' }}>
                               {record.setCount.toLocaleString()}
                             </Badge>
                           </td>
-                          <td className="px-2 py-2 align-top">
+                          <td className="px-3 py-3 align-top">
                             <span className="font-medium text-foreground break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.description}>{record.description}</span>
                           </td>
-                          <td className="px-2 py-2 text-center align-middle">
+                          <td className="px-3 py-3 text-center align-middle">
                             <Badge variant="outline" className="cursor-pointer font-bold" onClick={() => handleElementClick(record.id)} style={{ fontSize: 'var(--font-body)' }}>
                               {record.abcdTup.toLocaleString()}
                             </Badge>
                           </td>
-                          <td className="px-2 py-2 align-top">
+                          <td className="px-3 py-3 align-top">
                             <div className="max-w-full">
                               <span className="font-medium text-foreground break-words leading-tight block" style={{ fontSize: 'var(--font-body)' }} title={record.serviceName}>
                                 {record.serviceName}
                               </span>
                             </div>
                           </td>
-                          <td className="px-2 py-2 align-top">
+                          <td className="px-3 py-3 align-top">
                             <span className="font-medium text-foreground break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.provisionType}>
                               {record.provisionType}
                             </span>
                           </td>
-                          <td className="px-2 py-2 align-top">
+                          <td className="px-3 py-3 align-top">
                             <span className="font-medium text-accent break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.options}>{record.options}</span>
                           </td>
-                          <td className="px-2 py-2 align-middle">
-                            <div className="flex flex-wrap gap-1">
+                          <td className="px-3 py-3 align-middle">
+                            <div className="flex flex-wrap gap-1 justify-center">
                               {record.approvalsNeeded.map((approval, index) => (
                                 <Badge key={index} variant="destructive" className="text-xs font-medium">
                                   {approval}
@@ -734,7 +734,7 @@ export function AbcdSets() {
                               ))}
                             </div>
                           </td>
-                          <td className="px-2 py-2 align-middle">
+                          <td className="px-3 py-3 align-middle">
                             <span className="text-muted-foreground font-medium" style={{ fontSize: 'var(--font-body)' }}>{record.timestamp}</span>
                           </td>
                         </tr>
@@ -867,104 +867,104 @@ export function AbcdSets() {
                     <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                       <thead className="sticky top-0 bg-card border-b border-border z-10 shadow-sm">
                         <tr>
-                          <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleMembersSort('abcd_1up')} style={{ fontSize: 'var(--font-body)' }}>
+                          <th className="text-left px-3 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleMembersSort('abcd_1up')} style={{ fontSize: 'var(--font-body)' }}>
                             <div className="flex items-center">
                               ABCD 1-Up
                               {getMembersSortIcon('abcd_1up')}
                             </div>
                           </th>
-                          <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleMembersSort('service_id')} style={{ fontSize: 'var(--font-body)' }}>
-                            <div className="flex items-center">
+                          <th className="text-center px-3 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleMembersSort('service_id')} style={{ fontSize: 'var(--font-body)' }}>
+                            <div className="flex items-center justify-center">
                               Service ID
                               {getMembersSortIcon('service_id')}
                             </div>
                           </th>
-                          <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleMembersSort('service_name')} style={{ fontSize: 'var(--font-body)' }}>
+                          <th className="text-left px-3 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleMembersSort('service_name')} style={{ fontSize: 'var(--font-body)' }}>
                             <div className="flex items-center">
                               Service Name
                               {getMembersSortIcon('service_name')}
                             </div>
                           </th>
-                          <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleMembersSort('provision_type')} style={{ fontSize: 'var(--font-body)' }}>
+                          <th className="text-left px-3 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleMembersSort('provision_type')} style={{ fontSize: 'var(--font-body)' }}>
                             <div className="flex items-center">
                               Provision Type
                               {getMembersSortIcon('provision_type')}
                             </div>
                           </th>
-                          <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleMembersSort('options')} style={{ fontSize: 'var(--font-body)' }}>
+                          <th className="text-left px-3 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleMembersSort('options')} style={{ fontSize: 'var(--font-body)' }}>
                             <div className="flex items-center">
                               Options
                               {getMembersSortIcon('options')}
                             </div>
                           </th>
-                          <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleMembersSort('num_provisions')} style={{ fontSize: 'var(--font-body)' }}>
+                          <th className="text-center px-3 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleMembersSort('num_provisions')} style={{ fontSize: 'var(--font-body)' }}>
                             <div className="flex items-center justify-center">
                               Provisions
                               {getMembersSortIcon('num_provisions')}
                             </div>
                           </th>
-                          <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleMembersSort('num_products')} style={{ fontSize: 'var(--font-body)' }}>
+                          <th className="text-center px-3 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleMembersSort('num_products')} style={{ fontSize: 'var(--font-body)' }}>
                             <div className="flex items-center justify-center">
                               Products
                               {getMembersSortIcon('num_products')}
                             </div>
                           </th>
-                          <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleMembersSort('num_clients')} style={{ fontSize: 'var(--font-body)' }}>
+                          <th className="text-center px-3 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleMembersSort('num_clients')} style={{ fontSize: 'var(--font-body)' }}>
                             <div className="flex items-center justify-center">
                               Clients
                               {getMembersSortIcon('num_clients')}
                             </div>
                           </th>
-                          <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleMembersSort('num_groups')} style={{ fontSize: 'var(--font-body)' }}>
+                          <th className="text-center px-3 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleMembersSort('num_groups')} style={{ fontSize: 'var(--font-body)' }}>
                             <div className="flex items-center justify-center">
                               Groups
                               {getMembersSortIcon('num_groups')}
                             </div>
                           </th>
-                          <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Approval</th>
+                          <th className="text-center px-3 py-3 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Approval</th>
                         </tr>
                       </thead>
                       <tbody>
                         {filteredAndSortedMembers.map((record, index) => (
                           <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
-                            <td className="px-2 py-2 align-middle">
+                            <td className="px-3 py-3 align-middle">
                               <Button variant="link" className="p-0 h-auto text-primary underline hover:text-primary-foreground hover:bg-primary font-bold transition-colors" style={{ fontSize: 'var(--font-body)' }}>
                                 {record.abcd_1up}
                               </Button>
                             </td>
-                            <td className="px-2 py-2 text-center align-middle">
+                            <td className="px-3 py-3 text-center align-middle">
                               <span className="font-bold text-info" style={{ fontSize: 'var(--font-body)' }}>{record.service_id}</span>
                             </td>
-                            <td className="px-2 py-2 align-top">
+                            <td className="px-3 py-3 align-top">
                               <div className="max-w-full">
                                 <span className="font-medium text-foreground break-words leading-tight block" style={{ fontSize: 'var(--font-body)' }} title={record.service_name}>
                                   {record.service_name}
                                 </span>
                               </div>
                             </td>
-                            <td className="px-2 py-2 align-top">
+                            <td className="px-3 py-3 align-top">
                               <span className="font-medium text-foreground break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.provision_type}>
                                 {record.provision_type}
                               </span>
                             </td>
-                            <td className="px-2 py-2 align-top">
+                            <td className="px-3 py-3 align-top">
                               <span className="font-medium text-accent break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.options}>
                                 {record.options}
                               </span>
                             </td>
-                            <td className="px-2 py-2 text-center align-middle">
+                            <td className="px-3 py-3 text-center align-middle">
                               <span className="font-bold text-primary" style={{ fontSize: 'var(--font-body)' }}>{record.num_provisions.toLocaleString()}</span>
                             </td>
-                            <td className="px-2 py-2 text-center align-middle">
+                            <td className="px-3 py-3 text-center align-middle">
                               <span className="font-bold text-success" style={{ fontSize: 'var(--font-body)' }}>{record.num_products.toLocaleString()}</span>
                             </td>
-                            <td className="px-2 py-2 text-center align-middle">
+                            <td className="px-3 py-3 text-center align-middle">
                               <span className="text-info font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_clients?.toLocaleString() || '-'}</span>
                             </td>
-                            <td className="px-2 py-2 text-center align-middle">
+                            <td className="px-3 py-3 text-center align-middle">
                               <span className="text-warning font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_groups?.toLocaleString() || '-'}</span>
                             </td>
-                            <td className="px-2 py-2 text-center align-middle">
+                            <td className="px-3 py-3 text-center align-middle">
                               <ApprovalStatusIndicators statuses={record.approvalStatuses} />
                             </td>
                           </tr>
