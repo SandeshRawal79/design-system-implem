@@ -264,7 +264,7 @@ export function ServiceGroups() {
           </div>
           
           {/* Table Container with constrained height and scrolling */}
-          <div className="max-h-96 overflow-auto">
+          <div className="max-h-165 overflow-auto">
             <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
               <colgroup>
                 <col style={{ width: '80px' }} />
@@ -322,20 +322,20 @@ export function ServiceGroups() {
                 {filteredAndSortedData.map((record, index) => (
                   <tr key={record.id} className="border-b border-border hover:bg-muted/30 transition-colors">
                     <td className="px-3 py-3 align-middle">
-                      <span className="font-medium text-foreground" style={{ fontSize: 'var(--font-body)' }}>{record.id}</span>
+                      <span className="text-left text-primary hover:underline font-bold cursor-pointer" style={{ fontSize: 'var(--font-body)' }}>{record.id}</span>
                     </td>
                     <td className="px-3 py-3 align-middle">
-                      <span className="text-info hover:text-info/80 cursor-pointer font-medium transition-colors" style={{ fontSize: 'var(--font-body)' }}>
+                      <span className="text-left text-primary hover:underline font-bold cursor-pointer" style={{ fontSize: 'var(--font-body)' }}>
                         {record.name}
                       </span>
                     </td>
                     <td className="px-3 py-3 align-top">
-                      <span className="text-info hover:text-info/80 cursor-pointer transition-colors break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.description}>
+                      <span className="text-left text-primary hover:underline font-bold cursor-pointer" style={{ fontSize: 'var(--font-body)' }} title={record.description}>
                         {record.description}
                       </span>
                     </td>
                     <td className="px-3 py-3 align-middle">
-                      <span className="text-foreground" style={{ fontSize: 'var(--font-body)' }}>{record.assignee}</span>
+                      <span className="font-medium text-foreground" style={{ fontSize: 'var(--font-body)' }}>{record.assignee}</span>
                     </td>
                     <td className="px-3 py-3 text-center align-middle">
                       <Badge variant="secondary" className="cursor-pointer">
@@ -348,9 +348,9 @@ export function ServiceGroups() {
                     <td className="px-3 py-3 text-center align-middle">
                       <Button
                         onClick={() => handleModify(record.id)}
-                        variant="ghost"
+                        variant="secondary"
                         size="sm"
-                        className="text-success hover:text-success/80 hover:bg-success/10 font-medium cursor-pointer"
+                        className="font-medium cursor-pointer"
                         style={{ fontSize: 'var(--font-body)' }}
                       >
                         Modify
