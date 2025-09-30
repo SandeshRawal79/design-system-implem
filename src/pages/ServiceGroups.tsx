@@ -3,9 +3,9 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
-import { MagnifyingGlass, X, CaretUp, CaretDown } from '@phosphor-icons/react'
+import { MagnifyingGlass, X, CaretUp, CaretDown, SortAscending, SortDescending } from '@phosphor-icons/react'
 
 interface ServiceGroup {
   id: number
@@ -25,6 +25,7 @@ export function ServiceGroups() {
   const [sortField, setSortField] = useState<SortField>('id')
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
   const [isTableCollapsed, setIsTableCollapsed] = useState(false)
+  const [assigneeFilter, setAssigneeFilter] = useState('all')
 
   // Mock data based on the screenshot
   const serviceGroups: ServiceGroup[] = [
@@ -70,9 +71,20 @@ export function ServiceGroups() {
     }
   ]
 
+  // Get unique assignees for filter dropdown
+  const uniqueAssignees = useMemo(() => {
+    const assignees = serviceGroups.map(group => group.assignee)
+    return [...new Set(assignees)].sort()
+  }, [serviceGroups])
+
   // Filter and sort data
   const filteredAndSortedData = useMemo(() => {
     let filtered = [...serviceGroups]
+
+    // Apply assignee filter first
+    if (assigneeFilter !== 'all') {
+      filtered = filtered.filter(item => item.assignee === assigneeFilter)
+    }
 
     // Apply search filter
     if (searchTerm) {
@@ -126,7 +138,7 @@ export function ServiceGroups() {
     })
 
     return filtered
-  }, [serviceGroups, searchTerm, sortField, sortDirection])
+  }, [serviceGroups, searchTerm, sortField, sortDirection, assigneeFilter])
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -141,6 +153,7 @@ export function ServiceGroups() {
     setSearchTerm('')
     setSortField('id')
     setSortDirection('asc')
+    setAssigneeFilter('all')
   }
 
   const getSortIcon = (field: SortField) => {
@@ -149,8 +162,6 @@ export function ServiceGroups() {
       <CaretUp className="h-3 w-3 ml-1" /> : 
       <CaretDown className="h-3 w-3 ml-1" />
   }
-
-  const [assigneeFilter, setAssigneeFilter] = useState('all')
 
   const handleModify = (groupId: number) => {
     console.log('Modify group:', groupId)
