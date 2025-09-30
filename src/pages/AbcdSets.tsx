@@ -484,7 +484,7 @@ export function AbcdSets() {
   }
 
   return (
-    <div className="flex flex-col font-['Proxima_Nova',sans-serif] max-w-screen-2xl mx-auto px-8 py-6">
+    <div className="flex flex-col font-['Proxima_Nova',sans-serif] px-8 py-6">
       {/* Page Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-foreground mb-2">ABCD Sets</h1>

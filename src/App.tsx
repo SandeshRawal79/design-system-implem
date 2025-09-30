@@ -25,6 +25,9 @@ function AppContent() {
   // Check if we're on Service Groups page to show the Service Groups title
   const isServiceGroupsPage = location.pathname === '/service-groups'
   
+  // Check if we're on ABCD Sets page (needs full width like ClusterDetails)
+  const isAbcdSetsPage = location.pathname === '/abcd-sets'
+  
   // Extract cluster info from URL if on cluster details page
   const clusterInfo = isClusterDetailsPage ? {
     clusterId: location.pathname.split('/cluster/')[1] || '1',
@@ -48,10 +51,11 @@ function AppContent() {
       
       {/* Main Content Area */}
       <main className="flex-1 py-6 lg:py-8">
-        {/* Conditional layout - Full width for ClusterDetails, constrained for others */}
-        {isClusterDetailsPage ? (
+        {/* Conditional layout - Full width for ClusterDetails and AbcdSets, constrained for others */}
+        {isClusterDetailsPage || isAbcdSetsPage ? (
           <Routes>
             <Route path="/clusters/:serviceId/cluster/:clusterId" element={<ClusterDetails />} />
+            <Route path="/abcd-sets" element={<AbcdSets />} />
           </Routes>
         ) : (
           <div className="max-w-screen-2xl mx-auto px-8">
@@ -59,7 +63,6 @@ function AppContent() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/phase1-services" element={<Phase1Services />} />
               <Route path="/service-groups" element={<ServiceGroups />} />
-              <Route path="/abcd-sets" element={<AbcdSets />} />
               <Route path="/abcd" element={<AbcdPage />} />
               <Route path="/dendrogram/:serviceId" element={<DendrogramView />} />
               <Route path="/clusters/:serviceId" element={<ClustersView />} />
@@ -70,7 +73,7 @@ function AppContent() {
       
       {/* Compact Footer with exact specifications and dynamic layout constraint */}
       <footer className="border-t border-border bg-white mt-auto" style={{ height: '24px' }}>
-        <div className={`${isClusterDetailsPage ? 'px-8' : 'max-w-screen-2xl mx-auto px-8'} flex items-center justify-center h-full`}>
+        <div className={`${isClusterDetailsPage || isAbcdSetsPage ? 'px-8' : 'max-w-screen-2xl mx-auto px-8'} flex items-center justify-center h-full`}>
           <p className="text-muted-foreground text-center" style={{ fontSize: 'var(--font-caption)' }}>
             © 2024 Provision Intelligence Hub. Powered by SHC.AI
           </p>
