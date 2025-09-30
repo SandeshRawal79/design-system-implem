@@ -176,7 +176,7 @@ export function ServiceGroups() {
       }}
     >
       {/* Service Groups Table - Constrained width, not full width like ClusterDetails */}
-      <Card className="bg-card border-border shadow-sm flex flex-col overflow-hidden max-w-6xl mx-auto">
+      <Card className="bg-card border-border shadow-sm flex flex-col overflow-hidden max-w-9xl mx-auto">
         <CardContent className="p-0 flex flex-col h-full min-h-0">
           {/* Table Header with Filter Controls */}
           <div className="flex items-center gap-4 px-4 py-3 border-b border-border bg-muted/20 flex-shrink-0 flex-wrap">
