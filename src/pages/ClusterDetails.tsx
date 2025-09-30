@@ -1267,7 +1267,6 @@ export function ClusterDetails() {
                       <SelectItem value="Service ID/Name + Provision Type + Options (A+B+C+D)" style={{ fontSize: 'var(--font-body)' }}>Service ID/Name + Provision Type + Options (A+B+C+D)</SelectItem>
                     </SelectContent>
                   </Select>
-                  <span className="text-muted-foreground" style={{ fontSize: 'var(--font-body)' }}>for ABCD {selectedRecordId}</span>
                   <Badge variant="outline" className="px-2 py-0.5 bg-info/10 text-info border-info/20">
                     {filteredAndSortedSimilarRecords.length} records found
                   </Badge>
