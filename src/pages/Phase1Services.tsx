@@ -146,92 +146,83 @@ export function Phase1Services() {
 
   return (
     <div className="flex flex-col font-['Proxima_Nova',sans-serif] min-h-0">
-      {/* Table Header Section */}
-      <div className="bg-muted/20 border-b border-border mb-6">
-        <div className="flex items-center gap-4 py-3 flex-wrap">
-          {/* Left Section: Title and Badge */}
-          <div className="flex items-center gap-3">
-            <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
-              Phase 1 Services
-            </h3>
-            <Badge variant="outline" className="px-2 py-0.5 bg-primary/10 text-primary border-primary/20">
-              {filteredAndSortedData.length} records
-            </Badge>
-          </div>
-
-          {/* Search and Controls */}
-          <div className="flex items-center gap-2 flex-1 min-w-0">
-            {/* Search Input */}
-            <div className="relative flex-1 min-w-64 max-w-80">
-              <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder="Search services..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-7 pr-7 border-border placeholder:text-muted-foreground focus:ring-1 focus:ring-ring transition-colors"
-                style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
-              />
-              {searchTerm && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="absolute right-1 top-1/2 transform -translate-y-1/2 p-0 hover:bg-muted transition-colors"
-                  style={{ height: 'var(--button-xs)', width: 'var(--button-xs)' }}
-                  onClick={() => setSearchTerm('')}
-                >
-                  <X className="h-2 w-2 text-muted-foreground" />
-                </Button>
-              )}
-            </div>
-
-            {/* Results & Clear */}
-            <div className="flex items-center gap-2 ml-auto">
-              <Badge variant="outline" className="px-2 py-0.5 bg-muted/50 border-border" style={{ fontSize: 'var(--font-body)' }}>
-                {filteredAndSortedData.length}/{services.length}
-              </Badge>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={clearFilters}
-                className="px-2 text-muted-foreground hover:text-foreground hover:bg-muted focus:ring-1 focus:ring-ring transition-colors"
-                style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
-              >
-                <X className="h-2 w-2 mr-1" />
-                Clear
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsTableCollapsed(!isTableCollapsed)}
-                className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
-                style={{ height: 'var(--button-sm)' }}
-              >
-                {isTableCollapsed ? <CaretDown className="h-3 w-3" /> : <CaretUp className="h-3 w-3" />}
-                {isTableCollapsed ? 'Expand' : 'Collapse'}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* Page Header */}
-      <div className="mb-6">
-        <div className="flex items-center gap-4">
-          <Badge variant="outline" className="px-3 py-1 bg-primary/10 text-primary border-primary/20">
-            {services.length} services found
-          </Badge>
-        </div>
-      </div>
 
       {/* Services Table */}
       <Collapsible open={!isTableCollapsed} onOpenChange={(open) => setIsTableCollapsed(!open)}>
         <Card className="bg-card border-border shadow-sm flex-1 flex flex-col min-h-0 overflow-hidden">
           <CardContent className="p-0 flex flex-col h-full min-h-0">
+            {/* Table Header with Search and Controls */}
+            <div className="flex items-center gap-4 px-4 py-3 border-b border-border bg-muted/20 flex-shrink-0 flex-wrap">
+              {/* Left Section: Title and Badge */}
+              <div className="flex items-center gap-3">
+                <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
+                  Phase 1 Services
+                </h3>
+                <Badge variant="outline" className="px-2 py-0.5 bg-primary/10 text-primary border-primary/20">
+                  {filteredAndSortedData.length} records
+                </Badge>
+              </div>
+
+              {/* Search and Controls */}
+              <div className="flex items-center gap-2 flex-1 min-w-0">
+                {/* Search Input */}
+                <div className="relative flex-1 min-w-64 max-w-80">
+                  <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+                  <Input
+                    type="text"
+                    placeholder="Search services..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-7 pr-7 border-border placeholder:text-muted-foreground focus:ring-1 focus:ring-ring transition-colors"
+                    style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
+                  />
+                  {searchTerm && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-1 top-1/2 transform -translate-y-1/2 p-0 hover:bg-muted transition-colors"
+                      style={{ height: 'var(--button-xs)', width: 'var(--button-xs)' }}
+                      onClick={() => setSearchTerm('')}
+                    >
+                      <X className="h-2 w-2 text-muted-foreground" />
+                    </Button>
+                  )}
+                </div>
+
+                {/* Results & Clear */}
+                <div className="flex items-center gap-2 ml-auto">
+                  <Badge variant="outline" className="px-2 py-0.5 bg-muted/50 border-border" style={{ fontSize: 'var(--font-body)' }}>
+                    {filteredAndSortedData.length}/{services.length}
+                  </Badge>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={clearFilters}
+                    className="px-2 text-muted-foreground hover:text-foreground hover:bg-muted focus:ring-1 focus:ring-ring transition-colors"
+                    style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
+                  >
+                    <X className="h-2 w-2 mr-1" />
+                    Clear
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setIsTableCollapsed(!isTableCollapsed)}
+                    className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
+                    style={{ height: 'var(--button-sm)' }}
+                  >
+                    {isTableCollapsed ? <CaretDown className="h-3 w-3" /> : <CaretUp className="h-3 w-3" />}
+                    {isTableCollapsed ? 'Expand' : 'Collapse'}
+                  </Button>
+                </div>
+              </div>
+            </div>
+            
             <CollapsibleContent className="flex flex-col h-full min-h-0">
               {/* Table Container - Constrained width for Phase 1 Services */}
               {!isTableCollapsed && (
                 <>
-                  <div className="max-h-96 overflow-auto">
+                  <div className="max-h-165 overflow-auto">
                     <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                       <colgroup>
                         <col style={{ width: '120px' }} />
