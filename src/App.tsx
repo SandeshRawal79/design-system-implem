@@ -8,9 +8,11 @@ import { AbcdPage } from './pages/AbcdPage'
 import { DendrogramView } from './pages/DendrogramView'
 import { ClustersView } from './pages/ClustersView'
 import { ClusterDetails } from './pages/ClusterDetails'
+import { TableHeaderProvider, useTableHeader } from './contexts/TableHeaderContext'
 
 function AppContent() {
   const location = useLocation()
+  const { tableHeader } = useTableHeader()
   
   // Check if we're on a cluster details page to pass cluster info to header
   const isClusterDetailsPage = location.pathname.includes('/clusters/') && location.pathname.includes('/cluster/')
@@ -72,7 +74,9 @@ function AppContent() {
 function App() {
   return (
     <Router>
-      <AppContent />
+      <TableHeaderProvider>
+        <AppContent />
+      </TableHeaderProvider>
     </Router>
   )
 }

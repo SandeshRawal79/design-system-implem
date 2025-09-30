@@ -271,6 +271,15 @@ export function Header({ clusterInfo, pageTitle }: HeaderProps) {
         )}
       </header>
 
+      {/* Table Header Section - Rendered only when tableHeader prop is provided */}
+      {tableHeader && (
+        <div className="bg-muted/20 border-b border-border">
+          <div className="max-w-screen-2xl mx-auto px-8">
+            {tableHeader}
+          </div>
+        </div>
+      )}
+
       {/* Floating ChatBot - Following exact specifications */}
       <Button
         className="fixed bottom-5 right-5 rounded-full shadow-lg hover:shadow-xl z-50 btn-gradient-primary cursor-pointer transition-all duration-300"
