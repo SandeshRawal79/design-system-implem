@@ -126,17 +126,6 @@ export function IntelligenceCatalog() {
       onCardClick: () => navigate('/service-groups')
     },
     {
-      title: "Set Intelligence",
-      type: "Management" as const,
-      description: "Comprehensive ABCD set management and workflow orchestration for provision approval",
-      onCardClick: () => navigate('/abcd-sets'),
-      teamStats: [
-        { team: "Simplify Healthcare", percentage: "12%", detail: "8 of 66" },
-        { team: "HPO team", percentage: "2%", detail: "1 of 45" },
-        { team: "PM&D team", percentage: "2%", detail: "1 of 42" }
-      ]
-    },
-    {
       title: "ABCD Intelligence",
       type: "Analytics" as const,
       description: "Phase 1 Cycle 2 ABCD analytics and provision tracking with detailed insights and performance metrics",
@@ -155,11 +144,11 @@ export function IntelligenceCatalog() {
       <div className="flex items-center gap-3 mb-6">
         <h2 className="text-xl font-semibold text-foreground">Intelligence Catalog</h2>
         <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 font-medium px-2 py-0.5">
-          4
+          3
         </Badge>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
         {services.map((service, index) => (
           <IntelligenceCard key={index} {...service} />
         ))}
