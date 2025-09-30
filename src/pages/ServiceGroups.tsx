@@ -1,8 +1,11 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
-import { DataTable } from '@/components/DataTable'
 import { PageLayout } from '@/components/PageLayout'
 import { Badge } from '@/components/ui/badge'
+import { Input } from '@/components/ui/input'
+import { Card, CardContent } from '@/components/ui/card'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { MagnifyingGlass, X, CaretUp, CaretDown, SortAscending, SortDescending } from '@phosphor-icons/react'
 
 interface ServiceGroup {
   id: number
@@ -12,6 +15,9 @@ interface ServiceGroup {
   members: number
   created: string
 }
+
+type SortField = 'id' | 'name' | 'description' | 'assignee' | 'members' | 'created'
+type SortDirection = 'asc' | 'desc'
 
 export function ServiceGroups() {
   // Mock data based on the screenshot
@@ -58,6 +64,12 @@ export function ServiceGroups() {
     }
   ])
 
+  // State for filtering and sorting
+  const [searchTerm, setSearchTerm] = useState('')
+  const [sortField, setSortField] = useState<SortField>('id')
+  const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
+  const [assigneeFilter, setAssigneeFilter] = useState('all')
+
   const handleModify = (groupId: number) => {
     console.log('Modify group:', groupId)
   }
@@ -66,102 +78,93 @@ export function ServiceGroups() {
     console.log('Create/View group:', groupId)
   }
 
-  const columns = [
-    {
-      key: 'id',
-      label: 'ID',
-      minWidth: '50px',
-      className: 'id-col',
-      render: (value: number) => (
-        <span className="font-medium text-foreground cursor-pointer">{value}</span>
-      )
-    },
-    {
-      key: 'name',
-      label: 'Group Name',
-      className: 'name-col',
-      render: (value: string) => (
-        <span className="text-info hover:text-info/80 cursor-pointer font-medium transition-colors">
-          {value}
-        </span>
-      )
-    },
-    {
-      key: 'description',
-      label: 'Description',
-      className: 'description-col',
-      render: (value: string) => (
-        <span className="text-info hover:text-info/80 cursor-pointer transition-colors">
-          {value}
-        </span>
-      )
-    },
-    {
-      key: 'assignee',
-      label: 'Assignee',
-      className: 'assignee-col',
-      render: (value: string) => (
-        <span className="text-foreground cursor-pointer">{value}</span>
-      )
-    },
-    {
-      key: 'members',
-      label: 'Members',
-      minWidth: '70px',
-      className: 'members-col',
-      render: (value: number) => (
-        <div className="text-center">
-          <Badge variant="secondary" className="cursor-pointer">
-            {value}
-          </Badge>
-        </div>
-      )
-    },
-    {
-      key: 'created',
-      label: 'Created',
-      minWidth: '110px',
-      className: 'created-col',
-      render: (value: string) => (
-        <span className="text-muted-foreground text-sm cursor-pointer">{value}</span>
-      )
-    },
-    {
-      key: 'modify',
-      label: 'Modify',
-      sortable: false,
-      searchable: false,
-      minWidth: '70px',
-      className: 'modify-col',
-      render: (_: any, record: ServiceGroup) => (
-        <Button
-          onClick={() => handleModify(record.id)}
-          variant="ghost"
-          size="sm"
-          className="text-success hover:text-success/80 hover:bg-success/10 font-medium cursor-pointer table-action-btn"
-        >
-          Modify
-        </Button>
-      )
-    },
-    {
-      key: 'dendrogram',
-      label: 'Actions',
-      sortable: false,
-      searchable: false,
-      minWidth: '90px',
-      className: 'actions-col',
-      render: (_: any, record: ServiceGroup) => (
-        <Button
-          onClick={() => handleCreateView(record.id)}
-          size="sm"
-          className="btn-gradient-primary text-xs h-6 md:h-7 px-2 md:px-3 whitespace-nowrap cursor-pointer"
-        >
-          Create/View
-        </Button>
+  // Filter and sort data
+  const filteredAndSortedData = useMemo(() => {
+    let filtered = [...serviceGroups]
+
+    // Apply search filter
+    if (searchTerm) {
+      filtered = filtered.filter(item =>
+        item.id.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.assignee.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.created.toLowerCase().includes(searchTerm.toLowerCase())
       )
     }
-  ]
+
+    // Apply assignee filter
+    if (assigneeFilter !== 'all') {
+      filtered = filtered.filter(item => item.assignee === assigneeFilter)
+    }
+
+    // Apply sorting
+    filtered.sort((a, b) => {
+      let aValue: string | number = ''
+      let bValue: string | number = ''
+
+      switch (sortField) {
+        case 'id':
+          aValue = a.id
+          bValue = b.id
+          break
+        case 'name':
+          aValue = a.name
+          bValue = b.name
+          break
+        case 'description':
+          aValue = a.description
+          bValue = b.description
+          break
+        case 'assignee':
+          aValue = a.assignee
+          bValue = b.assignee
+          break
+        case 'members':
+          aValue = a.members
+          bValue = b.members
+          break
+        case 'created':
+          aValue = a.created
+          bValue = b.created
+          break
+        default:
+          return 0
+      }
+
+      if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1
+      if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1
+      return 0
+    })
+
+    return filtered
+  }, [serviceGroups, searchTerm, sortField, sortDirection, assigneeFilter])
+
+  const handleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
+    } else {
+      setSortField(field)
+      setSortDirection('asc')
+    }
+  }
+
+  const clearFilters = () => {
+    setSearchTerm('')
+    setAssigneeFilter('all')
+    setSortField('id')
+    setSortDirection('asc')
+  }
+
+  const getSortIcon = (field: SortField) => {
+    if (sortField !== field) return null
+    return sortDirection === 'asc' ? 
+      <CaretUp className="h-3 w-3 ml-1" /> : 
+      <CaretDown className="h-3 w-3 ml-1" />
+  }
+
+  // Get unique assignees for filter
+  const uniqueAssignees = Array.from(new Set(serviceGroups.map(item => item.assignee)))
 
   return (
     <PageLayout
@@ -172,12 +175,230 @@ export function ServiceGroups() {
         label: "service groups found"
       }}
     >
-      <DataTable
-        data={serviceGroups}
-        columns={columns}
-        searchable
-        searchPlaceholder="Search service groups..."
-      />
+      {/* Service Groups Table - Constrained width, not full width like ClusterDetails */}
+      <Card className="bg-card border-border shadow-sm flex flex-col overflow-hidden max-w-6xl mx-auto">
+        <CardContent className="p-0 flex flex-col h-full min-h-0">
+          {/* Table Header with Filter Controls */}
+          <div className="flex items-center gap-4 px-4 py-3 border-b border-border bg-muted/20 flex-shrink-0 flex-wrap">
+            {/* Left Section: Title and Badge */}
+            <div className="flex items-center gap-3">
+              <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
+                Service Groups
+              </h3>
+              <Badge variant="outline" className="px-2 py-0.5 bg-primary/10 text-primary border-primary/20">
+                {filteredAndSortedData.length} groups
+              </Badge>
+            </div>
+
+            {/* Filter Controls Section */}
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+              {/* Search Input */}
+              <div className="relative flex-1 min-w-64 max-w-80">
+                <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Search service groups..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-7 pr-7 border-border placeholder:text-muted-foreground focus:ring-1 focus:ring-ring transition-colors"
+                  style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
+                />
+                {searchTerm && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="absolute right-1 top-1/2 transform -translate-y-1/2 p-0 hover:bg-muted transition-colors"
+                    style={{ height: 'var(--button-xs)', width: 'var(--button-xs)' }}
+                    onClick={() => setSearchTerm('')}
+                  >
+                    <X className="h-2 w-2 text-muted-foreground" />
+                  </Button>
+                )}
+              </div>
+
+              {/* Assignee Filter */}
+              <div className="flex items-center gap-2">
+                <Select value={assigneeFilter} onValueChange={setAssigneeFilter}>
+                  <SelectTrigger className="w-40 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all" style={{ fontSize: 'var(--font-body)' }}>All Assignees</SelectItem>
+                    {uniqueAssignees.map((assignee) => (
+                      <SelectItem key={assignee} value={assignee} style={{ fontSize: 'var(--font-body)' }}>{assignee}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Select value={sortField} onValueChange={(value) => setSortField(value as SortField)}>
+                  <SelectTrigger className="w-32 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="id" style={{ fontSize: 'var(--font-body)' }}>ID</SelectItem>
+                    <SelectItem value="name" style={{ fontSize: 'var(--font-body)' }}>Name</SelectItem>
+                    <SelectItem value="assignee" style={{ fontSize: 'var(--font-body)' }}>Assignee</SelectItem>
+                    <SelectItem value="members" style={{ fontSize: 'var(--font-body)' }}>Members</SelectItem>
+                    <SelectItem value="created" style={{ fontSize: 'var(--font-body)' }}>Created</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="px-2 border-border focus:ring-1 focus:ring-ring transition-colors hover:bg-muted"
+                  style={{ height: 'var(--button-sm)' }}
+                  onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
+                >
+                  {sortDirection === 'asc' ? 
+                    <SortAscending className="h-3 w-3" /> : 
+                    <SortDescending className="h-3 w-3" />
+                  }
+                </Button>
+              </div>
+
+              {/* Results & Clear */}
+              <div className="flex items-center gap-2 ml-auto">
+                <Badge variant="outline" className="px-2 py-0.5 bg-muted/50 border-border" style={{ fontSize: 'var(--font-body)' }}>
+                  {filteredAndSortedData.length}/{serviceGroups.length}
+                </Badge>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={clearFilters}
+                  className="px-2 text-muted-foreground hover:text-foreground hover:bg-muted focus:ring-1 focus:ring-ring transition-colors"
+                  style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
+                >
+                  <X className="h-2 w-2 mr-1" />
+                  Clear
+                </Button>
+              </div>
+            </div>
+          </div>
+          
+          {/* Table Container with constrained height and scrolling */}
+          <div className="max-h-96 overflow-auto">
+            <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
+              <colgroup>
+                <col style={{ width: '80px' }} />
+                <col style={{ width: '200px' }} />
+                <col style={{ minWidth: '300px' }} />
+                <col style={{ width: '150px' }} />
+                <col style={{ width: '100px' }} />
+                <col style={{ width: '140px' }} />
+                <col style={{ width: '90px' }} />
+                <col style={{ width: '120px' }} />
+              </colgroup>
+              <thead className="sticky top-0 bg-card border-b border-border z-10 shadow-sm">
+                <tr>
+                  <th className="text-left px-3 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('id')} style={{ fontSize: 'var(--font-body)' }}>
+                    <div className="flex items-center">
+                      ID
+                      {getSortIcon('id')}
+                    </div>
+                  </th>
+                  <th className="text-left px-3 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('name')} style={{ fontSize: 'var(--font-body)' }}>
+                    <div className="flex items-center">
+                      Group Name
+                      {getSortIcon('name')}
+                    </div>
+                  </th>
+                  <th className="text-left px-3 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('description')} style={{ fontSize: 'var(--font-body)' }}>
+                    <div className="flex items-center">
+                      Description
+                      {getSortIcon('description')}
+                    </div>
+                  </th>
+                  <th className="text-left px-3 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('assignee')} style={{ fontSize: 'var(--font-body)' }}>
+                    <div className="flex items-center">
+                      Assignee
+                      {getSortIcon('assignee')}
+                    </div>
+                  </th>
+                  <th className="text-center px-3 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('members')} style={{ fontSize: 'var(--font-body)' }}>
+                    <div className="flex items-center justify-center">
+                      Members
+                      {getSortIcon('members')}
+                    </div>
+                  </th>
+                  <th className="text-left px-3 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('created')} style={{ fontSize: 'var(--font-body)' }}>
+                    <div className="flex items-center">
+                      Created
+                      {getSortIcon('created')}
+                    </div>
+                  </th>
+                  <th className="text-center px-3 py-3 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Modify</th>
+                  <th className="text-center px-3 py-3 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredAndSortedData.map((record, index) => (
+                  <tr key={record.id} className="border-b border-border hover:bg-muted/30 transition-colors">
+                    <td className="px-3 py-3 align-middle">
+                      <span className="font-medium text-foreground" style={{ fontSize: 'var(--font-body)' }}>{record.id}</span>
+                    </td>
+                    <td className="px-3 py-3 align-middle">
+                      <span className="text-info hover:text-info/80 cursor-pointer font-medium transition-colors" style={{ fontSize: 'var(--font-body)' }}>
+                        {record.name}
+                      </span>
+                    </td>
+                    <td className="px-3 py-3 align-top">
+                      <span className="text-info hover:text-info/80 cursor-pointer transition-colors break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.description}>
+                        {record.description}
+                      </span>
+                    </td>
+                    <td className="px-3 py-3 align-middle">
+                      <span className="text-foreground" style={{ fontSize: 'var(--font-body)' }}>{record.assignee}</span>
+                    </td>
+                    <td className="px-3 py-3 text-center align-middle">
+                      <Badge variant="secondary" className="cursor-pointer">
+                        {record.members}
+                      </Badge>
+                    </td>
+                    <td className="px-3 py-3 align-middle">
+                      <span className="text-muted-foreground" style={{ fontSize: 'var(--font-body)' }}>{record.created}</span>
+                    </td>
+                    <td className="px-3 py-3 text-center align-middle">
+                      <Button
+                        onClick={() => handleModify(record.id)}
+                        variant="ghost"
+                        size="sm"
+                        className="text-success hover:text-success/80 hover:bg-success/10 font-medium cursor-pointer"
+                        style={{ fontSize: 'var(--font-body)' }}
+                      >
+                        Modify
+                      </Button>
+                    </td>
+                    <td className="px-3 py-3 text-center align-middle">
+                      <Button
+                        onClick={() => handleCreateView(record.id)}
+                        size="sm"
+                        className="btn-gradient-primary text-xs px-3 whitespace-nowrap cursor-pointer"
+                        style={{ height: 'var(--button-sm)' }}
+                      >
+                        Create/View
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+                {filteredAndSortedData.length === 0 && (
+                  <tr>
+                    <td colSpan={8} className="text-center py-8 text-muted-foreground">
+                      <div className="flex flex-col items-center gap-2">
+                        <MagnifyingGlass className="h-8 w-8 text-muted-foreground/40" />
+                        <div>
+                          <p className="font-semibold">No service groups found</p>
+                          <p className="text-xs">Try adjusting your search or filter criteria</p>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
     </PageLayout>
   )
 }
