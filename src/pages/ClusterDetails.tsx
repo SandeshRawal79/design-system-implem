@@ -963,7 +963,7 @@ export function ClusterDetails() {
             
             {/* Similar Records Table */}
             {!isSimilarRecordsCollapsed && (
-              <div className="max-h-96 overflow-auto">
+              <div className="h-80 overflow-auto">
               <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                 <colgroup>
                   <col className="col-index" />
@@ -1110,7 +1110,7 @@ export function ClusterDetails() {
             
             {/* Exact Same CD Records Table */}
             {!isExactSameCDCollapsed && (
-              <div className="max-h-96 overflow-auto">
+              <div className="h-80 overflow-auto">
               <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                 <colgroup>
                   <col className="col-index" />

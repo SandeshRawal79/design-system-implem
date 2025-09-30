@@ -51,9 +51,9 @@ function AppContent() {
         )}
       </main>
       
-      {/* Compact Footer with exact specifications and matching layout constraint */}
+      {/* Compact Footer with conditional layout based on page type */}
       <footer className="border-t border-border bg-white mt-auto" style={{ height: '24px' }}>
-        <div className="max-w-screen-2xl mx-auto px-8 flex items-center justify-center h-full">
+        <div className={`${isClusterDetailsPage ? 'px-8' : 'max-w-screen-2xl mx-auto px-8'} flex items-center justify-center h-full`}>
           <p className="text-muted-foreground text-center" style={{ fontSize: 'var(--font-caption)' }}>
             © 2024 Provision Intelligence Hub. Powered by SHC.AI
           </p>
