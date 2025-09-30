@@ -748,8 +748,7 @@ export function ClusterDetails() {
             </div>
               </div>
           {/* Table Container - Fixed height with sticky header */}
-          <div className="flex-1 overflow-hidden">
-            <div className="h-full overflow-auto">
+            <div className="max-h-112 overflow-auto">
               <table className="w-full border-collapse cluster-details-table-full-width" style={{ fontSize: 'var(--font-body)', minWidth: '100%' }}>
                 <colgroup>
                   <col className="col-index" />
@@ -908,7 +907,6 @@ export function ClusterDetails() {
                 </tbody>
               </table>
             </div>
-          </div>
           </>
           )}
         </CardContent>
@@ -916,7 +914,6 @@ export function ClusterDetails() {
       </Collapsible>
       
       {/* Similar Records Table */}
-      {showSimilarRecords && selectedRecordId && (
         <Collapsible open={!isSimilarRecordsCollapsed} onOpenChange={(open) => setIsSimilarRecordsCollapsed(!open)}>
           <Card className="bg-card border-border shadow-sm mt-4 mx-8">
             <CardContent className="p-0">
@@ -932,38 +929,21 @@ export function ClusterDetails() {
                 </div>
                 <div className="flex items-center gap-2">
                   <CollapsibleTrigger asChild>
-                    <Button
+                     <Button
                       variant="ghost"
                       size="sm"
                       className="text-muted-foreground hover:text-foreground hover:bg-muted"
-                    >
-                      {isSimilarRecordsCollapsed ? (
-                        <CaretDown className="h-4 w-4" />
-                      ) : (
-                        <CaretUp className="h-4 w-4" />
-                      )}
+                     >
+                      {isSimilarRecordsCollapsed ? <CaretDown className="h-4 w-4" /> : <CaretUp className="h-4 w-4" />}
+                      {isSimilarRecordsCollapsed ? 'Expand' : 'Collapse'}
                     </Button>
                   </CollapsibleTrigger>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => {
-                      setShowSimilarRecords(false)
-                      setShowExactSameCDRecords(false)
-                      setSelectedRecordId(null)
-                      setSimilarRecords([])
-                      setExactSameCDRecords([])
-                    }}
-                    className="text-muted-foreground hover:text-foreground hover:bg-muted"
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
                 </div>
               </div>
             
             {/* Similar Records Table */}
             {!isSimilarRecordsCollapsed && (
-              <div className="max-h-96 overflow-auto">
+              <div className="max-h-112 overflow-auto">
               <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                 <colgroup>
                   <col className="col-index" />
@@ -1060,10 +1040,8 @@ export function ClusterDetails() {
           </CardContent>
         </Card>
         </Collapsible>
-      )}
       
       {/* Exact Same CD Records Table */}
-      {showExactSameCDRecords && selectedRecordId && (
         <Collapsible open={!isExactSameCDCollapsed} onOpenChange={(open) => setIsExactSameCDCollapsed(!open)}>
           <Card className="bg-card border-border shadow-sm mt-4 mx-8">
             <CardContent className="p-0">
@@ -1083,34 +1061,17 @@ export function ClusterDetails() {
                       variant="ghost"
                       size="sm"
                       className="text-muted-foreground hover:text-foreground hover:bg-muted"
-                    >
-                      {isExactSameCDCollapsed ? (
-                        <CaretDown className="h-4 w-4" />
-                      ) : (
-                        <CaretUp className="h-4 w-4" />
-                      )}
+                     >
+                      {isExactSameCDCollapsed ? <CaretDown className="h-4 w-4" /> : <CaretUp className="h-4 w-4" />}
+                      {isExactSameCDCollapsed ? 'Expand' : 'Collapse'}
                     </Button>
                   </CollapsibleTrigger>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => {
-                      setShowSimilarRecords(false)
-                      setShowExactSameCDRecords(false)
-                      setSelectedRecordId(null)
-                      setSimilarRecords([])
-                      setExactSameCDRecords([])
-                    }}
-                    className="text-muted-foreground hover:text-foreground hover:bg-muted"
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
                 </div>
               </div>
             
             {/* Exact Same CD Records Table */}
             {!isExactSameCDCollapsed && (
-              <div className="max-h-96 overflow-auto">
+              <div className="max-h-112 overflow-auto">
               <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                 <colgroup>
                   <col className="col-index" />
@@ -1203,7 +1164,6 @@ export function ClusterDetails() {
           </CardContent>
         </Card>
         </Collapsible>
-      )}
     </div>
   );
 }
