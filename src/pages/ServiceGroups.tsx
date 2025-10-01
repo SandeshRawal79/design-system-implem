@@ -417,7 +417,7 @@ export function ServiceGroups() {
           </div>
           
           {/* Table Container with constrained height and scrolling */}
-          <div className="max-h-165 overflow-auto">
+          <div className="max-h-96 overflow-auto">
             <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
               <colgroup>
                 <col style={{ width: '80px' }} />

@@ -222,7 +222,7 @@ export function Phase1Services() {
               {/* Table Container - Constrained width for Phase 1 Services */}
               {!isTableCollapsed && (
                 <>
-                  <div className="max-h-165 overflow-auto">
+                  <div className="max-h-96 overflow-auto">
                     <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                       <colgroup>
                         <col style={{ width: '120px' }} />

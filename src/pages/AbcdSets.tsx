@@ -586,7 +586,7 @@ export function AbcdSets() {
             <CollapsibleContent className="flex flex-col h-full min-h-0">
               {/* Table Container */}
               {!isMainTableCollapsed && (
-                <div className="max-h-165 overflow-auto">
+                <div className="max-h-96 overflow-auto">
                   <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                     <thead className="sticky top-0 bg-card border-b border-border z-10 shadow-sm">
                       <tr>
