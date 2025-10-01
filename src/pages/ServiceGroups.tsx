@@ -468,7 +468,7 @@ export function ServiceGroups() {
                     </div>
                   </th>
                   <th className="text-center px-3 py-3 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Modify</th>
-                  <th className="text-center px-3 py-3 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Actions</th>
+                  <th className="text-center px-3 py-3 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>See Dendrogram</th>
                 </tr>
               </thead>
               <tbody>
