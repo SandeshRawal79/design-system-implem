@@ -1,0 +1,51 @@
+<svg width="120" height="48" viewBox="0 0 120 48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Enhanced gradient to match BNi brand colors -->
+    <linearGradient id="bniGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#F7931E;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#C9579A;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#7B68A3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E88A8;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Shadow filters -->
+    <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+  
+  <!-- Background circle for the logo -->
+  <circle cx="24" cy="24" r="22" fill="url(#bniGradient)" filter="url(#dropShadow)"/>
+  
+  <!-- Main "BNi" text -->
+  <g transform="translate(48, 24)">
+    <!-- B -->
+    <path d="M0 -12 L0 12 L8 12 Q12 12 12 8 Q12 4 10 2 Q12 0 12 -4 Q12 -8 8 -8 Q8 -12 0 -12 Z M4 -8 L8 -8 Q8 -4 8 -4 Q8 0 4 0 Z M4 4 L8 4 Q8 8 8 8 Q8 8 4 8 Z" 
+          fill="white" 
+          stroke="none" 
+          stroke-width="0.5"/>
+    
+    <!-- N -->
+    <path d="M16 -12 L16 12 L20 12 L20 -4 L28 8 L32 8 L32 -12 L28 -12 L28 4 L20 -8 L16 -8 Z" 
+          fill="white" 
+          stroke="none" 
+          stroke-width="0.5"/>
+    
+    <!-- i -->
+    <g transform="translate(36, 0)">
+      <circle cx="2" cy="-8" r="1.5" fill="white"/>
+      <rect x="0.5" y="-4" width="3" height="16" rx="1.5" fill="white"/>
+    </g>
+  </g>
+  
+  <!-- Networking tagline -->
+  <text x="48" y="38" 
+        font-family="Arial, sans-serif" 
+        font-size="8" 
+        font-weight="500" 
+        fill="#666666" 
+        letter-spacing="0.5px">
+    BUSINESS NETWORKING INTERNATIONAL
+  </text>
+</svg>
