@@ -19,8 +19,6 @@ interface ClusterInfo {
   clusterId: string
   totalClusters: number
   xrayProjection: string
-  recordsInCluster: number
-  created: string
   serviceId?: string
 }
 
@@ -122,9 +120,6 @@ export function Header({ clusterInfo, pageTitle, pageSubtitle }: HeaderProps) {
                 <h4 className="font-semibold text-foreground truncate leading-none" style={{fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
                   Cluster #{clusterInfo.clusterId} of {clusterInfo.totalClusters} Details - {clusterInfo.xrayProjection}
                 </h4>
-                <p className="text-muted-foreground leading-none mt-0.5" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
-                  {clusterInfo.recordsInCluster} records • Created {clusterInfo.created}
-                </p>
               </div>
             )}
           </div>
@@ -200,9 +195,6 @@ export function Header({ clusterInfo, pageTitle, pageSubtitle }: HeaderProps) {
             <h4 className="font-medium text-foreground truncate leading-none" style={{ fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
               Cluster #{clusterInfo.clusterId} Details - {clusterInfo.xrayProjection}
             </h4>
-            <p className="text-muted-foreground leading-none mt-0.5" style={{ fontSize: 'var(--font-caption)', fontFamily: 'Proxima Nova, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
-              {clusterInfo.recordsInCluster} records
-            </p>
           </div>
         )}
         {/* Mobile page title display */}
