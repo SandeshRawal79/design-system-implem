@@ -1,32 +1,25 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import tailwindcss from "@tailwindcss/vite";
+import react from "@vitejs/plugin-react-swc";
+import { defineConfig, PluginOption } from "vite";
+
+import sparkPlugin from "@github/spark/spark-vite-plugin";
+import createIconImportProxy from "@github/spark/vitePhosphorIconProxyPlugin";
 import { resolve } from 'path'
 
-// https://vitejs.dev/config/
+const projectRoot = process.env.PROJECT_ROOT || import.meta.dirname
+
+// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    // DO NOT REMOVE
+    createIconImportProxy() as PluginOption,
+    sparkPlugin() as PluginOption,
+  ],
   resolve: {
     alias: {
-      '@': resolve(__dirname, './src'),
-    },
-  },
-  build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
-    rollupOptions: {
-      output: {
-        assetFileNames: (assetInfo) => {
-          // Ensure SVG files maintain their extension in the build
-          if (assetInfo.name?.endsWith('.svg')) {
-            return 'assets/[name]-[hash][extname]'
-          }
-          return 'assets/[name]-[hash][extname]'
-        }
-      }
+      '@': resolve(projectRoot, 'src')
     }
   },
-  server: {
-    port: 5000,
-    host: true,
-  },
-})
+});
