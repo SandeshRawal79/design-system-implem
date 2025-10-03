@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
-import { ArrowLeft, Check, X, CaretUp, CaretDown, MagnifyingGlass, SortAscending, SortDescending } from '@phosphor-icons/react'
+import { ArrowLeft, Check, X, CaretUp, CaretDown, MagnifyingGlass, SortAscending, SortDescending, Plus } from '@phosphor-icons/react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Badge } from '@/components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 
 // Types for filtering and sorting
 type SortField = 'abcd_1up' | 'service_id' | 'service_name' | 'provision_type' | 'options'
@@ -51,6 +52,9 @@ export function ClustersView() {
   const [sortField, setSortField] = useState<SortField>('abcd_1up')
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
   const [filterType, setFilterType] = useState<FilterType>('all')
+  
+  // Dialog state for Create Set Panel
+  const [isCreateSetDialogOpen, setIsCreateSetDialogOpen] = useState(false)
   
   // Table collapse state
   const [isTableCollapsed, setIsTableCollapsed] = useState(false)
@@ -344,149 +348,145 @@ export function ClustersView() {
 
   return (
     <div className="w-full min-h-screen bg-background flex flex-col">
-      {/* Data Context and X-ray Projection Cards */}
-      <Card className="bg-card border-border shadow-sm mx-8 mt-6">
-        <CardContent className="p-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Data Context Panel */}
-            <div>
-              <h3 className="font-semibold text-foreground mb-3" style={{ fontSize: 'var(--font-h6)' }}>
-                Data context:
-              </h3>
-              <div className="space-y-1 text-sm">
-                <div>
-                  <span className="font-medium">Service Group: Phase 1 Cycle 1 (50 services)</span>
-                  <span className="text-muted-foreground"> id=5001145 name=Physical Therapy {'->'} Professional Therapy and Rehabilitation Services {'->'} Professional Services {'->'} Product Wide Provision</span>
-                </div>
-                <div>
-                  <span className="font-medium">Created:</span>
-                  <span className="text-muted-foreground"> 2022-09-08 19:27:03</span>
-                </div>
-                <div>
-                  <span className="font-medium">By:</span>
-                  <span className="text-muted-foreground"> ServiceGroupUser</span>
-                </div>
-              </div>
+      {/* Compact Data Context and X-ray Projection Card */}
+      <Card className="bg-card border-border mb-4 shadow-sm mx-8 flex-shrink-0">
+        <CardContent className="px-4 py-3">
+          <div className="flex items-center justify-between gap-4">
+            {/* Data Context */}
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-foreground leading-tight" style={{ fontSize: 'var(--font-body)' }}>Data Context:</span>
+              <span className="text-muted-foreground leading-none" style={{ fontSize: 'var(--font-body)' }} title="Service Group: Phase 1 Cycle 1 (50 services) id=5001145 name=Physical Therapy -> Professional Therapy and Rehabilitation Services -> Professional Services -> Product Wide Provision Created: 2022-09-08 19:27:03 By: ServiceGroupUser">
+                Service Group: Phase 1 Cycle 1 (50 services) | X-ray Projection: Provision Type + Options (C+D) | Total Clusters: 279 | Total Records: 3642
+              </span>
             </div>
-
-            {/* X-ray Projection Panel */}
-            <div>
-              <h3 className="font-semibold text-foreground mb-3" style={{ fontSize: 'var(--font-h6)' }}>
-                X-ray Projection:
-              </h3>
-              <div className="space-y-1 text-sm">
-                <div className="text-muted-foreground">Provision Type + Options (C+D)</div>
-                <div>
-                  <span className="font-medium">Total Clusters:</span>
-                  <span className="text-muted-foreground"> 279</span>
-                </div>
-                <div>
-                  <span className="font-medium">Total Records:</span>
-                  <span className="text-muted-foreground"> 3642</span>
-                </div>
-                <div className="flex items-center gap-2 mt-3">
-                  <span className="font-medium text-foreground" style={{ fontSize: 'var(--font-body)' }}>Distance Threshold:</span>
-                  <Input
-                    type="number"
-                    value={distance}
-                    onChange={(e) => setDistance(e.target.value)}
-                    step="0.1"
-                    min="0"
-                    max="100"
-                    className="w-20 border-border font-bold text-accent focus:ring-1 focus:ring-ring transition-colors"
-                    style={{ height: 'var(--button-sm)', fontSize: 'var(--font-body)' }}
-                  />
+            
+            {/* Distance Threshold Controls and Create Set Button */}
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <span className="font-medium text-foreground" style={{ fontSize: 'var(--font-body)' }}>Distance Threshold:</span>
+                <Input
+                  type="number"
+                  value={distance}
+                  onChange={(e) => setDistance(e.target.value)}
+                  step="0.1"
+                  min="0"
+                  max="100"
+                  className="w-20 border-border font-bold text-accent focus:ring-1 focus:ring-ring transition-colors"
+                  style={{ height: 'var(--button-sm)', fontSize: 'var(--font-body)' }}
+                />
+                <Button 
+                  size="sm" 
+                  className="px-4 btn-gradient-primary font-medium focus:ring-1 focus:ring-ring transition-colors"
+                  style={{ height: 'var(--button-sm)', fontSize: 'var(--font-body)' }}
+                  onClick={() => {
+                    console.log('Update distance threshold to:', distance)
+                  }}
+                >
+                  Update
+                </Button>
+              </div>
+              
+              <div className="h-4 w-px bg-border"></div>
+              
+              {/* Create Set Button */}
+              <Dialog open={isCreateSetDialogOpen} onOpenChange={setIsCreateSetDialogOpen}>
+                <DialogTrigger asChild>
                   <Button 
                     size="sm" 
-                    className="px-4 btn-gradient-primary font-medium focus:ring-1 focus:ring-ring transition-colors"
+                    className="px-4 bg-warning hover:bg-warning/90 text-white font-medium focus:ring-1 focus:ring-ring transition-colors"
                     style={{ height: 'var(--button-sm)', fontSize: 'var(--font-body)' }}
-                    onClick={() => {
-                      console.log('Update distance threshold to:', distance)
-                    }}
                   >
-                    Update
+                    <Plus className="h-3 w-3 mr-1" />
+                    Create Set
                   </Button>
-                </div>
-                <div className="mt-2">
-                  <Button 
-                    variant="link" 
-                    className="p-0 h-auto text-primary hover:underline text-sm"
-                    onClick={() => navigate(`/dendrogram/${serviceId}`)}
-                  >
-                    ← Back to 3-dendrograms view
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* Create Set Panel */}
-            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex-1 mr-4">
-                  <Label className="text-sm font-semibold">Creator:*</Label>
-                  <Input
-                    placeholder="Enter creator name"
-                    value={creator}
-                    onChange={(e) => setCreator(e.target.value)}
-                    className="mt-1 bg-white"
-                    style={{ height: 'var(--button-md)', fontSize: 'var(--font-body)' }}
-                  />
-                </div>
-                <div className="text-right">
-                  <Button 
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
-                    style={{ height: 'var(--button-md)', fontSize: 'var(--font-body)' }}
-                    onClick={() => {
-                      console.log('Select an existing set')
-                    }}
-                  >
-                    Select an existing set
-                  </Button>
-                  <div className="text-xs text-muted-foreground mt-1">to add rows to it</div>
-                  <div className="text-xs text-muted-foreground">Select set first</div>
-                </div>
-              </div>
-              <div className="mb-4">
-                <Label className="text-sm font-semibold">Set Name:*</Label>
-                <Input
-                  placeholder="Enter set name"
-                  value={setName}
-                  onChange={(e) => setSetName(e.target.value)}
-                  className="mt-1 bg-white"
-                  style={{ height: 'var(--button-md)', fontSize: 'var(--font-body)' }}
-                />
-              </div>
-              <div className="mb-4">
-                <Label className="text-sm font-semibold">Description:*</Label>
-                <Textarea
-                  placeholder="Enter description (max 500 chars)"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="mt-1 bg-white h-20"
-                  maxLength={500}
-                  style={{ fontSize: 'var(--font-body)' }}
-                />
-              </div>
-              <div className="flex gap-2">
-                <Button 
-                  className="bg-warning hover:bg-warning/90 text-white"
-                  style={{ height: 'var(--button-md)', fontSize: 'var(--font-body)' }}
-                  onClick={() => {
-                    console.log('Add rows to set (select rows first)')
-                  }}
-                >
-                  Add rows to set (select rows first)
-                </Button>
-                <Button 
-                  className="bg-warning hover:bg-warning/90 text-white"
-                  style={{ height: 'var(--button-md)', fontSize: 'var(--font-body)' }}
-                  onClick={() => {
-                    console.log('Create a set (select rows first)')
-                  }}
-                >
-                  Create a set (select rows first)
-                </Button>
-              </div>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <DialogTitle style={{ fontSize: 'var(--font-h5)' }}>Create New Set</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-4 pt-4">
+                    <div>
+                      <Label className="text-sm font-semibold">Creator:*</Label>
+                      <Input
+                        placeholder="Enter creator name"
+                        value={creator}
+                        onChange={(e) => setCreator(e.target.value)}
+                        className="mt-1"
+                        style={{ height: 'var(--button-md)', fontSize: 'var(--font-body)' }}
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label className="text-sm font-semibold">Set Name:*</Label>
+                      <Input
+                        placeholder="Enter set name"
+                        value={setName}
+                        onChange={(e) => setSetName(e.target.value)}
+                        className="mt-1"
+                        style={{ height: 'var(--button-md)', fontSize: 'var(--font-body)' }}
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label className="text-sm font-semibold">Description:*</Label>
+                      <Textarea
+                        placeholder="Enter description (max 500 chars)"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        className="mt-1 h-20"
+                        maxLength={500}
+                        style={{ fontSize: 'var(--font-body)' }}
+                      />
+                      <div className="text-xs text-muted-foreground mt-1">{description.length}/500 characters</div>
+                    </div>
+                    
+                    <div className="flex gap-2 pt-4">
+                      <Button 
+                        className="bg-warning hover:bg-warning/90 text-white flex-1"
+                        style={{ height: 'var(--button-md)', fontSize: 'var(--font-body)' }}
+                        onClick={() => {
+                          console.log('Add selected rows to set')
+                          setIsCreateSetDialogOpen(false)
+                        }}
+                      >
+                        Add selected rows to set
+                      </Button>
+                      <Button 
+                        className="bg-primary hover:bg-primary/90 text-white flex-1"
+                        style={{ height: 'var(--button-md)', fontSize: 'var(--font-body)' }}
+                        onClick={() => {
+                          console.log('Create new set with selected rows')
+                          setIsCreateSetDialogOpen(false)
+                        }}
+                      >
+                        Create new set
+                      </Button>
+                    </div>
+                    
+                    <div className="pt-2 border-t">
+                      <Button 
+                        variant="outline"
+                        className="w-full"
+                        style={{ height: 'var(--button-md)', fontSize: 'var(--font-body)' }}
+                        onClick={() => {
+                          console.log('Select an existing set')
+                        }}
+                      >
+                        Select an existing set to add rows to
+                      </Button>
+                      <div className="text-xs text-muted-foreground text-center mt-1">Choose from existing sets</div>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
+              
+              <Button 
+                variant="link" 
+                className="p-0 h-auto text-primary hover:underline text-sm"
+                onClick={() => navigate(`/dendrogram/${serviceId}`)}
+              >
+                ← Back to dendrograms
+              </Button>
             </div>
           </div>
         </CardContent>
@@ -494,7 +494,7 @@ export function ClustersView() {
 
       {/* Cluster Table */}
       <Collapsible open={!isTableCollapsed} onOpenChange={(open) => setIsTableCollapsed(!open)}>
-        <Card className="bg-card border-border shadow-sm mx-8 mt-4 flex flex-col min-h-0 overflow-hidden">
+        <Card className="bg-card border-border shadow-sm mx-8 flex flex-col min-h-0 overflow-hidden">
           <CardContent className="p-0 flex flex-col h-full min-h-0">
             {/* Table Header with Filter Controls */}
             <div className="flex items-center gap-4 px-3 py-2 border-b border-border bg-muted/20 flex-shrink-0 flex-wrap">
