@@ -1,3 +1,4 @@
+import React from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { Header } from './components/Header'
 import { Dashboard } from './pages/Dashboard'
