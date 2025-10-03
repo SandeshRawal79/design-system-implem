@@ -25,7 +25,7 @@ const mockClusterData = [
   {
     abcd_1up: 2001,
     service_id: 15001,
-    service_name: "Federal Legend Drugs",
+    service_name: "Inpatient Occupational Therapy -> Short-Term Inpatient Rehabilitation Therapy -> Inpatient Facility Services Inpatient Occupational Therapy -> Short-Term Inpatient Rehabilitation Therapy -> Inpatient Facility Services",
     provision_type_1up: null,
     provision_type: "Anti Cancer Deductible",
     options: "Does Not Apply",
@@ -109,7 +109,7 @@ const mockClusterData = [
   {
     abcd_1up: 2043,
     service_id: 15001,
-    service_name: "Federal Legend Drugs",
+    service_name: "Yes Brand Drug 60 Percent of Allowed Charge Generic Drug 60 Percent of Allowed Charge Brand Drug if Generic Drug Available 60 Percent of Allowed Charge",
     provision_type_1up: null,
     provision_type: "Specialty Tier Coins - Member Form",
     options: "Yes Brand Drug 60 Percent of Allowed Charge Generic Drug 60 Percent of Allowed Charge Brand Drug if Generic Drug Available 60 Percent of Allowed Charge",
@@ -259,15 +259,15 @@ const mockClusterData = [
 const generateSimilarRecords = (abcdId: number) => {
   const baseRecord = mockClusterData.find(r => r.abcd_1up === abcdId)
   if (!baseRecord) return []
-  
+
   return Array.from({ length: 5 + Math.floor(Math.random() * 8) }, (_, i) => ({
     abcd_1up: abcdId + 10000 + i,
     service_id: baseRecord.service_id + Math.floor(Math.random() * 5),
     service_name: baseRecord.service_name,
     provision_type_1up: null,
     provision_type: baseRecord.provision_type,
-    options: i % 3 === 0 ? baseRecord.options : 
-             i % 3 === 1 ? "Similar Option Variant" : "Alternative Configuration",
+    options: i % 3 === 0 ? baseRecord.options :
+      i % 3 === 1 ? "Similar Option Variant" : "Alternative Configuration",
     num_splits: Math.floor(Math.random() * 3),
     is_single_split_with_no_change: null,
     num_provisions: Math.floor(baseRecord.num_provisions * (0.5 + Math.random())),
@@ -289,7 +289,7 @@ const generateSimilarRecords = (abcdId: number) => {
 const generateExactSameCDRecords = (abcdId: number) => {
   const baseRecord = mockClusterData.find(r => r.abcd_1up === abcdId)
   if (!baseRecord) return []
-  
+
   // Generate records with exactly same CD (provision_type and options) but different ABCD IDs
   return Array.from({ length: 3 + Math.floor(Math.random() * 5) }, (_, i) => ({
     abcd_1up: abcdId + 20000 + i,
@@ -323,7 +323,7 @@ function ApprovalStatusIndicators({ statuses }: { statuses: string[] }) {
         let displaySymbol;
         let colorClass;
         let ariaLabel;
-        
+
         if (status === '✓') {
           displaySymbol = '✓';
           colorClass = "text-success font-bold";
@@ -337,7 +337,7 @@ function ApprovalStatusIndicators({ statuses }: { statuses: string[] }) {
           colorClass = "text-muted-foreground font-bold";
           ariaLabel = `Pending step ${index + 1}`;
         }
-        
+
         return (
           <span
             key={index}
@@ -378,16 +378,16 @@ export function ClusterDetails() {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
   const [provisionTypeFilter, setProvisionTypeFilter] = useState('all')
   const [distanceThreshold, setDistanceThreshold] = useState(clusterInfo.distanceThreshold.toString())
-  
+
   // State for similar records
   const [selectedRecordId, setSelectedRecordId] = useState<number | null>(null)
   const [similarRecords, setSimilarRecords] = useState<any[]>([])
   const [showSimilarRecords, setShowSimilarRecords] = useState(false)
-  
+
   // State for exact same CD records
   const [exactSameCDRecords, setExactSameCDRecords] = useState<any[]>([])
   const [showExactSameCDRecords, setShowExactSameCDRecords] = useState(false)
-  
+
   // State for collapsible tables
   const [isMainTableCollapsed, setIsMainTableCollapsed] = useState(false)
   const [isSimilarRecordsCollapsed, setIsSimilarRecordsCollapsed] = useState(false)
@@ -439,7 +439,7 @@ export function ClusterDetails() {
         const hasApprovals = item.approvalStatuses.includes('✓')
         const hasRejections = item.approvalStatuses.includes('✗')
         const hasPending = item.approvalStatuses.includes('-')
-        
+
         switch (filterType) {
           case 'with-approvals':
             return hasApprovals
@@ -459,7 +459,7 @@ export function ClusterDetails() {
         const approvedCount = item.approvalStatuses.filter(s => s === '✓').length
         const rejectedCount = item.approvalStatuses.filter(s => s === '✗').length
         const pendingCount = item.approvalStatuses.filter(s => s === '-').length
-        
+
         switch (statusFilter) {
           case 'approved':
             return approvedCount > rejectedCount && approvedCount > 0
@@ -557,7 +557,7 @@ export function ClusterDetails() {
         const hasApprovals = item.approvalStatuses.includes('✓')
         const hasRejections = item.approvalStatuses.includes('✗')
         const hasPending = item.approvalStatuses.includes('-')
-        
+
         switch (similarFilterType) {
           case 'with-approvals':
             return hasApprovals
@@ -577,7 +577,7 @@ export function ClusterDetails() {
         const approvedCount = item.approvalStatuses.filter(s => s === '✓').length
         const rejectedCount = item.approvalStatuses.filter(s => s === '✗').length
         const pendingCount = item.approvalStatuses.filter(s => s === '-').length
-        
+
         switch (similarStatusFilter) {
           case 'approved':
             return approvedCount > rejectedCount && approvedCount > 0
@@ -679,7 +679,7 @@ export function ClusterDetails() {
         const hasApprovals = item.approvalStatuses.includes('✓')
         const hasRejections = item.approvalStatuses.includes('✗')
         const hasPending = item.approvalStatuses.includes('-')
-        
+
         switch (exactFilterType) {
           case 'with-approvals':
             return hasApprovals
@@ -699,7 +699,7 @@ export function ClusterDetails() {
         const approvedCount = item.approvalStatuses.filter(s => s === '✓').length
         const rejectedCount = item.approvalStatuses.filter(s => s === '✗').length
         const pendingCount = item.approvalStatuses.filter(s => s === '-').length
-        
+
         switch (exactStatusFilter) {
           case 'approved':
             return approvedCount > rejectedCount && approvedCount > 0
@@ -827,25 +827,25 @@ export function ClusterDetails() {
 
   const getSortIcon = (field: SortField) => {
     if (sortField !== field) return null
-    return sortDirection === 'asc' ? 
-      <CaretUp className="h-3 w-3 ml-1" /> : 
+    return sortDirection === 'asc' ?
+      <CaretUp className="h-3 w-3 ml-1" /> :
       <CaretDown className="h-3 w-3 ml-1" />
   }
 
   const getSimilarSortIcon = (field: SortField) => {
     if (similarSortField !== field) return null
-    return similarSortDirection === 'asc' ? 
-      <CaretUp className="h-3 w-3 ml-1" /> : 
+    return similarSortDirection === 'asc' ?
+      <CaretUp className="h-3 w-3 ml-1" /> :
       <CaretDown className="h-3 w-3 ml-1" />
   }
 
   const getExactSortIcon = (field: SortField) => {
     if (exactSortField !== field) return null
-    return exactSortDirection === 'asc' ? 
-      <CaretUp className="h-3 w-3 ml-1" /> : 
+    return exactSortDirection === 'asc' ?
+      <CaretUp className="h-3 w-3 ml-1" /> :
       <CaretDown className="h-3 w-3 ml-1" />
   }
-  
+
   // Handle clicking on the # column to show similar records and scroll to them
   const handleRowNumberClick = (abcdId: number) => {
     if (selectedRecordId === abcdId && showSimilarRecords && showExactSameCDRecords) {
@@ -864,17 +864,17 @@ export function ClusterDetails() {
       setShowExactSameCDRecords(true)
       setIsSimilarRecordsCollapsed(false) // Ensure tables are expanded when showing
       setIsExactSameCDCollapsed(false)
-      
+
       // Reset filters for new data
       clearSimilarFilters()
       clearExactFilters()
-      
+
       // Scroll to Similar Records table after a brief delay to allow rendering
       setTimeout(() => {
-        similarRecordsRef.current?.scrollIntoView({ 
-          behavior: 'smooth', 
+        similarRecordsRef.current?.scrollIntoView({
+          behavior: 'smooth',
           block: 'start',
-          inline: 'nearest' 
+          inline: 'nearest'
         })
       }, 100)
     }
@@ -893,12 +893,18 @@ export function ClusterDetails() {
           <div className="flex items-center justify-between gap-4">
             {/* Data Context */}
             <div className="flex items-center gap-2">
+              <span className="font-semibold text-foreground leading-tight truncate" style={{ fontSize: 'var(--font-body)' }}>X-ray Projection:</span>
+              <span className="text-muted-foreground leading-non" style={{ fontSize: 'var(--font-body)' }} title={clusterInfo.xrayProjection}>
+                {clusterInfo.xrayProjection}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
               <span className="font-semibold text-foreground leading-tight truncate" style={{ fontSize: 'var(--font-body)' }}>Data Context:</span>
               <span className="text-muted-foreground leading-non" style={{ fontSize: 'var(--font-body)' }} title={clusterInfo.dataContext}>
                 {clusterInfo.dataContext}
               </span>
             </div>
-            
+
             {/* Distance Threshold Controls */}
             <div className="flex items-center gap-2">
               <span className="font-medium text-foreground" style={{ fontSize: 'var(--font-body)' }}>Distance Threshold:</span>
@@ -912,8 +918,8 @@ export function ClusterDetails() {
                 className="w-20 border-border font-bold text-accent focus:ring-1 focus:ring-ring transition-colors"
                 style={{ height: 'var(--button-sm)', fontSize: 'var(--font-body)' }}
               />
-              <Button 
-                size="sm" 
+              <Button
+                size="sm"
                 className="px-4 btn-gradient-primary font-medium focus:ring-1 focus:ring-ring transition-colors"
                 style={{ height: 'var(--button-sm)', fontSize: 'var(--font-body)' }}
                 onClick={() => {
@@ -929,357 +935,374 @@ export function ClusterDetails() {
       {/* Main Data Table - Fixed height with sticky header */}
       <Collapsible open={!isMainTableCollapsed} onOpenChange={(open) => setIsMainTableCollapsed(!open)}>
         <Card className="bg-card border-border shadow-sm flex-1 flex flex-col min-h-0 mx-8 overflow-hidden">
-        <CardContent className="p-0 flex flex-col h-full min-h-0">
-          {/* Merged Table Header with Collapse Control and Filter Controls */}
-          <div className="flex items-center gap-4 px-3 py-2 border-b border-border bg-muted/20 flex-shrink-0 flex-wrap">
-            {/* Left Section: Title, Badge, and Collapse Control */}
-            <div className="flex items-center gap-3">
-              <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
-                Main Cluster Data
-              </h3>
-              <Badge variant="outline" className="px-2 py-0.5 bg-primary/10 text-primary border-primary/20">
-                {filteredAndSortedData.length} records
-              </Badge>
-            </div>
+          <CardContent className="p-0 flex flex-col h-full min-h-0">
+            {/* Merged Table Header with Collapse Control and Filter Controls */}
+            <div className="flex items-center gap-4 px-3 py-2 border-b border-border bg-muted/20 flex-shrink-0 flex-wrap">
+              {/* Left Section: Title, Badge, and Collapse Control */}
+              <div className="flex items-center gap-3">
+                <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
+                  Main Cluster Data
+                </h3>
+                <Badge variant="outline" className="px-2 py-0.5 bg-primary/10 text-primary border-primary/20">
+                  {filteredAndSortedData.length} records
+                </Badge>
+              </div>
 
-            {/* Filter Controls Section - Merged into header row */}
-            <div className="flex items-center gap-2 flex-1 min-w-0">
-            {/* Search Input - Optimized width */}
-            <div className="relative flex-1 min-w-64 max-w-80">
-              <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder="Search records..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-7 pr-7 border-border placeholder:text-muted-foreground focus:ring-1 focus:ring-ring transition-colors"
-                style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
-              />
-              {searchTerm && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="absolute right-1 top-1/2 transform -translate-y-1/2 p-0 hover:bg-muted transition-colors"
-                  style={{ height: 'var(--button-xs)', width: 'var(--button-xs)' }}
-                  onClick={() => setSearchTerm('')}
-                >
-                  <X className="h-2 w-2 text-muted-foreground" />
-                </Button>
-              )}
-            </div>
-
-            {/* Quick Status Filters - Ultra-compact for 1920x1080 */}
-            <div className="flex items-center gap-1">
-              {['all', 'with-approvals', 'pending-approvals', 'no-approvals'].map((type) => (
-                <Button
-                  key={type}
-                  variant={filterType === type ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setFilterType(type as FilterType)}
-                  className={`${
-                    filterType === type 
-                      ? type === 'with-approvals' ? 'bg-success text-success-foreground hover:bg-success/90'
-                        : type === 'pending-approvals' ? 'bg-warning text-warning-foreground hover:bg-warning/90'
-                        : type === 'no-approvals' ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
-                        : 'bg-primary text-primary-foreground hover:bg-primary/90'
-                      : 'border-border text-foreground hover:bg-muted'
-                  } focus:ring-1 focus:ring-ring transition-colors`}
-                  style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
-                >
-                  {type === 'all' ? 'All' 
-                    : type === 'with-approvals' ? 'With Approvals'
-                    : type === 'pending-approvals' ? 'Pending'
-                    : 'None'}
-                </Button>
-              ))}
-            </div>
-
-            {/* Advanced Filters - Compact Selects */}
-            <div className="flex items-center gap-1">
-              <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as StatusFilter)}>
-                <SelectTrigger className="w-24 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all" style={{ fontSize: 'var(--font-body)' }}>All</SelectItem>
-                  <SelectItem value="approved" style={{ fontSize: 'var(--font-body)' }}>✓</SelectItem>
-                  <SelectItem value="rejected" style={{ fontSize: 'var(--font-body)' }}>✗</SelectItem>
-                  <SelectItem value="pending" style={{ fontSize: 'var(--font-body)' }}>-</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Select value={provisionTypeFilter} onValueChange={setProvisionTypeFilter}>
-                <SelectTrigger className="w-32 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all" style={{ fontSize: 'var(--font-body)' }}>All Types</SelectItem>
-                  {uniqueProvisionTypes.map((type) => (
-                    <SelectItem key={type} value={type} style={{ fontSize: 'var(--font-body)' }}>{type.substring(0, 20)}...</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <Select value={sortField} onValueChange={(value) => setSortField(value as SortField)}>
-                <SelectTrigger className="w-40 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="abcd_1up" style={{ fontSize: 'var(--font-body)' }}>ABCD</SelectItem>
-                  <SelectItem value="service_name" style={{ fontSize: 'var(--font-body)' }}>Name</SelectItem>
-                  <SelectItem value="num_provisions" style={{ fontSize: 'var(--font-body)' }}>Prov</SelectItem>
-                  <SelectItem value="num_products" style={{ fontSize: 'var(--font-body)' }}>Prod</SelectItem>
-                  <SelectItem value="num_groups" style={{ fontSize: 'var(--font-body)' }}>Groups</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Button
-                variant="outline"
-                size="sm"
-                className="px-2 border-border focus:ring-1 focus:ring-ring transition-colors hover:bg-muted"
-                style={{ height: 'var(--button-sm)' }}
-                onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
-              >
-                {sortDirection === 'asc' ? 
-                  <SortAscending className="h-3 w-3" /> : 
-                  <SortDescending className="h-3 w-3" />
-                }
-              </Button>
-            </div>
-
-            {/* Results & Clear */}
-            <div className="flex items-center gap-2 ml-auto">
-              <Badge variant="outline" className="px-2 py-0.5 bg-muted/50 border-border" style={{ fontSize: 'var(--font-body)' }}>
-                {filteredAndSortedData.length}/{mockClusterData.length}
-              </Badge>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={clearFilters}
-                className="px-2 text-muted-foreground hover:text-foreground hover:bg-muted focus:ring-1 focus:ring-ring transition-colors"
-                style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
-              >
-                <X className="h-2 w-2 mr-1" />
-                Clear
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsMainTableCollapsed(!isMainTableCollapsed)}
-                className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
-                style={{ height: 'var(--button-sm)' }}
-              >
-                {isMainTableCollapsed ? <CaretDown className="h-3 w-3" /> : <CaretUp className="h-3 w-3" />}
-                {isMainTableCollapsed ? 'Expand' : 'Collapse'}
-              </Button>
-            </div>
-            </div>
-          </div>
-          
-          <CollapsibleContent className="flex flex-col h-full min-h-0">
-          {/* Table Container - Fixed height with sticky header */}
-          {!isMainTableCollapsed && (
-          <>
-            <div className="max-h-112 overflow-auto">
-              <table className="w-full border-collapse cluster-details-table-full-width" style={{ fontSize: 'var(--font-body)', minWidth: '100%' }}>
-                <colgroup>
-                  <col className="col-index" />
-                  <col className="col-abcd" />
-                  <col className="col-service-id" />
-                  <col className="col-service-name" />
-                  <col className="col-provision-type" />
-                  <col className="col-options" />
-                  <col className="col-splits" />
-                  <col className="col-provisions" />
-                  <col className="col-products" />
-                  <col className="col-clients" />
-                  <col className="col-groups" />
-                  <col className="col-approval" />
-                </colgroup>
-                <thead className="sticky top-0 bg-card border-b border-border z-10 shadow-sm">
-                  <tr>
-                    <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-index bg-card" style={{ fontSize: 'var(--font-body)' }}>#</th>
-                    <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-abcd bg-card" onClick={() => handleSort('abcd_1up')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center">
-                        ABCD 1-Up
-                        {getSortIcon('abcd_1up')}
-                      </div>
-                    </th>
-                    <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-service-id bg-card" onClick={() => handleSort('service_id')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center">
-                        Service ID
-                        {getSortIcon('service_id')}
-                      </div>
-                    </th>
-                    <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors col-service-name bg-card" onClick={() => handleSort('service_name')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center">
-                        Service Name
-                        {getSortIcon('service_name')}
-                      </div>
-                    </th>
-                    <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors col-provision-type bg-card" onClick={() => handleSort('provision_type')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center">
-                        Provision Type
-                        {getSortIcon('provision_type')}
-                      </div>
-                    </th>
-                    <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-options bg-card" onClick={() => handleSort('options')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center">
-                        Options
-                        {getSortIcon('options')}
-                      </div>
-                    </th>
-                    <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-splits bg-card" onClick={() => handleSort('num_splits')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center justify-center">
-                        Splits
-                        {getSortIcon('num_splits')}
-                      </div>
-                    </th>
-                    <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-provisions bg-card" onClick={() => handleSort('num_provisions')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center justify-center">
-                        Provisions
-                        {getSortIcon('num_provisions')}
-                      </div>
-                    </th>
-                    <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-products bg-card" onClick={() => handleSort('num_products')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center justify-center">
-                        Products
-                        {getSortIcon('num_products')}
-                      </div>
-                    </th>
-                    <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-clients bg-card" onClick={() => handleSort('num_clients')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center justify-center">
-                        Clients
-                        {getSortIcon('num_clients')}
-                      </div>
-                    </th>
-                    <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-groups bg-card" onClick={() => handleSort('num_groups')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center justify-center">
-                        Groups
-                        {getSortIcon('num_groups')}
-                      </div>
-                    </th>
-                    <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-approval bg-card" style={{ fontSize: 'var(--font-body)' }}>Approval</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredAndSortedData.map((record, index) => (
-                    <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
-                      <td className="px-2 py-2 text-left col-index align-middle" style={{ fontSize: 'var(--font-body)' }}>
-                        <Button 
-                          variant="ghost" 
-                          className={`p-1 h-auto text-primary underline hover:text-primary-foreground hover:bg-primary font-bold transition-colors ${
-                            selectedRecordId === record.abcd_1up && (showSimilarRecords || showExactSameCDRecords) ? 'bg-primary text-primary-foreground' : ''
-                          }`}
-                          style={{ fontSize: 'var(--font-body)' }}
-                          onClick={() => handleRowNumberClick(record.abcd_1up)}
-                          title="Click to show/hide similar records and exact same CD records"
-                        >
-                          {index + 1}
-                        </Button>
-                      </td>
-                      <td className="px-2 py-2 col-abcd align-middle">
-                        <Button variant="link" className="p-0 h-auto text-primary underline font-bold" style={{ fontSize: 'var(--font-body)' }}>
-                          {record.abcd_1up}
-                        </Button>
-                      </td>
-                      <td className="px-2 py-2 text-center col-service-id align-middle">
-                        <span className="font-bold text-info" style={{ fontSize: 'var(--font-body)' }}>{record.service_id}</span>
-                      </td>
-                      <td className="px-2 py-2 col-service-name align-top">
-                        <div className="max-w-full">
-                          <span className="font-medium text-foreground break-words leading-tight block" style={{ fontSize: 'var(--font-body)' }} title={record.service_name}>
-                            {record.service_name}
-                          </span>
-                        </div>
-                      </td>
-                      <td className="px-2 py-2 col-provision-type align-top">
-                        <span className="font-medium text-foreground break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.provision_type}>
-                          {record.provision_type}
-                        </span>
-                      </td>
-                      <td className="px-2 py-2 col-options align-top">
-                        <span className="font-medium text-accent break-words leading-tight block" style={{ fontSize: 'var(--font-body)' }} title={record.options}>
-                          {record.options}
-                        </span>
-                      </td>
-                      <td className="px-2 py-2 text-center col-splits align-middle">
-                        <span className="font-bold text-secondary" style={{ fontSize: 'var(--font-body)' }}>{record.num_splits}</span>
-                      </td>
-                      <td className="px-2 py-2 text-center col-provisions align-middle">
-                        <span className="font-bold text-primary" style={{ fontSize: 'var(--font-body)' }}>{record.num_provisions.toLocaleString()}</span>
-                      </td>
-                      <td className="px-2 py-2 text-center col-products align-middle">
-                        <span className="font-bold text-success" style={{ fontSize: 'var(--font-body)' }}>{record.num_products.toLocaleString()}</span>
-                      </td>
-                      <td className="px-2 py-2 text-center col-clients align-middle">
-                        <span className="text-info font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_clients?.toLocaleString() || '-'}</span>
-                      </td>
-                      <td className="px-2 py-2 text-center col-groups align-middle">
-                        <span className="text-warning font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_groups?.toLocaleString() || '-'}</span>
-                      </td>
-                      <td className="px-2 py-2 text-center col-approval align-middle">
-                        <ApprovalStatusIndicators statuses={record.approvalStatuses} />
-                      </td>
-                    </tr>
-                  ))}
-                  {filteredAndSortedData.length === 0 && (
-                    <tr>
-                      <td colSpan={12} className="text-center py-8 text-muted-foreground">
-                        <div className="flex flex-col items-center gap-2">
-                          <MagnifyingGlass className="h-8 w-8 text-muted-foreground/40" />
-                          <div>
-                            <p className="font-semibold">No records found</p>
-                            <p className="text-xs">Try adjusting your search or filter criteria</p>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
+              {/* Filter Controls Section - Merged into header row */}
+              <div className="flex items-center gap-2 flex-1 min-w-0">
+                {/* Search Input - Optimized width */}
+                <div className="relative flex-1 min-w-64 max-w-80">
+                  <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+                  <Input
+                    type="text"
+                    placeholder="Search records..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-7 pr-7 border-border placeholder:text-muted-foreground focus:ring-1 focus:ring-ring transition-colors"
+                    style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
+                  />
+                  {searchTerm && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-1 top-1/2 transform -translate-y-1/2 p-0 hover:bg-muted transition-colors"
+                      style={{ height: 'var(--button-xs)', width: 'var(--button-xs)' }}
+                      onClick={() => setSearchTerm('')}
+                    >
+                      <X className="h-2 w-2 text-muted-foreground" />
+                    </Button>
                   )}
-                </tbody>
-              </table>
-            </div>
-          </>
-          )}
-          </CollapsibleContent>
-        </CardContent>
-      </Card>
-      </Collapsible>
-      
-      {/* Similar Records Table */}
-        <Collapsible open={!isSimilarRecordsCollapsed} onOpenChange={(open) => setIsSimilarRecordsCollapsed(!open)}>
-          <Card ref={similarRecordsRef} className="bg-card border-border shadow-sm mt-4 mx-8 flex flex-col">
-            <CardContent className="p-0 flex flex-col h-full">
-              {/* Merged Similar Records Header with Collapse Control and Filter Controls */}
-              <div className="flex items-center gap-4 px-3 py-2 border-b border-border bg-muted/20 flex-shrink-0 flex-wrap">
-                {/* Left Section: Title, Badge, Dropdown, and Collapse Control */}
-                <div className="flex items-center gap-3">
-                  <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
-                    Similar Records
-                  </h3>
-                  <Select value={similarRecordsViewMode} onValueChange={setSimilarRecordsViewMode}>
-                    <SelectTrigger className="w-64 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
+                </div>
+
+                {/* Quick Status Filters - Ultra-compact for 1920x1080 */}
+                <div className="flex items-center gap-1">
+                  {['all', 'with-approvals', 'pending-approvals', 'no-approvals'].map((type) => (
+                    <Button
+                      key={type}
+                      variant={filterType === type ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => setFilterType(type as FilterType)}
+                      className={`${filterType === type
+                        ? type === 'with-approvals' ? 'bg-success text-success-foreground hover:bg-success/90'
+                          : type === 'pending-approvals' ? 'bg-warning text-warning-foreground hover:bg-warning/90'
+                            : type === 'no-approvals' ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
+                              : 'bg-primary text-primary-foreground hover:bg-primary/90'
+                        : 'border-border text-foreground hover:bg-muted'
+                        } focus:ring-1 focus:ring-ring transition-colors`}
+                      style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
+                    >
+                      {type === 'all' ? 'All'
+                        : type === 'with-approvals' ? 'With Approvals'
+                          : type === 'pending-approvals' ? 'Pending'
+                            : 'None'}
+                    </Button>
+                  ))}
+                </div>
+
+                {/* Advanced Filters - Compact Selects */}
+                <div className="flex items-center gap-1">
+                  <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as StatusFilter)}>
+                    <SelectTrigger className="w-24 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Only Options (D)" style={{ fontSize: 'var(--font-body)' }}>Only Options (D)</SelectItem>
-                      <SelectItem value="Provision Type + Options (C+D)" style={{ fontSize: 'var(--font-body)' }}>Provision Type + Options (C+D)</SelectItem>
-                      <SelectItem value="Service ID/Name + Provision Type + Options (A+B+C+D)" style={{ fontSize: 'var(--font-body)' }}>Service ID/Name + Provision Type + Options (A+B+C+D)</SelectItem>
+                      <SelectItem value="all" style={{ fontSize: 'var(--font-body)' }}>All</SelectItem>
+                      <SelectItem value="approved" style={{ fontSize: 'var(--font-body)' }}>✓</SelectItem>
+                      <SelectItem value="rejected" style={{ fontSize: 'var(--font-body)' }}>✗</SelectItem>
+                      <SelectItem value="pending" style={{ fontSize: 'var(--font-body)' }}>-</SelectItem>
                     </SelectContent>
                   </Select>
-                  <Badge variant="outline" className="px-2 py-0.5 bg-info/10 text-info border-info/20">
-                    {filteredAndSortedSimilarRecords.length} records found
-                  </Badge>
+
+                  <Select value={provisionTypeFilter} onValueChange={setProvisionTypeFilter}>
+                    <SelectTrigger className="w-32 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all" style={{ fontSize: 'var(--font-body)' }}>All Types</SelectItem>
+                      {uniqueProvisionTypes.map((type) => (
+                        <SelectItem key={type} value={type} style={{ fontSize: 'var(--font-body)' }}>{type.substring(0, 20)}...</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+
+                  <Select value={sortField} onValueChange={(value) => setSortField(value as SortField)}>
+                    <SelectTrigger className="w-40 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="abcd_1up" style={{ fontSize: 'var(--font-body)' }}>ABCD</SelectItem>
+                      <SelectItem value="service_name" style={{ fontSize: 'var(--font-body)' }}>Name</SelectItem>
+                      <SelectItem value="num_provisions" style={{ fontSize: 'var(--font-body)' }}>Prov</SelectItem>
+                      <SelectItem value="num_products" style={{ fontSize: 'var(--font-body)' }}>Prod</SelectItem>
+                      <SelectItem value="num_groups" style={{ fontSize: 'var(--font-body)' }}>Groups</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="px-2 border-border focus:ring-1 focus:ring-ring transition-colors hover:bg-muted"
+                    style={{ height: 'var(--button-sm)' }}
+                    onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
+                  >
+                    {sortDirection === 'asc' ?
+                      <SortAscending className="h-3 w-3" /> :
+                      <SortDescending className="h-3 w-3" />
+                    }
+                  </Button>
                 </div>
 
-                {/* Filter Controls Section - Merged into header row */}
-                <div className="flex items-center gap-2 flex-1 min-w-0">
-                  {/* Search Input */}
-                  <div className="relative flex-1 min-w-64 max-w-80">
-                    <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
-                    <Input
-                      type="text"
-                      placeholder="Search similar records..."
+                {/* Results & Clear */}
+                <div className="flex items-center gap-2 ml-auto">
+                  <Badge variant="outline" className="px-2 py-0.5 bg-muted/50 border-border" style={{ fontSize: 'var(--font-body)' }}>
+                    {filteredAndSortedData.length}/{mockClusterData.length}
+                  </Badge>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={clearFilters}
+                    className="px-2 text-muted-foreground hover:text-foreground hover:bg-muted focus:ring-1 focus:ring-ring transition-colors"
+                    style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
+                  >
+                    <X className="h-2 w-2 mr-1" />
+                    Clear
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setIsMainTableCollapsed(!isMainTableCollapsed)}
+                    className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
+                    style={{ height: 'var(--button-sm)' }}
+                  >
+                    {isMainTableCollapsed ? <CaretDown className="h-3 w-3" /> : <CaretUp className="h-3 w-3" />}
+                    {isMainTableCollapsed ? 'Expand' : 'Collapse'}
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            <CollapsibleContent className="flex flex-col h-full min-h-0">
+              {/* Table Container - Fixed height with sticky header */}
+              {!isMainTableCollapsed && (
+                <>
+                  <div className="max-h-112 overflow-auto">
+                    <table className="w-full border-collapse cluster-details-table-full-width" style={{ fontSize: 'var(--font-body)', minWidth: '100%' }}>
+                      <colgroup>
+                        <col className="col-index" />
+                        <col className="col-abcd" />
+                        <col className="col-service-id" />
+                        <col className="col-service-name" />
+                        <col className="col-service-name" />
+                        <col className="col-p" />
+                        <col className="col-provision-type" />
+                        <col className="col-o" />
+                        <col className="col-options" />
+                        <col className="col-splits" />
+                        <col className="col-provisions" />
+                        <col className="col-products" />
+                        <col className="col-clients" />
+                        <col className="col-groups" />
+                        <col className="col-approval" />
+                      </colgroup>
+                      <thead className="sticky top-0 bg-card border-b border-border z-10 shadow-sm">
+                        <tr>
+                          <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-index bg-card" style={{ fontSize: 'var(--font-body)' }}>#</th>
+                          <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-abcd bg-card" onClick={() => handleSort('abcd_1up')} style={{ fontSize: 'var(--font-body)' }}>
+                            <div className="flex items-center">
+                              ABCD 1-Up
+                              {getSortIcon('abcd_1up')}
+                            </div>
+                          </th>
+                          <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-service-id bg-card" onClick={() => handleSort('service_id')} style={{ fontSize: 'var(--font-body)' }}>
+                            <div className="flex items-center">
+                              Service ID
+                              {getSortIcon('service_id')}
+                            </div>
+                          </th>
+                          <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors col-service-name bg-card" onClick={() => handleSort('service_name')} style={{ fontSize: 'var(--font-body)' }}>
+                            <div className="flex items-center">
+                              Service Name
+                              {getSortIcon('service_name')}
+                            </div>
+                          </th>
+                          <th className="text-left px-2 py-3 font-medium text-muted-foreground hover:text-foreground transition-colors col-p bg-card" style={{ fontSize: 'var(--font-body)' }}>
+                            <div className="flex items-center">
+                              P
+                            </div>
+                          </th>
+                          <th className="text-left px-2 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors col-provision-type bg-card" onClick={() => handleSort('provision_type')} style={{ fontSize: 'var(--font-body)' }}>
+                            <div className="flex items-center">
+                              Provision Type
+                              {getSortIcon('provision_type')}
+                            </div>
+                          </th>
+                          <th className="text-left px-2 py-3 font-medium text-muted-foreground hover:text-foreground transition-colors col-o bg-card" style={{ fontSize: 'var(--font-body)' }}>
+                            <div className="flex items-center">
+                              O
+                            </div>
+                          </th>
+                          <th className="text-left px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-options bg-card" onClick={() => handleSort('options')} style={{ fontSize: 'var(--font-body)' }}>
+                            <div className="flex items-center">
+                              Options
+                              {getSortIcon('options')}
+                            </div>
+                          </th>
+                          <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-splits bg-card" onClick={() => handleSort('num_splits')} style={{ fontSize: 'var(--font-body)' }}>
+                            <div className="flex items-center justify-center">
+                              Splits
+                              {getSortIcon('num_splits')}
+                            </div>
+                          </th>
+                          <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-provisions bg-card" onClick={() => handleSort('num_provisions')} style={{ fontSize: 'var(--font-body)' }}>
+                            <div className="flex items-center justify-center">
+                              Provisions
+                              {getSortIcon('num_provisions')}
+                            </div>
+                          </th>
+                          <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-products bg-card" onClick={() => handleSort('num_products')} style={{ fontSize: 'var(--font-body)' }}>
+                            <div className="flex items-center justify-center">
+                              Products
+                              {getSortIcon('num_products')}
+                            </div>
+                          </th>
+                          <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-clients bg-card" onClick={() => handleSort('num_clients')} style={{ fontSize: 'var(--font-body)' }}>
+                            <div className="flex items-center justify-center">
+                              Clients
+                              {getSortIcon('num_clients')}
+                            </div>
+                          </th>
+                          <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors col-groups bg-card" onClick={() => handleSort('num_groups')} style={{ fontSize: 'var(--font-body)' }}>
+                            <div className="flex items-center justify-center">
+                              Groups
+                              {getSortIcon('num_groups')}
+                            </div>
+                          </th>
+                          <th className="text-center px-2 py-3 font-medium text-muted-foreground whitespace-nowrap col-approval bg-card" style={{ fontSize: 'var(--font-body)' }}>Approval</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredAndSortedData.map((record, index) => (
+                          <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
+                            <td className="px-2 py-2 text-left col-index align-middle" style={{ fontSize: 'var(--font-body)' }}>
+                              <Button
+                                variant="ghost"
+                                className={`p-1 h-auto text-primary underline hover:text-primary-foreground cursor-pointer hover:bg-primary font-bold transition-colors ${selectedRecordId === record.abcd_1up && (showSimilarRecords || showExactSameCDRecords) ? 'bg-primary text-primary-foreground' : ''
+                                  }`}
+                                style={{ fontSize: 'var(--font-body)' }}
+                                onClick={() => handleRowNumberClick(record.abcd_1up)}
+                                title="Click to show/hide similar records and exact same CD records"
+                              >
+                                {index + 1}
+                              </Button>
+                            </td>
+                            <td className="px-2 py-2 col-abcd align-middle">
+                              <Button variant="link" className="p-0 h-auto text-primary underline font-bold cursor-pointer" style={{ fontSize: 'var(--font-body)' }}>
+                                {record.abcd_1up}
+                              </Button>
+                            </td>
+                            <td className="px-2 py-2 text-center col-service-id align-middle">
+                              <span className="font-bold text-info" style={{ fontSize: 'var(--font-body)' }}>{record.service_id}</span>
+                            </td>
+                            <td className="px-2 py-2 col-service-name align-top">
+                              <div className="max-w-full">
+                                <span className="font-medium text-foreground break-words leading-tight block" style={{ fontSize: 'var(--font-body)' }} title={record.service_name}>
+                                  {record.service_name}
+                                </span>
+                              </div>
+                            </td>
+                            <td className="px-2 py-2 text-center col-p align-middle">
+                              <span className="font-bold text-info" style={{ fontSize: 'var(--font-body)' }}></span>
+                            </td>
+                            <td className="px-2 py-2 col-provision-type align-top">
+                              <span className="font-medium text-foreground break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.provision_type}>
+                                {record.provision_type}
+                              </span>
+                            </td>
+                            <td className="px-2 py-2 text-center col-o align-middle">
+                              <span className="font-bold text-info" style={{ fontSize: 'var(--font-body)' }}></span>
+                            </td>
+                            <td className="px-2 py-2 col-options align-top">
+                              <span className="font-medium text-accent break-words leading-tight block" style={{ fontSize: 'var(--font-body)' }} title={record.options}>
+                                {record.options}
+                              </span>
+                            </td>
+                            <td className="px-2 py-2 text-center col-splits align-middle">
+                              <span className="font-bold text-secondary" style={{ fontSize: 'var(--font-body)' }}>{record.num_splits}</span>
+                            </td>
+                            <td className="px-2 py-2 text-center col-provisions align-middle">
+                              <span className="font-bold text-primary" style={{ fontSize: 'var(--font-body)' }}>{record.num_provisions.toLocaleString()}</span>
+                            </td>
+                            <td className="px-2 py-2 text-center col-products align-middle">
+                              <span className="font-bold text-success" style={{ fontSize: 'var(--font-body)' }}>{record.num_products.toLocaleString()}</span>
+                            </td>
+                            <td className="px-2 py-2 text-center col-clients align-middle">
+                              <span className="text-info font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_clients?.toLocaleString() || '-'}</span>
+                            </td>
+                            <td className="px-2 py-2 text-center col-groups align-middle">
+                              <span className="text-warning font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_groups?.toLocaleString() || '-'}</span>
+                            </td>
+                            <td className="px-2 py-2 text-center col-approval align-middle">
+                              <ApprovalStatusIndicators statuses={record.approvalStatuses} />
+                            </td>
+                          </tr>
+                        ))}
+                        {filteredAndSortedData.length === 0 && (
+                          <tr>
+                            <td colSpan={12} className="text-center py-8 text-muted-foreground">
+                              <div className="flex flex-col items-center gap-2">
+                                <MagnifyingGlass className="h-8 w-8 text-muted-foreground/40" />
+                                <div>
+                                  <p className="font-semibold">No records found</p>
+                                  <p className="text-xs">Try adjusting your search or filter criteria</p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
+              )}
+            </CollapsibleContent>
+          </CardContent>
+        </Card>
+      </Collapsible>
+
+      {/* Similar Records Table */}
+      <Collapsible open={!isSimilarRecordsCollapsed} onOpenChange={(open) => setIsSimilarRecordsCollapsed(!open)}>
+        <Card ref={similarRecordsRef} className="bg-card border-border shadow-sm mt-4 mx-8 flex flex-col">
+          <CardContent className="p-0 flex flex-col h-full">
+            {/* Merged Similar Records Header with Collapse Control and Filter Controls */}
+            <div className="flex items-center gap-4 px-3 py-2 border-b border-border bg-muted/20 flex-shrink-0 flex-wrap">
+              {/* Left Section: Title, Badge, Dropdown, and Collapse Control */}
+              <div className="flex items-center gap-3">
+                <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
+                  Similar Records
+                </h3>
+                <Select value={similarRecordsViewMode} onValueChange={setSimilarRecordsViewMode}>
+                  <SelectTrigger className="w-64 border-border focus:ring-1 focus:ring-ring transition-colors" style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Only Options (D)" style={{ fontSize: 'var(--font-body)' }}>Only Options (D)</SelectItem>
+                    <SelectItem value="Provision Type + Options (C+D)" style={{ fontSize: 'var(--font-body)' }}>Provision Type + Options (C+D)</SelectItem>
+                    <SelectItem value="Service ID/Name + Provision Type + Options (A+B+C+D)" style={{ fontSize: 'var(--font-body)' }}>Service ID/Name + Provision Type + Options (A+B+C+D)</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Badge variant="outline" className="px-2 py-0.5 bg-info/10 text-info border-info/20">
+                  {filteredAndSortedSimilarRecords.length} records found
+                </Badge>
+              </div>
+
+              {/* Filter Controls Section - Merged into header row */}
+              <div className="flex items-center gap-2 flex-1 min-w-0">
+                {/* Search Input */}
+                <div className="relative flex-1 min-w-64 max-w-80">
+                  <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+                  <Input
+                    type="text"
+                    placeholder="Search similar records..."
                     value={similarSearchTerm}
                     onChange={(e) => setSimilarSearchTerm(e.target.value)}
                     className="pl-7 pr-7 border-border placeholder:text-muted-foreground focus:ring-1 focus:ring-ring transition-colors"
@@ -1306,20 +1329,19 @@ export function ClusterDetails() {
                       variant={similarFilterType === type ? 'default' : 'outline'}
                       size="sm"
                       onClick={() => setSimilarFilterType(type as FilterType)}
-                      className={`${
-                        similarFilterType === type 
-                          ? type === 'with-approvals' ? 'bg-success text-success-foreground hover:bg-success/90'
-                            : type === 'pending-approvals' ? 'bg-warning text-warning-foreground hover:bg-warning/90'
+                      className={`${similarFilterType === type
+                        ? type === 'with-approvals' ? 'bg-success text-success-foreground hover:bg-success/90'
+                          : type === 'pending-approvals' ? 'bg-warning text-warning-foreground hover:bg-warning/90'
                             : type === 'no-approvals' ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
-                            : 'bg-primary text-primary-foreground hover:bg-primary/90'
-                          : 'border-border text-foreground hover:bg-muted'
-                      } focus:ring-1 focus:ring-ring transition-colors`}
+                              : 'bg-primary text-primary-foreground hover:bg-primary/90'
+                        : 'border-border text-foreground hover:bg-muted'
+                        } focus:ring-1 focus:ring-ring transition-colors`}
                       style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
                     >
-                      {type === 'all' ? 'All' 
+                      {type === 'all' ? 'All'
                         : type === 'with-approvals' ? 'With Approvals'
-                        : type === 'pending-approvals' ? 'Pending'
-                        : 'None'}
+                          : type === 'pending-approvals' ? 'Pending'
+                            : 'None'}
                     </Button>
                   ))}
                 </div>
@@ -1371,8 +1393,8 @@ export function ClusterDetails() {
                     style={{ height: 'var(--button-sm)' }}
                     onClick={() => setSimilarSortDirection(similarSortDirection === 'asc' ? 'desc' : 'asc')}
                   >
-                    {similarSortDirection === 'asc' ? 
-                      <SortAscending className="h-3 w-3" /> : 
+                    {similarSortDirection === 'asc' ?
+                      <SortAscending className="h-3 w-3" /> :
                       <SortDescending className="h-3 w-3" />
                     }
                   </Button>
@@ -1394,210 +1416,221 @@ export function ClusterDetails() {
                     Clear
                   </Button>
                   <CollapsibleTrigger asChild>
-                     <Button
+                    <Button
                       variant="ghost"
                       size="sm"
                       className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
                       style={{ height: 'var(--button-sm)' }}
-                     >
+                    >
                       {isSimilarRecordsCollapsed ? <CaretDown className="h-3 w-3" /> : <CaretUp className="h-3 w-3" />}
                       {isSimilarRecordsCollapsed ? 'Expand' : 'Collapse'}
                     </Button>
                   </CollapsibleTrigger>
                 </div>
-                </div>
               </div>
-              
-              <CollapsibleContent className="flex flex-col h-full min-h-0">
-
-            {/* Similar Records Table */}
-            {!isSimilarRecordsCollapsed && (
-              <div className="max-h-112 overflow-auto">
-              <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
-                <colgroup>
-                  <col className="col-index" />
-                  <col className="col-abcd" />
-                  <col className="col-service-id" />
-                  <col className="col-service-name" />
-                  <col className="col-provision-type" />
-                  <col className="col-options" />
-                  <col className="col-provisions" />
-                  <col className="col-products" />
-                  <col className="col-clients" />
-                  <col className="col-groups" />
-                  <col className="col-similarity" />
-                  <col className="col-approval" />
-                </colgroup>
-                <thead className="sticky top-0 bg-card border-b border-border z-10 shadow-sm">
-                  <tr>
-                    <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap col-index bg-card" style={{ fontSize: 'var(--font-body)' }}>#</th>
-                    <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('abcd_1up')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center">
-                        ABCD 1-Up
-                        {getSimilarSortIcon('abcd_1up')}
-                      </div>
-                    </th>
-                    <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('service_id')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center">
-                        Service ID
-                        {getSimilarSortIcon('service_id')}
-                      </div>
-                    </th>
-                    <th className="text-left px-2 py-2 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('service_name')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center">
-                        Service Name
-                        {getSimilarSortIcon('service_name')}
-                      </div>
-                    </th>
-                    <th className="text-left px-2 py-2 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('provision_type')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center">
-                        Provision Type
-                        {getSimilarSortIcon('provision_type')}
-                      </div>
-                    </th>
-                    <th className="text-left px-2 py-2 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('options')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center">
-                        Options
-                        {getSimilarSortIcon('options')}
-                      </div>
-                    </th>
-                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('num_provisions')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center justify-center">
-                        Provisions
-                        {getSimilarSortIcon('num_provisions')}
-                      </div>
-                    </th>
-                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('num_products')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center justify-center">
-                        Products
-                        {getSimilarSortIcon('num_products')}
-                      </div>
-                    </th>
-                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('num_clients')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center justify-center">
-                        Clients
-                        {getSimilarSortIcon('num_clients')}
-                      </div>
-                    </th>
-                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('num_groups')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center justify-center">
-                        Groups
-                        {getSimilarSortIcon('num_groups')}
-                      </div>
-                    </th>
-                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('similarity_score')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center justify-center">
-                        Similarity
-                        {getSimilarSortIcon('similarity_score')}
-                      </div>
-                    </th>
-                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Approval</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredAndSortedSimilarRecords.map((record, index) => (
-                    <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
-                      <td className="px-2 py-2 text-left col-index align-middle" style={{ fontSize: 'var(--font-body)' }}>
-                        <span className="font-bold text-muted-foreground">{index + 1}</span>
-                      </td>
-                      <td className="px-2 py-2">
-                        <Button variant="link" className="p-0 h-auto text-primary hover:underline font-bold" style={{ fontSize: 'var(--font-body)' }}>
-                          {record.abcd_1up}
-                        </Button>
-                      </td>
-                      <td className="px-2 py-2 text-center">
-                        <span className="font-bold text-info" style={{ fontSize: 'var(--font-body)' }}>{record.service_id}</span>
-                      </td>
-                      <td className="px-2 py-2 align-top">
-                        <span className="font-medium text-foreground break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.service_name}>
-                          {record.service_name}
-                        </span>
-                      </td>
-                      <td className="px-2 py-2 align-top">
-                        <span className="font-medium text-foreground break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.provision_type}>
-                          {record.provision_type}
-                        </span>
-                      </td>
-                      <td className="px-2 py-2 align-top">
-                        <span className="font-medium text-accent break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.options}>
-                          {record.options}
-                        </span>
-                      </td>
-                      <td className="px-2 py-2 text-center align-middle">
-                        <span className="font-bold text-primary" style={{ fontSize: 'var(--font-body)' }}>{record.num_provisions.toLocaleString()}</span>
-                      </td>
-                      <td className="px-2 py-2 text-center align-middle">
-                        <span className="font-bold text-success" style={{ fontSize: 'var(--font-body)' }}>{record.num_products.toLocaleString()}</span>
-                      </td>
-                      <td className="px-2 py-2 text-center align-middle">
-                        <span className="text-info font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_clients?.toLocaleString() || '-'}</span>
-                      </td>
-                      <td className="px-2 py-2 text-center align-middle">
-                        <span className="text-warning font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_groups?.toLocaleString() || '-'}</span>
-                      </td>
-                      <td className="px-2 py-2 text-center align-middle">
-                        <Badge 
-                          variant="outline" 
-                          className={`font-bold ${
-                            parseFloat(record.similarity_score) >= 95 ? 'bg-success/10 text-success border-success/20' :
-                            parseFloat(record.similarity_score) >= 90 ? 'bg-warning/10 text-warning border-warning/20' :
-                            'bg-info/10 text-info border-info/20'
-                          }`}
-                        >
-                          {record.similarity_score}%
-                        </Badge>
-                      </td>
-                      <td className="px-2 py-2 text-center align-middle">
-                        <ApprovalStatusIndicators statuses={record.approvalStatuses} />
-                      </td>
-                    </tr>
-                  ))}
-                  {filteredAndSortedSimilarRecords.length === 0 && (
-                    <tr>
-                      <td colSpan={12} className="text-center py-8 text-muted-foreground">
-                        <div className="flex flex-col items-center gap-2">
-                          <MagnifyingGlass className="h-8 w-8 text-muted-foreground/40" />
-                          <div>
-                            <p className="font-semibold">No similar records found</p>
-                            <p className="text-xs">Try adjusting your search or filter criteria</p>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
             </div>
-            )}
+
+            <CollapsibleContent className="flex flex-col h-full min-h-0">
+
+              {/* Similar Records Table */}
+              {!isSimilarRecordsCollapsed && (
+                <div className="max-h-112 overflow-auto">
+                  <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
+                    <colgroup>
+                      <col className="col-index" />
+                      <col className="col-abcd" />
+                      <col className="col-service-id" />
+                      <col className="col-service-name" />
+                      <col className="col-p" />
+                      <col className="col-provision-type" />
+                      <col className="col-o" />
+                      <col className="col-options" />
+                      <col className="col-provisions" />
+                      <col className="col-products" />
+                      <col className="col-clients" />
+                      <col className="col-groups" />
+                      <col className="col-similarity" />
+                      <col className="col-approval" />
+                    </colgroup>
+                    <thead className="sticky top-0 bg-card border-b border-border z-10 shadow-sm">
+                      <tr>
+                        <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap col-index bg-card" style={{ fontSize: 'var(--font-body)' }}>#</th>
+                        <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('abcd_1up')} style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center">
+                            ABCD 1-Up
+                            {getSimilarSortIcon('abcd_1up')}
+                          </div>
+                        </th>
+                        <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('service_id')} style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center">
+                            Service ID
+                            {getSimilarSortIcon('service_id')}
+                          </div>
+                        </th>
+                        <th className="text-left px-2 py-2 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('service_name')} style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center">
+                            Service Name
+                            {getSimilarSortIcon('service_name')}
+                          </div>
+                        </th>
+                        <th className="text-left px-2 py-3 font-medium text-muted-foreground hover:text-foreground transition-colors col-p bg-card" style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center">
+                            P
+                          </div>
+                        </th>
+                        <th className="text-left px-2 py-2 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('provision_type')} style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center">
+                            Provision Type
+                            {getSimilarSortIcon('provision_type')}
+                          </div>
+                        </th>
+                        <th className="text-left px-2 py-3 font-medium text-muted-foreground hover:text-foreground transition-colors col-o bg-card" style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center">
+                            O
+                          </div>
+                        </th>
+                        <th className="text-left px-2 py-2 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('options')} style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center">
+                            Options
+                            {getSimilarSortIcon('options')}
+                          </div>
+                        </th>
+                        <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('num_provisions')} style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center justify-center">
+                            Provisions
+                            {getSimilarSortIcon('num_provisions')}
+                          </div>
+                        </th>
+                        <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('num_products')} style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center justify-center">
+                            Products
+                            {getSimilarSortIcon('num_products')}
+                          </div>
+                        </th>
+                        <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('num_clients')} style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center justify-center">
+                            Clients
+                            {getSimilarSortIcon('num_clients')}
+                          </div>
+                        </th>
+                        <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('num_groups')} style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center justify-center">
+                            Groups
+                            {getSimilarSortIcon('num_groups')}
+                          </div>
+                        </th>
+                        <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSimilarSort('similarity_score')} style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center justify-center">
+                            Similarity
+                            {getSimilarSortIcon('similarity_score')}
+                          </div>
+                        </th>
+                        <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Approval</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredAndSortedSimilarRecords.map((record, index) => (
+                        <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
+                          <td className="px-2 py-2 text-left col-index align-middle" style={{ fontSize: 'var(--font-body)' }}>
+                            <span className="font-bold text-muted-foreground">{index + 1}</span>
+                          </td>
+                          <td className="px-2 py-2">
+                            <Button variant="link" className="p-0 h-auto text-primary hover:underline font-bold" style={{ fontSize: 'var(--font-body)' }}>
+                              {record.abcd_1up}
+                            </Button>
+                          </td>
+                          <td className="px-2 py-2 text-center">
+                            <span className="font-bold text-info" style={{ fontSize: 'var(--font-body)' }}>{record.service_id}</span>
+                          </td>
+                          <td className="px-2 py-2 align-top">
+                            <span className="font-medium text-foreground break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.service_name}>
+                              {record.service_name}
+                            </span>
+                          </td>
+                          <td className="px-2 py-2 align-top">
+                            <span className="font-medium text-foreground break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.provision_type}>
+                              {record.provision_type}
+                            </span>
+                          </td>
+                          <td className="px-2 py-2 align-top">
+                            <span className="font-medium text-accent break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.options}>
+                              {record.options}
+                            </span>
+                          </td>
+                          <td className="px-2 py-2 text-center align-middle">
+                            <span className="font-bold text-primary" style={{ fontSize: 'var(--font-body)' }}>{record.num_provisions.toLocaleString()}</span>
+                          </td>
+                          <td className="px-2 py-2 text-center align-middle">
+                            <span className="font-bold text-success" style={{ fontSize: 'var(--font-body)' }}>{record.num_products.toLocaleString()}</span>
+                          </td>
+                          <td className="px-2 py-2 text-center align-middle">
+                            <span className="text-info font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_clients?.toLocaleString() || '-'}</span>
+                          </td>
+                          <td className="px-2 py-2 text-center align-middle">
+                            <span className="text-warning font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_groups?.toLocaleString() || '-'}</span>
+                          </td>
+                          <td className="px-2 py-2 text-center align-middle">
+                            <Badge
+                              variant="outline"
+                              className={`font-bold ${parseFloat(record.similarity_score) >= 95 ? 'bg-success/10 text-success border-success/20' :
+                                parseFloat(record.similarity_score) >= 90 ? 'bg-warning/10 text-warning border-warning/20' :
+                                  'bg-info/10 text-info border-info/20'
+                                }`}
+                            >
+                              {record.similarity_score}%
+                            </Badge>
+                          </td>
+                          <td className="px-2 py-2 text-center align-middle">
+                            <ApprovalStatusIndicators statuses={record.approvalStatuses} />
+                          </td>
+                        </tr>
+                      ))}
+                      {filteredAndSortedSimilarRecords.length === 0 && (
+                        <tr>
+                          <td colSpan={12} className="text-center py-8 text-muted-foreground">
+                            <div className="flex flex-col items-center gap-2">
+                              <MagnifyingGlass className="h-8 w-8 text-muted-foreground/40" />
+                              <div>
+                                <p className="font-semibold">No similar records found</p>
+                                <p className="text-xs">Try adjusting your search or filter criteria</p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </CollapsibleContent>
           </CardContent>
         </Card>
-        </Collapsible>
-      
-      {/* Exact Same CD Records Table */}
-        <Collapsible open={!isExactSameCDCollapsed} onOpenChange={(open) => setIsExactSameCDCollapsed(!open)}>
-          <Card ref={exactSameCDRecordsRef} className="bg-card border-border shadow-sm mt-4 mx-8 flex flex-col">
-            <CardContent className="p-0 flex flex-col h-full">
-              {/* Merged Exact Same CD Records Header with Collapse Control and Filter Controls */}
-              <div className="flex items-center gap-4 px-3 py-2 border-b border-border bg-muted/20 flex-shrink-0 flex-wrap">
-                {/* Left Section: Title, Badge, and Collapse Control */}
-                <div className="flex items-center gap-3">
-                  <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
-                    Exact Same CD Records for ABCD {selectedRecordId}
-                  </h3>
-                  <Badge variant="outline" className="px-2 py-0.5 bg-success/10 text-success border-success/20">
-                    {filteredAndSortedExactRecords.length} exact matches found
-                  </Badge>
-                </div>
+      </Collapsible>
 
-                {/* Filter Controls Section - Merged into header row */}
-                <div className="flex items-center gap-2 flex-1 min-w-0">
-                  {/* Search Input */}
-                  <div className="relative flex-1 min-w-64 max-w-80">
-                    <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
-                    <Input
-                      type="text"
-                      placeholder="Search exact CD records..."
+      {/* Exact Same CD Records Table */}
+      <Collapsible open={!isExactSameCDCollapsed} onOpenChange={(open) => setIsExactSameCDCollapsed(!open)}>
+        <Card ref={exactSameCDRecordsRef} className="bg-card border-border shadow-sm mt-4 mx-8 flex flex-col">
+          <CardContent className="p-0 flex flex-col h-full">
+            {/* Merged Exact Same CD Records Header with Collapse Control and Filter Controls */}
+            <div className="flex items-center gap-4 px-3 py-2 border-b border-border bg-muted/20 flex-shrink-0 flex-wrap">
+              {/* Left Section: Title, Badge, and Collapse Control */}
+              <div className="flex items-center gap-3">
+                <h3 className="font-semibold text-foreground" style={{ fontSize: 'var(--font-h6)' }}>
+                  Exact Same CD Records for ABCD {selectedRecordId}
+                </h3>
+                <Badge variant="outline" className="px-2 py-0.5 bg-success/10 text-success border-success/20">
+                  {filteredAndSortedExactRecords.length} exact matches found
+                </Badge>
+              </div>
+
+              {/* Filter Controls Section - Merged into header row */}
+              <div className="flex items-center gap-2 flex-1 min-w-0">
+                {/* Search Input */}
+                <div className="relative flex-1 min-w-64 max-w-80">
+                  <MagnifyingGlass className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+                  <Input
+                    type="text"
+                    placeholder="Search exact CD records..."
                     value={exactSearchTerm}
                     onChange={(e) => setExactSearchTerm(e.target.value)}
                     className="pl-7 pr-7 border-border placeholder:text-muted-foreground focus:ring-1 focus:ring-ring transition-colors"
@@ -1624,20 +1657,19 @@ export function ClusterDetails() {
                       variant={exactFilterType === type ? 'default' : 'outline'}
                       size="sm"
                       onClick={() => setExactFilterType(type as FilterType)}
-                      className={`${
-                        exactFilterType === type 
-                          ? type === 'with-approvals' ? 'bg-success text-success-foreground hover:bg-success/90'
-                            : type === 'pending-approvals' ? 'bg-warning text-warning-foreground hover:bg-warning/90'
+                      className={`${exactFilterType === type
+                        ? type === 'with-approvals' ? 'bg-success text-success-foreground hover:bg-success/90'
+                          : type === 'pending-approvals' ? 'bg-warning text-warning-foreground hover:bg-warning/90'
                             : type === 'no-approvals' ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
-                            : 'bg-primary text-primary-foreground hover:bg-primary/90'
-                          : 'border-border text-foreground hover:bg-muted'
-                      } focus:ring-1 focus:ring-ring transition-colors`}
+                              : 'bg-primary text-primary-foreground hover:bg-primary/90'
+                        : 'border-border text-foreground hover:bg-muted'
+                        } focus:ring-1 focus:ring-ring transition-colors`}
                       style={{ fontSize: 'var(--font-body)', height: 'var(--button-sm)' }}
                     >
-                      {type === 'all' ? 'All' 
+                      {type === 'all' ? 'All'
                         : type === 'with-approvals' ? 'With Approvals'
-                        : type === 'pending-approvals' ? 'Pending'
-                        : 'None'}
+                          : type === 'pending-approvals' ? 'Pending'
+                            : 'None'}
                     </Button>
                   ))}
                 </div>
@@ -1688,8 +1720,8 @@ export function ClusterDetails() {
                     style={{ height: 'var(--button-sm)' }}
                     onClick={() => setExactSortDirection(exactSortDirection === 'asc' ? 'desc' : 'asc')}
                   >
-                    {exactSortDirection === 'asc' ? 
-                      <SortAscending className="h-3 w-3" /> : 
+                    {exactSortDirection === 'asc' ?
+                      <SortAscending className="h-3 w-3" /> :
                       <SortDescending className="h-3 w-3" />
                     }
                   </Button>
@@ -1716,171 +1748,183 @@ export function ClusterDetails() {
                       size="sm"
                       className="text-muted-foreground hover:text-foreground hover:bg-muted flex items-center gap-1"
                       style={{ height: 'var(--button-sm)' }}
-                     >
+                    >
                       {isExactSameCDCollapsed ? <CaretDown className="h-3 w-3" /> : <CaretUp className="h-3 w-3" />}
                       {isExactSameCDCollapsed ? 'Expand' : 'Collapse'}
                     </Button>
                   </CollapsibleTrigger>
                 </div>
-                </div>
               </div>
-              
-              <CollapsibleContent className="flex flex-col h-full min-h-0">
-
-            {/* Exact Same CD Records Table */}
-            {!isExactSameCDCollapsed && (
-              <div className="max-h-112 overflow-auto">
-              <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
-                <colgroup>
-                  <col className="col-index" />
-                  <col className="col-abcd" />
-                  <col className="col-service-id" />
-                  <col className="col-service-name" />
-                  <col className="col-provision-type" />
-                  <col className="col-options" />
-                  <col className="col-provisions" />
-                  <col className="col-products" />
-                  <col className="col-clients" />
-                  <col className="col-groups" />
-                  <col className="col-match-type" />
-                  <col className="col-approval" />
-                </colgroup>
-                <thead className="sticky top-0 bg-card border-b border-border z-10 shadow-sm">
-                  <tr>
-                    <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap col-index bg-card" style={{ fontSize: 'var(--font-body)' }}>#</th>
-                    <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleExactSort('abcd_1up')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center">
-                        ABCD 1-Up
-                        {getExactSortIcon('abcd_1up')}
-                      </div>
-                    </th>
-                    <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleExactSort('service_id')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center">
-                        Service ID
-                        {getExactSortIcon('service_id')}
-                      </div>
-                    </th>
-                    <th className="text-left px-2 py-2 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleExactSort('service_name')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center">
-                        Service Name
-                        {getExactSortIcon('service_name')}
-                      </div>
-                    </th>
-                    <th className="text-left px-2 py-2 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleExactSort('provision_type')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center">
-                        Provision Type
-                        {getExactSortIcon('provision_type')}
-                      </div>
-                    </th>
-                    <th className="text-left px-2 py-2 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleExactSort('options')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center">
-                        Options
-                        {getExactSortIcon('options')}
-                      </div>
-                    </th>
-                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleExactSort('num_provisions')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center justify-center">
-                        Provisions
-                        {getExactSortIcon('num_provisions')}
-                      </div>
-                    </th>
-                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleExactSort('num_products')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center justify-center">
-                        Products
-                        {getExactSortIcon('num_products')}
-                      </div>
-                    </th>
-                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleExactSort('num_clients')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center justify-center">
-                        Clients
-                        {getExactSortIcon('num_clients')}
-                      </div>
-                    </th>
-                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleExactSort('num_groups')} style={{ fontSize: 'var(--font-body)' }}>
-                      <div className="flex items-center justify-center">
-                        Groups
-                        {getExactSortIcon('num_groups')}
-                      </div>
-                    </th>
-                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Match Type</th>
-                    <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Approval</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredAndSortedExactRecords.map((record, index) => (
-                    <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
-                      <td className="px-2 py-2 text-left col-index align-middle" style={{ fontSize: 'var(--font-body)' }}>
-                        <span className="font-bold text-muted-foreground">{index + 1}</span>
-                      </td>
-                      <td className="px-2 py-2">
-                        <Button variant="link" className="p-0 h-auto text-primary hover:underline font-bold" style={{ fontSize: 'var(--font-body)' }}>
-                          {record.abcd_1up}
-                        </Button>
-                      </td>
-                      <td className="px-2 py-2 text-center">
-                        <span className="font-bold text-info" style={{ fontSize: 'var(--font-body)' }}>{record.service_id}</span>
-                      </td>
-                      <td className="px-2 py-2 align-top">
-                        <span className="font-medium text-foreground break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.service_name}>
-                          {record.service_name}
-                        </span>
-                      </td>
-                      <td className="px-2 py-2 align-top">
-                        <span className="font-medium text-foreground break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.provision_type}>
-                          {record.provision_type}
-                        </span>
-                      </td>
-                      <td className="px-2 py-2 align-top">
-                        <span className="font-medium text-accent break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.options}>
-                          {record.options}
-                        </span>
-                      </td>
-                      <td className="px-2 py-2 text-center align-middle">
-                        <span className="font-bold text-primary" style={{ fontSize: 'var(--font-body)' }}>{record.num_provisions.toLocaleString()}</span>
-                      </td>
-                      <td className="px-2 py-2 text-center align-middle">
-                        <span className="font-bold text-success" style={{ fontSize: 'var(--font-body)' }}>{record.num_products.toLocaleString()}</span>
-                      </td>
-                      <td className="px-2 py-2 text-center align-middle">
-                        <span className="text-info font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_clients?.toLocaleString() || '-'}</span>
-                      </td>
-                      <td className="px-2 py-2 text-center align-middle">
-                        <span className="text-warning font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_groups?.toLocaleString() || '-'}</span>
-                      </td>
-                      <td className="px-2 py-2 text-center align-middle">
-                        <Badge 
-                          variant="outline" 
-                          className="bg-success/10 text-success border-success/20 font-bold"
-                        >
-                          Exact CD Match
-                        </Badge>
-                      </td>
-                      <td className="px-2 py-2 text-center align-middle">
-                        <ApprovalStatusIndicators statuses={record.approvalStatuses} />
-                      </td>
-                    </tr>
-                  ))}
-                  {filteredAndSortedExactRecords.length === 0 && (
-                    <tr>
-                      <td colSpan={12} className="text-center py-8 text-muted-foreground">
-                        <div className="flex flex-col items-center gap-2">
-                          <MagnifyingGlass className="h-8 w-8 text-muted-foreground/40" />
-                          <div>
-                            <p className="font-semibold">No exact CD records found</p>
-                            <p className="text-xs">Try adjusting your search or filter criteria</p>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
             </div>
-            )}
+
+            <CollapsibleContent className="flex flex-col h-full min-h-0">
+
+              {/* Exact Same CD Records Table */}
+              {!isExactSameCDCollapsed && (
+                <div className="max-h-112 overflow-auto">
+                  <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
+                    <colgroup>
+                      <col className="col-index" />
+                      <col className="col-abcd" />
+                      <col className="col-service-id" />
+                      <col className="col-service-name" />
+                      <col className="col-p" />
+                      <col className="col-provision-type" />
+                      <col className="col-o" />
+                      <col className="col-options" />
+                      <col className="col-provisions" />
+                      <col className="col-products" />
+                      <col className="col-clients" />
+                      <col className="col-groups" />
+                      <col className="col-match-type" />
+                      <col className="col-approval" />
+                    </colgroup>
+                    <thead className="sticky top-0 bg-card border-b border-border z-10 shadow-sm">
+                      <tr>
+                        <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap col-index bg-card" style={{ fontSize: 'var(--font-body)' }}>#</th>
+                        <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleExactSort('abcd_1up')} style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center">
+                            ABCD 1-Up
+                            {getExactSortIcon('abcd_1up')}
+                          </div>
+                        </th>
+                        <th className="text-left px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleExactSort('service_id')} style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center">
+                            Service ID
+                            {getExactSortIcon('service_id')}
+                          </div>
+                        </th>
+                        <th className="text-left px-2 py-2 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleExactSort('service_name')} style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center">
+                            Service Name
+                            {getExactSortIcon('service_name')}
+                          </div>
+                        </th>
+                        <th className="text-left px-2 py-3 font-medium text-muted-foreground hover:text-foreground transition-colors col-p bg-card" style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center">
+                            P
+                          </div>
+                        </th>
+                        <th className="text-left px-2 py-2 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleExactSort('provision_type')} style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center">
+                            Provision Type
+                            {getExactSortIcon('provision_type')}
+                          </div>
+                        </th>
+                        <th className="text-left px-2 py-3 font-medium text-muted-foreground hover:text-foreground transition-colors col-o bg-card" style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center">
+                            O
+                          </div>
+                        </th>
+                        <th className="text-left px-2 py-2 font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleExactSort('options')} style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center">
+                            Options
+                            {getExactSortIcon('options')}
+                          </div>
+                        </th>
+                        <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleExactSort('num_provisions')} style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center justify-center">
+                            Provisions
+                            {getExactSortIcon('num_provisions')}
+                          </div>
+                        </th>
+                        <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleExactSort('num_products')} style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center justify-center">
+                            Products
+                            {getExactSortIcon('num_products')}
+                          </div>
+                        </th>
+                        <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleExactSort('num_clients')} style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center justify-center">
+                            Clients
+                            {getExactSortIcon('num_clients')}
+                          </div>
+                        </th>
+                        <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleExactSort('num_groups')} style={{ fontSize: 'var(--font-body)' }}>
+                          <div className="flex items-center justify-center">
+                            Groups
+                            {getExactSortIcon('num_groups')}
+                          </div>
+                        </th>
+                        <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Match Type</th>
+                        <th className="text-center px-2 py-2 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Approval</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredAndSortedExactRecords.map((record, index) => (
+                        <tr key={record.abcd_1up} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
+                          <td className="px-2 py-2 text-left col-index align-middle" style={{ fontSize: 'var(--font-body)' }}>
+                            <span className="font-bold text-muted-foreground">{index + 1}</span>
+                          </td>
+                          <td className="px-2 py-2">
+                            <Button variant="link" className="p-0 h-auto text-primary hover:underline font-bold" style={{ fontSize: 'var(--font-body)' }}>
+                              {record.abcd_1up}
+                            </Button>
+                          </td>
+                          <td className="px-2 py-2 text-center">
+                            <span className="font-bold text-info" style={{ fontSize: 'var(--font-body)' }}>{record.service_id}</span>
+                          </td>
+                          <td className="px-2 py-2 align-top">
+                            <span className="font-medium text-foreground break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.service_name}>
+                              {record.service_name}
+                            </span>
+                          </td>
+                          <td className="px-2 py-2 align-top">
+                            <span className="font-medium text-foreground break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.provision_type}>
+                              {record.provision_type}
+                            </span>
+                          </td>
+                          <td className="px-2 py-2 align-top">
+                            <span className="font-medium text-accent break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.options}>
+                              {record.options}
+                            </span>
+                          </td>
+                          <td className="px-2 py-2 text-center align-middle">
+                            <span className="font-bold text-primary" style={{ fontSize: 'var(--font-body)' }}>{record.num_provisions.toLocaleString()}</span>
+                          </td>
+                          <td className="px-2 py-2 text-center align-middle">
+                            <span className="font-bold text-success" style={{ fontSize: 'var(--font-body)' }}>{record.num_products.toLocaleString()}</span>
+                          </td>
+                          <td className="px-2 py-2 text-center align-middle">
+                            <span className="text-info font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_clients?.toLocaleString() || '-'}</span>
+                          </td>
+                          <td className="px-2 py-2 text-center align-middle">
+                            <span className="text-warning font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_groups?.toLocaleString() || '-'}</span>
+                          </td>
+                          <td className="px-2 py-2 text-center align-middle">
+                            <Badge
+                              variant="outline"
+                              className="bg-success/10 text-success border-success/20 font-bold"
+                            >
+                              Exact CD Match
+                            </Badge>
+                          </td>
+                          <td className="px-2 py-2 text-center align-middle">
+                            <ApprovalStatusIndicators statuses={record.approvalStatuses} />
+                          </td>
+                        </tr>
+                      ))}
+                      {filteredAndSortedExactRecords.length === 0 && (
+                        <tr>
+                          <td colSpan={12} className="text-center py-8 text-muted-foreground">
+                            <div className="flex flex-col items-center gap-2">
+                              <MagnifyingGlass className="h-8 w-8 text-muted-foreground/40" />
+                              <div>
+                                <p className="font-semibold">No exact CD records found</p>
+                                <p className="text-xs">Try adjusting your search or filter criteria</p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </CollapsibleContent>
           </CardContent>
         </Card>
-        </Collapsible>
+      </Collapsible>
     </div>
   );
 }

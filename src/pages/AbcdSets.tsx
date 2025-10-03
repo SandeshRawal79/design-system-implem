@@ -46,32 +46,19 @@ const generateApprovalStatuses = () => {
   return Array.from({ length: 5 }, () => statuses[Math.floor(Math.random() * statuses.length)]);
 };
 
-// Component to render approval status indicators in compact format to save column space
-function ApprovalStatusIndicators({ statuses }: { statuses: string[] }) {
+// ApprovalStatusIndicators for 5 teams
+const TEAM_NAMES = ["SH", "HPO", "PM&D", "Legal", "Finance"];
+function ApprovalStatusIndicators({ approvalsNeeded }: { approvalsNeeded: string[] }) {
   return (
     <div className="flex items-center justify-center gap-0.5 font-mono text-sm" role="group" aria-label="Approval status indicators">
-      {statuses.map((status, index) => {
-        let displaySymbol;
-        let colorClass;
-        let ariaLabel;
-        
-        if (status === '✓') {
-          displaySymbol = '✓';
-          colorClass = "text-success font-bold";
-          ariaLabel = `Approved step ${index + 1}`;
-        } else if (status === '✗') {
-          displaySymbol = 'X';
-          colorClass = "text-destructive font-bold";
-          ariaLabel = `Rejected step ${index + 1}`;
-        } else {
-          displaySymbol = '-';
-          colorClass = "text-muted-foreground font-bold";
-          ariaLabel = `Pending step ${index + 1}`;
-        }
-        
+      {TEAM_NAMES.map((team, index) => {
+        const isNeeded = approvalsNeeded.includes(team);
+        let displaySymbol = isNeeded ? "✓" : "X";
+        let colorClass = isNeeded ? "text-success font-bold" : "text-destructive font-bold";
+        let ariaLabel = isNeeded ? `Approval needed from ${team}` : `No approval needed from ${team}`;
         return (
           <span
-            key={index}
+            key={team}
             className={`inline-flex items-center justify-center w-4 text-center cursor-default transition-colors duration-200 ${colorClass}`}
             role="status"
             aria-label={ariaLabel}
@@ -599,7 +586,7 @@ export function AbcdSets() {
             <CollapsibleContent className="flex flex-col h-full min-h-0">
               {/* Table Container */}
               {!isMainTableCollapsed && (
-                <div className="max-h-165 overflow-auto">
+                <div className="max-h-96 overflow-auto">
                   <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
                     <thead className="sticky top-0 bg-card border-b border-border z-10 shadow-sm">
                       <tr>
@@ -632,7 +619,7 @@ export function AbcdSets() {
                         </th>
                         <th className="text-center px-3 py-3 font-medium text-muted-foreground whitespace-nowrap cursor-pointer hover:text-foreground transition-colors bg-card" onClick={() => handleSort('abcdTup')} style={{ fontSize: 'var(--font-body)' }}>
                           <div className="flex items-center justify-center">
-                            ABCD Tup
+                            ABCD 1up
                             {getSortIcon('abcdTup')}
                           </div>
                         </th>
@@ -726,13 +713,7 @@ export function AbcdSets() {
                             <span className="font-medium text-accent break-words leading-tight" style={{ fontSize: 'var(--font-body)' }} title={record.options}>{record.options}</span>
                           </td>
                           <td className="px-3 py-3 align-middle">
-                            <div className="flex flex-wrap gap-1 justify-center">
-                              {record.approvalsNeeded.map((approval, index) => (
-                                <Badge key={index} variant="destructive" className="text-xs font-medium">
-                                  {approval}
-                                </Badge>
-                              ))}
-                            </div>
+                            <ApprovalStatusIndicators approvalsNeeded={record.approvalsNeeded} />
                           </td>
                           <td className="px-3 py-3 align-middle">
                             <span className="text-muted-foreground font-medium" style={{ fontSize: 'var(--font-body)' }}>{record.timestamp}</span>
@@ -965,7 +946,7 @@ export function AbcdSets() {
                               <span className="text-warning font-bold" style={{ fontSize: 'var(--font-body)' }}>{record.num_groups?.toLocaleString() || '-'}</span>
                             </td>
                             <td className="px-3 py-3 text-center align-middle">
-                              <ApprovalStatusIndicators statuses={record.approvalStatuses} />
+                              <ApprovalStatusIndicators approvalsNeeded={record.approvalStatuses} />
                             </td>
                           </tr>
                         ))}
