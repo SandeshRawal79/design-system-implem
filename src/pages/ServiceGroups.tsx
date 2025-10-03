@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef } from 'react'
+import React, { useState, useMemo, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
@@ -417,7 +417,7 @@ export function ServiceGroups() {
           </div>
           
           {/* Table Container with constrained height and scrolling */}
-          <div className="max-h-165 overflow-auto">
+          <div className="max-h-96 overflow-auto">
             <table className="w-full border-collapse" style={{ fontSize: 'var(--font-body)' }}>
               <colgroup>
                 <col style={{ width: '80px' }} />
@@ -468,7 +468,7 @@ export function ServiceGroups() {
                     </div>
                   </th>
                   <th className="text-center px-3 py-3 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Modify</th>
-                  <th className="text-center px-3 py-3 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>Actions</th>
+                  <th className="text-center px-3 py-3 font-medium text-muted-foreground whitespace-nowrap bg-card" style={{ fontSize: 'var(--font-body)' }}>See Dendrogram</th>
                 </tr>
               </thead>
               <tbody>

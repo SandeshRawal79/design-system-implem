@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { ArrowLeft, Check, X, CaretUp, CaretDown, MagnifyingGlass, SortAscending, SortDescending, Plus } from '@phosphor-icons/react'
 import { Button } from "@/components/ui/button"
@@ -53,6 +53,9 @@ export function ClustersView() {
   const [sortField, setSortField] = useState<SortField>('abcd_1up')
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
   const [filterType, setFilterType] = useState<FilterType>('all')
+  
+  // Dialog state for Create Set Panel
+  const [isCreateSetDialogOpen, setIsCreateSetDialogOpen] = useState(false)
   
   // Table collapse state
   const [isTableCollapsed, setIsTableCollapsed] = useState(false)
@@ -490,7 +493,7 @@ export function ClustersView() {
 
       {/* Cluster Table */}
       <Collapsible open={!isTableCollapsed} onOpenChange={(open) => setIsTableCollapsed(!open)}>
-        <Card className="bg-card border-border shadow-sm mx-8 mt-4 flex flex-col min-h-0 overflow-hidden">
+        <Card className="bg-card border-border shadow-sm mx-8 flex flex-col min-h-0 overflow-hidden">
           <CardContent className="p-0 flex flex-col h-full min-h-0">
             {/* Table Header with Filter Controls */}
             <div className="flex items-center gap-4 px-3 py-2 border-b border-border bg-muted/20 flex-shrink-0 flex-wrap">
@@ -570,7 +573,7 @@ export function ClustersView() {
                   ))}
                 </div>
 
-                {/* Results & Clear */}
+                {/* Results & Clear & Actions */}
                 <div className="flex items-center gap-2 ml-auto">
                   <Badge variant="outline" className="px-2 py-0.5 bg-muted/50 border-border" style={{ fontSize: 'var(--font-body)' }}>
                     {filteredAndSortedData.length}/{selectedClusterData?.records.length || 0}
@@ -585,6 +588,108 @@ export function ClustersView() {
                     <X className="h-2 w-2 mr-1" />
                     Clear
                   </Button>
+                  
+                  {/* Create Set Button */}
+                  <Dialog open={isCreateSetDialogOpen} onOpenChange={setIsCreateSetDialogOpen}>
+                    <DialogTrigger asChild>
+                      <Button 
+                        size="sm" 
+                        className="px-4 bg-warning hover:bg-warning/90 text-white font-medium focus:ring-1 focus:ring-ring transition-colors"
+                        style={{ height: 'var(--button-sm)', fontSize: 'var(--font-body)' }}
+                      >
+                        <Plus className="h-3 w-3 mr-1" />
+                        Create Set
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                      <DialogHeader>
+                        <DialogTitle style={{ fontSize: 'var(--font-h5)' }}>Create New Set</DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4 pt-4">
+                        <div>
+                          <Label className="text-sm font-semibold">Creator:*</Label>
+                          <Input
+                            placeholder="Enter creator name"
+                            value={creator}
+                            onChange={(e) => setCreator(e.target.value)}
+                            className="mt-1"
+                            style={{ height: 'var(--button-md)', fontSize: 'var(--font-body)' }}
+                          />
+                        </div>
+                        
+                        <div>
+                          <Label className="text-sm font-semibold">Set Name:*</Label>
+                          <Input
+                            placeholder="Enter set name"
+                            value={setName}
+                            onChange={(e) => setSetName(e.target.value)}
+                            className="mt-1"
+                            style={{ height: 'var(--button-md)', fontSize: 'var(--font-body)' }}
+                          />
+                        </div>
+                        
+                        <div>
+                          <Label className="text-sm font-semibold">Description:*</Label>
+                          <Textarea
+                            placeholder="Enter description (max 500 chars)"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            className="mt-1 h-20"
+                            maxLength={500}
+                            style={{ fontSize: 'var(--font-body)' }}
+                          />
+                          <div className="text-xs text-muted-foreground mt-1">{description.length}/500 characters</div>
+                        </div>
+                        
+                        <div className="flex gap-2 pt-4">
+                          <Button 
+                            className="bg-warning hover:bg-warning/90 text-white flex-1"
+                            style={{ height: 'var(--button-md)', fontSize: 'var(--font-body)' }}
+                            onClick={() => {
+                              console.log('Add selected rows to set')
+                              setIsCreateSetDialogOpen(false)
+                            }}
+                          >
+                            Add selected rows to set
+                          </Button>
+                          <Button 
+                            className="bg-primary hover:bg-primary/90 text-white flex-1"
+                            style={{ height: 'var(--button-md)', fontSize: 'var(--font-body)' }}
+                            onClick={() => {
+                              console.log('Create new set with selected rows')
+                              setIsCreateSetDialogOpen(false)
+                            }}
+                          >
+                            Create new set
+                          </Button>
+                        </div>
+                        
+                        <div className="pt-2 border-t">
+                          <Button 
+                            variant="outline"
+                            className="w-full"
+                            style={{ height: 'var(--button-md)', fontSize: 'var(--font-body)' }}
+                            onClick={() => {
+                              console.log('Select an existing set')
+                            }}
+                          >
+                            Select an existing set to add rows to
+                          </Button>
+                          <div className="text-xs text-muted-foreground text-center mt-1">Choose from existing sets</div>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                  
+                  <Button 
+                    variant="link" 
+                    className="p-0 h-auto text-primary hover:underline"
+                    style={{ fontSize: 'var(--font-body)' }}
+                    onClick={() => navigate(`/dendrogram/${serviceId}`)}
+                  >
+                    ← Back to dendrograms
+                  </Button>
+                  
                   <Button
                     variant="ghost"
                     size="sm"
