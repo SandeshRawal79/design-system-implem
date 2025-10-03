@@ -348,14 +348,14 @@ export function ClustersView() {
 
   return (
     <div className="w-full min-h-screen bg-background flex flex-col">
-      {/* Compact Data Context and X-ray Projection Card - Matching ClusterDetails */}
+      {/* Compact Data Context and X-ray Projection Card - Exactly matching ClusterDetails */}
       <Card className="bg-card border-border mb-4 shadow-sm mx-8 flex-shrink-0">
         <CardContent className="px-4">
           <div className="flex items-center justify-between gap-4">
             {/* X-ray Projection */}
             <div className="flex items-center gap-2">
               <span className="font-semibold text-foreground leading-tight truncate" style={{ fontSize: 'var(--font-body)' }}>X-ray Projection:</span>
-              <span className="text-muted-foreground leading-none" style={{ fontSize: 'var(--font-body)' }} title="Provision Type + Options (C+D)">
+              <span className="text-muted-foreground leading-non" style={{ fontSize: 'var(--font-body)' }} title="Provision Type + Options (C+D)">
                 Provision Type + Options (C+D)
               </span>
             </div>
@@ -363,7 +363,7 @@ export function ClustersView() {
             {/* Data Context */}
             <div className="flex items-center gap-2">
               <span className="font-semibold text-foreground leading-tight truncate" style={{ fontSize: 'var(--font-body)' }}>Data Context:</span>
-              <span className="text-muted-foreground leading-none" style={{ fontSize: 'var(--font-body)' }} title="Service Group: Phase 1 Cycle 1 (50 services) | Total Clusters: 279 | Total Records: 3642">
+              <span className="text-muted-foreground leading-non" style={{ fontSize: 'var(--font-body)' }} title="Service Group: Phase 1 Cycle 1 (50 services) | Total Clusters: 279 | Total Records: 3642">
                 Service Group: Phase 1 Cycle 1 (50 services) | Total Clusters: 279 | Total Records: 3642
               </span>
             </div>
