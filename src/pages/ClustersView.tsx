@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { ArrowLeft, Check, X, CaretUp, CaretDown, MagnifyingGlass, SortAscending, SortDescending, Plus } from '@phosphor-icons/react'
 import { Button } from "@/components/ui/button"
